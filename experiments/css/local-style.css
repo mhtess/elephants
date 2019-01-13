@@ -9,27 +9,39 @@
   font-size: 24px;
 }
 
-.storyText{
-	font-family: "Times New Roman", Times, serif;
-  font-size: 50px;
-	word-wrap: break-word;
-	text-align: left
+#title_page {
+  background-color: #f9e4d1;
+}
+#main_chapters {
+  background-color: #f9e4d1;
 }
 
+.storyText{
+font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+  font-size: 50px;
+	word-wrap: break-word;
+	text-align: left;
+	margin-left: 40px;
+	margin-right: 40px;
+}
 
 .bookTitle{
-	font-family: "Times New Roman", Times, serif;
-  font-size: 100px;
+	font: 400 100px/1.2 'Merienda One', Helvetica, sans-serif;
+  color: #2b2b2b;
+  font-size: 80px;
 }
 
 .chapterTitle{
-	font-family: "Times New Roman", Times, serif;
-  font-size: 100px;
+	font: 400 100px/1.2 'Merienda One', Helvetica, sans-serif;
+  color: #2b2b2b;
+  font-size: 60px;
 }
 
 .subtitle{
-	font-family: "Times New Roman", Times, serif;
+	font: 400 100px/1.2 'Merienda One', Helvetica, sans-serif;
+  color: #2b2b2b;
   font-size: 60px;
+	font-style: italic;
 }
 /* .query{
 	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;

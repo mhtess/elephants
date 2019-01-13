@@ -22,55 +22,64 @@ function make_slides(f) {
       name: "main_chapters",
       trial_num : 1,
       // present : exp.stims,
-      present: [
-        {
-          title: "An introduction to Dax",
-          main_text: [
-            "Dax is a lot like Earth.  Like Earth it has seven continents, in similar locations,",
-            " but instead of North America, South America, Africa, Europe, Asia, ",
-            "Australia, and Antarctica, the continents are called Aga, Benli, Caro, Dodi, Ente, Fale, and Gomi.  ",
-            "Its climate is a lot like Earth's, too.  But the plants and animals of Dax are completely different."
-          ],
-          critical: false
-        },
-        {
-          title: "Zorxon, overlord of Dax",
-          main_text: [
-            "Zorxon is the overlord of Dax.  Everyone loves Zorxon because blah.",
-            "However, Zorxon is now very old and blah blah blah blah blah blah.",
-            "and gah gah gah"
-          ],
-          query: true,
-          kind: "aliens",
-          verb: "love ",
-          single: "Zorxon"
-        },
-        {
-          title: "Glippets",
-          main_text: [
-            "Glippets are large creatures, quite intelligent, with a life-span of about sixty years.  They live in Caro ",
-            "and Este."
-          ],
-          query: true,
-          kind: "glippets",
-          verb: "live in ",
-          single: "Caro"
-        },
-      ],
-      //this gets run only at the beginning of the block
+      present: exp.stims,
+      //this gets run only at the beginning of the chapter
       present_handle : function(stim) {
+        $(".err").hide()
+
         $(".query").hide()
         $(".slider_number").hide()
         $(".slider_table").hide()
         this.page = 0
-        $(".chapterTitle").html(stim.title)
+        exp.sliderPost = -99;
+
+        $(".chapterTitle").html("<u>Chapter "+ this.trial_num +": "+stim.title+"</u>")
 
         this.startTime = Date.now();
         this.stim = stim
 
         this.chapter_length = stim.main_text.length;
+        console.log("chapter length = " + this.chapter_length)
         this.present_page()
       },
+
+      // this presents a page of a chapter
+      present_page : function(){
+        $(".err").hide()
+        $(".query").hide()
+        $(".slider_number").hide()
+        $(".slider_table").hide()
+        console.log("page = " + this.page)
+        if (this.page > 0) {
+          $(".chapterTitle").html('')
+        }
+
+        // if (this.stim.critical && this.stim.condition == "single") {
+        if (this.stim.condition == "single") {
+          this.last_page = this.chapter_length - 1
+        } else {
+          this.last_page = this.chapter_length
+        }
+
+        // if this.stim.critical {
+          if (
+            this.page == this.last_page
+              // (
+              //   (exp.condition == "single" && this.page == this.chapter_length - 1) ||
+              //   (exp.condition == "conjunction" && this.page == this.chapter_length)
+              // )
+              && this.stim.query
+            ) {
+              this.present_question()
+            } else {
+              $(".storyText").html(this.stim.main_text[this.page]);
+            }
+        // } else {
+        //
+        // }
+      },
+
+      // this gets run on pages where we ask questions
       present_question: function(){
         var query_prompt = "<strong>Out of all "  + this.stim.kind + "</strong>, what percentage do you think " + this.stim.verb + " " + this.stim.single + "?\n";
         $(".query").html(query_prompt);
@@ -82,24 +91,8 @@ function make_slides(f) {
         exp.sliderPost = -1;
         $(".slider_number").html("---")
         this.stim.query = false;
-      },
-      present_page : function(){
-        if (this.page > 0) {
-          $(".chapterTitle").html('')
-        }
-
-        if (
-          (
-            (exp.condition == "single" && this.page == this.chapter_length - 1) ||
-            (exp.condition == "conjunction" && this.page == this.chapter_length)
-          )
-          && this.stim.query
-        ) {
-          this.present_question()
-        } else {
-          $(".storyText").html(this.stim.main_text[this.page]);
-        }
-
+        if (this.stim.condition == "single") { this.page -- }
+        // console.log(this.page)
       },
 
       init_sliders : function() {
@@ -113,35 +106,43 @@ function make_slides(f) {
       },
 
       button : function() {
-          this.page++;
-        // if (exp.sliderPost<0) {
-          // $(".err").show();
-        // } else {
-          // this.rt = Date.now() - this.startTime;
-          // this.log_responses();
+
+        if (exp.sliderPost == -1) {
+          $(".err").show();
+        } else {
+          if ((this.page == this.chapter_length - 1 )&& !this.stim.query) {this.page++}
+          // console.log(this.page)
+
           if (this.stim.query) {
-            this.present_page()
-          } else if (this.page >= this.chapter_length){
-              $(".storyText").html() == ""
-              _stream.apply(this)
+            this.page++;
+            this.present_page();
+          } else if (this.page == this.chapter_length){
+            $(".storyText").html() == ""
+            this.log_responses();
+            _stream.apply(this);
           } else {
+            this.page++
             // this.trial_num++;
             this.present_page()
           }
-
+        }
         // }
       },
      log_responses : function() {
-        // exp.data_trials.push({
-        //   "trial_type" : "implied_prevalence",
-        //   "trial_num": this.trial_num,
-        //   "response" : exp.sliderPost,
-        //   "rt":this.rt,
-        //   "property_type": this.stim.type,
-        //   "property": this.stim.property,
-        //   "category": this.stim.category//,
-        //   // "explanation": $("#followUpResponse").val()
-        // });
+       this.rt = Date.now() - this.startTime;
+        exp.data_trials.push({
+          "trial_type" : this.stim.type,
+          "condition": this.stim.condition,
+          "trial_num": this.trial_num,
+          "response" : exp.sliderPost,
+          "rt":this.rt,
+          "kind": this.stim.kind,
+          "verb": this.stim.verb,
+          "predicate": this.stim.single,
+          "chapter": this.stim.title
+          //,
+          // "explanation": $("#followUpResponse").val()
+        });
         // CHECK THAT THIS IS LAST TRIAL
         // if (this.trial_num == exp.stims.length){
         //
@@ -550,8 +551,40 @@ function init() {
       }
   })();
 
-  exp.condition = _.sample(["single", "conjunction"])
-  exp.condition = "single"
+  // exp.condition = _.sample(["single", "conjunction"])
+  // exp.condition = "conjunction"
+
+  exp.conditions = _.shuffle([
+    "single", "conjunction",
+    "single", "conjunction",
+    "single", "conjunction"
+  ])
+
+  for (i=0; i<stims_chapters.length; i++){
+    _.extend(
+      stims_chapters[i],
+      {condition: exp.conditions[i]}
+    )
+  }
+
+  // console.log(stims_chapters)
+
+
+  exp.stims = [
+    firstChapter,
+    distractor_chapters[0],
+    filler_chapters[0],
+    stims_chapters[0],
+    stims_chapters[1],
+    stims_chapters[2],
+    distractor_chapters[1],
+    filler_chapters[1],
+    stims_chapters[3],
+    stims_chapters[4],
+    distractor_chapters[2],
+    stims_chapters[5]
+  ]
+
 
   exp.numTrials = stim_properties.length;
 // console.log(stim_properties.length)
@@ -561,23 +594,21 @@ function init() {
 //
 // var properties_to_be_tested = _.shuffle(stim_properties).slice(0,exp.numTrials)
 
-exp.stims = stim_properties
 
 // _.map(_.zip(creatures, properties_to_be_tested),
 //   function(cp){
 //     return _.extend(cp[1], cp[0])
 //   })
 
-exp.stimscopy = exp.stims.slice(0);
+  exp.stimscopy = exp.stims.slice(0);
 
   exp.trials = [];
   exp.catch_trials = [];
   exp.data_trials = [];
 
-  exp.instructions = "elaborate_instructions";
   exp.structure=[
     "i0",
-    // "title_page",
+    "title_page",
     "main_chapters",
     // "implied_prevalence",
     // "conjunctive_prevalence",

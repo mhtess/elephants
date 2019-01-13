@@ -1,3 +1,182 @@
+var firstChapter =   {
+    title: "An introduction to Dax",
+    main_text: [
+      "Dax is a lot like Earth.  Like Earth it has seven continents, in similar locations, but instead of ",
+      " North America, South America, Africa, Europe, Asia, Australia,",
+      " and Antarctica, the continents are called Aga, Benli, Caro, Dodi, Ente, Fale, and Gomi.  ",
+      "Its climate is a lot like Earth's, too.  But the plants and animals of Dax are completely different."
+    ],
+    critical: false,
+    query: false,
+    type: "filler"
+    // kind: "aliens",
+    // verb: "love ",
+    // single: "Zorxon"
+  }
+
+var filler_chapters = [
+  {
+    title: "Blins",
+    main_text: [
+      "Blins are small creatures that have hollow bones and fly. They sing beautiful songs to attract mates",
+      "and distract their enemies when they attack."
+    ],
+    critical: false,
+    query: false,
+    type: "filler"//,
+  },
+  {
+    title: "Morseths",
+    main_text: [
+      "The morseth is animal that lives part of its life in the sea and part of its life on land.",
+      "Morseths come on land only to find mates and to bury their dead. Moserths build ",
+      "permanent structures called fendles for burying their dead",
+      "and fendles are usually made out of wood."
+    ],
+    critical: false,
+    query: false,
+    type: "filler"//,
+  }
+]
+
+var distractor_chapters = [
+  {
+    title: "Zorxon, overlord of Dax",
+    main_text: [
+      "Zorxon is the overlord of Dax.  Everyone loves Zorxon because she ",
+      "provides for all the aliens of Dax. However, Zorxon is now very old ",
+      "and she rarely makes public appearances anymore."
+    ],
+    query: true,
+    critical: false,
+    kind: "aliens",
+    verb: "love ",
+    single: "Zorxon",
+    type: "distractor",
+    condition: "single"
+  },
+  {
+    title: "Kazzes",
+    main_text: [
+      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the",
+      " springtime, but the fruit is poisonous to most animals. Only lorches can eat kazzes ",
+      " and do so quite frequently."
+    ],
+    critical: false,
+    query: true,
+    kind: "lorches",
+    verb: "eat ",
+    single: "kazzes",
+    type: "distractor",
+    condition: "single"
+  },
+  {
+    title: "Weather",
+    main_text: [
+      "The weather on Dax is very constant, not changing much from day to day. Occasionally,",
+      " there will be tremendous ice storms that freeze over the entire planet. These ice storms almost never ",
+      " result in permanent damage to the plants and animals on Dax."
+    ],
+    critical: false,
+    query: true,
+    kind: "ice storms on Dax",
+    verb: "result in permanent damage ",
+    single: "to the plants and animals on Dax",
+    type: "distractor",
+    condition: "conjunction"
+  },
+
+]
+
+
+var stims_chapters = [
+  {
+    title: "Krens",
+    main_text: [
+      "Krens are the most intelligent creature on Dax. They live on all",
+      "continents of Dax. Krens ascribe to various religions and have diverse customs. They pray in caboos",
+      "and daiths."
+    ],
+    query: true,
+    critical: true,
+    kind: "krens",
+    verb: "pray in ",
+    single: "caboos",
+    type: "critical"
+  },
+  {
+    title: "Glippets",
+    main_text: [
+      "Glippets are large creatures on Dax, quite intelligent, with a life-span of about sixty years.  They live in Caro ",
+      "and Este."
+    ],
+    query: true,
+    critical: true,
+    kind: "glippets",
+    verb: "live in ",
+    single: "Caro",
+    type: "critical"
+  },
+  {
+    title: "Mooks",
+    main_text: [
+      "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes  ",
+      "should be avoided as it can cause seizures in the observer. They hunt at the top of tall mountains ",
+      // "",
+      "and at the bottom of deep canyons."
+    ],
+    query: true,
+    critical: true,
+    kind: "mooks",
+    verb: "hunt ",
+    single: "at the tops of tall mountains",
+    type: "critical"
+  },
+  {
+    title: "Agriculture",
+    main_text: [
+      "On the continent of Benli, Krens grow many crops.",
+      "In the spring, they plant fujusi",
+      "and soroneeks."
+    ],
+    query: true,
+    critical: true,
+    kind: "krens",
+    verb: "plant ",
+    single: "fujusi",
+    type: "critical"
+  },
+  {
+    title: "Fengnors",
+    main_text: [
+      "Fengnors are nocturnal, smaller creatures. They often hide under the leaves ",
+      "of trees to avoid being seen by predators. They build nests in gloors",
+      "and droops."
+    ],
+    query: true,
+    critical: true,
+    kind: "fengnors",
+    verb: "build nests in ",
+    single: "gloors",
+    type: "critical"
+  },
+  {
+    title: "Herding and fishing",
+    main_text: [
+      "Like most creatures on Dax, Krens eat other creatures. Stups are large creatures",
+      "that roam around large swaths of land. Krens are stup-herders",
+      // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
+      "and fishermen."
+    ],
+    query: true,
+    critical: true,
+    kind: "krens",
+    verb: "are ",
+    single: "stup-herders",
+    type: "critical"
+  }
+]
+
 var stim_properties = [
   {
     verb: "live in",
@@ -5,66 +184,66 @@ var stim_properties = [
     continuation: "Asia",
     kind: "glippets",
   },
-  // {
-  //   verb: "build nests in",
-  //   single: "trees",
-  //   continuation: "caves",
-  //   kind: "lorches"
-  // },
-  // {
-  //   verb: "",
-  //   single: "lay eggs",
-  //   continuation: "give live birth",
-  //   kind: "wugs"
-  // },
-  // {
-  //   verb: "swim in",
-  //   single: "lakes",
-  //   continuation: "rivers",
-  //   kind: "morseths",
-  // },
-  // {
-  //   verb: "get",
-  //   single: "cancer",
-  //   continuation: "rabies",
-  //   kind: "reesles"
-  // },
-  // {
-  //   verb: "pray in",
-  //   single: "synogogues",
-  //   continuation: "mosques",
-  //   kind: "residents of the town of Kiryat Lezion"
-  // },
-  // {
-  //   verb: "try",
-  //   single: "criminal cases",
-  //   continuation: "civil cases",
-  //   kind: "lawyers in the law firm Escondido"
-  // },
-  // {
-  //   verb: "grow",
-  //   single: "corn",
-  //   continuation: "soy",
-  //   kind: "farmers in the town of Boone"
-  // },
-  // {
-  //   verb: "are",
-  //   single: "fisherman",
-  //   continuation: "reindeer herders",
-  //   kind: "the indigenous people of Scandinavia"
-  // },
-  // {
-  //   verb: "teach",
-  //   single: "science",
-  //   continuation: "history",
-  //   kind: "instructors at the governor's school"
-  // },
-  // {
-  //   verb: "live in",
-  //   single: "houses",
-  //   continuation: "apartment buildings",
-  //   kind: "residents of the town of Tumbling Rapids"
-  // }
+  {
+    verb: "build nests in",
+    single: "trees",
+    continuation: "caves",
+    kind: "lorches"
+  },
+  {
+    verb: "",
+    single: "lay eggs",
+    continuation: "give live birth",
+    kind: "wugs"
+  },
+  {
+    verb: "swim in",
+    single: "lakes",
+    continuation: "rivers",
+    kind: "morseths",
+  },
+  {
+    verb: "get",
+    single: "cancer",
+    continuation: "rabies",
+    kind: "reesles"
+  },
+  {
+    verb: "pray in",
+    single: "synogogues",
+    continuation: "mosques",
+    kind: "residents of the town of Kiryat Lezion"
+  },
+  {
+    verb: "try",
+    single: "criminal cases",
+    continuation: "civil cases",
+    kind: "lawyers in the law firm Escondido"
+  },
+  {
+    verb: "grow",
+    single: "corn",
+    continuation: "soy",
+    kind: "farmers in the town of Boone"
+  },
+  {
+    verb: "are",
+    single: "fisherman",
+    continuation: "reindeer herders",
+    kind: "the indigenous people of Scandinavia"
+  },
+  {
+    verb: "teach",
+    single: "science",
+    continuation: "history",
+    kind: "instructors at the governor's school"
+  },
+  {
+    verb: "live in",
+    single: "houses",
+    continuation: "apartment buildings",
+    kind: "residents of the town of Tumbling Rapids"
+  }
 ]
 
 // "people pray in churches, synogogues, and mosques"
