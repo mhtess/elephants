@@ -66,7 +66,7 @@ workerid.pass <- df.mmry %>% filter(n_correct >= 7) %>% pull(workerid)
 ggplot(df.mmry, aes( x = n_correct ))+
   geom_bar()+
   xlab("n correctly recognized (or correctly rejected)")+
-  scale_x_continuous(limits = c(0, 10), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
   ylab("n participants")
 
 df.mmry %>%
