@@ -1,10 +1,10 @@
 var firstChapter =   {
     title: "An introduction to Dax",
     main_text: [
-      "Dax is a lot like Earth.  Like Earth it has seven continents, in similar locations, but instead of ",
-      " North America, South America, Africa, Europe, Asia, Australia,",
-      " and Antarctica, the continents are called Aga, Benli, Caro, Dodi, Ente, Fale, and Gomi.  ",
-      "Its climate is a lot like Earth's, too.  But the plants and animals of Dax are completely different."
+      "Dax is a lot like Earth.  Like Earth it has seven continents, in similar locations, but instead of North ",
+      " America, South America, Africa, Europe, Asia, Australia, and Antarctica, the continents are  ",
+      " called  Aga,  Benli, Caro, Dodi, Ente, Fale, and Gomi. Its climate is a lot like Earth's, too. But the",
+      "  plants and animals of Dax are completely different."
     ],
     critical: false,
     query: false,
@@ -28,9 +28,9 @@ var filler_chapters = [
   {
     title: "Morseths",
     main_text: [
-      "The morseth is animal that lives part of its life in the sea and part of its life on land.",
-      "Morseths come on land only to find mates and to bury their dead. Moserths build ",
-      "permanent structures called fendles for burying their dead",
+      "The morseth is an animal that lives part of its life in the sea and part of its life on land. Morseths come",
+      " on land only to find mates and to bury their dead. Moserths build ",
+      "permanent structures called fendles in order to bury their dead kin",
       "and fendles are usually made out of wood."
     ],
     critical: false,
@@ -58,8 +58,8 @@ var distractor_chapters = [
   {
     title: "Kazzes",
     main_text: [
-      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the",
-      " springtime, but the fruit is poisonous to most animals. Only lorches can eat kazzes ",
+      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the",
+      "  fruit is poisonous to most animals. Only lorches can eat kazzes ",
       " and do so quite frequently."
     ],
     critical: false,
@@ -73,9 +73,9 @@ var distractor_chapters = [
   {
     title: "Weather",
     main_text: [
-      "The weather on Dax is very constant, not changing much from day to day. Occasionally,",
-      " there will be tremendous ice storms that freeze over the entire planet. These ice storms almost never ",
-      " result in permanent damage to the plants and animals on Dax."
+      "The weather on Dax is very constant, not changing much from day to day. Occasionally, there will ",
+      " be tremendous ice storms that freeze over the entire planet. These ice storms almost never last long ",
+      " or result in permanent damage to the plants and animals on Dax."
     ],
     critical: false,
     query: true,
@@ -93,7 +93,7 @@ var stims_chapters = [
   {
     title: "Krens",
     main_text: [
-      "Krens are the most intelligent creature on Dax. They live on all",
+      "Krens are the most intelligent creatures on Dax. They live on all",
       "continents of Dax. Krens ascribe to various religions and have diverse customs. They pray in caboos",
       "and daiths."
     ],
@@ -107,7 +107,7 @@ var stims_chapters = [
   {
     title: "Glippets",
     main_text: [
-      "Glippets are large creatures on Dax, quite intelligent, with a life-span of about sixty years.  They live in Caro ",
+      "Glippets are large creatures, quite intelligent, with a life-span of about sixty years.  They live in Caro ",
       "and Este."
     ],
     query: true,
@@ -120,8 +120,8 @@ var stims_chapters = [
   {
     title: "Mooks",
     main_text: [
-      "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes  ",
-      "should be avoided as it can cause seizures in the observer. They hunt at the top of tall mountains ",
+      "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes should ",
+      " be avoided because it can cause seizures in the observer. They hunt at the top of tall mountains ",
       // "",
       "and at the bottom of deep canyons."
     ],
@@ -129,14 +129,14 @@ var stims_chapters = [
     critical: true,
     kind: "mooks",
     verb: "hunt ",
-    single: "at the tops of tall mountains",
+    single: "at the top of tall mountains",
     type: "critical"
   },
   {
     title: "Agriculture",
     main_text: [
-      "On the continent of Benli, Krens grow many crops.",
-      "In the spring, they plant fujusi",
+      "On the continent of Benli, Krens grow and harvest many crops.",
+      "In the fall, they will harvest. In the springtime, they plant fujusi",
       "and soroneeks."
     ],
     query: true,
@@ -149,8 +149,8 @@ var stims_chapters = [
   {
     title: "Fengnors",
     main_text: [
-      "Fengnors are nocturnal, smaller creatures. They often hide under the leaves ",
-      "of trees to avoid being seen by predators. They build nests in gloors",
+      "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid ",
+      "being seen by larger predators. They build their nests in gloors",
       "and droops."
     ],
     query: true,
@@ -163,8 +163,8 @@ var stims_chapters = [
   {
     title: "Herding and fishing",
     main_text: [
-      "Like most creatures on Dax, Krens eat other creatures. Stups are large creatures",
-      "that roam around large swaths of land. Krens are stup-herders",
+      "Like most creatures on Dax, Krens eat other creatures. Stups are four-legged creatures with large antlers",
+      "and roam large areas of the land Aga. Krens are stup-herders",
       // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
       "and fishermen."
     ],

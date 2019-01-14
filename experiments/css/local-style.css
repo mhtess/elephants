@@ -9,6 +9,13 @@
   font-size: 24px;
 }
 
+.query{
+	font-size:24px
+}
+
+.slider_instruct{
+	font-size:16px
+}
 #title_page {
   background-color: #f9e4d1;
 }
@@ -20,7 +27,9 @@
 font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
   font-size: 50px;
 	word-wrap: break-word;
-	text-align: left;
+	text-align: justify;
+	text-justify: inter-word;
+	text-align-last: justify;
 	margin-left: 40px;
 	margin-right: 40px;
 }

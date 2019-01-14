@@ -17,6 +17,12 @@ function make_slides(f) {
     }
   });
 
+  slides.the_end = slide({
+    name : "the_end",
+    button : function() {
+      exp.go(); //use exp.go() if and only if there is no "present" data.
+    }
+  });
 
   slides.main_chapters = slide({
       name: "main_chapters",
@@ -26,12 +32,13 @@ function make_slides(f) {
       //this gets run only at the beginning of the chapter
       present_handle : function(stim) {
         $(".err").hide()
-
+        $(".slider_instruct").hide()
         $(".query").hide()
         $(".slider_number").hide()
         $(".slider_table").hide()
         this.page = 0
         exp.sliderPost = -99;
+        $(".storyText").css("text-align-last", "justify")
 
         $(".chapterTitle").html("<u>Chapter "+ this.trial_num +": "+stim.title+"</u>")
 
@@ -46,6 +53,7 @@ function make_slides(f) {
       // this presents a page of a chapter
       present_page : function(){
         $(".err").hide()
+        $(".slider_instruct").hide()
         $(".query").hide()
         $(".slider_number").hide()
         $(".slider_table").hide()
@@ -64,23 +72,22 @@ function make_slides(f) {
         // if this.stim.critical {
           if (
             this.page == this.last_page
-              // (
-              //   (exp.condition == "single" && this.page == this.chapter_length - 1) ||
-              //   (exp.condition == "conjunction" && this.page == this.chapter_length)
-              // )
               && this.stim.query
             ) {
               this.present_question()
-            } else {
-              $(".storyText").html(this.stim.main_text[this.page]);
+          } else {
+            if (this.page == this.chapter_length - 1) {
+              console.log('align last left')
+              $(".storyText").css("text-align-last", "left")
             }
-        // } else {
-        //
-        // }
+            $(".storyText").html(this.stim.main_text[this.page]);
+          }
       },
 
       // this gets run on pages where we ask questions
       present_question: function(){
+        $(".slider_instruct").show()
+
         var query_prompt = "<strong>Out of all "  + this.stim.kind + "</strong>, what percentage do you think " + this.stim.verb + " " + this.stim.single + "?\n";
         $(".query").html(query_prompt);
         $(".storyText").html('');
@@ -169,15 +176,21 @@ function make_slides(f) {
   slides.memory_check = slide({
     name : "memory_check",
     start: function() {
-
-     this.tested_properties = _.shuffle(_.pluck(exp.stims, "property")).slice(0, 5)
+    $(".err").hide()
+     this.tested_properties = [
+       "Krens are stup-herders and fishermen",
+       "Glippets live in Caro and Este",
+       "Krens pray in caboos and daiths",
+       "Ice storms don't result in permanent damage to the plants and animals on Dax",
+       "Everyone loves Zorxon"
+     ]
 
      this.catch_properties = [
-       "have long legs",
-       "have gold spots",
-       "have infected scales",
-       "can see at night",
-       "eat plants"
+       "Lorches have long legs and breathe underwater",
+       "Taifles have gold spots that are sticky",
+       "Dorbs have infected, yellow scales ",
+       "Cranoor is the kind of all beings",
+       "Kweps eat plants"
      ]
 
      this.check_properties = _.shuffle(_.flatten([this.tested_properties, this.catch_properties]))
@@ -229,6 +242,11 @@ function make_slides(f) {
           correct: (tested_on == response) ? 1 : 0
         })
       }
+
+      exp.catch_trials.push({
+        condition: "explanation",
+        check_index: $("#explanation").val()
+      })
 
       exp.go(); //use exp.go() if and only if there is no "present" data.
     }
@@ -610,11 +628,8 @@ function init() {
     "i0",
     "title_page",
     "main_chapters",
-    // "implied_prevalence",
-    // "conjunctive_prevalence",
-    // "memory_check",
-    // "explain_instructions",
-    // "explain_responses",
+    "the_end",
+    "memory_check",
     'subj_info',
     'thanks'
   ];
