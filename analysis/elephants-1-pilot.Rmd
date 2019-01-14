@@ -1,0 +1,207 @@
+---
+title: "elephants-1-pilot"
+author: "MH Tessler"
+date: "1/14/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(viridis)
+library(tidyboot)
+theme_set(theme_few())
+project.path <- "~/projects/elephants/"
+expt.prefix <- "elephants-1"
+data.path <- paste("mturk", expt.prefix, sep = "/")
+```
+
+### Subject information
+
+```{r}
+df.subj <- read_csv(
+  paste(project.path, data.path, "/", 
+        expt.prefix, "-subject_information.csv", sep = "")
+  ) %>%
+  mutate(language = gsub("\"", "", language),
+         enjoyment = gsub("\"", "", enjoyment),
+         age = gsub("\"", "", age),
+         gender = gsub("\"", "", gender),
+         problems = gsub("\"", "", problems),
+         comments = gsub("\"", "", comments))
+
+df.subj %>%
+  select(workerid, language, enjoyment, age, gender, problems, comments) %>%
+  kable(.)
+```
+
+## Attention check 
+
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+
+### Memory check
+
+```{r}
+df.attn <- read_csv(
+  paste(project.path, data.path, "/", 
+        expt.prefix, "-catch_trials.csv", sep = "")
+  ) %>%
+  mutate(property = gsub("\"", "", property))
+
+# memory check data
+df.mmry <- df.attn %>%
+  filter(correct != -1) %>% # remove explanations
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`, 
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits) 
+
+workerid.pass <- df.mmry %>% filter(n_correct >= 7) %>% pull(workerid)
+
+ggplot(df.mmry, aes( x = n_correct ))+
+  geom_bar()+
+  xlab("n correctly recognized (or correctly rejected)")+
+  scale_x_continuous(limits = c(0, 10), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  ylab("n participants")
+
+df.mmry %>%
+  kable(.)
+```
+
+### Explanations of task
+
+```{r}
+df.expln <- df.attn %>%
+  filter(correct == -1) 
+
+
+df.expln %>%
+  select(workerid, property) %>%
+  rename(explanation = property) %>%
+  kable(.)
+```
+
+## Trial data
+
+Removing participants who got fewer than 7 correct on memory check.
+
+```{r}
+df.trials <- left_join(
+    read_csv(
+    paste(project.path, data.path, "/", 
+          expt.prefix, "-trials.csv", sep = "")
+    ) %>% 
+    mutate(
+      page_type = gsub("\"", "", page_type),
+      trial_type = gsub("\"", "", trial_type),
+      kind = gsub("\"", "", kind),
+      generic = gsub("\"", "", generic),
+      page_content = gsub("\"", "", page_content),
+      predicate = gsub("\"", "", predicate),
+      verb = gsub("\"", "", verb),
+      chapter = gsub("\"", "", chapter),
+      condition = gsub("\"", "", condition),
+      memory_pass = workerid %in% workerid.pass
+      ),
+    df.mmry %>% select(workerid, n_correct)
+)
+
+df.query <- df.trials %>%
+  filter(page_type == "query")
+```
+
+## participant responses
+ 
+collapsed across trials
+
+- fill = number of correct responses on the memory check (out of 10)
+- facet = particiapnts
+
+```{r}
+df.query  %>%
+  ggplot(., aes( x = response, fill = n_correct ))+
+  geom_histogram(color = 'black')+
+  facet_wrap(~workerid)+
+  scale_fill_viridis()+
+  scale_x_continuous(breaks = c(0, 0.5, 1))
+```
+
+## filler trials
+
+two of these used quantifiers (and thus we have strong idea about literal meaning)
+- "all aliens love Zorxon"
+- "no storms (or few) on Dax result in permanent damage..."
+
+other two are generics about singular properties
+
+```{r}
+df.query.dstrct <- df.query %>%
+  filter(memory_pass) %>%
+  filter(trial_type == "distractor") %>%
+  select(workerid, condition, chapter_num, rt, trial_type, generic, page_type, response)
+
+df.query.dstrct  %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~generic + condition)
+```
+
+## critical trials (collapsed across item)
+
+```{r}
+df.query.critical <- df.query %>%
+  filter(memory_pass) %>%
+  select(workerid, condition, chapter_num, rt, 
+         trial_type, generic, page_type, response, memory_pass) %>%
+  filter(trial_type == "critical")
+
+df.query.critical %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~condition)
+```
+
+```{r fig.width = 4, fig.height = 3}
+df.bs.query.critical <- df.query.critical %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = response)
+
+df.bs.query.critical %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia"))) %>%
+  ggplot(., aes( x = "manipulation", fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()
+```
+
+### By-item averages
+
+```{r}
+df.bs.crit.item <- df.query.critical %>%
+  filter(memory_pass) %>%
+  group_by(condition, generic, chapter_num) %>%
+  tidyboot_mean(column = response)
+
+df.bs.crit.item %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia")),
+         generic = factor(generic, levels=unique(generic[order(chapter_num)]), ordered=TRUE)) %>%
+  ggplot(., aes( x = generic, fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
+  xlab("item, in order of presentation from L to R")
+```
+
+
