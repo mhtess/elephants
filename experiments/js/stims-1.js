@@ -8,10 +8,11 @@ var firstChapter =   {
     ],
     critical: false,
     query: false,
-    type: "filler"
-    // kind: "aliens",
-    // verb: "love ",
-    // single: "Zorxon"
+    type: "filler",
+    kind: "NA",
+    verb: "NA",
+    single: "NA",
+    condition: "filler"
   }
 
 var filler_chapters = [
@@ -23,7 +24,11 @@ var filler_chapters = [
     ],
     critical: false,
     query: false,
-    type: "filler"//,
+    type: "filler",
+    kind: "NA",
+    verb: "NA",
+    single: "NA",
+    condition: "filler"
   },
   {
     title: "Morseths",
@@ -35,7 +40,11 @@ var filler_chapters = [
     ],
     critical: false,
     query: false,
-    type: "filler"//,
+    type: "filler",
+    kind: "NA",
+    verb: "NA",
+    single: "NA",
+    condition: "filler"
   }
 ]
 
@@ -45,7 +54,7 @@ var distractor_chapters = [
     main_text: [
       "Zorxon is the overlord of Dax.  Everyone loves Zorxon because she ",
       "provides for all the aliens of Dax. However, Zorxon is now very old ",
-      "and she rarely makes public appearances anymore."
+      "and she rarely makes public appearances anymore. Still, she is very influential."
     ],
     query: true,
     critical: false,
@@ -59,14 +68,30 @@ var distractor_chapters = [
     title: "Kazzes",
     main_text: [
       "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the",
-      "  fruit is poisonous to most animals. Only lorches can eat kazzes ",
-      " and do so quite frequently."
+      "  fruit is poisonous to most other animals. Only lorches can eat kazzes ",
+      " and do so quite frequently. Kazzes can be very tasty."
     ],
     critical: false,
     query: true,
     kind: "lorches",
     verb: "eat ",
     single: "kazzes",
+    type: "distractor",
+    condition: "single"
+  },
+  {
+    title: "Plovs",
+    main_text: [
+      "Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent",
+      " years have migrated to continent Caro. When they migrated to Caro, they intruded upon territory of",
+      "  other creatures and struggled to find a new home. Now, they live quite happily near the water",
+      " and very seldom are attacked by other creatures."
+    ],
+    critical: false,
+    query: true,
+    kind: "plovs",
+    verb: "live ",
+    single: "near the water",
     type: "distractor",
     condition: "single"
   },
@@ -95,7 +120,7 @@ var stims_chapters = [
     main_text: [
       "Krens are the most intelligent creatures on Dax. They live on all",
       "continents of Dax. Krens ascribe to various religions and have diverse customs. They pray in caboos",
-      "and daiths."
+      "and daiths. All krens have the same calendar and celebrate the same new year."
     ],
     query: true,
     critical: true,
@@ -108,7 +133,7 @@ var stims_chapters = [
     title: "Glippets",
     main_text: [
       "Glippets are large creatures, quite intelligent, with a life-span of about sixty years.  They live in Caro ",
-      "and Este."
+      "and Este. Glippets rarely attack other creatures, often being very content eating plants."
     ],
     query: true,
     critical: true,
@@ -123,7 +148,7 @@ var stims_chapters = [
       "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes should ",
       " be avoided because it can cause seizures in the observer. They hunt at the top of tall mountains ",
       // "",
-      "and at the bottom of deep canyons."
+      "and at the bottom of deep canyons. They stalk their prey, sometimes waiting for days to attack."
     ],
     query: true,
     critical: true,
@@ -135,9 +160,9 @@ var stims_chapters = [
   {
     title: "Agriculture",
     main_text: [
-      "On the continent of Benli, Krens grow and harvest many crops.",
-      "In the fall, they will harvest. In the springtime, they plant fujusi",
-      "and soroneeks."
+      "The soil on the continent of Benli is very fertile, and Krens have learned to grow and harvest many crops.",
+      "Their farms are very big, often stretching miles in every direction. In springtime, Krens plant fujusi",
+      "and soroneeks. In the fall, they harvest and communities will come together to celebrate."
     ],
     query: true,
     critical: true,
@@ -150,23 +175,23 @@ var stims_chapters = [
     title: "Fengnors",
     main_text: [
       "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid ",
-      "being seen by larger predators. They build their nests in gloors",
-      "and droops."
+      "being seen by larger predators. They scrape the bark off trees to eat. They build their nests in gluers",
+      "and droops. Baby fengnors stay in the nest until they are mature enough to scrape their own bark."
     ],
     query: true,
     critical: true,
     kind: "fengnors",
     verb: "build nests in ",
-    single: "gloors",
+    single: "gluers",
     type: "critical"
   },
   {
     title: "Herding and fishing",
     main_text: [
-      "Like most creatures on Dax, Krens eat other creatures. Stups are four-legged creatures with large antlers",
-      "and roam large areas of the land Aga. Krens are stup-herders",
+      "Like most creatures on Dax, Krens eat other creatures. The seas of Dax are full of fish. On the land, animals",
+      "like stups are a resource. Stups are four-legged creatures with large antlers. Krens are stup-herders",
       // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
-      "and fishermen."
+      "and fishermen. "
     ],
     query: true,
     critical: true,

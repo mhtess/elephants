@@ -27,12 +27,16 @@
 font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
   font-size: 50px;
 	word-wrap: break-word;
-	text-align: justify;
 	text-justify: inter-word;
 	text-align-last: justify;
+	text-align: justify;
 	margin-left: 40px;
 	margin-right: 40px;
 }
+
+/*
+
+*/
 
 .bookTitle{
 	font: 400 100px/1.2 'Merienda One', Helvetica, sans-serif;

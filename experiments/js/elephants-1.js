@@ -119,13 +119,15 @@ function make_slides(f) {
         } else {
           if ((this.page == this.chapter_length - 1 )&& !this.stim.query) {this.page++}
           // console.log(this.page)
-
+          this.log_responses();
+          this.startTime = Date.now();
           if (this.stim.query) {
             this.page++;
             this.present_page();
           } else if (this.page == this.chapter_length){
             $(".storyText").html() == ""
-            this.log_responses();
+            // this.log_responses();
+            this.trial_num++;
             _stream.apply(this);
           } else {
             this.page++
@@ -137,19 +139,27 @@ function make_slides(f) {
       },
      log_responses : function() {
        this.rt = Date.now() - this.startTime;
+
         exp.data_trials.push({
           "trial_type" : this.stim.type,
+          "page_type": $(".storyText").html() == "" ? "query" : "text",
           "condition": this.stim.condition,
-          "trial_num": this.trial_num,
+          "chapter_num": this.trial_num,
+          "page_num": this.page,
+          "page_content": $(".storyText").html(),
           "response" : exp.sliderPost,
           "rt":this.rt,
           "kind": this.stim.kind,
           "verb": this.stim.verb,
           "predicate": this.stim.single,
+          "generic": this.stim.kind + " " + this.stim.verb + " " + this.stim.single,
           "chapter": this.stim.title
           //,
           // "explanation": $("#followUpResponse").val()
         });
+
+        exp.sliderPost >= 0 ? exp.sliderPost = -99 : null
+
         // CHECK THAT THIS IS LAST TRIAL
         // if (this.trial_num == exp.stims.length){
         //
@@ -160,18 +170,8 @@ function make_slides(f) {
         //   // set stimuli to be explained,
         //   slides.explain_responses.present = _.shuffle(minorityInterpretations).slice(0, 5)
         // }
-        this.trial_num++;
       }
     });
-
-
-  slides.explain_instructions = slide({
-    name : "explain_instructions",
-    button : function() {
-      exp.go(); //use exp.go() if and only if there is no "present" data.
-    }
-  });
-
 
   slides.memory_check = slide({
     name : "memory_check",
@@ -245,275 +245,15 @@ function make_slides(f) {
 
       exp.catch_trials.push({
         condition: "explanation",
-        check_index: $("#explanation").val()
+        condition: "memory_check",
+        check_index: -1,
+        property: $("#explanation").val(),
+        tested_on: -1,
+        response: -1,
+        correct: -1
       })
 
       exp.go(); //use exp.go() if and only if there is no "present" data.
-    }
-  });
-
-  slides.implied_prevalence = slide({
-    name: "implied_prevalence",
-
-    // present : _.shuffle(_.range(numTrials)),
-    trial_num : 1,
-    present : exp.stims,
-    //this gets run only at the beginning of the block
-    present_handle : function(stim) {
-      this.startTime = Date.now();
-
-      $(".err").hide();
-      // $(".followUpQ").hide();
-      // $("#followUpResponse").val('');
-      this.followUp = true;
-
-      this.stim = stim
-      // console.log(this.stim)
-
-      this.evidence_prompt = 'Fact: ' + utils.upperCaseFirst(this.stim.kind) + " " + this.stim.verb + " " + this.stim.single + '.'
-      $(".evidence").html(this.evidence_prompt);
-
-      // var query_prompt = "Out of 100 "  + this.stim.category + ", how many do you think " + this.stim.property + "?\n";
-      var query_prompt = "<strong>Out of all "  + this.stim.kind + "</strong>, what percentage do you think " + this.stim.verb + " " + this.stim.single + "?\n";
-      $(".query").html(query_prompt);
-
-      this.init_sliders();
-      // exp.sliderPost = [];
-      exp.sliderPost = -1;
-      $(".slider_number").html("---")
-
-    },
-
-    init_sliders : function() {
-        utils.make_slider("#single_slider", this.make_slider_callback());
-      // utils.make_slider("#single_slider", function(event, ui) {
-      //   exp.sliderPost = ui.value;
-      // });
-    },
-    make_slider_callback : function() {
-      return function(event, ui) {
-        exp.sliderPost = ui.value;
-        $(".slider_number").html(Math.round(exp.sliderPost*100) + "%")
-      };
-    },
-
-    button : function() {
-      if (exp.sliderPost<0) {
-        $(".err").show();
-      // } else if ((exp.sliderPost <= 0.25) & (this.followUp)){
-      //   $(".followUpQ").show()
-      //   this.followUp = false;
-      } else {
-        this.rt = Date.now() - this.startTime;
-        this.log_responses();
-        _stream.apply(this);
-      }
-    },
-   log_responses : function() {
-      exp.data_trials.push({
-        "trial_type" : "implied_prevalence",
-        "trial_num": this.trial_num,
-        "response" : exp.sliderPost,
-        "rt":this.rt,
-        "property_type": this.stim.type,
-        "property": this.stim.property,
-        "category": this.stim.category//,
-        // "explanation": $("#followUpResponse").val()
-      });
-      // CHECK THAT THIS IS LAST TRIAL
-      if (this.trial_num == exp.stims.length){
-
-        minorityInterpretations = _.filter(exp.data_trials, function(x){
-          return x.response < 0.50
-        })
-
-        // set stimuli to be explained,
-        slides.explain_responses.present = _.shuffle(minorityInterpretations).slice(0, 5)
-      }
-      this.trial_num++;
-    }
-  });
-
-  slides.conjunctive_prevalence = slide({
-    name: "conjunctive_prevalence",
-
-    // present : _.shuffle(_.range(numTrials)),
-    trial_num : 1,
-    present : exp.stimscopy,
-    //this gets run only at the beginning of the block
-    present_handle : function(stim) {
-      this.startTime = Date.now();
-
-      $(".err").hide();
-      // $(".followUpQ").hide();
-      // $("#followUpResponse").val('');
-      this.followUp = true;
-      this.stim = stim
-      // console.log(this.stim)
-
-      this.evidence_prompt = 'We recently learned more about ' + this.stim.kind + '.<br>'
-      this.evidence_prompt += 'Now we know: ' + utils.upperCaseFirst(this.stim.kind) +
-      " " + this.stim.verb + " " + this.stim.single + ' and ' + this.stim.continuation + '.'
-
-      $(".evidence").html(this.evidence_prompt);
-
-      // var query_prompt = "Out of 100 "  + this.stim.category + ", how many do you think " + this.stim.property + "?\n";
-      var query_prompt = "<strong>Out of all "  + this.stim.kind + "</strong>, what percentage do you think..."
-
-      var properties = [
-        this.stim.verb + " " + this.stim.single,
-        this.stim.verb + " " + this.stim.continuation,
-        this.stim.verb + " " + "both " + this.stim.single + " and " + this.stim.continuation
-      ]
-
-      $(".slider_row").remove();
-      for (var i=0; i<3; i++) {
-        var sentence = properties[i];
-        $("#multi_slider_table").append('<tr class="slider_row"><td class="slider_target" id="sentence' + i + '">' + sentence + '</td><td colspan="2"><div id="single_slider' + i + '" class="slider">-------[ ]--------</div></td></tr>');
-        utils.match_row_height("#multi_slider_table", ".slider_target");
-        this.init_sliders(i)
-        // utils.make_slider("#single_slider" + i,  this.make_slider_callback(i))
-      }
-
-      $(".query").html(query_prompt);
-
-      this.init_sliders();
-      exp.sliderPost = [];
-      // exp.sliderPost = -1;
-      // $(".slider_number").html("---")
-
-    },
-
-    init_sliders : function(i) {
-      utils.make_slider("#single_slider" + i, this.make_slider_callback(i));
-    },
-
-    make_slider_callback : function(i) {
-      return function(event, ui) {
-          exp.sliderPost[i] = ui.value
-      };
-    },
-
-
-    button : function() {
-      if (exp.sliderPost<0) {
-        $(".err").show();
-      // } else if ((exp.sliderPost <= 0.25) & (this.followUp)){
-      //   $(".followUpQ").show()
-      //   this.followUp = false;
-      } else {
-        this.rt = Date.now() - this.startTime;
-        this.log_responses();
-        _stream.apply(this);
-      }
-    },
-   log_responses : function() {
-      exp.data_trials.push({
-        "trial_type" : "implied_prevalence",
-        "trial_num": this.trial_num,
-        "response" : exp.sliderPost,
-        "rt":this.rt,
-        "property_type": this.stim.type,
-        "property": this.stim.property,
-        "category": this.stim.category//,
-        // "explanation": $("#followUpResponse").val()
-      });
-      // CHECK THAT THIS IS LAST TRIAL
-      if (this.trial_num == exp.stims.length){
-
-        minorityInterpretations = _.filter(exp.data_trials, function(x){
-          return x.response < 0.50
-        })
-
-        // set stimuli to be explained,
-        slides.explain_responses.present = _.shuffle(minorityInterpretations).slice(0, 5)
-      }
-      this.trial_num++;
-    }
-  });
-
-
-  slides.explain_responses = slide({
-    name: "explain_responses",
-
-    // present : _.shuffle(_.range(numTrials)),
-    trial_num : 1,
-    present : [],
-    //this gets run only at the beginning of the block
-    present_handle : function(stim) {
-      this.startTime = Date.now();
-
-      $(".err").hide();
-      $(".secondResponse").hide();
-      $("#followUpResponse").val('');
-
-      this.stim = stim
-
-      // var query_prompt = "Out of 100 "  + this.stim.category + ", how many do you think " + this.stim.property + "?\n";
-      var query_prompt = "Out of all of the "  + this.stim.category + " on the planet, what percentage do you think " + this.stim.property + "?\n";
-
-      this.evidence_prompt = utils.upperCaseFirst(this.stim.category) + " " + this.stim.property + "."
-
-      $(".evidence").html("Earlier you learned: " + this.evidence_prompt);
-      $(".query").html("You reported the following percentage (out of all of the " + this.stim.category + " on the planet), you thought " + this.stim.property + "." );
-
-      this.init_sliders();
-      exp.sliderPost = -1;
-
-      $(".slider_number").html(Math.round(stim.response*100) + "%")
-
-
-      var label = "#single_slider1";
-      $(label+ ' .ui-slider-handle').show();
-      $(label).slider({value:stim.response});
-      $(label).css({"background":"#99D6EB"});
-      $(label + ' .ui-slider-handle').css({
-        "background":"#667D94",
-        "border-color": "#001F29"
-      })
-      $(label).unbind("mousedown");
-
-      exp.sliderPost = -1;
-      $("#second_number").html("---")
-    },
-
-    init_sliders : function() {
-        utils.make_slider("#single_slider1")
-        utils.make_slider("#single_slider2", this.make_slider_callback());
-    },
-
-    make_slider_callback : function() {
-      return function(event, ui) {
-        exp.sliderPost = ui.value;
-        $("#second_number").html(Math.round(exp.sliderPost*100) + "%")
-      };
-    },
-
-    button : function() {
-      if ($("#followUpResponse").val() == "") {
-        $(".err").show();
-      } else if (exp.sliderPost<0) {
-        $(".secondResponse").show();
-        exp.sliderPost = this.stim.response;
-      } else {
-        this.rt = Date.now() - this.startTime;
-        this.log_responses();
-        _stream.apply(this);
-      }
-    },
-   log_responses : function() {
-      exp.data_trials.push({
-        "trial_type" : "explain_responses",
-        "trial_num": this.trial_num,
-        "original_response" : this.stim.response,
-        "response" : exp.sliderPost,
-        "rt":this.rt,
-        "property_type": this.stim.property_type,
-        "property": this.stim.property,
-        "category": this.stim.category,
-        "explanation": $("#followUpResponse").val()
-      });
-      this.trial_num++;
     }
   });
 
@@ -561,7 +301,7 @@ function init() {
 
   repeatWorker = false;
   (function(){
-      var ut_id = "mht-genint-20180416";
+      var ut_id = "mht-eleph-20190114";
       if (UTWorkerLimitReached(ut_id)) {
         $('.slide').empty();
         repeatWorker = true;
@@ -591,15 +331,16 @@ function init() {
   exp.stims = [
     firstChapter,
     distractor_chapters[0],
-    filler_chapters[0],
     stims_chapters[0],
     stims_chapters[1],
-    stims_chapters[2],
+    filler_chapters[0],
     distractor_chapters[1],
-    filler_chapters[1],
+    stims_chapters[2],
     stims_chapters[3],
-    stims_chapters[4],
+    filler_chapters[1],
     distractor_chapters[2],
+    stims_chapters[4],
+    distractor_chapters[3],
     stims_chapters[5]
   ]
 
