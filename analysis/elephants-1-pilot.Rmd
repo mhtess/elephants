@@ -5,6 +5,8 @@ date: "1/14/2019"
 output: github_document
 ---
 
+[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-1.html)
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
 library(tidyverse)
@@ -134,6 +136,7 @@ df.query  %>%
 ## filler trials
 
 two of these used quantifiers (and thus we have strong idea about literal meaning)
+
 - "all aliens love Zorxon"
 - "no storms (or few) on Dax result in permanent damage..."
 
@@ -165,6 +168,8 @@ df.query.critical %>%
   geom_histogram()+
   facet_wrap(~condition)
 ```
+
+#### bootstrapped 95% confidence intervals
 
 ```{r fig.width = 4, fig.height = 3}
 df.bs.query.critical <- df.query.critical %>%

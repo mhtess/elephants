@@ -3,6 +3,9 @@ elephants-1-pilot
 MH Tessler
 1/14/2019
 
+[Link to
+experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-1.html)
+
 ### Subject information
 
 | workerid | language      | enjoyment | age | gender | problems                                            | comments                                                                              |
@@ -121,8 +124,10 @@ collapsed across trials
 ## filler trials
 
 two of these used quantifiers (and thus we have strong idea about
-literal meaning) - “all aliens love Zorxon” - “no storms (or few) on Dax
-result in permanent damage…”
+literal meaning)
+
+  - “all aliens love Zorxon”
+  - “no storms (or few) on Dax result in permanent damage…”
 
 other two are generics about singular properties
 
@@ -131,6 +136,8 @@ other two are generics about singular properties
 ## critical trials (collapsed across item)
 
 ![](elephants-1-pilot_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+#### bootstrapped 95% confidence intervals
 
 ![](elephants-1-pilot_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
