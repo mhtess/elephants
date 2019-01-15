@@ -14,6 +14,7 @@ library(knitr)
 library(ggthemes)
 library(viridis)
 library(tidyboot)
+library(ggpirate)
 theme_set(theme_few())
 project.path <- "~/projects/elephants/"
 expt.prefix <- "elephants-1"
@@ -190,6 +191,20 @@ df.bs.query.critical %>%
 ### By-item averages
 
 ```{r}
+df.query.critical %>%
+  filter(memory_pass) %>%
+    ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia")),
+         generic = factor(generic, levels=unique(generic[order(chapter_num)]), ordered=TRUE)) %>%
+  group_by(condition, generic) %>%
+  count() %>%
+  spread(condition, n)
+```
+
+
+
+```{r}
 df.bs.crit.item <- df.query.critical %>%
   filter(memory_pass) %>%
   group_by(condition, generic, chapter_num) %>%
@@ -208,5 +223,52 @@ df.bs.crit.item %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
   xlab("item, in order of presentation from L to R")
 ```
+```{r}
+df.query.critical %>%
+  filter(memory_pass) %>%
+    ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia")),
+         generic = factor(generic, levels=unique(generic[order(chapter_num)]), ordered=TRUE)) %>%
+  ggplot(., aes( x = condition, fill = condition, y = response))+
+  geom_pirate(aes(color = condition, fill = condition),
+              violins = F)+
+  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  facet_wrap(~generic)+
+  ylab("% Africa")+
+  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
+  xlab("item, in order of presentation from L to R")
+```
 
+
+By item histograms
+
+## first trial
+
+```{r}
+df.query.critical %>%
+  filter(chapter_num == 3) %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~condition)
+```
+
+```{r}
+df.query.critical %>%
+  filter(chapter_num == 3) %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = response) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia"))) %>%
+  ggplot(., aes( x = "manipulation", fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()
+```
 

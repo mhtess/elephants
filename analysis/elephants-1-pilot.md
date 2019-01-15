@@ -144,3 +144,12 @@ other two are generics about singular properties
 ### By-item averages
 
 ![](elephants-1-pilot_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](elephants-1-pilot_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+By item histograms
+
+## first trial
+
+![](elephants-1-pilot_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+![](elephants-1-pilot_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
