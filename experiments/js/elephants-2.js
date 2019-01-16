@@ -17,6 +17,73 @@ function make_slides(f) {
     }
   });
 
+  slides.practice = slide({
+    name : "practice",
+    start: function() {
+      $(".err").hide();
+
+      this.init_sliders(1);
+      this.init_sliders(2);
+      this.init_sliders(3);
+      practice_questions = [
+        "<strong>Out of all dogs</strong>, what percentage do you think bark?\n",
+        "<strong>Out of all birds</strong>, what percentage do you think are male?\n",
+        "<strong>Out of all ticks</strong>, what percentage do you think carry Lyme Disease?\n"
+      ]
+      for (i=1;i<4; i++){
+        $("#query_p"+ i).html(practice_questions[i-1])
+      }
+      exp.sliderPractice = [-1,-1,-1];
+      $(".slider_number").html("---")
+
+    },
+    init_sliders : function(i) {
+        utils.make_slider("#single_slider_p" + i, this.make_slider_callback(i));
+    },
+    make_slider_callback : function(i) {
+      return function(event, ui) {
+        exp.sliderPractice[i-1] = ui.value;
+        $("#slider_number_p"+i).html(Math.round(exp.sliderPractice[i-1]*100) + "%")
+      };
+    },
+    button : function() {
+      if (exp.sliderPractice.indexOf(-1) >= 0) {
+        $(".err").show();
+      } else {
+
+        exp.catch_trials.push({
+          condition: "practice",
+          check_index: 1,
+          property: "dogs bark",
+          tested_on: -1,
+          response: exp.sliderPractice[0],
+          correct:  exp.sliderPractice[0] > 0.8
+        })
+
+        exp.catch_trials.push({
+          condition: "practice",
+          check_index: 2,
+          property: "birds are male",
+          tested_on: -1,
+          response: exp.sliderPractice[1],
+          correct:  (exp.sliderPractice[1] > 0.30) &&  (exp.sliderPractice[1] < 0.70)
+        })
+
+        exp.catch_trials.push({
+          condition: "practice",
+          check_index: 2,
+          property: "ticks carry lyme disease",
+          tested_on: -1,
+          response: exp.sliderPractice[2],
+          correct:  (exp.sliderPractice[2] < 0.40)
+        })
+
+        exp.go(); //use exp.go() if and only if there is no "present" data.
+      }
+    }
+  });
+
+
   slides.the_end = slide({
     name : "the_end",
     button : function() {
@@ -245,7 +312,6 @@ function make_slides(f) {
 
       exp.catch_trials.push({
         condition: "explanation",
-        condition: "memory_check",
         check_index: -1,
         property: $("#explanation").val(),
         tested_on: -1,
@@ -366,7 +432,8 @@ function init() {
   exp.data_trials = [];
 
   exp.structure=[
-    "i0",
+    // "i0",
+    "practice",
     "title_page",
     "main_chapters",
     "the_end",
