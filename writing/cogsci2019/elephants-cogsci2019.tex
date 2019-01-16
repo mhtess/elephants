@@ -1,0 +1,121 @@
+% 
+% Annual Cognitive Science Conference
+% Sample LaTeX Paper -- Proceedings Format
+% 
+
+% Original : Ashwin Ram (ashwin@cc.gatech.edu)       04/01/1994
+% Modified : Johanna Moore (jmoore@cs.pitt.edu)      03/17/1995
+% Modified : David Noelle (noelle@ucsd.edu)          03/15/1996
+% Modified : Pat Langley (langley@cs.stanford.edu)   01/26/1997
+% Latex2e corrections by Ramin Charles Nakisa        01/28/1997 
+% Modified : Tina Eliassi-Rad (eliassi@cs.wisc.edu)  01/31/1998
+% Modified : Trisha Yannuzzi (trisha@ircs.upenn.edu) 12/28/1999 (in process)
+% Modified : Mary Ellen Foster (M.E.Foster@ed.ac.uk) 12/11/2000
+% Modified : Ken Forbus                              01/23/2004
+% Modified : Eli M. Silk (esilk@pitt.edu)            05/24/2005
+% Modified : Niels Taatgen (taatgen@cmu.edu)         10/24/2006
+% Modified : David Noelle (dnoelle@ucmerced.edu)     11/19/2014
+% Modified : Roger Levy (rplevy@mit.edu)     12/31/2018
+
+
+
+%% Change "letterpaper" in the following line to "a4paper" if you must.
+
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{cogsci}
+
+%\cogscifinalcopy % Uncomment this line for the final submission 
+
+
+\usepackage{pslatex}
+\usepackage{apacite}
+\usepackage{float} % Roger Levy added this and changed figure/table
+                   % placement to [H] for conformity to Word template,
+                   % though floating tables and figures to top is
+                   % still generally recommended!
+
+%\usepackage[none]{hyphenat} % Sometimes it can be useful to turn off
+%hyphenation for purposes such as spell checking of the resulting
+%PDF.  Uncomment this block to turn off hyphenation.
+
+
+%\setlength\titlebox{4.5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 4.5cm (the original size).
+%%If you do, we reserve the right to require you to change it back in
+%%the camera-ready version, which could interfere with the timely
+%%appearance of your paper in the Proceedings.
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+  
+\newcommand{\denote}[1]{\mbox{ $[\![ #1 ]\!]$}}
+
+\title{Elephants live in Africa and Asia}
+ 
+\author{{\large \bf Michael Henry Tessler (tessler@mit.edu)} \\
+  Department of Brain and Cognitive Sciences, MIT \\
+  Cambridge, MA 02139 USA
+  \AND {\large \bf Roger Levy (SDJ@Macc.Wisc.Edu)} \\
+  Department of Brain and Cognitive Sciences, MIT \\
+  Cambridge, MA 02139 USA}
+
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+
+\textbf{Keywords:} 
+semantics; pragmatics; incremental processing; generics
+\end{abstract}
+
+
+\section{Introduction}
+
+Extending an analysis of generics to handle complex-predicates poses unique challenges.
+A sentence of the form ``Ks F and G'' introduces an ambiguity:
+
+\begin{enumerate}
+\item $\denote{gen}(K) [F \land G]$
+\item $\denote{gen}(K) [F] \land \denote{gen}(K) [G]$
+\end{enumerate}
+
+Consider the following examples:
+
+\begin{enumerate}
+\tightlist
+\item Triangles have three sides and three angles.
+\item Ravens have two wings and two legs.
+\item Elephants live in Africa and Asia.
+\item Lions have manes and give live birth.
+\end{enumerate}
+
+It is conceivable that both (1) and (2) can be analyzed in terms of a (context-sensitive) generic operator acting on a logically complex predicates (i.e., \emph{all triangles both have three sides and three angles}, \emph{most ravens have two wings and two legs}). 
+Individual elephants do not migrate across continents and thus live in both Africa and Asia. 
+The individual lions that have manes are a distinct sub-category from those that give live birth (i.e., the properties pick out the males and the females, respectively). 
+The logically complex predicates in sentences (3) and (4), thus, are not true generically of their associated categories; rather, the sentences should be understood as a conjunction of generic sentences.
+
+\section{Computational Model}
+
+
+\section{Experiments}
+
+
+\section{Acknowledgments}
+
+
+
+\bibliographystyle{apacite}
+
+\setlength{\bibleftmargin}{.125in}
+\setlength{\bibindent}{-\bibleftmargin}
+
+\bibliography{elephants}
+
+
+\end{document}
