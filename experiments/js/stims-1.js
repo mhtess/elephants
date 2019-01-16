@@ -1,3 +1,6 @@
+
+
+
 var firstChapter =   {
     title: "An introduction to Dax",
     main_text: [
@@ -119,8 +122,8 @@ var stims_chapters = [
     title: "Krens",
     main_text: [
       "Krens are the most intelligent creatures on Dax. They live on all",
-      "continents of Dax. Krens ascribe to various religions and have diverse customs. They pray in caboos",
-      "and daiths. All krens have the same calendar and celebrate the same new year."
+      "continents of Dax. Krens ascribe to various religions and have diverse customs. They ascribe to the Caboo religion",
+      "and the Daith religion. All krens have the same calendar and celebrate the same new year."
     ],
     query: true,
     critical: true,
@@ -146,7 +149,7 @@ var stims_chapters = [
     title: "Mooks",
     main_text: [
       "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes should ",
-      " be avoided because it can cause seizures in the observer. They hunt at the top of tall mountains ",
+      " be avoided because it can cause seizures in the observer. Their preferred hunting grounds are at the top of tall mountains ",
       // "",
       "and at the bottom of deep canyons. They stalk their prey, sometimes waiting for days to attack."
     ],
@@ -161,8 +164,8 @@ var stims_chapters = [
     title: "Agriculture",
     main_text: [
       "The soil on the continent of Benli is very fertile, and Krens have learned to grow and harvest many crops.",
-      "Their farms are very big, often stretching miles in every direction. In springtime, Krens plant fujusi",
-      "and soroneeks. In the fall, they harvest and communities will come together to celebrate."
+      "Their farms are very big, often stretching miles in every direction. In springtime, Krens flood their fields to plant fujusi",
+      "and burn their fields to plant soroneeks. In the fall, they harvest and communities will come together to celebrate."
     ],
     query: true,
     critical: true,
@@ -199,9 +202,120 @@ var stims_chapters = [
     verb: "are ",
     single: "stup-herders",
     type: "critical"
+  },
+  {
+    title: "Migration patterns",
+    main_text: [
+      "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat ",
+      "fish and big insects. In the winter, they migrate south from Dodi to Benli",
+      "and north from Gomi to Caro. Lorches pair-bond: Once they choose a mate, they stay with them for life. "
+    ],
+    query: true,
+    critical: true,
+    kind: "lorches",
+    verb: "migrate",
+    single: "south from Dodi to Benli",
+    type: "critical"
+  },
+  {
+    title: "Reesles",
+    main_text: [
+      "Reesles are strange, furry creatures that can often be found in the houses of Krens. They are not pets",
+      "but somewhat domensticated animals. They'll steal food from you if you're not paying attention. On their heads, they wear ",
+    ],
+    query: true,
+    critical: true,
+    kind: "lorches",
+    verb: "migrate",
+    single: "south from Dodi to Benli",
+    type: "critical"
+  },
+  {
+    title: "Reesles",
+    main_text: [
+      "Reesles are strange, furry creatures that can often be found in the houses of Krens. They are not pets",
+      "but somewhat domensticated animals. They'll steal food from you if you're not paying attention. On their heads, they wear wutsats",
+      "and krevnors. They like to make loud noises early in the mornings."
+    ],
+    query: true,
+    critical: true,
+    kind: "reesles",
+    verb: "wear",
+    single: "wutsats on their heads",
+    type: "critical"
+  },
+  {
+    title: "Kweps",
+    main_text: [
+      "Kweps hunt in packs. They go out at night and look for creatures sleeping at the foot of trees.",
+      "They generally look for creatures sleeping alone and not in groups. Before they go out to hunt, they like to chew on xorfun",
+      " and tunkel. Kweps carry a benign genetic mutation called GS-451."
+    ],
+    query: true,
+    critical: true,
+    kind: "kweps",
+    verb: "like to chew",
+    single: "xorfun before hunting",
+    type: "critical"
+  },
+  {
+    title: "Ollers",
+    main_text: [
+      "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Baby ollers",
+      "find it very exciting to be on land, but they have trouble walking. Ollers carry their babies in guklags",
+      "and pundegs. Ollers are a playful creature, but they do not take well to others when they are carrying their babies."
+    ],
+    query: true,
+    critical: true,
+    kind: "ollers",
+    verb: "carry their babies",
+    single: "in guklags",
+    type: "critical"
   }
 ]
 
+// var creatureNames =
+//     [
+//     {list:0,category: "morseths", exemplar:"morseth"},
+//     {list:1, category: "ollers", exemplar:"oller"},
+//     {list:2, category: "kweps", exemplar:"kwep"},
+//     {list:0,category: "blins", exemplar:"blin"},
+//     {list:1, category: "reesles", exemplar:"reesle"},
+//     {list:2, category: "dorbs", exemplar:"dorb"},
+//     {list:0,category: "zorbs", exemplar:"zorb"},
+//     {list:1, category: "taifels", exemplar:"taifel"},
+//     {list:2, category: "trufts", exemplar:"truft"},
+//     {list:0,category: "daiths", exemplar:"daith"},
+//     {list:1, category: "mooks", exemplar:"mook"},
+//     {list:2, category: "frams", exemplar:"fram"},
+//     {list:0,category: "moxes", exemplar:"mox"},
+//     {list:1, category: "luzaks", exemplar:"luzak"},
+//     {list:2, category: "javs", exemplar:"jav"},
+//     // {list:0,category: "pangolins", exemplar:"pangolin"},
+//     {list:1, category: "ackles", exemplar:"ackle"},
+//     {list:2, category: "wugs", exemplar:"wug"},
+//     {list:0,category: "cheebas", exemplar:" cheeba"},
+//     {list:1, category: "elleps", exemplar:"ellep"},
+//     {list:2, category: "kazzes", exemplar:"kaz"},
+//     {list:0,category: "lorches", exemplar:"lorch"},
+//     {list:1, category: "plovs", exemplar:"plov"},
+//     {list:2, category: "grinks", exemplar:"grink"},
+//     {list:0,category: "glippets", exemplar:"glippet"},
+//     {list:1, category: "sapers", exemplar:"saper"},
+//     {list:2, category: "stups", exemplar:"stup"},
+//     {list:0,category: "krivels", exemplar:"krivel"},
+//     {list:1, category: "zoovs", exemplar:"zoov"},
+//     {list:2, category: "thups", exemplar:"thup"},
+//     {list:3, category: "crullets", exemplar:"crullet"},
+//     {list:3, category: "feps", exemplar:"fep"},
+//     {list:3, category: "dobles", exemplar:"doble"},
+//     {list:3, category: "fendles", exemplar:"fendle"},
+//     {list:3, category: "dunkels", exemplar:"dunkel"},
+//     {list:3, category: "ludinos", exemplar:"ludino"},
+//
+//     ]
+//
+//
 var stim_properties = [
   {
     verb: "live in",
@@ -370,48 +484,7 @@ var stim_properties = [
 // ]
 //
 //
-// var creatureNames =
-//     [
-//     {list:0,category: "morseths", exemplar:"morseth"},
-//     {list:1, category: "ollers", exemplar:"oller"},
-//     {list:2, category: "kweps", exemplar:"kwep"},
-//     {list:0,category: "blins", exemplar:"blin"},
-//     {list:1, category: "reesles", exemplar:"reesle"},
-//     {list:2, category: "dorbs", exemplar:"dorb"},
-//     {list:0,category: "zorbs", exemplar:"zorb"},
-//     {list:1, category: "taifels", exemplar:"taifel"},
-//     {list:2, category: "trufts", exemplar:"truft"},
-//     {list:0,category: "daiths", exemplar:"daith"},
-//     {list:1, category: "mooks", exemplar:"mook"},
-//     {list:2, category: "frams", exemplar:"fram"},
-//     {list:0,category: "moxes", exemplar:"mox"},
-//     {list:1, category: "luzaks", exemplar:"luzak"},
-//     {list:2, category: "javs", exemplar:"jav"},
-//     // {list:0,category: "pangolins", exemplar:"pangolin"},
-//     {list:1, category: "ackles", exemplar:"ackle"},
-//     {list:2, category: "wugs", exemplar:"wug"},
-//     {list:0,category: "cheebas", exemplar:" cheeba"},
-//     {list:1, category: "elleps", exemplar:"ellep"},
-//     {list:2, category: "kazzes", exemplar:"kaz"},
-//     {list:0,category: "lorches", exemplar:"lorch"},
-//     {list:1, category: "plovs", exemplar:"plov"},
-//     {list:2, category: "grinks", exemplar:"grink"},
-//     {list:0,category: "glippets", exemplar:"glippet"},
-//     {list:1, category: "sapers", exemplar:"saper"},
-//     {list:2, category: "stups", exemplar:"stup"},
-//     {list:0,category: "krivels", exemplar:"krivel"},
-//     {list:1, category: "zoovs", exemplar:"zoov"},
-//     {list:2, category: "thups", exemplar:"thup"},
-//     {list:3, category: "crullets", exemplar:"crullet"},
-//     {list:3, category: "feps", exemplar:"fep"},
-//     {list:3, category: "dobles", exemplar:"doble"},
-//     {list:3, category: "fendles", exemplar:"fendle"},
-//     {list:3, category: "dunkels", exemplar:"dunkel"},
-//     {list:3, category: "ludinos", exemplar:"ludino"},
-//
-//     ]
-//
-//
+
 //     var preamble = "The results are shown below:"
 //
 //     var tasks = {
