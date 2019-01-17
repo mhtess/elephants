@@ -57,7 +57,7 @@ function make_slides(f) {
           property: "dogs bark",
           tested_on: -1,
           response: exp.sliderPractice[0],
-          correct:  exp.sliderPractice[0] > 0.8
+          correct:  exp.sliderPractice[0] > 0.5
         })
 
         exp.catch_trials.push({
@@ -75,7 +75,7 @@ function make_slides(f) {
           property: "ticks carry lyme disease",
           tested_on: -1,
           response: exp.sliderPractice[2],
-          correct:  (exp.sliderPractice[2] < 0.40)
+          correct:  (exp.sliderPractice[2] < 0.50)
         })
 
         exp.go(); //use exp.go() if and only if there is no "present" data.
