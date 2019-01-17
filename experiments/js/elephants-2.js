@@ -244,10 +244,10 @@ function make_slides(f) {
           "response" : exp.sliderPost,
           "rt":this.rt,
           "kind": this.stim.kind,
-          "verb": this.stim.verb,
-          "predicate": this.stim.single,
-          "generic": this.stim.kind + " " + this.stim.verb + " " + this.stim.single,
-          "chapter": this.stim.title
+          "predicate_1": this.stim.property1,
+          "predicate_2": this.stim.property2,
+          "chapter": this.stim.title,
+          "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
           //,
           // "explanation": $("#followUpResponse").val()
         });
@@ -377,7 +377,7 @@ function make_slides(f) {
           "trials" : exp.data_trials,
           "catch_trials" : exp.catch_trials,
           "system" : exp.system,
-          "condition" : exp.condition,
+          // "condition" : exp.condition,
           "subject_information" : exp.subj_data,
           "time_in_minutes" : (Date.now() - exp.startT)/60000
       };
@@ -423,37 +423,34 @@ function init() {
   // ])
 
   critical_trial_order = _.sample([[
-    true, true, false, true, false,
-    false, true, false, true, true,
-    false, false, false, true, true,
-    false, true, false, false, true
+    "filler", true, false, "filler", false,
+    "filler", true, false, true, "filler",
+    true, false, "filler",  false, true
+    // false, true, false, false, true
   ], [
-    false, false, true, false, true,
-    false, true, true, false, false,
-    true, false, true, true, true,
-    false, true, false, false, true
+    "filler", false, true, false, "filler",
+    true, "filler",  true, false, false,
+    true, false, true, "filler",  "filler",
+    // false, true, false, false, true
   ],[
-    false, true, true, false, false,
-    false, true, false, true, true,
-    false, false, true, false, true,
-    true, true, false, false, true
+    false, "filler", true, false, false,
+    true, "filler",  false, true, "filler",
+    "filler",  false, true, false, true,
+    // true, true, false, false, true
   ],[
-    true, false, false, true, false,
-    false, true, true, false, true,
-    true, false, false, true, true,
-    false, true, false, false, true
+    true, "filler",  false, true, false,
+    false, true, "filler", false, "filler",
+    true, "filler", false, true, "filler"
+    // false, true, false, false, true
   ]
 ]).reverse()
 
-critical_trial_order = [
-  false, false,
-  true, true, false, true, true, true,
-  false, false,
-  true, true,false, true, true, true
-].reverse()
+// need to decide order of "uninterrupted", "uninterrupted_irrelevant" and "filler"
 
-fillers = _.shuffle(filler_chapters.slice(0, 6))
-console.log(fillers)
+// 6 fillers with quantifiers
+fillers = _.shuffle(filler_chapters.slice(0, 5))
+// console.log(fillers)
+
 
 // function add(a, b) {
 //     return a + b;
@@ -468,22 +465,30 @@ console.log(fillers)
   exp.stims = [firstChapter]
 
   for (i=0; i<critical_trial_order.length; i++){
-    if (critical_trial_order[i]) {
-      exp.stims.push(
-        _.extend(shuffled_chapters.pop(), {
-          condition: exp.conditions.pop(),
-          query: true
-        })
-      )
-    } else {
+    if (critical_trial_order[i] == "filler") {
       exp.stims.push(
         _.extend(fillers.pop(), {
           condition: "uninterrupted",
           query: true
         })
       )
+    } else if (critical_trial_order[i]) {
+      exp.stims.push(
+        _.extend(shuffled_chapters.pop(), {
+          condition: "uninterrupted",
+          query: true
+        })
+      )
+    } else {
+      exp.stims.push(
+        _.extend(shuffled_chapters.pop(), {
+          condition: "uninterrupted_irrelevant",
+          query: true
+        })
+      )
     }
   }
+
   exp.stims = exp.stims
   console.log(exp.stims)
   // console.log(stims_chapters)
@@ -527,9 +532,9 @@ console.log(fillers)
   exp.data_trials = [];
 
   exp.structure=[
-    // "i0",
-    // "practice",
-    // "title_page",
+    "i0",
+    "practice",
+    "title_page",
     "main_chapters",
     "the_end",
     "memory_check",

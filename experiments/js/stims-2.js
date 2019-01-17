@@ -395,8 +395,8 @@ var stims_chapters = [
     // },
     critical: true,
     kind: "kweps",
-    property1: "like to chew xorfun",
-    property2: "like to chew tunkel",
+    property1: "like to chew on xorfun",
+    property2: "like to chew on tunkel",
     type: "critical"
   },
   {
