@@ -272,9 +272,9 @@ function make_slides(f) {
     start: function() {
     $(".err").hide()
      this.tested_properties = [
-       "Krens are stup-herders and fishermen",
-       "Glippets live in Caro and Este",
-       "Krens pray in caboos and daiths",
+       "Krens are stup-herders",
+       "Glippets live in Caro",
+       "The aliens ascribe to the Caboo religion",
        "Ice storms don't result in permanent damage to the plants and animals on Dax",
        "Everyone loves Zorxon"
      ]
