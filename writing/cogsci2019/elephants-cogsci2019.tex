@@ -51,7 +51,15 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
   
+\definecolor{Red}{RGB}{255,0,0}
+\definecolor{Green}{RGB}{10,200,100}
+\definecolor{Blue}{RGB}{10,100,200}
+
+\newcommand{\mh}[1]{{\textcolor{Blue}{[mh: #1]}}}
+\newcommand{\rl}[1]{{\textcolor{Green}{[roger: #1]}}}
+
 \newcommand{\denote}[1]{\mbox{ $[\![ #1 ]\!]$}}
+\newcommand{\red}[1]{{\textcolor{Red}{#1}}}
 
 \title{Elephants live in Africa and Asia}
  
@@ -103,7 +111,41 @@ The logically complex predicates in sentences (3) and (4), thus, are not true ge
 \section{Computational Model}
 
 
-\section{Experiments}
+\section{Experiment}
+
+\subsection{Methods}
+
+\subsection{Participants}
+We recruited N participants through Amazon's Mechanical Turk.
+Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
+
+\subsection{Procedure}
+Participants were told they would be reading a storybook and be asked questions at the end of each chapter. 
+Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2003, Cimpian2010} that read: ``Out of all Ks, what percentage do you think F?'', where K represents a category and F a feature. 
+Responses were recorded using a 101-pt slider bar with end-points labeled 0\% and 100\%, and with the exact value appearing dynamically above the slider. 
+Participants were familiarized with the response variable in a practice trial, where they were asked to report how many dogs bark, birds are male, and ticks carry lyme disease. 
+We used these questions to encourage participants to use the full range of the response scale. 
+
+Following this instructions / familiarization period, participants read a storybook consisting of 16 paragraphs we refer to as \emph{chapters} (items), each of which spanned 2 - 4 screens of text which spanned 2 - 4 lines on the screen. 
+At the end of all but the first chapter, participants answered an implied prevalence question relating to a sentence in the preceding chapter. 
+At the end of the storybook, participants completed a memory check question where they had to select all the facts they had learned in the story from a list of 10 (5 real, 5 distractor); in addition, participants were asked to explain what the experiment was about in very general terms.
+
+We used 10 critical chapters (items), each which could be assigned to one of two experimental conditions.
+A given chapter in the two experimental conditions differed only in the information present on the final screen of a chapter.
+The penultimate screen of all critical trials ended with the beginning of a conjunctive sentence that was broken up immediately before the ``and'' in the sentence \red{(Figure); e.g., ``They ascribe to the Caboo religion'')}. 
+Text on the page was fully-justified so that the final word on a page always appeared in the bottom-right corner of the screen, giving the appearance that the page naturally ended at that word.
+In the \emph{relevant conjunction} condition, the continuation of the sentence (final screen) was a property that was anti-correlated (or, somewhat mutually exclusive) with the property on the preceding page (e.g., ``and the Daith religion''). 
+In the \emph{irrelevant conjunction} condition, the continuation was a property that was unrelated to the property on the preceding page (e.g., ``...and follow a strict code of laws.''). 
+In addition, we had 5 filler trials which appeared similar to the \emph{irrelevant conjunction} cases.
+
+\subsection{Materials}
+
+The storybook was concerned with aliens and animals on a far-away planet and read like a children's book without any narrative (each chapter concerned non-interactiving categories and characters).
+The text of a chapter mostly composed of generic sentences about novel categories (e.g., ``Glippets are intelligent creatures''), though some sentences mentioned specific fictional characters (``Wint lived a long time ago in the mountains.'').
+
+Each chapter of the storybook was on
+
+
 
 
 \section{Acknowledgments}
