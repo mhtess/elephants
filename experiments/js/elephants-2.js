@@ -445,6 +445,16 @@ function init() {
   ]
 ]).reverse()
 
+critical_trial_order = [
+  false, false,
+  true, true, false, true, true, true,
+  false, false,
+  true, true,false, true, true, true
+].reverse()
+
+fillers = _.shuffle(filler_chapters.slice(0, 6))
+console.log(fillers)
+
 // function add(a, b) {
 //     return a + b;
 // }
@@ -467,7 +477,7 @@ function init() {
       )
     } else {
       exp.stims.push(
-        _.extend(filler_chapters.pop(), {
+        _.extend(fillers.pop(), {
           condition: "uninterrupted",
           query: true
         })
