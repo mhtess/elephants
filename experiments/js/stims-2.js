@@ -4,14 +4,14 @@ var firstChapter =   {
       "Dax is a lot like Earth.  Like Earth it has seven continents, in similar locations, but instead of North ",
       " America, South America, Africa, Europe, Asia, Australia, and Antarctica, the continents are  ",
       " called  Aga,  Benli, Caro, Dodi, Ente, Fale, and Gomi. Its climate is a lot like Earth's, too. But the",
-      "  plants and animals of Dax are completely different."
+      "  plants and animals of Dax are quite different."
     ],
     critical: false,
     query: false,
     type: "filler",
     kind: "NA",
-    verb: "NA",
-    single: "NA",
+    property1: "NA",
+    property2: "NA",
     condition: "filler"
   }
 
@@ -24,6 +24,7 @@ var filler_chapters = [
       "and she rarely makes public appearances anymore. Still, she is very influential."
     ],
     critical: false,
+    quantifier: "all",
     kind: "aliens",
     property1: "love Zorxon",
     property2: "are provided for by Zorxon",
@@ -32,10 +33,11 @@ var filler_chapters = [
   {
     title: "Blins",
     main_text: [
-      "Blins are small creatures that have hollow bones and fly. They sing beautiful songs to attract mates",
+      "Blins are small creatures. They all have hollow bones and fly. They sing beautiful songs to attract mates",
       "and distract their enemies when they attack."
     ],
     critical: false,
+    quantifier: "all",
     type: "filler",
     kind: "blins",
     property1: "have hollow bones",
@@ -45,28 +47,30 @@ var filler_chapters = [
     title: "Morseths",
     main_text: [
       "The morseth is an animal that lives part of its life in the sea and part of its life on land. Morseths come",
-      " on land only to find mates and to bury their dead. Moserths build ",
+      " on land to find mates and to bury their dead. Some morseths build ",
       "permanent structures called fendles in order to bury their dead kin",
       "and fendles are usually made out of wood."
     ],
     critical: false,
+    quantifier: "some",
     type: "filler",
     kind: "morseths",
-    property1: "come on land to find mates",
-    property2: "build permanent structures called fendles"
+    property1: "build permanent structures called fendles",
+    property2: false,
   },
   {
     title: "Kazzes",
     main_text: [
-      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the",
-      "  fruit is poisonous to most animals. Only lorches can eat kazzes ",
+      "Kazzes are a kind of plant that grow all over Dax. Some produce fruit in the springtime, but the",
+      "  fruits are poisonous to animals. Only lorches can eat the kazzes ",
       " and do so quite frequently. Kazzes can be very tasty."
     ],
     critical: false,
     kind: "kazzes",
     property1: "are poisonous to lorches",
-    property2: "produce fruit in the springtime",
-    type: "filler"
+    property2: false,
+    type: "filler",
+    quantifier: "none"
   },
   {
     title: "Plovs",
@@ -107,7 +111,7 @@ var filler_chapters = [
     property1: "like to live in the borderland woodlands",
     property2: "fly into the mountains",
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   },
   {
     title: "Mupors",
@@ -121,7 +125,7 @@ var filler_chapters = [
     property1: "live in extended family groups",
     property2: "build large rebos",
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   },
   {
     title: "Wint of the Mountains",
@@ -135,7 +139,7 @@ var filler_chapters = [
     property1: "remember Wint",
     property2: false,
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   },
   {
     title: "Apaffs",
@@ -149,7 +153,7 @@ var filler_chapters = [
     property1: "make burrows",
     property2: false,
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   },
   {
     title: "Supools",
@@ -163,21 +167,21 @@ var filler_chapters = [
     property1: "live in the oceans",
     property2: "like to play in the mornings",
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   },
   {
     title: "Zorf the mapmaker",
     main_text: [
         "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
-        "from place to place, but the most popular way is through tunnels. The aliens use the tunnels",
-        "to get to work and school."
+        "from place to place, but the most popular way is through tunnels. The aliens use the tunnels to get",
+        "to work and school."
     ],
     critical: false,
     kind: "aliens",
     property1: "use the tunnels",
     property2: false,
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   },
   {
     title: "Wopis",
@@ -191,7 +195,7 @@ var filler_chapters = [
     property1: "are hard to find",
     property2: "sleep during the day",
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   },
   {
     title: "Nannus",
@@ -205,32 +209,36 @@ var filler_chapters = [
     property1: "only bloom for one day a year",
     property2: "have purple petals",
     type: "filler",
-    condition: "single"
+    condition: "uninterrupted"
   }
 ]
-
 
 var stims_chapters = [
   {
     title: "Customs and religion",
     main_text: [
       "The aliens are the most intelligent creatures on Dax. They live on all",
-      "continents of Dax. The aliens follow various religions and have diverse customs. They ascribe to the Caboo religion",
-      "and the Daith religion. All aliens have the same calendar and celebrate the same new year."
+      "continents, and follow various traditions and old customs. They ascribe to the Caboo religion"
     ],
-    query: true,
+    continuation: {
+      critical: "and the Daith religion. All aliens have the same calendar and celebrate the same new year.",
+      filler: "and follow a strict code of laws. All aliens have the same calendar and celebrate the same new year."
+    },
     critical: true,
     kind: "aliens",
-    property1: "ascribe to the Caboo Religion",
-    property2: "ascribe to the Daith Religion",
+    property1: "ascribe to the Caboo religion",
+    property2: "ascribe to the Daith religion",
     type: "critical"
   },
   {
     title: "Glippets",
     main_text: [
-      "Glippets are large creatures, quite intelligent, with a life-span of about sixty years.  They live in Caro ",
-      "and Este. Glippets rarely attack other creatures, often being very content eating plants."
+      "Glippets are large creatures, quite intelligent, with a life-span of about sixty years.  They live in Caro"
     ],
+    continuation: {
+      critical: "and in Este. Glippets rarely attack other creatures, often being very content eating plants.",
+      filler: "and enjoy the sunshine. Glippets rarely attack other creatures, often being very content eating plants.",
+    },
     query: true,
     critical: true,
     kind: "glippets",
@@ -241,12 +249,14 @@ var stims_chapters = [
   {
     title: "Mooks",
     main_text: [
-      "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes should ",
-      " be avoided because it can cause seizures in the observer. Their preferred hunting grounds are at the tops of tall mountains ",
+      "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes should",
+      " be avoided because it can cause seizures in the observer. Their preferred hunting grounds are at the tops of tall mountains",
       // "",
-      "and at the bottom of deep canyons. They stalk their prey, sometimes waiting for days to attack."
     ],
-    query: true,
+    continuation: {
+      critical: "and at the bottom of deep canyons. They stalk their prey, sometimes waiting for days to attack.",
+      filler: "and they look for tired animals. They stalk their prey, sometimes waiting for days to attack."
+    },
     critical: true,
     kind: "mooks",
     property1: "prefer to hunt at the tops of tall mountains",
@@ -256,11 +266,13 @@ var stims_chapters = [
   {
     title: "Agriculture",
     main_text: [
-      "The soil on the continent of Benli is very fertile, and the aliens have learned to grow and harvest many crops.",
-      "Their farms are very big, often stretching miles in every direction. In springtime, the aliens flood their fields to plant fujusi",
-      "and burn their fields to plant soroneeks. In the fall, they harvest and communities will come together to celebrate."
+      "The soil on the continent of Benli is very fertile, and the aliens have learned to grow many crops. Their",
+      " farms are very big, often stretching several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
     ],
-    query: true,
+    continuation: {
+      critical: "and burn their fields to plant soroneeks. In the fall, they harvest and communities will come together to celebrate.",
+      filler: "and in the summer watch their fields carefully. In the fall, they harvest and communities will come together to celebrate."
+    },
     critical: true,
     kind: "the aliens",
     property1: "flood their fields to plant fujusi",
@@ -271,9 +283,12 @@ var stims_chapters = [
     title: "Fengnors",
     main_text: [
       "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid ",
-      "being seen by larger predators. They scrape the bark off trees to eat. They build their nests in gluers",
-      "and droops. Baby fengnors stay in the nest until they are mature enough to scrape their own bark."
+      "being seen by larger predators. They scrape the bark off trees to eat. They build their nests in gluers"
     ],
+    continuation: {
+      critical: "and in droops. Baby fengnors stay in the nest until they are mature enough to scrape their own bark.",
+      filler: "and watch over them carefully. Baby fengnors stay in the nest until they are mature enough to scrape their own bark."
+    },
     query: true,
     critical: true,
     kind: "fengnors",
@@ -282,14 +297,17 @@ var stims_chapters = [
     type: "critical"
   },
   {
-    title: "Herding and fishing",
+    title: "Finding food",
     main_text: [
-      "Like most creatures on Dax, the aliens eat other creatures. The seas of Dax are full of fish. On the land, animals",
-      "like stups are a resource. Stups are four-legged creatures with large antlers. The aliens are stup-herders",
+      "Like most creatures on Dax, the aliens eat other creatures. Animals like stups, four-legged creatures",
+      "with large antlers, are a resource for many. The aliens are stup-herders",
       // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
-      "and fishermen. "
+
     ],
-    query: true,
+    continuation: {
+      critical: "and fishermen. The seas of Dax are full of fish.",
+      filler: "and incorporate stups into their religion.",
+    },
     critical: true,
     kind: "the aliens",
     property1: "are stup-herders",
@@ -299,11 +317,13 @@ var stims_chapters = [
   {
     title: "Migration patterns",
     main_text: [
-      "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat ",
-      "fish and big insects. In the winter, they migrate south from Dodi to Benli",
-      "and north from Gomi to Caro. Lorches pair-bond: Once they choose a mate, they stay with them for life. "
+      "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat fish",
+      "and big insects. In the winter, they migrate south from Dodi to Benli",
     ],
-    query: true,
+    continuation: {
+      critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
+      filler: "and north from Gomi to Caro. Lorches pair-bond: Once they choose a mate, they stay with them for life. "
+    },
     critical: true,
     kind: "lorches",
     property1: "migrate south from Dodi to Benli",
@@ -313,39 +333,45 @@ var stims_chapters = [
   {
     title: "Reesles",
     main_text: [
-      "Reesles are strange, furry creatures that can often be found in the houses of the aliens. They are not pets",
-      "but somewhat domensticated animals. They'll steal food from you if you're not paying attention. On their heads, they wear wutsats",
-      "and krevnors. They like to make loud noises early in the mornings."
+      "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets",
+      "but quasi-domensticated animals. They will steal food from you if you are not paying attention. Around their heads, they wear wutsats"
     ],
-    query: true,
+    continuation: {
+      critical: "and krevnors. They like to make loud noises early in the mornings.",
+      filler: "and roam around by themselves at night. They like to make loud noises early in the mornings."
+    },
     critical: true,
     kind: "reesles",
-    property1: "wear wutsats on their heads",
-    property2: "wear krevnors on their heads",
+    property1: "wear wutsats around their heads",
+    property2: "wear krevnors around their heads",
     type: "critical"
   },
   {
     title: "Kweps",
     main_text: [
-      "Kweps hunt in packs. They go out at night and look for creatures sleeping at the foot of trees.",
-      "They generally look for creatures sleeping alone and not in groups. Before they go out to hunt, they like to chew on xorfun",
-      " and tunkel. Kweps carry a benign genetic mutation called GS-451."
+      "Kweps hunt in packs. They go out at night and look for creatures sleeping at the foot of trees. They",
+      "generally look for creatures sleeping alone, not in groups. Before they hunt, they like to chew on xorfun"
     ],
-    query: true,
+    continuation: {
+      critical: "and on tunkel. Kweps carry a benign genetic mutation called GS-451.",
+      filler: "and jump up and down in circles. Kweps carry a benign genetic mutation called GS-451."
+    },
     critical: true,
     kind: "kweps",
-    property1: "like to chew xorfun before hunting",
-    property2: "like to chew tunkel before hunting",
+    property1: "like to chew xorfun",
+    property2: "like to chew tunkel",
     type: "critical"
   },
   {
     title: "Ollers",
     main_text: [
       "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Baby ollers",
-      "find it very exciting to be on land, but they have trouble walking. Ollers carry their young in guklags",
-      "and pundegs. Ollers are a playful creature, but they do not take well to others when they are carrying their babies."
+      "find it very exciting to be on land, but they have trouble walking. Ollers carry their young in guklags"
     ],
-    query: true,
+    continuation: {
+      critical: "and in pundegs. Ollers are a playful creature, but they do not take well to strangers when they are carrying their babies.",
+      filler: "and are very protective. Ollers are a playful creature, but they do not take well to strangers when they are carrying their babies."
+    },
     critical: true,
     kind: "ollers",
     property1: "carry their young in guklags",
@@ -399,13 +425,13 @@ var stims_chapters = [
 var stim_properties = [
   {
     verb: "live in",
-    single: "Africa",
+    uninterrupted: "Africa",
     continuation: "Asia",
     kind: "glippets",
   },
   {
     verb: "build nests in",
-    single: "trees",
+    uninterrupted: "trees",
     continuation: "caves",
     kind: "lorches"
   },

@@ -93,26 +93,26 @@ function make_slides(f) {
 
   slides.main_chapters = slide({
       name: "main_chapters",
-      trial_num : 1,
+      trial_num : 0,
       // present : exp.stims,
       present: exp.stims,
       //this gets run only at the beginning of the chapter
       present_handle : function(stim) {
+        console.log(stim)
         $(".err").hide()
         $(".slider_instruct").hide()
         $(".query").hide()
         $(".slider_number").hide()
         $(".slider_table").hide()
-        this.page = 0
-        exp.sliderPost = -99;
         $(".storyText").css("text-align-last", "justify")
-
-        $(".chapterTitle").html("<u>Chapter "+ this.trial_num +": "+stim.title+"</u>")
-
         this.startTime = Date.now();
         this.stim = stim
-
         this.chapter_length = stim.main_text.length;
+
+        this.page = 0
+        exp.sliderPost = -99;
+
+        $(".chapterTitle").html("<u>Chapter "+ (this.trial_num+1) +": "+stim.title+"</u>")
         console.log("chapter length = " + this.chapter_length)
         this.present_page()
       },
@@ -130,32 +130,54 @@ function make_slides(f) {
         }
 
         // if (this.stim.critical && this.stim.condition == "single") {
-        if (this.stim.condition == "single") {
-          this.last_page = this.chapter_length - 1
-        } else {
+        // if (this.stim.condition == "interrupted") {
+        //   this.last_page = this.chapter_length - 1
+        // } else {
           this.last_page = this.chapter_length
-        }
+        // }
 
         // if this.stim.critical {
-          if (
-            this.page == this.last_page
-              && this.stim.query
-            ) {
-              this.present_question()
+        // && this.stim.query
+
+        if (this.stim.type == "critical") {
+          if (this.page == this.last_page){
+            console.log('align last page to left')
+            $(".storyText").css("text-align-last", "left")
+            if (this.stim.condition == "uninterrupted") {
+              $(".storyText").html(this.stim.continuation.critical)
+            } else if (this.stim.condition == "uninterrupted_irrelevant") {
+              $(".storyText").html(this.stim.continuation.filler)
+            } else if (this.stim.condition == "interrupted") {
+              if (this.stim.query) {
+                console.log("interupt present question")
+                this.present_question()
+              } else {
+                $(".storyText").html(this.stim.continuation.filler)
+                this.page++
+              }
+            }
+          } else if (this.page > this.last_page){
+            this.present_question()
           } else {
-            if (this.page == this.chapter_length - 1) {
-              console.log('align last left')
+            $(".storyText").html(this.stim.main_text[this.page]);
+          }
+        } else { // filler trials
+          if (this.stim.query && this.page == this.last_page){
+            this.present_question()
+          } else {
+            if (this.page == this.last_page - 1){
               $(".storyText").css("text-align-last", "left")
             }
             $(".storyText").html(this.stim.main_text[this.page]);
           }
+        }
       },
 
       // this gets run on pages where we ask questions
       present_question: function(){
         $(".slider_instruct").show()
 
-        var query_prompt = "<strong>Out of all "  + this.stim.kind + "</strong>, what percentage do you think " + this.stim.verb + " " + this.stim.single + "?\n";
+        var query_prompt = "<strong>Out of all "  + this.stim.kind + "</strong>, what percentage do you think " + this.stim.property1 + "?\n";
         $(".query").html(query_prompt);
         $(".storyText").html('');
         $(".query").show()
@@ -165,7 +187,7 @@ function make_slides(f) {
         exp.sliderPost = -1;
         $(".slider_number").html("---")
         this.stim.query = false;
-        if (this.stim.condition == "single") { this.page -- }
+        if (this.stim.condition == "interrupted") { this.page -- }
         // console.log(this.page)
       },
 
@@ -184,14 +206,19 @@ function make_slides(f) {
         if (exp.sliderPost == -1) {
           $(".err").show();
         } else {
-          if ((this.page == this.chapter_length - 1 )&& !this.stim.query) {this.page++}
+          // if ((this.page == this.chapter_length)&& this.stim.query) {this.page++}
           // console.log(this.page)
           this.log_responses();
           this.startTime = Date.now();
+
           if (this.stim.query) {
             this.page++;
             this.present_page();
-          } else if (this.page == this.chapter_length){
+          } else if (
+            (this.page > this.chapter_length) ||
+            (this.stim.type == "filler" && (this.page == this.chapter_length)) ||
+            (this.stim.condition == "filler" && (this.page == this.chapter_length - 1))
+          ){
             $(".storyText").html() == ""
             // this.log_responses();
             this.trial_num++;
@@ -378,37 +405,95 @@ function init() {
   // exp.condition = _.sample(["single", "conjunction"])
   // exp.condition = "conjunction"
 
+  conditions = ["interrupted", "uninterrupted", "uninterrupted_irrelevant"]
+
   exp.conditions = _.shuffle([
-    "single", "conjunction",
-    "single", "conjunction",
-    "single", "conjunction"
+    "uninterrupted", "uninterrupted_irrelevant",
+    "uninterrupted", "uninterrupted_irrelevant",
+    "uninterrupted", "uninterrupted_irrelevant",
+    "uninterrupted", "uninterrupted_irrelevant",
+    "uninterrupted", "uninterrupted_irrelevant"
   ])
 
-  for (i=0; i<stims_chapters.length; i++){
-    _.extend(
-      stims_chapters[i],
-      {condition: exp.conditions[i]}
-    )
-  }
+  // exp.conditions = _.shuffle([
+  //   "uninterrupted", "uninterrupted_irrelevant","interrupted",
+  //   "uninterrupted", "uninterrupted_irrelevant","interrupted",
+  //   "uninterrupted", "uninterrupted_irrelevant","interrupted",
+  //   _.sample(["uninterrupted", "uninterrupted_irrelevant","interrupted"])
+  // ])
 
+  critical_trial_order = _.sample([[
+    true, true, false, true, false,
+    false, true, false, true, true,
+    false, false, false, true, true,
+    false, true, false, false, true
+  ], [
+    false, false, true, false, true,
+    false, true, true, false, false,
+    true, false, true, true, true,
+    false, true, false, false, true
+  ],[
+    false, true, true, false, false,
+    false, true, false, true, true,
+    false, false, true, false, true,
+    true, true, false, false, true
+  ],[
+    true, false, false, true, false,
+    false, true, true, false, true,
+    true, false, false, true, true,
+    false, true, false, false, true
+  ]
+]).reverse()
+
+// function add(a, b) {
+//     return a + b;
+// }
+// _.map(critical_trial_order, function(x){
+//   console.log(x.reduce(add, 0))
+// })
+
+  shuffled_chapters = _.shuffle(stims_chapters)
+  // shuffled_chapters = stims_chapters
+
+  exp.stims = [firstChapter]
+
+  for (i=0; i<critical_trial_order.length; i++){
+    if (critical_trial_order[i]) {
+      exp.stims.push(
+        _.extend(shuffled_chapters.pop(), {
+          condition: exp.conditions.pop(),
+          query: true
+        })
+      )
+    } else {
+      exp.stims.push(
+        _.extend(filler_chapters.pop(), {
+          condition: "uninterrupted",
+          query: true
+        })
+      )
+    }
+  }
+  exp.stims = exp.stims
+  console.log(exp.stims)
   // console.log(stims_chapters)
 
-
-  exp.stims = [
-    firstChapter,
-    distractor_chapters[0],
-    stims_chapters[0],
-    stims_chapters[1],
-    filler_chapters[0],
-    distractor_chapters[1],
-    stims_chapters[2],
-    stims_chapters[3],
-    filler_chapters[1],
-    distractor_chapters[2],
-    stims_chapters[4],
-    distractor_chapters[3],
-    stims_chapters[5]
-  ]
+  // console.log(stims_chapters.length)
+  // console.log(filler_chapters.length)
+    // firstChapter,
+    // distractor_chapters[0],
+    // stims_chapters[0],
+    // stims_chapters[1],
+    // filler_chapters[0],
+    // distractor_chapters[1],
+    // stims_chapters[2],
+    // stims_chapters[3],
+    // filler_chapters[1],
+    // distractor_chapters[2],
+    // stims_chapters[4],
+    // distractor_chapters[3],
+    // stims_chapters[5]
+  // ]
 
 
   exp.numTrials = stim_properties.length;
@@ -433,8 +518,8 @@ function init() {
 
   exp.structure=[
     // "i0",
-    "practice",
-    "title_page",
+    // "practice",
+    // "title_page",
     "main_chapters",
     "the_end",
     "memory_check",
