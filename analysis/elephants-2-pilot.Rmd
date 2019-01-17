@@ -1,0 +1,302 @@
+---
+title: "elephants-2-pilot"
+author: "MH Tessler"
+date: "1/17/2019"
+output: github_document
+---
+
+[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-2.html)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(viridis)
+library(tidyboot)
+library(ggpirate)
+theme_set(theme_few())
+project.path <- "~/projects/elephants/"
+expt.prefix <- "elephants-2"
+data.path <- paste("mturk", expt.prefix, sep = "/")
+```
+
+### Subject information
+
+```{r}
+df.subj <- read_csv(
+  paste(project.path, data.path, "/", 
+        expt.prefix, "-subject_information.csv", sep = "")
+  ) %>%
+  mutate(language = gsub("\"", "", language),
+         enjoyment = gsub("\"", "", enjoyment),
+         age = gsub("\"", "", age),
+         gender = gsub("\"", "", gender),
+         problems = gsub("\"", "", problems),
+         comments = gsub("\"", "", comments))
+
+df.subj %>%
+  select(workerid, language, enjoyment, age, gender, problems, comments) %>%
+  kable(.)
+```
+
+## Attention check 
+
+### Slider practice
+
+Before the experiment, participants practice usign the sliders to rate 3 category--property pairs:
+
+- dogs bark (coded as correct if x > 0.5)
+- birds are male (coded as correct if 0.25 < x < 0.75)
+- ticks carry lyme disease (coded as correct if x < 0.50)
+
+Several (9) participants rated % of ticks with Lyme disease as > 50% (but got other two slider questions correct). Not excluding anyone using this metric.
+
+### Memory check
+
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+
+
+```{r}
+df.attn <- read_csv(
+  paste(project.path, data.path, "/", 
+        expt.prefix, "-catch_trials.csv", sep = "")
+  ) %>%
+  mutate(property = gsub("\"", "", property),
+         condition = gsub("\"", "", condition))
+
+# slider bar check
+
+workers.fail.sliders <- df.attn %>% 
+  filter(condition == "practice") %>%
+  mutate(correct = case_when(
+    property == "dogs bark" ~ response > 0.5,
+    property == "birds are male" ~ response > 0.25 && response < 0.75,
+    property == "ticks carry lyme disease" ~ response < 0.5
+  )) %>%
+  group_by(workerid) %>% 
+  summarize(not_all_correct = sum(correct) < 3,
+            not_two_correct = sum(correct) < 2) %>%
+  filter(not_two_correct) %>%
+  pull(workerid)
+
+# memory check data
+df.mmry <- df.attn %>%
+  filter(condition == "memory_check") %>%
+  mutate(correct = as.numeric(correct)) %>%
+  #filter(correct != -1) %>% # remove explanations
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`, 
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits) 
+
+workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
+
+ggplot(df.mmry, aes( x = n_correct ))+
+  geom_bar()+
+  xlab("n correctly recognized (or correctly rejected)")+
+  scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  ylab("n participants")
+
+df.mmry %>%
+  kable(.)
+```
+
+
+### Explanations of task
+
+```{r}
+df.expln <- df.attn %>%
+  filter(correct == -1) 
+
+df.expln %>%
+  select(workerid, property) %>%
+  rename(explanation = property) %>%
+  kable(.)
+```
+
+## Trial data
+
+Removing participants who got fewer than 7 correct on memory check.
+
+```{r}
+df.trials <- left_join(
+    read_csv(
+    paste(project.path, data.path, "/", 
+          expt.prefix, "-trials.csv", sep = "")
+    ) %>% 
+    mutate(
+      page_type = gsub("\"", "", page_type),
+      trial_type = gsub("\"", "", trial_type),
+      kind = gsub("\"", "", kind),
+      #generic = gsub("\"", "", generic),
+      page_content = gsub("\"", "", page_content),
+      predicate_1 = gsub("\"", "", predicate_1),
+      predicate_2 = gsub("\"", "", predicate_2),
+      #verb = gsub("\"", "", verb),
+      chapter = gsub("\"", "", chapter),
+      condition = gsub("\"", "", condition),
+      memory_fail = workerid %in% workers.fail.memory
+      ),
+    df.mmry %>% select(workerid, n_correct)
+)
+
+df.query <- df.trials %>%
+  filter(page_type == "query")
+```
+
+## participant responses
+ 
+collapsed across trials
+
+- fill = number of correct responses on the memory check (out of 10)
+- facet = particiapnts
+
+```{r}
+df.query  %>%
+  ggplot(., aes( x = response, fill = n_correct ))+
+  geom_histogram()+
+  facet_wrap(~workerid)+
+  scale_fill_viridis()+
+  scale_x_continuous(breaks = c(0, 0.5, 1))
+```
+
+## filler trials
+
+these used quantifiers (and thus we have strong idea about literal meaning)
+
+- "no Xs are poisonous to lorches"
+- "some build permanent structures"
+- "all have hollow bones"
+- "all aliens love Zorxon"
+- "no storms (or few) on Dax result in permanent damage..."
+
+```{r}
+df.query.filler <- df.query %>%
+  filter(!memory_fail) %>%
+  filter(trial_type == "filler") %>%
+  select(workerid, condition, chapter_num, rt, trial_type, predicate_1, page_type, response)
+
+df.query.filler  %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~predicate_1 + condition)
+```
+
+## critical trials (collapsed across item)
+
+```{r}
+df.query.critical <- df.query %>%
+  filter(!memory_fail) %>%
+  select(workerid, condition, chapter_num, rt, 
+         trial_type, predicate_1, page_type, response, memory_fail) %>%
+  filter(trial_type == "critical") %>%  
+  mutate(condition = factor(condition, levels = c("uninterrupted_irrelevant", "uninterrupted"),
+                            labels = c("..Africa", "..Africa and Asia")))
+
+df.query.critical %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~condition)
+```
+
+#### bootstrapped 95% confidence intervals
+
+```{r fig.width = 4, fig.height = 3}
+df.bs.query.critical <- df.query.critical %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = response)
+
+df.bs.query.critical %>%
+  ggplot(., aes( x = "manipulation", fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()
+```
+
+### By-item averages
+
+
+N's per item X condition
+
+```{r}
+df.query.critical %>%
+  filter(!memory_fail) %>%
+  ungroup() %>%
+  group_by(condition, predicate_1) %>%
+  count() %>%
+  spread(condition, n) %>% kable()
+```
+
+Pirate plots
+
+```{r}
+df.query.critical %>%
+  filter(!memory_fail) %>%
+  ggplot(., aes( x = condition, fill = condition, y = response))+
+  geom_pirate(aes(color = condition, fill = condition),
+              violins = F)+
+  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  facet_wrap(~predicate_1, nrow = 2)+
+  ylab("% Africa")+
+  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+
+
+95% CIs
+
+```{r}
+df.bs.crit.item <- df.query.critical %>%
+  filter(!memory_fail) %>%
+  group_by(condition, predicate_1) %>%
+  tidyboot_mean(column = response)
+
+df.bs.crit.item %>%
+  ggplot(., aes( x = predicate_1, fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
+  xlab("item")
+```
+
+By item histograms
+
+## first trial
+
+```{r}
+df.query.critical %>%
+  group_by(workerid, condition) %>%
+  mutate(first_trial  = min(chapter_num),
+         is_first = chapter_num == first_trial) %>%
+  filter(is_first) %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  xlim(0, 1)+
+  facet_wrap(~condition)
+```
+
+```{r}
+df.query.critical %>%
+  group_by(workerid, condition) %>%
+  mutate(first_trial  = min(chapter_num),
+         is_first = chapter_num == first_trial) %>%
+  filter(is_first) %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = response) %>%
+  ggplot(., aes( x = "manipulation", fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()
+```
+
