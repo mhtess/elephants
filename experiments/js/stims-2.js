@@ -314,7 +314,7 @@ var stims_chapters = [
     // },
     query: true,
     critical: true,
-    kind: "fengnors",
+    kind: "fengnor mated pairs",
     property1: "build nests in gluers",
     property2: "build nests in droops",
     type: "critical"
