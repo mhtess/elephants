@@ -349,8 +349,8 @@ var stims_chapters = [
       "and big insects. In the winter, they migrate south from Dodi to Benli",
     ],
     continuation: {
-      critical: "and fly only at night.",
-      filler: "and north from Gomi to Caro."
+      critical: "and north from Gomi to Caro.",
+      filler: "and fly only at night."
     },
     // continuation: {
     //   critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
