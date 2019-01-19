@@ -14,3 +14,9 @@
 - 10 critical trials: 5 conjunction relevant, 5 conjunction irrelevant (within item randomization)
 - randomize order of chapters
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-2.html)
+
+2. Elephants-3
+- change "ticks carry lyme disease" to get "cats get cancer"
+- enrich chapter to provide more context for the mutual exclusivity
+- ask about both properties
+- [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
