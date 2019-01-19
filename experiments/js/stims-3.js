@@ -51,7 +51,7 @@ var filler_chapters = [
       " or result in permanent damage to the plants and animals on Dax."
     ],
     critical: false,
-    quantifier: "none",
+    quantifier: "almost none",
     kind: "ice storms on Dax",
     property1: "result in permanent damage to the plants and animals on Dax",
     property2: "last a long time",
@@ -102,117 +102,124 @@ var filler_chapters = [
     condition: "uninterrupted"
   },
   {
-    title: "Plovs",
-    main_text: [
-      "Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent",
-      " years have migrated to continent Caro. When they migrated to Caro, they intruded upon territory of",
-      "  other creatures and struggled to find a new home. Now, they live quite happily near the water",
-      " and very seldom are attacked by other creatures."
-    ],
-    critical: false,
-    kind: "plovs",
-    property1: "live near the water",
-    property1: "are attacked by other creatures",
-    type: "filler"
+      title: "Plovs",
+      main_text: [
+  	"Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent",
+  	"years have migrated to the continent Caro. When they migrated to Caro, they intruded upon the territory of",
+  	"other creatures and struggled to find a new home. Now, they live quite happily near the water",
+  	" and very seldom are attacked by other creatures."
+      ],
+      critical: false,
+      kind: "plovs",
+      property1: "are attacked by other creatures",
+      property1: false,
+      type: "filler",
+      quantifier: "few"
   },
   {
-    title: "Yomis",
-    main_text: [
-        "Yomis are small insect-like creatures that like to live in the borderland",
-        "woodlands. They often fly towards the mountains in search of food ",
-        "but they need to be careful of their natural predators, turmens."
-    ],
-    critical: false,
-    kind: "yomis",
-    property1: "like to live in the borderland woodlands",
-    property2: "fly into the mountains",
-    type: "filler",
-    condition: "uninterrupted"
+      title: "Yomis",
+      main_text: [
+          "Yomis are small insect-like creatures. They all live in the borderland",
+          "woodlands. They often fly towards the mountains in search of food ",
+          "but they need to be careful of their natural predators, turmens."
+      ],
+      critical: false,
+      kind: "yomis",
+      property1: "live in the borderland woodlands",
+      property2: false,
+      type: "filler",
+      condition: "single",
+      quantifier: "all"
   },
   {
-    title: "Mupors",
-    main_text: [
-        "Mupors are very social creatures. They live in extended family groups ",
-        "consisting of multiple generations. They build large triangular rebos ",
-        "made of clay and grass, and they often enlarge their rebos in the spring."
-    ],
-    critical: false,
-    kind: "mupors",
-    property1: "live in extended family groups",
-    property2: "build large rebos",
-    type: "filler",
-    condition: "uninterrupted"
+      title: "Mupors",
+      main_text: [
+          "Mupors are very social creatures. They live in extended family groups ",
+          "consisting of multiple generations. Most of them build large triangular rebos ",
+          "made of clay and grass, and they often enlarge their rebos in the spring."
+      ],
+      critical: false,
+      kind: "mupors",
+      property1: "build large triangular rebos",
+      property2: false,
+      type: "filler",
+      condition: "single",
+      quantifier: "most"
   },
-
   {
-    title: "Apaffs",
-    main_text: [
+      title: "Apaffs",
+      main_text: [
         "Apaffs are a nuisance for the aliens. They make burrows everywhere",
-        "including in the middle of farmland and in front of their houses. But sometimes the aliens find apaffs",
+        "including in the middle of farmland and in front of their houses. But some aliens find apaffs",
         "cute, and even like to keep them as pets."
-    ],
-    critical: false,
-    kind: "apaffs",
-    property1: "make burrows",
-    property2: false,
-    type: "filler",
-    condition: "uninterrupted"
+      ],
+      critical: false,
+      kind: "aliens",
+      property1: "find apaffs cute and keep them as pets",
+      property2: false,
+      type: "filler",
+      condition: "single",
+      quantifier: "some"
   },
   {
-    title: "Supools",
-    main_text: [
-        "Supools are the biggest creatures on Dax. They live in the oceans and ",
-        "live for a very long time. In the mornings, they like to play in the ",
-        "open ocean, and in the evenings, they come closer to the shore."
-    ],
-    critical: false,
-    kind: "supools",
-    property1: "live in the oceans",
-    property2: "like to play in the mornings",
-    type: "filler",
-    condition: "uninterrupted"
+      title: "Supools",
+      main_text: [
+          "Supools are the biggest creatures on Dax. They live in the oceans and ",
+          "most of them live for a very long time. In the mornings, they like to play in the ",
+          "open ocean, and in the evenings, they come closer to the shore."
+      ],
+      critical: false,
+      kind: "supools",
+      property1: "live for a very long time",
+      property2: false,
+      type: "filler",
+      condition: "single",
+      quantifier: "most"
   },
   {
-    title: "Zorf the mapmaker",
-    main_text: [
-        "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
-        "from place to place, but the most popular way is through tunnels. The aliens use the tunnels to get",
-        "to work and school."
-    ],
-    critical: false,
-    kind: "aliens",
-    property1: "use the tunnels",
-    property2: false,
-    type: "filler",
-    condition: "uninterrupted"
+      title: "Zorf the mapmaker",
+      main_text: [
+          "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
+          "from place to place, but the most popular way is through tunnels. All of the aliens use the tunnels",
+          "to get around town."
+      ],
+      critical: false,
+      kind: "aliens",
+      property1: "use the tunnels to get around town",
+      property2: false,
+      type: "filler",
+      condition: "single",
+      quantifier: "all"
   },
   {
-    title: "Wopis",
-    main_text: [
-        "Wopis are extremely rare creatures. They only live in the desert and ",
-        "they are very hard to find. Wopis sleep during the day to avoid ",
-        "the heat, and look for food at night when it's cool."
-    ],
-    critical: false,
-    kind: "wopis",
-    property1: "are hard to find",
-    property2: "sleep during the day",
-    type: "filler",
-    condition: "uninterrupted"
+      title: "Wopis",
+      main_text: [
+          "Wopis are extremely rare creatures. They only live in the desert and ",
+          "they all are very hard to find. Wopis sleep during the day to avoid ",
+          "the heat, and look for food at night when it's cool."
+      ],
+      critical: false,
+      kind: "wopis",
+      property1: "are very hard to find",
+      property2: false,
+      type: "filler",
+      condition: "single",
+      quantifier: "all"
   },
   {
-    title: "Nannus",
-    main_text: [
-        "Nannus only feed on lodeks, which are very rare flowers. Lodeks only ",
-        "bloom for one day a year, and they have purple petals. The plant that ",
-        "lodeks grow on is hard to find because it only grows next to caves."
-    ],
-    critical: false,
-    kind: "lodeks",
-    property1: "only bloom for one day a year",
-    property2: "have purple petals",
-    type: "filler",
-    condition: "uninterrupted"
+      title: "Nannus",
+      main_text: [
+          "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
+          "bloom for one day a year, and most have purple petals. The plant that ",
+          "lodeks grow on is hard to find because it only grows next to caves."
+      ],
+      critical: false,
+      kind: "lodeks",
+      property1: "have purple petals",
+      property2: false,
+      type: "filler",
+      condition: "single",
+      quantifier: "most"
   }
 ]
 
