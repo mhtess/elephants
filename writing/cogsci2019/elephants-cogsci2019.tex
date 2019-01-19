@@ -24,6 +24,7 @@
 \documentclass[10pt,letterpaper]{article}
 
 \usepackage{cogsci}
+\usepackage{color}
 
 %\cogscifinalcopy % Uncomment this line for the final submission 
 
@@ -61,7 +62,7 @@
 \newcommand{\denote}[1]{\mbox{ $[\![ #1 ]\!]$}}
 \newcommand{\red}[1]{{\textcolor{Red}{#1}}}
 
-\title{Elephants live in Africa and Asia}
+\title{Incremental understanding of conjunctive generic sentences}
  
 \author{{\large \bf Michael Henry Tessler (tessler@mit.edu)} \\
   Department of Brain and Cognitive Sciences, MIT \\
@@ -84,6 +85,26 @@ semantics; pragmatics; incremental processing; generics
 
 
 \section{Introduction}
+
+Much of what we come to learn about the world comes not from direct experience but from information conveyed to us from others, often in the form of linguistic utterances. 
+``Elephants eat 300 lb. of a food in a day'' succinctly conveys generalizable knowledge that extends beyond any specific context (e.g., it could apply to any elephant, any day of the week). 
+This kind of utterance is called \emph{generic} and is the foremost case study of rich, abstract knowledge conveyed in simple utterances.
+Understanding how generic language updates beliefs holds the key to understanding how young children build rich, intuitive theories \cite{Gelman2009}. 
+
+Generic sentences pose a number of philosophical challenges that have made it very difficult to develop a unified, formal theory of their meaning \cite<for useful reviews, see>{genericBook, Leslie2008, Nickel2016}. 
+To take but one example: the sentence ``Robins lay eggs'' is believed to be true despite the property only applying to female robins, yet the same logic does not make ``Robins are female'' a true or felicitous utterance. 
+At this point, quantificational accounts (such as that of \citeNP{Cohen1999} where a generic ``Ks F'' means roughly that \emph{most of the relevant Ks F}) appeal to a mechanism to implicitly restrict the ``relevant'' set of robins to be females in the case of a property concerning reproduction. 
+This restriction results from knowledge about the kind of property under consideration (i.e., \emph{laying eggs} has to do with reproduction, so we are only talking about females), but this mechanism is too restrictive when it comes to generics about conjunctive properties such as ``Elephants live in Africa and Asia'': 
+It cannot be the case that most (more than half of) elephants live in Africa and most (more than half of) elephants live in Asia, unless we imagine elephants migrating back-and-forth from continent to continent (i.e,. \emph{international elephants}), which is intuitively implausible \cite{Nickel2008}.
+More generally, a theory of generics need be sufficiently flexible to accommodate property-specific interpretations (e.g., ``Robins lay eggs'' means half of robins lay eggs; ``Dogs get cancer'' means some dogs get cancer; ``Birds fly'' means almost all birds fly) as well as be able to revise those interpretations with new, potentially conflicting evidence (e.g., consider ``Elephants live in Africa''~vs.~``Elephants live in Africa and Asia'').
+
+Recently, \cite{Tessler2019:genLang} proposed a theory of generic language wherein the meaning of a generic is \emph{underspecified} (or., vague) and Bayesian reasoning is used to resolve more precise meanings in context.
+Crucially, this theory does not provide a fixed meaning for generics, but an uncertain one which can be updated as more information is available.
+With prior knowledge suggesting against the existence of international elephants, the mode of \citeA{Tessler2019:genLang} interprets ``Elephants live in Africa and Asia” as meaning that some elephants live in Africa and that different ones live in Asia. 
+Intriguingly, an incremental parsing of the sentence (i.e., upon hearing only that ``Elephants live in Africa'') leads our model to believe that most, possibly all, elephants live in Africa, but when the sentence is completed (``. . . and Asia''), the model nonmonotonically updates its beliefs to the weaker \emph{some elephants live in Africa and others in Asia}. 
+
+%``Lions have manes and give live birth'' wherein the first and second conjuncts apply to distinct subsets (i.e., male lions have manes and female lions give live birth).
+
 
 Extending an analysis of generics to handle complex-predicates poses unique challenges.
 A sentence of the form ``Ks F and G'' introduces an ambiguity:
@@ -121,7 +142,7 @@ Participants were restricted to those with verified U.S. IP addresses and had at
 
 \subsection{Procedure}
 Participants were told they would be reading a storybook and be asked questions at the end of each chapter. 
-Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2003, Cimpian2010} that read: ``Out of all Ks, what percentage do you think F?'', where K represents a category and F a feature. 
+Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2002, Cimpian2010} that read: ``Out of all Ks, what percentage do you think F?'', where K represents a category and F a feature. 
 Responses were recorded using a 101-pt slider bar with end-points labeled 0\% and 100\%, and with the exact value appearing dynamically above the slider. 
 Participants were familiarized with the response variable in a practice trial, where they were asked to report how many dogs bark, birds are male, and ticks carry lyme disease. 
 We used these questions to encourage participants to use the full range of the response scale. 
