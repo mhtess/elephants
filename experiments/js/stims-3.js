@@ -228,7 +228,7 @@ var stims_chapters = [
     title: "Customs and religion",
     main_text: [
       "The aliens are the most intelligent creatures on Dax. They live on all",
-      "continents, and follow various traditions and old customs. They ascribe to the Caboo religion"
+      "continents, and all of them are highly spiritual. They ascribe to the Caboo religion"
     ],
     continuation: {
       // critical: "and the Daith religion. All aliens have the same calendar and celebrate the same new year.",
@@ -245,10 +245,10 @@ var stims_chapters = [
   {
     title: "Glippets",
     main_text: [
-      "Glippets are large creatures, quite intelligent, with a life-span of about sixty years. They live on the warm continent of Caro"
+      "Glippets are large creatures, quite intelligent, with a life-span of about sixty years. They live on the southern continent of Caro"
     ],
     continuation: {
-      critical: "and on the chilly continent of Este.",
+      critical: "and on the northern continent of Este.",
       filler: "and enjoy the sunshine there.",
     },
     // continuation: {
@@ -258,16 +258,16 @@ var stims_chapters = [
     query: true,
     critical: true,
     kind: "glippets",
-    property1: "live in Caro",
-    property2: "live in Este",
+    property1: "live on the continent of Caro",
+    property2: "live on the continent of Este",
     type: "critical"
   },
   {
     title: "Mooks",
     main_text: [
-      "Mooks are ferocious creatures, that one would be wise to not upset. Looking into their eyes should",
-	" be avoided because it can cause seizures in the observer. Because they are very territorial",
-	" creatures, they often use this skill to defend their own territory. Their preferred territories are at the tops of tall mountains",
+      "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes",
+	    "unlike any other continent on Dax. Animals find their own terrority in locations that maximize their",
+	    "chances of survival. Mooks' territories are at the tops of tall mountains",
     ],
     // continuation: {
     //   critical: "and at the bottom of deep canyons. They stalk their prey, sometimes waiting for days to attack.",
@@ -275,20 +275,20 @@ var stims_chapters = [
     // },
     continuation: {
       critical: "and at the bottom of deep canyons.",
-      filler: "and they look for tired animals to hunt."
+      filler: "and one would be wise to keep their distance from them."
     },
     critical: true,
     kind: "mooks",
-    property1: "prefer to have territories at the tops of tall mountains",
-    property2: "prefer to have territories at the bottom of deep canyons",
+    property1: "have territories at the tops of tall mountains",
+    property2: "have territories at the bottom of deep canyons",
     type: "critical"
   },
   {
     title: "Agriculture",
     main_text: [
-      "The soil on the continent of Benli is very fertile, and the aliens have learned to grow many crops. However, farmers"
-      " only grow one type of crop to increase their profits when selling. Their",
-      " farms are very big, often stretching several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
+      "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers"
+      "only grow one type of crop to increase their profits when selling. Their farms are",
+      "very big, often stretching several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
     ],
     continuation: {
       critical: "and burn their fields to plant soroneeks.",
@@ -299,7 +299,7 @@ var stims_chapters = [
     //   filler: "and in the summer watch their fields carefully. In the fall, they harvest and communities will come together to celebrate."
     // },
     critical: true,
-    kind: "farmers",
+    kind: "farmers in the springtime",
     property1: "flood their fields to plant fujusi",
     property2: "burn their fields to plant soroneeks",
     type: "critical"
@@ -308,8 +308,9 @@ var stims_chapters = [
     title: "Fengnors",
     main_text: [
       "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid ",
-      "being seen by larger predators. They scrape the bark off trees to eat. Their mating habits are very complex.",
-      " They mate for life, and the males often bring twigs and leaves to the females during courtship. The mated pairs use these twigs and leaves to build their elaborate nests in gluers"
+      "being seen by larger predators. They scrape the bark off trees to eat. They have highly complex mating",
+      "habits. They mate for life, and the males often bring twigs and leaves to the females during",
+      "courtship. The mated pairs use these twigs and leaves to build their elaborate nests in gluers"
     ],
     continuation: {
       critical: "and in droops.",
@@ -329,9 +330,9 @@ var stims_chapters = [
   {
     title: "Finding food",
     main_text: [
-      "Krens are a tribe of the aliens that do not live on the agricultural continent of Benli. ",
-      "Like most creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with large antlers,",
-      " are a resource for many. Stups roam all over the windy highlands of Dax, far from the oceans. Krens are stup-herders",
+      "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like ",
+      "most creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with large antlers,",
+      "are a resource for all of the krens. Stups roam all over the windy highlands of Dax, far from the oceans. Krens are stup-herders",
       // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
 
     ],
@@ -349,31 +350,32 @@ var stims_chapters = [
     property2: "are fishermen",
     type: "critical"
   },
-  {
-    title: "Migration patterns",
-    main_text: [
-      "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat fish",
-      "and big insects. In the winter, they migrate south from Dodi to Benli",
-    ],
-    continuation: {
-      critical: "and north from Gomi to Caro.",
-      filler: "and fly only at night."
-    },
-    // continuation: {
-    //   critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
-    //   filler: "and north from Gomi to Caro. Lorches pair-bond: Once they choose a mate, they stay with them for life. "
-    // },
-    critical: true,
-    kind: "lorches",
-    property1: "migrate south from Dodi to Benli",
-    property2: "migrate north from Gomi to Caro",
-    type: "critical"
-  },
+  // {
+  //   title: "Migration patterns",
+  //   main_text: [
+  //     "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat fish",
+  //     "and big insects. In the winter, they migrate south from Dodi to Benli",
+  //   ],
+  //   continuation: {
+  //     critical: "and north from Gomi to Caro.",
+  //     filler: "and fly only at night."
+  //   },
+  //   // continuation: {
+  //   //   critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
+  //   //   filler: "and north from Gomi to Caro. Lorches pair-bond: Once they choose a mate, they stay with them for life. "
+  //   // },
+  //   critical: true,
+  //   kind: "lorches",
+  //   property1: "migrate south from Dodi to Benli",
+  //   property2: "migrate north from Gomi to Caro",
+  //   type: "critical"
+  // },
   {
     title: "Reesles",
     main_text: [
-	"Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets but quasi-domensticated animals. ",
-	"They will steal food from you if you are not paying attention. They have special headgear to help other aliens identify their owners. Around their heads, they wear giant wutsats"
+	     "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets ",
+	 "but quasi-domensticated animals. They will steal food from you if you are not paying attention. They have",
+    "special headgear to help other aliens identify their owners. Around their heads, they wear giant wutsats"
     ],
     continuation: {
       critical: "and krevnors.",
@@ -392,9 +394,9 @@ var stims_chapters = [
   {
     title: "Kweps",
     main_text: [
-      "Kweps hunt in packs. Their rigid pack roles are reflected in everything from sleeping locations to eating habits. ",
-      "Kweps go out at night and look for creatures sleeping at the foot of trees. They",
-      "generally look for creatures sleeping alone, not in groups. Before they hunt, they like to chew on xorfun"
+      "Kweps hunt in packs. Even though they are pack animals, they have highly idiosyncractic ",
+      "food preferences and behaviors. Some of them like to eat apples and others like to eat oranges. When they",
+      "go hunting, they look for creatures sleeping alone, not in groups. Before they hunt, they chew on xorfun"
     ],
     continuation: {
       critical: "and on tunkel.",
@@ -406,15 +408,15 @@ var stims_chapters = [
     // },
     critical: true,
     kind: "kweps",
-    property1: "like to chew on xorfun",
-    property2: "like to chew on tunkel",
+    property1: "chew on xorfun",
+    property2: "chew on tunkel",
     type: "critical"
   },
   {
     title: "Ollers",
     main_text: [
-      "Ollers spend most of their lives in water, but occasionally come on land to gather berries. The tools, like baskets, that ollers use on land ",
-      "are very difficult to make and are passed down from parents to children, so that each family only has one of each kind of tool.",
+      "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land on land ",
+      "but have a difficult time making them and so are passed down from parents to children, so that each family only has one of each kind of tool.",
       " Baby ollers find it very exciting to be on land, but they have trouble walking. While on land, ollers carry their young in guklags"
     ],
     // continuation: {
