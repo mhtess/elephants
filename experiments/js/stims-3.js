@@ -60,8 +60,8 @@ var filler_chapters = [
   {
     title: "Morseths",
     main_text: [
-      "The morseth is an animal that lives part of its life in the sea and part of its life on land. Morseths come",
-      " on land to find mates and to bury their dead. Some morseths build ",
+      "The morseth is an animal that lives part of its life in the sea and part of its life on land. Most morseths ",
+      "come on land to find mates and to bury their dead. Most morseths build ",
       "permanent structures called fendles in order to bury their dead kin",
       "and fendles are usually made out of wood."
     ],
@@ -70,19 +70,19 @@ var filler_chapters = [
     type: "filler",
     kind: "morseths",
     property1: "build permanent structures called fendles",
-    property2: false,
+    property2: "come on land to find mates",
   },
   {
     title: "Kazzes",
     main_text: [
-      "Kazzes are a kind of plant that grow all over Dax. Some produce fruit in the springtime, but the",
-      "  fruits are poisonous to animals. Only lorches can eat the kazzes ",
-      " and do so quite frequently. Kazzes can be very tasty."
+      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the",
+      " fruit is poisonous to animals. No feps eat kazzes nor ",
+      " do they come close. Kazzes can be highly toxic."
     ],
     critical: false,
-    kind: "kazzes",
-    property1: "are poisonous to lorches",
-    property2: false,
+    kind: "feps",
+    property1: "eat kazzes",
+    property2: "come close to kazzes",
     type: "filler",
     quantifier: "none"
   },
@@ -90,13 +90,13 @@ var filler_chapters = [
     title: "Wint of the Mountains",
     main_text: [
         "Wint lived a long time ago in the mountains. He loved to travel, and ",
-        "would often go as far as the oceans. But all aliens remember Wint ",
-        "because he was the one that found the lost city of Baff."
+        "would often go as far as the oceans. But all aliens remember Wint and ",
+        "admire him because he was the one that found the lost city of Baff."
     ],
     critical: false,
     kind: "aliens",
     property1: "remember Wint",
-    property2: false,
+    property2: "admire Wint",
     quantifier: "all",
     type: "filler",
     condition: "uninterrupted"
@@ -266,8 +266,8 @@ var stims_chapters = [
     title: "Mooks",
     main_text: [
       "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes",
-	    "unlike any other continent on Dax. Animals find their own terrority in locations that maximize their",
-	    "chances of survival. Mooks' territories are at the tops of tall mountains",
+	    "unlike any other continent on Dax. Animals find terrority in locations that maximize their chances",
+	    "of survival. Mooks' territories are at the tops of tall mountains",
     ],
     // continuation: {
     //   critical: "and at the bottom of deep canyons. They stalk their prey, sometimes waiting for days to attack.",
@@ -286,8 +286,8 @@ var stims_chapters = [
   {
     title: "Agriculture",
     main_text: [
-      "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers"
-      "only grow one type of crop to increase their profits when selling. Their farms are",
+      "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers only grow",
+      "one type of crop to increase their profits when selling. Their farms are",
       "very big, often stretching several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
     ],
     continuation: {
@@ -308,9 +308,9 @@ var stims_chapters = [
     title: "Fengnors",
     main_text: [
       "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid ",
-      "being seen by larger predators. They scrape the bark off trees to eat. They have highly complex mating",
-      "habits. They mate for life, and the males often bring twigs and leaves to the females during",
-      "courtship. The mated pairs use these twigs and leaves to build their elaborate nests in gluers"
+      "being seen by larger predators. They scrape the bark off trees to eat. They have highly complex",
+      "mating habits. They mate for life, and the males often bring twigs and leaves to the females during",
+      "courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests in gluers"
     ],
     continuation: {
       critical: "and in droops.",
@@ -332,9 +332,8 @@ var stims_chapters = [
     main_text: [
       "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like ",
       "most creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with large antlers,",
-      "are a resource for all of the krens. Stups roam all over the windy highlands of Dax, far from the oceans. Krens are stup-herders",
+      "are a resource for all of the krens. Stups roam all over the windy highlands of Dax, far from the oceans. Krens are stup-herders"
       // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
-
     ],
     continuation: {
       critical: "and fishermen.",
@@ -350,26 +349,26 @@ var stims_chapters = [
     property2: "are fishermen",
     type: "critical"
   },
-  // {
-  //   title: "Migration patterns",
-  //   main_text: [
-  //     "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat fish",
-  //     "and big insects. In the winter, they migrate south from Dodi to Benli",
-  //   ],
-  //   continuation: {
-  //     critical: "and north from Gomi to Caro.",
-  //     filler: "and fly only at night."
-  //   },
-  //   // continuation: {
-  //   //   critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
-  //   //   filler: "and north from Gomi to Caro. Lorches pair-bond: Once they choose a mate, they stay with them for life. "
-  //   // },
-  //   critical: true,
-  //   kind: "lorches",
-  //   property1: "migrate south from Dodi to Benli",
-  //   property2: "migrate north from Gomi to Caro",
-  //   type: "critical"
-  // },
+  {
+    title: "Lorches",
+    main_text: [
+      "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat fish",
+      "and big insects, and spend long stretches of time soaring through the sky. They have soft claws"
+    ],
+    continuation: {
+      critical: "and hard claws.",
+      filler: "and fly only at night."
+    },
+    // continuation: {
+    //   critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
+    //   filler: "and north from Gomi to Caro. Lorches pair-bond: Once they choose a mate, they stay with them for life. "
+    // },
+    critical: true,
+    kind: "lorches",
+    property1: "have soft claws",
+    property2: "have hard claws",
+    type: "critical"
+  },
   {
     title: "Reesles",
     main_text: [
@@ -424,13 +423,13 @@ var stims_chapters = [
     //   filler: "and are very protective. Ollers are a playful creature, but they do not take well to strangers when they are carrying their babies."
     // },
     continuation: {
-      critical: "and in pundegs.",
+      critical: "and in trullets.",
       filler: "and are very protective."
     },
     critical: true,
     kind: "ollers",
     property1: "carry their young in guklags",
-    property2: "carry their young in pundegs",
+    property2: "carry their young in trullets",
     type: "critical"
   }
 ]

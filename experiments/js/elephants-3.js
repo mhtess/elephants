@@ -17,6 +17,14 @@ function make_slides(f) {
     }
   });
 
+  slides.instructions = slide({
+    name : "instructions",
+    button : function() {
+      exp.go(); //use exp.go() if and only if there is no "present" data.
+    }
+  });
+
+
   slides.practice = slide({
     name : "practice",
     start: function() {
@@ -25,12 +33,14 @@ function make_slides(f) {
       this.init_sliders(1);
       this.init_sliders(2);
       this.init_sliders(3);
+      this.init_sliders(4);
       practice_questions = [
         "<strong>Out of all dogs</strong>, what percentage do you think bark?\n",
         "<strong>Out of all birds</strong>, what percentage do you think are male?\n",
-        "<strong>Out of all ticks</strong>, what percentage do you think carry Lyme Disease?\n"
+        "<strong>Out of all cats</strong>, what percentage do you think get cancer?\n",
+        "<strong>Out of all lions</strong>, what percentage do you think lay eggs?\n"
       ]
-      for (i=1;i<4; i++){
+      for (i=1;i<5; i++){
         $("#query_p"+ i).html(practice_questions[i-1])
       }
       exp.sliderPractice = [-1,-1,-1];
@@ -72,11 +82,20 @@ function make_slides(f) {
         exp.catch_trials.push({
           condition: "practice",
           check_index: 2,
-          property: "ticks carry lyme disease",
+          property: "cats get cancer",
           tested_on: -1,
           response: exp.sliderPractice[2],
           correct:  (exp.sliderPractice[2] < 0.50)
         })
+        exp.catch_trials.push({
+          condition: "practice",
+          check_index: 2,
+          property: "lions lay eggs",
+          tested_on: -1,
+          response: exp.sliderPractice[3],
+          correct:  (exp.sliderPractice[3] < 0.1)
+        })
+
 
         exp.go(); //use exp.go() if and only if there is no "present" data.
       }
@@ -101,16 +120,18 @@ function make_slides(f) {
         console.log(stim)
         $(".err").hide()
         $(".slider_instruct").hide()
-        $(".query").hide()
-        $(".slider_number").hide()
-        $(".slider_table").hide()
+        $("#question_material").hide()
+        // $(".query").hide()
+        // $(".slider_number").hide()
+        // $(".slider_table").hide()
+
         $(".storyText").css("text-align-last", "justify")
         this.startTime = Date.now();
         this.stim = stim
         this.chapter_length = stim.main_text.length;
 
         this.page = 0
-        exp.sliderPost = -99;
+        exp.sliderPost = [-99, -99];
 
         $(".chapterTitle").html("<u>Chapter "+ (this.trial_num+1) +": "+stim.title+"</u>")
         console.log("chapter length = " + this.chapter_length)
@@ -121,9 +142,13 @@ function make_slides(f) {
       present_page : function(){
         $(".err").hide()
         $(".slider_instruct").hide()
-        $(".query").hide()
+        $("#question_material").hide()
+        $("#text_material").show()
+
+        // $(".query").hide()
         $(".slider_number").hide()
         $(".slider_table").hide()
+
         console.log("page = " + this.page)
         if (this.page > 0) {
           $(".chapterTitle").html('')
@@ -176,34 +201,52 @@ function make_slides(f) {
       // this gets run on pages where we ask questions
       present_question: function(){
         $(".slider_instruct").show()
+        $("#question_material").show()
+        $("#text_material").hide()
+        // $(".query").hide()
+        // $(".slider_number").hide()
+        // $(".slider_table").hide()
 
-        var query_prompt = "<strong>Out of all "  + this.stim.kind + "</strong>, what percentage do you think " + this.stim.property1 + "?\n";
-        $(".query").html(query_prompt);
+        this.question_order = _.sample(["same", "reverse"])
+
+        var query_prompt0 = "<strong>Out of all "  + this.stim.kind +
+          "</strong>, what percentage do you think <strong>" + this.stim.property1 + "</strong>?\n";
+
+        var query_prompt1 = "<strong>Out of all "  + this.stim.kind +
+          "</strong>, what percentage do you think <strong>" + this.stim.property2 + "</strong>?\n";
+
+        $("#query0").html(this.question_order == "same" ? query_prompt0 : query_prompt1);
+        $("#query1").html(this.question_order == "same" ? query_prompt1 : query_prompt0);
+
         $(".storyText").html('');
         $(".query").show()
         $(".slider_number").show()
         $(".slider_table").show()
-        this.init_sliders();
-        exp.sliderPost = -1;
-        $(".slider_number").html("---")
+
+        this.init_sliders(0);
+        this.init_sliders(1);
+        exp.sliderPost = [-1, -1];
+        $("#slider_number0").html("---")
+        $("#slider_number1").html("---")
+
         this.stim.query = false;
         if (this.stim.condition == "interrupted") { this.page -- }
         // console.log(this.page)
       },
 
-      init_sliders : function() {
-          utils.make_slider("#single_slider", this.make_slider_callback());
+      init_sliders : function(i) {
+          utils.make_slider("#single_slider" + i, this.make_slider_callback(i));
       },
-      make_slider_callback : function() {
+      make_slider_callback : function(i) {
         return function(event, ui) {
-          exp.sliderPost = ui.value;
-          $(".slider_number").html(Math.round(exp.sliderPost*100) + "%")
+          exp.sliderPost[i] = ui.value;
+          $("#slider_number" + i ).html(Math.round(exp.sliderPost[i]*100) + "%")
         };
       },
 
       button : function() {
 
-        if (exp.sliderPost == -1) {
+        if (exp.sliderPost.indexOf(-1) > -1) {
           $(".err").show();
         } else {
           // if ((this.page == this.chapter_length)&& this.stim.query) {this.page++}
@@ -241,11 +284,13 @@ function make_slides(f) {
           "chapter_num": this.trial_num,
           "page_num": this.page,
           "page_content": $(".storyText").html(),
-          "response" : exp.sliderPost,
+          "response_1" : this.question_order == "same" ? exp.sliderPost[0] : exp.sliderPost[1],
+          "response_2" : this.question_order == "same" ? exp.sliderPost[1] : exp.sliderPost[0],
           "rt":this.rt,
           "kind": this.stim.kind,
           "predicate_1": this.stim.property1,
           "predicate_2": this.stim.property2,
+          "question_order": this.question_order,
           "chapter": this.stim.title,
           "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
           //,
@@ -435,7 +480,7 @@ function init() {
   ],[
     false, "filler", true, false, false,
     true, "filler",  false, true, "filler",
-    "filler",  false, true, false, true,
+    "filler",  false, true, "filler", true,
     // true, true, false, false, true
   ],[
     true, "filler",  false, true, false,
@@ -449,7 +494,7 @@ function init() {
 
 // 6 fillers with quantifiers
 fillers = _.shuffle(filler_chapters.slice(0, 5))
-// console.log(fillers)
+console.log(fillers)
 
 
 // function add(a, b) {
@@ -460,9 +505,11 @@ fillers = _.shuffle(filler_chapters.slice(0, 5))
 // })
 
   shuffled_chapters = _.shuffle(stims_chapters)
+  console.log(shuffled_chapters)
   // shuffled_chapters = stims_chapters
 
-  exp.stims = [firstChapter]
+  // exp.stims = [firstChapter]
+  exp.stims = []
 
   for (i=0; i<critical_trial_order.length; i++){
     if (critical_trial_order[i] == "filler") {
@@ -533,6 +580,7 @@ fillers = _.shuffle(filler_chapters.slice(0, 5))
 
   exp.structure=[
     "i0",
+    "instructions",
     "practice",
     "title_page",
     "main_chapters",
