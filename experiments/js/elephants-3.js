@@ -35,10 +35,10 @@ function make_slides(f) {
       this.init_sliders(3);
       this.init_sliders(4);
       practice_questions = [
-        "<strong>Out of all dogs</strong>, what percentage do you think bark?\n",
-        "<strong>Out of all birds</strong>, what percentage do you think are male?\n",
-        "<strong>Out of all cats</strong>, what percentage do you think get cancer?\n",
-        "<strong>Out of all lions</strong>, what percentage do you think lay eggs?\n"
+        "What percentage of <strong>dogs</strong> do you think <strong>bark</strong>?\n",
+        "What percentage of <strong>birds</strong> do you think <strong>are male</strong>?\n",
+        "What percentage of <strong>cats</strong> do you think <strong>get cancer</strong>?\n",
+        "What percentage of <strong>lions</strong> do you think <strong>lay eggs</strong>?\n"
       ]
       for (i=1;i<5; i++){
         $("#query_p"+ i).html(practice_questions[i-1])
@@ -209,11 +209,11 @@ function make_slides(f) {
 
         this.question_order = _.sample(["same", "reverse"])
 
-        var query_prompt0 = "<strong>Out of all "  + this.stim.kind +
-          "</strong>, what percentage do you think <strong>" + this.stim.property1 + "</strong>?\n";
+        var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
+          "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";
 
-        var query_prompt1 = "<strong>Out of all "  + this.stim.kind +
-          "</strong>, what percentage do you think <strong>" + this.stim.property2 + "</strong>?\n";
+        var query_prompt1 = "What percentage of <strong>"  + this.stim.kind +
+          "</strong> do you think <strong>" + this.stim.property2 + "</strong>?\n";
 
         $("#query0").html(this.question_order == "same" ? query_prompt0 : query_prompt1);
         $("#query1").html(this.question_order == "same" ? query_prompt1 : query_prompt0);
@@ -439,7 +439,7 @@ function init() {
 
   repeatWorker = false;
   (function(){
-      var ut_id = "mht-eleph-20190114";
+      var ut_id = "mht-eleph-20190121";
       if (UTWorkerLimitReached(ut_id)) {
         $('.slide').empty();
         repeatWorker = true;
@@ -457,8 +457,12 @@ function init() {
     "uninterrupted", "uninterrupted_irrelevant",
     "uninterrupted", "uninterrupted_irrelevant",
     "uninterrupted", "uninterrupted_irrelevant",
+    "uninterrupted", "uninterrupted_irrelevant",
     "uninterrupted", "uninterrupted_irrelevant"
   ])
+
+  console.log(stims_chapters.length)
+  console.log(filler_chapters.length)
 
   // exp.conditions = _.shuffle([
   //   "uninterrupted", "uninterrupted_irrelevant","interrupted",
@@ -468,24 +472,24 @@ function init() {
   // ])
 
   critical_trial_order = _.sample([[
-    "filler", true, false, "filler", false,
-    "filler", true, false, true, "filler",
-    true, false, "filler",  false, true
+    "filler", true, false, "filler", false, true,
+    "filler", true, false, true, "filler",false,
+    true, false, "filler",  false, true, "filler"
     // false, true, false, false, true
   ], [
-    "filler", false, true, false, "filler",
-    true, "filler",  true, false, false,
-    true, false, true, "filler",  "filler",
+    "filler", false, true, false, "filler",true,
+    "filler", "filler",  true, false, true, "filler",
+    false, true, false, true, "filler", false
     // false, true, false, false, true
   ],[
-    false, "filler", true, false, false,
-    true, "filler",  false, true, "filler",
-    "filler",  false, true, "filler", true,
+    false, "filler", true, false, "filler", false,
+    true, "filler",  false, true, "filler", true,
+    "filler",  false, true, "filler", true, false
     // true, true, false, false, true
   ],[
-    true, "filler",  false, true, false,
-    false, true, "filler", false, "filler",
-    true, "filler", false, true, "filler"
+    true, "filler",  false, true, false, "filler",
+    false, true, "filler", false, "filler", false,
+    true, "filler", false, true, "filler", true
     // false, true, false, false, true
   ]
 ]).reverse()
@@ -493,8 +497,6 @@ function init() {
 // need to decide order of "uninterrupted", "uninterrupted_irrelevant" and "filler"
 
 // 6 fillers with quantifiers
-fillers = _.shuffle(filler_chapters.slice(0, 5))
-console.log(fillers)
 
 
 // function add(a, b) {
@@ -503,9 +505,11 @@ console.log(fillers)
 // _.map(critical_trial_order, function(x){
 //   console.log(x.reduce(add, 0))
 // })
-
+  fillers = _.shuffle(filler_chapters)
   shuffled_chapters = _.shuffle(stims_chapters)
-  console.log(shuffled_chapters)
+  // console.log(shuffled_chapters)
+  // console.log(fillers)
+
   // shuffled_chapters = stims_chapters
 
   // exp.stims = [firstChapter]
@@ -536,7 +540,7 @@ console.log(fillers)
     }
   }
 
-  exp.stims = exp.stims
+  // exp.stims = _.where(exp.stims, {title: "Lorches"})
   console.log(exp.stims)
   // console.log(stims_chapters)
 
@@ -580,7 +584,6 @@ console.log(fillers)
 
   exp.structure=[
     "i0",
-    "instructions",
     "practice",
     "title_page",
     "main_chapters",

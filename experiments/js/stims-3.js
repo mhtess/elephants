@@ -352,11 +352,11 @@ var stims_chapters = [
   {
     title: "Lorches",
     main_text: [
-      "Lorches have massive wingspans and are found on the continents of Dodi and Gomi. They eat fish",
-      "and big insects, and spend long stretches of time soaring through the sky. They have soft claws "
+      "Lorches have massive beaks and are found on the continents of Dodi and Gomi. The two continents",
+      "are quite different in what kinds of animals are available for them to eat. Lorches have long wings "
     ],
     continuation: {
-      critical: "and have hard claws.",
+      critical: "and short wings.",
       filler: "and fly only at night."
     },
     // continuation: {
@@ -365,8 +365,8 @@ var stims_chapters = [
     // },
     critical: true,
     kind: "lorches",
-    property1: "have soft claws",
-    property2: "have hard claws",
+    property1: "have long wings",
+    property2: "have short wings",
     type: "critical"
   },
   {
@@ -457,8 +457,8 @@ var stims_chapters = [
 	    "have special wings that are light but powerful. Batozes have six wings "
 	],
 	continuation: {
-	    critical: "and have seven wings.",
-	    filler: "and have three eyes."
+	    critical: "and seven wings.",
+	    filler: "and three eyes."
 	},
 	critical: true,
 	kind: "batozes",
@@ -474,8 +474,8 @@ var stims_chapters = [
 	    "them among the plants on the forest floor. Kaples have striped fur "
 	],
 	continuation: {
-	    critical: "and have spotted fur.",
-	    filler: "and have long tails."
+	    critical: "and spotted fur.",
+	    filler: "and long tails."
 	},
 	critical: true,
 	kind: "kaples",
@@ -491,8 +491,8 @@ var stims_chapters = [
 	    "backs. Landeks have four horns "
 	],
 	continuation: {
-	    critical: "and have seven horns.",
-	    filler: "and have two tails."
+	    critical: "and seven horns.",
+	    filler: "and two tails."
 	},
 	critical: true,
 	kind: "landeks",
@@ -524,7 +524,7 @@ var stims_chapters = [
 	    "cultivate isooms for food. Isooms produce fruit with bumpy skin "
 	],
 	continuation: {
-	    critical: "and produce fruit with smooth skin.",
+	    critical: "and fruit with smooth skin.",
 	    filler: "and prefer to grow in the shade."
 	},
 	critical: true,
