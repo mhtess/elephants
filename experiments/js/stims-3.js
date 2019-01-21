@@ -111,7 +111,7 @@ var filler_chapters = [
       critical: false,
       kind: "plovs",
       property1: "live in the continent of Aga",
-      property1: "are attacked by other creatures",
+      property2: "are attacked by other creatures",
       type: "filler",
       quantifier: "none"
   },
