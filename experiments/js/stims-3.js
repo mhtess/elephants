@@ -47,11 +47,11 @@ var filler_chapters = [
     title: "Weather",
     main_text: [
       "The weather on Dax is very constant, not changing much from day to day. Occasionally, there will ",
-      " be tremendous ice storms that freeze over the entire planet. These ice storms almost never last long ",
+      " be tremendous ice storms that freeze over the entire planet. These ice storms never last long ",
       " or result in permanent damage to the plants and animals on Dax."
     ],
     critical: false,
-    quantifier: "almost none",
+    quantifier: "none",
     kind: "ice storms on Dax",
     property1: "result in permanent damage to the plants and animals on Dax",
     property2: "last a long time",
@@ -65,7 +65,7 @@ var filler_chapters = [
       "kin, and fendles are usually made out of wood."
     ],
     critical: false,
-    quantifier: "some",
+    quantifier: "most",
     type: "filler",
     kind: "morseths",
     property1: "build permanent structures called fendles",
@@ -104,28 +104,28 @@ var filler_chapters = [
       title: "Plovs",
       main_text: [
   	"Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent",
-  	"years have migrated to the continent Caro. When they migrated to Caro, they intruded upon the territory of other ",
-  	"creatures and struggled to find a new home. Now, they live quite happily near the water and very ",
-  	" seldom are attacked by other creatures."
+  	"years they all have migrated to the continent Caro. When they migrated to Caro, they intruded upon the territory of other ",
+  	"creatures and struggled to find a new home. Now, they live quite happily near the water and are ",
+  	"never attacked by other creatures."
       ],
       critical: false,
       kind: "plovs",
+      property1: "live in the continent of Aga",
       property1: "are attacked by other creatures",
-      property1: false,
       type: "filler",
-      quantifier: "few"
+      quantifier: "none"
   },
   {
       title: "Yomis",
       main_text: [
           "Yomis are small, fast insect-like creatures. They all live in the ",
-          "borderland woodlands. They often fly towards the mountains in search ",
+          "borderland woodlands. They all fly towards the mountains in search ",
           "of food, but they need to be careful of their natural predators, turmens."
       ],
       critical: false,
       kind: "yomis",
       property1: "live in the borderland woodlands",
-      property2: false,
+      property2: "fly towards the mountains in search of food",
       type: "filler",
       condition: "single",
       quantifier: "all"
@@ -135,12 +135,12 @@ var filler_chapters = [
       main_text: [
           "Mupors are very social creatures. They live in extended family groups ",
           "consisting of multiple generations. Most of them build large triangular ",
-          "rebos made of clay and grass, and they often enlarge their rebos in the spring."
+          "rebos made of clay and grass, and most of them enlarge their rebos in the spring."
       ],
       critical: false,
       kind: "mupors",
       property1: "build large triangular rebos",
-      property2: false,
+      property2: "enlarge their rebos in the spring",
       type: "filler",
       condition: "single",
       quantifier: "most"
@@ -149,43 +149,43 @@ var filler_chapters = [
       title: "Apaffs",
       main_text: [
         "Apaffs are a nuisance for the aliens. They make burrows everywhere",
-        "including in the middle of farmland and in front of their houses. But some aliens find apaffs cute, ",
-        "and even like to keep them as pets."
+        "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, ",
+        "and tolerate them to some extent. Some aliens even like to keep them as pets."
       ],
       critical: false,
       kind: "aliens",
-      property1: "find apaffs cute and keep them as pets",
-      property2: false,
-      type: "filler",
-      condition: "single",
-      quantifier: "some"
-  },
-  {
-      title: "Supools",
-      main_text: [
-          "Supools are the biggest creatures on Dax. They live in the oceans and ",
-          "most of them live for a very long time. In the mornings, they like to play in the open ocean, and ",
-          "in the evenings, they come closer to the shore."
-      ],
-      critical: false,
-      kind: "supools",
-      property1: "live for a very long time",
-      property2: false,
+      property1: "find apaffs cute",
+      property2: "tolerate apaffs to some extent",
       type: "filler",
       condition: "single",
       quantifier: "most"
   },
   {
+      title: "Supools",
+      main_text: [
+          "Supools are the biggest creatures on Dax. They all live in the oceans and ",
+          "all of them live for a very long time. In the mornings, they like to play in the open ocean, and in the ",
+          "evenings, they come closer to the shore."
+      ],
+      critical: false,
+      kind: "supools",
+      property1: "live in the oceans",
+      property2: "live for a very long time",
+      type: "filler",
+      condition: "single",
+      quantifier: "all"
+  },
+  {
       title: "Zorf the mapmaker",
       main_text: [
           "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
-          "from place to place, but the most popular way is through tunnels. All of the aliens use the tunnels",
-          "to get around town."
+          "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels",
+          "to get around town from their homes in the residential quarter."
       ],
       critical: false,
-      kind: "aliens",
+      kind: "Astom aliens",
       property1: "use the tunnels to get around town",
-      property2: false,
+      property2: "live in the residential quarter",
       type: "filler",
       condition: "single",
       quantifier: "all"
@@ -199,8 +199,8 @@ var filler_chapters = [
       ],
       critical: false,
       kind: "wopis",
-      property1: "are very hard to find",
-      property2: false,
+      property1: "live in the desert",
+      property2: "are very hard to find",
       type: "filler",
       condition: "single",
       quantifier: "all"
@@ -214,8 +214,8 @@ var filler_chapters = [
       ],
       critical: false,
       kind: "lodeks",
-      property1: "have purple petals",
-      property2: false,
+      property1: "only bloom for one day a year",
+      property2: "have purple petals",
       type: "filler",
       condition: "single",
       quantifier: "most"
