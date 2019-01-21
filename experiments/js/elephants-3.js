@@ -316,20 +316,23 @@ function make_slides(f) {
     name : "memory_check",
     start: function() {
     $(".err").hide()
-     this.tested_properties = [
-       "Krens are stup-herders",
-       "Glippets live in Caro",
-       "The aliens ascribe to the Caboo religion",
-       "Ice storms don't result in permanent damage to the plants and animals on Dax",
-       "Everyone loves Zorxon"
-     ]
+    console.log(exp.memory_properties)
+
+     this.tested_properties = _.map(exp.memory_properties, function(x){
+       var quantifier = x.quantifier ?
+       x.quantfier == "none" ? "no " :
+        x.quantifier + " ": ""
+       return quantifier + x.kind + " " + x.property1
+     })
+     console.log(this.tested_properties)
+
 
      this.catch_properties = [
-       "Lorches have long legs and breathe underwater",
-       "Taifles have gold spots that are sticky",
-       "Dorbs have infected, yellow scales ",
-       "Cranoor is the kind of all beings",
-       "Kweps eat plants"
+       "lorches have long legs and breathe underwater",
+       "taifles have gold spots that are sticky",
+       "dorbs have infected, yellow scales ",
+       "cranoor is the king of all beings",
+       "no kweps eat plants"
      ]
 
      this.check_properties = _.shuffle(_.flatten([this.tested_properties, this.catch_properties]))
@@ -357,41 +360,46 @@ function make_slides(f) {
      }
    },
     button : function() {
-      var checked_options = new Array();
-      var unchecked_options = new Array();
+      if ($("#explanation").val() == "") {
+        $(".err").show()
+      } else {
+        var checked_options = new Array();
+        var unchecked_options = new Array();
 
-      $.each($("input[name='slct1']:checked"), function() {
-        checked_options.push($(this).val());
-      });
+        $.each($("input[name='slct1']:checked"), function() {
+          checked_options.push($(this).val());
+        });
 
-      $.each($("input[name='slct1']:not(:checked)"), function() {
-        unchecked_options.push($(this).val());
-      });
+        $.each($("input[name='slct1']:not(:checked)"), function() {
+          unchecked_options.push($(this).val());
+        });
 
-      for (i=0;i<this.check_properties.length;i++){
-        var p = this.check_properties[i];
-        var tested_on = this.tested_properties.indexOf(p) > -1 ? 1 : 0;
-        var response = checked_options.indexOf(p) > -1 ? 1 : 0;
+        for (i=0;i<this.check_properties.length;i++){
+          var p = this.check_properties[i];
+          var tested_on = this.tested_properties.indexOf(p) > -1 ? 1 : 0;
+          var response = checked_options.indexOf(p) > -1 ? 1 : 0;
+          exp.catch_trials.push({
+            condition: "memory_check",
+            check_index: i,
+            property: p,
+            tested_on: tested_on,
+            response: response,
+            correct: (tested_on == response) ? 1 : 0
+          })
+        }
+
         exp.catch_trials.push({
-          condition: "memory_check",
-          check_index: i,
-          property: p,
-          tested_on: tested_on,
-          response: response,
-          correct: (tested_on == response) ? 1 : 0
+          condition: "explanation",
+          check_index: -1,
+          property: $("#explanation").val(),
+          tested_on: -1,
+          response: -1,
+          correct: -1
         })
+
+        exp.go(); //use exp.go() if and only if there is no "present" data.
       }
 
-      exp.catch_trials.push({
-        condition: "explanation",
-        check_index: -1,
-        property: $("#explanation").val(),
-        tested_on: -1,
-        response: -1,
-        correct: -1
-      })
-
-      exp.go(); //use exp.go() if and only if there is no "present" data.
     }
   });
 
@@ -539,6 +547,8 @@ function init() {
       )
     }
   }
+
+  exp.memory_properties = _.shuffle(exp.stims).slice(0, 5)
 
   // exp.stims = _.where(exp.stims, {title: "Lorches"})
   console.log(exp.stims)
