@@ -144,7 +144,6 @@ function make_slides(f) {
         $(".slider_instruct").hide()
         $("#question_material").hide()
         $("#text_material").show()
-
         // $(".query").hide()
         $(".slider_number").hide()
         $(".slider_table").hide()
@@ -164,38 +163,67 @@ function make_slides(f) {
         // if this.stim.critical {
         // && this.stim.query
 
-        if (this.stim.type == "critical") {
-          if (this.page == this.last_page){
-            console.log('align last page to left')
-            $(".storyText").css("text-align-last", "left")
-            if (this.stim.condition == "uninterrupted") {
-              $(".storyText").html(this.stim.continuation.critical)
-            } else if (this.stim.condition == "uninterrupted_irrelevant") {
-              $(".storyText").html(this.stim.continuation.filler)
-            } else if (this.stim.condition == "interrupted") {
-              if (this.stim.query) {
-                console.log("interupt present question")
-                this.present_question()
-              } else {
-                $(".storyText").html(this.stim.continuation.filler)
-                this.page++
-              }
-            }
+        switch (this.stim.type){
+         case "critical":
+          if (this.page < this.last_page){
+            $(".storyText").html(this.stim.main_text[this.page]);
           } else if (this.page > this.last_page){
             this.present_question()
-          } else {
-            $(".storyText").html(this.stim.main_text[this.page]);
-          }
-        } else { // filler trials
-          if (this.stim.query && this.page == this.last_page){
-            this.present_question()
-          } else {
-            if (this.page == this.last_page - 1){
-              $(".storyText").css("text-align-last", "left")
+          } else if (this.page == this.last_page){
+
+            $(".storyText").css("text-align-last", "left") // align last page to left
+
+            switch (this.stim.condition){
+              case "uninterrupted":
+                $(".storyText").html(this.stim.continuation.critical)
+                break;
+              case "uninterrupted_irrelevant":
+                $(".storyText").html(this.stim.continuation.filler)
+                break;
+              case "interrupted":
+                if (this.stim.query) {
+                  console.log("interupt present question")
+                  this.present_question()
+                } else {
+                  $(".storyText").html(this.stim.continuation.filler)
+                  this.page++
+                }
+                break;
             }
-            $(".storyText").html(this.stim.main_text[this.page]);
+
           }
+          break;
+
+        case "filler": // filler trials
+          switch (this.stim.condition){
+            case "uninterrupted":
+              if (this.stim.query && this.page == this.last_page){
+                this.present_question()
+              } else {
+                if (this.page == this.last_page - 1){
+                  $(".storyText").css("text-align-last", "left")
+                }
+                $(".storyText").html(this.stim.main_text[this.page]);
+              }
+              break;
+            case "interrupted":
+              if (this.stim.query && (this.page == this.last_page - 1)) {
+                this.present_question()
+              } else {
+                if (this.page == this.last_page - 1){
+                  $(".storyText").css("text-align-last", "left")
+                }
+                $(".storyText").html(this.stim.main_text[this.page]);
+                this.page++
+              }
+              break;
+
+          break;
         }
+        break;
+      }
+
+
       },
 
       // this gets run on pages where we ask questions
@@ -460,14 +488,6 @@ function init() {
 
   conditions = ["interrupted", "uninterrupted", "uninterrupted_irrelevant"]
 
-  exp.conditions = _.shuffle([
-    "uninterrupted", "uninterrupted_irrelevant",
-    "uninterrupted", "uninterrupted_irrelevant",
-    "uninterrupted", "uninterrupted_irrelevant",
-    "uninterrupted", "uninterrupted_irrelevant",
-    "uninterrupted", "uninterrupted_irrelevant",
-    "uninterrupted", "uninterrupted_irrelevant"
-  ])
 
   console.log(stims_chapters.length)
   console.log(filler_chapters.length)
@@ -479,28 +499,53 @@ function init() {
   //   _.sample(["uninterrupted", "uninterrupted_irrelevant","interrupted"])
   // ])
 
+
   critical_trial_order = _.sample([[
-    "filler", true, false, "filler", false, true,
-    "filler", true, false, true, "filler",false,
-    true, false, "filler",  false, true, "filler"
-    // false, true, false, false, true
+    false, true, false, false,
+    true, true, false, true,
+    false, true, true ,false,
+    true, false, false, true
   ], [
-    "filler", false, true, false, "filler",true,
-    "filler", "filler",  true, false, true, "filler",
-    false, true, false, true, "filler", false
-    // false, true, false, false, true
+    false, false, true, false,
+    false, true, true, false,
+    true, false, true, true,
+    false, true, false, true
   ],[
-    false, "filler", true, false, "filler", false,
-    true, "filler",  false, true, "filler", true,
-    "filler",  false, true, "filler", true, false
-    // true, true, false, false, true
+    false, true, true, false,
+    true, false, true, true,
+    false, true, false, true,
+    false, false, true, false
   ],[
-    true, "filler",  false, true, false, "filler",
-    false, true, "filler", false, "filler", false,
-    true, "filler", false, true, "filler", true
-    // false, true, false, false, true
+    true, false, false, true,
+    false, true, false, true,
+    true, false, true, false,
+    true, false, false, true
   ]
 ]).reverse()
+
+//   critical_trial_order = _.sample([[
+//     "filler", true, false, "filler", false, true,
+//     "filler", true, false, true, "filler",false,
+//     true, false, "filler",  false, true, "filler"
+//     // false, true, false, false, true
+//   ], [
+//     "filler", false, true, false, "filler",true,
+//     "filler", "filler",  true, false, true, "filler",
+//     false, true, false, true, "filler", false
+//     // false, true, false, false, true
+//   ],[
+//     false, "filler", true, false, "filler", false,
+//     true, "filler",  false, true, "filler", true,
+//     "filler",  false, true, "filler", true, false
+//     // true, true, false, false, true
+//   ],[
+//     true, "filler",  false, true, false, "filler",
+//     false, true, "filler", false, "filler", false,
+//     true, "filler", false, true, "filler", true
+//     // false, true, false, false, true
+//   ]
+// ]).reverse()
+
 
 // need to decide order of "uninterrupted", "uninterrupted_irrelevant" and "filler"
 
@@ -527,7 +572,7 @@ function init() {
     if (critical_trial_order[i] == "filler") {
       exp.stims.push(
         _.extend(fillers.pop(), {
-          condition: "uninterrupted",
+          condition: "interrupted",
           query: true
         })
       )
@@ -541,7 +586,8 @@ function init() {
     } else {
       exp.stims.push(
         _.extend(shuffled_chapters.pop(), {
-          condition: "uninterrupted_irrelevant",
+          // condition: "uninterrupted_irrelevant",
+          condition: "interrupted",
           query: true
         })
       )
@@ -593,9 +639,9 @@ function init() {
   exp.data_trials = [];
 
   exp.structure=[
-    "i0",
-    "practice",
-    "title_page",
+    // "i0",
+    // "practice",
+    // "title_page",
     "main_chapters",
     "the_end",
     "memory_check",
