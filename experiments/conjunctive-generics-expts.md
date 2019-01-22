@@ -16,7 +16,9 @@
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-2.html)
 
 2. Elephants-3
-- change "ticks carry lyme disease" to get "cats get cancer"
+- change "ticks carry lyme disease" to get "cats get cancer", add "lions lay eggs"
 - enrich chapter to provide more context for the mutual exclusivity
+- add items
 - ask about both properties
+- memory check to test actually tested properties
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
