@@ -34,6 +34,16 @@ font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Tim
 	margin-right: 40px;
 }
 
+.storyText:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
+
+.storyText.leftJustify:after {
+    content: none;
+}
+
 /*
 
 */

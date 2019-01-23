@@ -167,11 +167,13 @@ function make_slides(f) {
          case "critical":
           if (this.page < this.last_page){
             $(".storyText").html(this.stim.main_text[this.page]);
+	    $(".storyText").removeClass("leftJustify");
           } else if (this.page > this.last_page){
             this.present_question()
           } else if (this.page == this.last_page){
 
             $(".storyText").css("text-align-last", "left") // align last page to left
+	    $(".storyText").addClass("leftJustify");
 
             switch (this.stim.condition){
               case "uninterrupted":
@@ -201,7 +203,8 @@ function make_slides(f) {
                 this.present_question()
               } else {
                 if (this.page == this.last_page - 1){
-                  $(".storyText").css("text-align-last", "left")
+                  $(".storyText").css("text-align-last", "left");
+		  $(".storyText").addClass("leftJustify");
                 }
                 $(".storyText").html(this.stim.main_text[this.page]);
               }
@@ -212,6 +215,7 @@ function make_slides(f) {
               } else {
                 if (this.page == this.last_page - 1){
                   $(".storyText").css("text-align-last", "left")
+		  $(".storyText").addClass("leftJustify");
                 }
                 $(".storyText").html(this.stim.main_text[this.page]);
                 this.page++
