@@ -153,12 +153,12 @@ function make_slides(f) {
           $(".chapterTitle").html('')
         }
 
-        // if (this.stim.critical && this.stim.condition == "single") {
-        // if (this.stim.condition == "interrupted") {
-        //   this.last_page = this.chapter_length - 1
-        // } else {
-          this.last_page = this.chapter_length
-        // }
+	if (this.stim.type == "filler") {
+          this.last_page = this.chapter_length - 1; // page numbers are 0-indexed
+        }
+        else {
+          this.last_page = this.chapter_length; // continuation adds a page
+        }
 
         // if this.stim.critical {
         // && this.stim.query
@@ -188,7 +188,6 @@ function make_slides(f) {
                   this.present_question()
                 } else {
                   $(".storyText").html(this.stim.continuation.filler)
-                  this.page++
                 }
                 break;
             }
@@ -210,16 +209,11 @@ function make_slides(f) {
               }
               break;
             case "interrupted":
-              if (this.stim.query && (this.page == this.last_page - 1)) {
-                this.present_question()
-              } else {
-                if (this.page == this.last_page - 1){
-                  $(".storyText").css("text-align-last", "left")
-		  $(".storyText").addClass("leftJustify");
-                }
-                $(".storyText").html(this.stim.main_text[this.page]);
-                this.page++
+              if (this.page == this.last_page){
+                $(".storyText").css("text-align-last", "left")
+	        $(".storyText").addClass("leftJustify");
               }
+              $(".storyText").html(this.stim.main_text[this.page]);
               break;
 
           break;
@@ -262,8 +256,6 @@ function make_slides(f) {
         $("#slider_number1").html("---")
 
         this.stim.query = false;
-        if (this.stim.condition == "interrupted") { this.page -- }
-        // console.log(this.page)
       },
 
       init_sliders : function(i) {
@@ -282,29 +274,44 @@ function make_slides(f) {
           $(".err").show();
         } else {
           // if ((this.page == this.chapter_length)&& this.stim.query) {this.page++}
-          // console.log(this.page)
           this.log_responses();
           this.startTime = Date.now();
 
-          if (this.stim.query) {
-            this.page++;
-            this.present_page();
-          } else if (
-            (this.page > this.chapter_length) ||
-            (this.stim.type == "filler" && (this.page == this.chapter_length)) ||
-            (this.stim.condition == "filler" && (this.page == this.chapter_length - 1))
-          ){
-            $(".storyText").html() == ""
-            // this.log_responses();
-            this.trial_num++;
-            _stream.apply(this);
-          } else {
-            this.page++
-            // this.trial_num++;
-            this.present_page()
-          }
+          if (this.page == null) { // came from an interrupting question, so go directly to last page
+            this.page = this.last_page;
+	    this.present_page();
+	  }
+	  else {
+	    if (this.page < this.last_page - 1) {
+	      this.page ++;
+	      this.present_page();
+	    }
+	    else if (this.page == this.last_page - 1) { // came from second to last page: decide if we need to query
+	      if (this.stim.condition == "interrupted" && this.stim.query) { // go to question
+	 	this.page = null;
+		this.present_question();
+	      }
+	      else {
+		this.page ++;
+		this.present_page();
+	      }
+	    }
+	    else if (this.page == this.last_page) { // last page, but might still need to ask question
+	      if (this.stim.condition != "interrupted" && this.stim.query) { // go to question
+		this.page++;
+		this.present_question();
+	      }
+	      else { // done with this stim
+		this.trial_num ++;
+		_stream.apply(this);
+	      }
+	    }
+	    else { // done with this stim
+	      this.trial_num ++;
+	      _stream.apply(this);
+	    }
+	  }
         }
-        // }
       },
      log_responses : function() {
        this.rt = Date.now() - this.startTime;
