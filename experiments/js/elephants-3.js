@@ -271,8 +271,10 @@ function make_slides(f) {
         if (exp.sliderPost.indexOf(-1) > -1) {
           $(".err").show();
         } else {
-          // if ((this.page == this.chapter_length)&& this.stim.query) {this.page++}
 
+	    this.log_responses();
+	this.startTime = Date.now();
+	    
           if (this.page == null) { // came from an interrupting question, so go directly to last page
             this.page = this.last_page;
 	    this.present_page();
@@ -288,7 +290,6 @@ function make_slides(f) {
 		this.present_question();
 	      }
 		else {
-		    console.log('here');
 		this.page ++;
 		this.present_page();
 	      }
@@ -300,15 +301,11 @@ function make_slides(f) {
 	      }
 	      else { // done with this stim
 		  this.trial_num ++;
-		  this.log_responses();
-		  this.startTime = Date.now();
 		_stream.apply(this);
 	      }
 	    }
 	    else { // done with this stim
 		this.trial_num ++;
-		this.log_responses();
-		this.startTime = Date.now();
 	      _stream.apply(this);
 	    }
 	  }
@@ -498,10 +495,10 @@ function init() {
   shuffled_chapters = _.shuffle(stims_chapters)
 
     // CONFIGURATION
-    const numCriticalControls = 3;
-    const numCriticalInterrupts = 3;
-    const numFillerControls = 3;
-    const numFillerInterrupts = 3;
+    const numCriticalControls = 4;
+    const numCriticalInterrupts = 4;
+    const numFillerControls = 4;
+    const numFillerInterrupts = 4;
     const beginningFillers = 2;
 
     const numCriticals = numCriticalControls + numCriticalInterrupts;
