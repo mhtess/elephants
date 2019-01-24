@@ -334,7 +334,7 @@ var stims_chapters = [
     main_text: [
       "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most ",
       "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with ",
-      "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far from the oceans. Krens are stup-herders"
+      "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders"
       // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
     ],
     continuation: {
