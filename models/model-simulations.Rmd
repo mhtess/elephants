@@ -14,15 +14,19 @@ theme_set(theme_few())
 ```
 
 
-## Elephants live in Africa and Asia 
-
+## Literal Listener 
 
 ```{r}
+timestamp()
 rs.eleph <- webppl(program_file = "elephants.wppl")
+timestamp()
+#rs.eleph
+```
 
+```{r}
 rs.asia <- as.data.frame(rs.eleph$asiaStatePosterior)
 rs.asiaafrica <- as.data.frame(rs.eleph$AfricaAndAsiaStatePosterior)
-rs.asiaafrica.prior <- as.data.frame(rs.eleph$statePrior)
+rs.asiaafrica.prior <- as.data.frame(rs.eleph$JointPrevalencePrior)
 
 rs.prior.samp <- get_samples(rs.asiaafrica.prior %>%
                                rename(prob = probs), 50000)
@@ -48,51 +52,35 @@ ggplot(rs.prior.samp, aes(x = support.africa, y = support.asia))+
 rs.africa.samp <- get_samples(rs.asia %>% rename(prob = probs), 50000)
 
 ggplot(rs.africa.samp, aes(x = support.africa, y = support.asia))+
-  geom_bin2d(bins = 10)+
-  #stat_density_2d(aes(fill = ..density..), 
-  #                geom = "raster", contour = FALSE) +
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
   scale_fill_viridis()+
   xlab("% lives in Africa")+
   ylab("% lives in Asia")
 ```
 
+#### "Elephants live in Africa and Asia"
 
 ```{r}
-rs.asia.marignals <- bind_rows(
-  rs.asia %>%
-    rename(state = support.asia) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "africa"),
-  rs.asia %>%
-    rename(state = support.africa) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "asia")
-)
+rs.africa.asia.samp <- get_samples(rs.asiaafrica %>% rename(prob = probs), 50000)
 
+ggplot(rs.africa.asia.samp, aes(x = support.africa, y = support.asia))+
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  scale_fill_viridis()+
+  xlab("% lives in Africa")+
+  ylab("% lives in Asia")
+```
 
-ggplot(rs.asia.marignals, aes(x = state, y = prob))+
-  geom_col(position = position_dodge())+
-  facet_wrap(~marginal)
+##### marginals
 
-rs.asiaafrica.marignals <- bind_rows(
-  rs.asiaafrica %>%
-    rename(state = support.asia) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "asia"),
-  rs.asiaafrica %>%
-    rename(state = support.africa) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "africa")
-)
+```{r}
 
-ggplot(rs.asiaafrica.marignals, aes(x = state, y = prob))+
-  geom_col(position = position_dodge())+
-  facet_wrap(~marginal)
-
+# save(rs.asia.marignals, rs.asiaafrica.marignals,rs.asiaafrica.priors,
+#      file = "../paper/cached_results/modelSims-elephants.RData")
+# 
 
 rs.asiaafrica.priors <- bind_rows(
   rs.asiaafrica.prior %>%
@@ -106,14 +94,32 @@ rs.asiaafrica.priors <- bind_rows(
     summarize(prob = sum(probs)) %>%
     mutate(marginal = "africa")
 )
-```
 
-```{r}
+rs.asia.marignals <- bind_rows(
+  rs.asia %>%
+    rename(state = support.asia) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "africa"),
+  rs.asia %>%
+    rename(state = support.africa) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "asia")
+)
 
-# save(rs.asia.marignals, rs.asiaafrica.marignals,rs.asiaafrica.priors,
-#      file = "../paper/cached_results/modelSims-elephants.RData")
-# 
-
+rs.asiaafrica.marignals <- bind_rows(
+  rs.asiaafrica %>%
+    rename(state = support.asia) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "asia"),
+  rs.asiaafrica %>%
+    rename(state = support.africa) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "africa")
+)
 
 fig.eleph.0 <- get_samples(rs.asiaafrica.priors, 50000) %>%
   ggplot(., aes(x = state))+
@@ -155,13 +161,233 @@ cowplot::plot_grid(
 ```
 
 
+#### Africa
+
+```{r}
 
 
+ggplot(rs.asia.marignals, aes(x = state, y = prob))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~marginal)
+
+
+```
+
+#### Africa and Asia
 
 
 ```{r}
-fig.eleph.0
+
+ggplot(rs.asiaafrica.marignals, aes(x = state, y = prob))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~marginal)
+
+
+
 ```
+
+
+
+
+#### Prior
+
+```{r}
+get_samples(rs.asiaafrica.priors, 50000) %>%
+  ggplot(., aes(x = state))+
+  geom_density(aes(y = ..scaled..),adjust = 2, fill = 'grey', alpha = 0.3)+
+  facet_wrap(~marginal, ncol = 1)+
+  ggtitle('prevalence priors')+
+  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
+  xlab("")+
+  ylab("Probability density")
+```
+
+
+## Pragmatic Listener (lifted threshold)
+
+```{r}
+timestamp()
+rs.eleph <- webppl(program_file = "elephants-L1.wppl")
+timestamp()
+#rs.eleph
+```
+
+```{r}
+rs.l1.africa <- as.data.frame(rs.eleph$africaStatePosterior)
+rs.l1.asiaafrica <- as.data.frame(rs.eleph$AfricaAndAsiaStatePosterior)
+rs.l1.asiaafrica.prior <- as.data.frame(rs.eleph$JointPrevalencePrior)
+
+rs.l1.prior.samp <- get_samples(rs.l1.asiaafrica.prior %>%
+                               rename(prob = probs), 50000)
+```
+### Joint distributions
+
+#### Prior
+
+```{r}
+ggplot(rs.l1.prior.samp, aes(x = support.africa, y = support.asia))+
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  scale_fill_viridis()+
+  xlab("% lives in Africa")+
+  ylab("% lives in Asia")
+```
+
+
+#### "Elephants live in Africa"
+
+```{r}
+rs.l1.africa.samp <- get_samples(rs.l1.africa %>% rename(prob = probs), 50000)
+
+ggplot(rs.l1.africa.samp, aes(x = support.africa, y = support.asia))+
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  scale_fill_viridis()+
+  xlab("% lives in Africa")+
+  ylab("% lives in Asia")
+```
+
+#### "Elephants live in Africa and Asia"
+
+```{r}
+rs.l1.africa.asia.samp <- get_samples(rs.l1.asiaafrica %>% rename(prob = probs), 50000)
+
+ggplot(rs.l1.africa.asia.samp, aes(x = support.africa, y = support.asia))+
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  scale_fill_viridis()+
+  xlab("% lives in Africa")+
+  ylab("% lives in Asia")
+```
+
+##### marginals
+
+```{r}
+
+# save(rs.asia.marignals, rs.asiaafrica.marignals,rs.asiaafrica.priors,
+#      file = "../paper/cached_results/modelSims-elephants.RData")
+# 
+
+rs.l1.asiaafrica.priors <- bind_rows(
+  rs.l1.asiaafrica.prior %>%
+    rename(state = support.asia) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "asia"),
+  rs.l1.asiaafrica.prior %>%
+    rename(state = support.africa) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "africa")
+)
+
+
+rs.l1.africa.marignals <- bind_rows(
+  rs.l1.africa %>%
+    rename(state = support.asia) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "africa"),
+  rs.l1.africa %>%
+    rename(state = support.africa) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "asia")
+)
+
+rs.l1.asiaafrica.marignals <- bind_rows(
+  rs.l1.asiaafrica %>%
+    rename(state = support.asia) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "asia"),
+  rs.l1.asiaafrica %>%
+    rename(state = support.africa) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "africa")
+)
+
+fig.eleph.0 <- get_samples(rs.l1.asiaafrica.priors, 50000) %>%
+  ggplot(., aes(x = state))+
+  geom_density(aes(y = ..scaled..),adjust = 2, fill = 'grey', alpha = 0.3)+
+  facet_wrap(~marginal, ncol = 1)+
+  ggtitle('prevalence priors')+
+  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
+  xlab("")+
+  ylab("Probability density")
+
+fig.eleph.1 <- get_samples(rs.l1.africa.marignals, 50000) %>%
+  ggplot(., aes(x = state))+
+  geom_density(aes(y = ..scaled..),adjust = 4, fill = 'grey', alpha = 0.3)+
+  facet_wrap(~marginal, ncol = 1)+
+  ggtitle('"Elephants live in Africa..."')+
+  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
+  xlab("Prevalence")+
+  ylab("Probability density")+
+  theme(axis.title.y = element_blank())
+
+fig.eleph.2 <- get_samples(rs.l1.asiaafrica.marignals, 50000) %>%
+  ggplot(., aes(x = state))+
+  geom_density(aes(y = ..scaled..),adjust = 4, fill = 'grey', alpha = 0.3)+
+  facet_wrap(~marginal, ncol = 1)+
+  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
+  xlab("")+
+  ggtitle('"...and Asia"')+
+  ylab("Probability density")+
+  theme(axis.title.y = element_blank())
+
+cowplot::plot_grid(
+  fig.eleph.0,
+  fig.eleph.1,
+  fig.eleph.2,
+  nrow = 1,
+  rel_widths =c(1,1, 1),
+  labels = c("A", "B","C")
+)
+```
+
+
+#### Africa
+
+```{r}
+ggplot(rs.asia.marignals, aes(x = state, y = prob))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~marginal)
+
+```
+
+#### Africa and Asia
+
+
+```{r}
+
+ggplot(rs.asiaafrica.marignals, aes(x = state, y = prob))+
+  geom_col(position = position_dodge())+
+  facet_wrap(~marginal)
+
+
+rs.asiaafrica.priors <- bind_rows(
+  rs.asiaafrica.prior %>%
+    rename(state = support.asia) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "asia"),
+  rs.asiaafrica.prior %>%
+    rename(state = support.africa) %>%
+    group_by(state) %>%
+    summarize(prob = sum(probs)) %>%
+    mutate(marginal = "africa")
+)
+```
+
+
+
+
+#### Prior
 
 ```{r}
 get_samples(rs.asiaafrica.priors, 50000) %>%
