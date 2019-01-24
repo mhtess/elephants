@@ -196,17 +196,15 @@ function make_slides(f) {
           break;
 
         case "filler": // filler trials
+	    console.log(this.last_page)
           switch (this.stim.condition){
             case "uninterrupted":
-              if (this.stim.query && this.page == this.last_page){
-                this.present_question()
-              } else {
-                if (this.page == this.last_page - 1){
+
+                if (this.page == this.last_page) {
                   $(".storyText").css("text-align-last", "left");
 		  $(".storyText").addClass("leftJustify");
                 }
                 $(".storyText").html(this.stim.main_text[this.page]);
-              }
               break;
             case "interrupted":
               if (this.page == this.last_page){
@@ -273,10 +271,10 @@ function make_slides(f) {
         if (exp.sliderPost.indexOf(-1) > -1) {
           $(".err").show();
         } else {
-          // if ((this.page == this.chapter_length)&& this.stim.query) {this.page++}
-          this.log_responses();
-          this.startTime = Date.now();
 
+	    this.log_responses();
+	this.startTime = Date.now();
+	    
           if (this.page == null) { // came from an interrupting question, so go directly to last page
             this.page = this.last_page;
 	    this.present_page();
@@ -291,23 +289,23 @@ function make_slides(f) {
 	 	this.page = null;
 		this.present_question();
 	      }
-	      else {
+		else {
 		this.page ++;
 		this.present_page();
 	      }
 	    }
 	    else if (this.page == this.last_page) { // last page, but might still need to ask question
 	      if (this.stim.condition != "interrupted" && this.stim.query) { // go to question
-		this.page++;
+		this.page ++;
 		this.present_question();
 	      }
 	      else { // done with this stim
-		this.trial_num ++;
+		  this.trial_num ++;
 		_stream.apply(this);
 	      }
 	    }
 	    else { // done with this stim
-	      this.trial_num ++;
+		this.trial_num ++;
 	      _stream.apply(this);
 	    }
 	  }
@@ -359,7 +357,7 @@ function make_slides(f) {
 
      this.tested_properties = _.map(exp.memory_properties, function(x){
        var quantifier = x.quantifier ?
-       x.quantfier == "none" ? "no " :
+       x.quantifier == "none" ? "no " :
         x.quantifier + " ": ""
        return quantifier + x.kind + " " + x.property1
      })
@@ -483,7 +481,6 @@ function make_slides(f) {
 /// init ///
 function init() {
 
-
   repeatWorker = false;
   (function(){
       var ut_id = "mht-eleph-20190121";
@@ -494,121 +491,90 @@ function init() {
       }
   })();
 
-  // exp.condition = _.sample(["single", "conjunction"])
-  // exp.condition = "conjunction"
-
-  conditions = ["interrupted", "uninterrupted", "uninterrupted_irrelevant"]
-
-
-  console.log(stims_chapters.length)
-  console.log(filler_chapters.length)
-
-  // exp.conditions = _.shuffle([
-  //   "uninterrupted", "uninterrupted_irrelevant","interrupted",
-  //   "uninterrupted", "uninterrupted_irrelevant","interrupted",
-  //   "uninterrupted", "uninterrupted_irrelevant","interrupted",
-  //   _.sample(["uninterrupted", "uninterrupted_irrelevant","interrupted"])
-  // ])
-
-
-  critical_trial_order = _.sample([[
-    false, true, false, false,
-    true, true, false, true,
-    false, true, true ,false,
-    true, false, false, true
-  ], [
-    false, false, true, false,
-    false, true, true, false,
-    true, false, true, true,
-    false, true, false, true
-  ],[
-    false, true, true, false,
-    true, false, true, true,
-    false, true, false, true,
-    false, false, true, false
-  ],[
-    true, false, false, true,
-    false, true, false, true,
-    true, false, true, false,
-    true, false, false, true
-  ]
-]).reverse()
-
-//   critical_trial_order = _.sample([[
-//     "filler", true, false, "filler", false, true,
-//     "filler", true, false, true, "filler",false,
-//     true, false, "filler",  false, true, "filler"
-//     // false, true, false, false, true
-//   ], [
-//     "filler", false, true, false, "filler",true,
-//     "filler", "filler",  true, false, true, "filler",
-//     false, true, false, true, "filler", false
-//     // false, true, false, false, true
-//   ],[
-//     false, "filler", true, false, "filler", false,
-//     true, "filler",  false, true, "filler", true,
-//     "filler",  false, true, "filler", true, false
-//     // true, true, false, false, true
-//   ],[
-//     true, "filler",  false, true, false, "filler",
-//     false, true, "filler", false, "filler", false,
-//     true, "filler", false, true, "filler", true
-//     // false, true, false, false, true
-//   ]
-// ]).reverse()
-
-
-// need to decide order of "uninterrupted", "uninterrupted_irrelevant" and "filler"
-
-// 6 fillers with quantifiers
-
-
-// function add(a, b) {
-//     return a + b;
-// }
-// _.map(critical_trial_order, function(x){
-//   console.log(x.reduce(add, 0))
-// })
   fillers = _.shuffle(filler_chapters)
   shuffled_chapters = _.shuffle(stims_chapters)
-  // console.log(shuffled_chapters)
-  // console.log(fillers)
 
-  // shuffled_chapters = stims_chapters
+    // CONFIGURATION
+    const numCriticalControls = 4;
+    const numCriticalInterrupts = 4;
+    const numFillerControls = 4;
+    const numFillerInterrupts = 4;
+    const beginningFillers = 2;
 
-  // exp.stims = [firstChapter]
-  exp.stims = []
+    const numCriticals = numCriticalControls + numCriticalInterrupts;
+    const numFillers = numFillerControls + numFillerInterrupts;
 
-  for (i=0; i<critical_trial_order.length; i++){
-    if (critical_trial_order[i] == "filler") {
-      exp.stims.push(
-        _.extend(fillers.pop(), {
-          condition: "interrupted",
-          query: true
-        })
-      )
-    } else if (critical_trial_order[i]) {
-      exp.stims.push(
-        _.extend(shuffled_chapters.pop(), {
-          condition: "uninterrupted",
-          query: true
-        })
-      )
-    } else {
-      exp.stims.push(
-        _.extend(shuffled_chapters.pop(), {
-          // condition: "uninterrupted_irrelevant",
-          condition: "interrupted",
-          query: true
-        })
-      )
+    // randomize order of interrupts
+    var criticalInterrupts = [];
+    for (i=0;i<numCriticalControls;i++) {
+	criticalInterrupts.push("uninterrupted");
     }
-  }
+    for (i=0;i<numCriticalInterrupts;i++) {
+	criticalInterrupts.push("interrupted");
+    }
+    criticalInterrupts = _.shuffle(criticalInterrupts);
 
-  exp.memory_properties = _.shuffle(exp.stims).slice(0, 5)
+    var fillerInterrupts = [];
+    for (i=0;i<numFillerControls;i++) {
+	fillerInterrupts.push("uninterrupted");
+    }
+    for (i=0;i<numFillerInterrupts;i++) {
+	fillerInterrupts.push("interrupted");
+    }
+    fillerInterrupts = _.shuffle(fillerInterrupts);
+
+    // add first chapter and desired number of beginning fillers (uninterrupted)
+    exp.stims = [firstChapter]
+    for (i=0;i<beginningFillers;i++) {
+	exp.stims.push(_.extend(fillers[i], {condition: "uninterrupted", query: true}))
+    }
+    fillers = fillers.slice(2, fillers.length);
+
+    // add critical trials with filler trials in between each
+    var withoutFillers = shuffled_chapters.slice(0, numCriticals)
+    var otherFillers = fillers.slice(0, numCriticals - 1);
+    var criticalIndex = 0;
+    var fillerIndex = 0;
+    var withFillers = [];
+    for (i=0;i<withoutFillers.length;i++) {
+	withFillers.push(_.extend(withoutFillers[i], {condition: criticalInterrupts[criticalIndex], query: true}))
+	    criticalIndex ++;
+	if (i < withoutFillers.length-1) {
+	withFillers.push(_.extend(otherFillers[i], {condition: fillerInterrupts[fillerIndex], query: true}))
+	    fillerIndex ++;
+	}
+    }
+
+
+    // insert remaining fillers randomly into completed sequence
+    function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var insertionFillers = fillers.slice(numCriticals - 1, numFillers);
+
+    var insertionIndices = []
+    for (i=0;i<numFillers - (numCriticals - 1);i++) {
+	insertionIndices.push(getRandomInt(0, withFillers.length));
+    }
+    var prevIndex = 0;
+    var i = 0;
+    insertionIndices.forEach(function(index) {
+	exp.stims = exp.stims.concat(withFillers.slice(prevIndex, index));
+	exp.stims.push(_.extend(insertionFillers[i], {condition: fillerInterrupts[fillerIndex], query:true}));
+	fillerIndex ++;
+	i ++;
+	prevIndex = index;
+    });
+    exp.stims = exp.stims.concat(withFillers.slice(prevIndex, withFillers.length))
+
+    console.log(exp.stims)
+
+  exp.memory_properties = _.shuffle(otherFillers).slice(0, 5)
 
   // exp.stims = _.where(exp.stims, {title: "Lorches"})
-  console.log(exp.stims)
   // console.log(stims_chapters)
 
   // console.log(stims_chapters.length)
@@ -629,7 +595,7 @@ function init() {
   // ]
 
 
-  exp.numTrials = stim_properties.length;
+  //exp.numTrials = stim_properties.length;
 // console.log(stim_properties.length)
 // var creatures = _.map(_.shuffle(creatureNames).slice(0,exp.numTrials),
 //   function(x){return {category: x.category, exemplar: x.exemplar}}
@@ -650,9 +616,9 @@ function init() {
   exp.data_trials = [];
 
   exp.structure=[
-    // "i0",
-    // "practice",
-    // "title_page",
+     "i0",
+     "practice",
+     "title_page",
     "main_chapters",
     "the_end",
     "memory_check",
