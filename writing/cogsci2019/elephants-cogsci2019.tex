@@ -62,7 +62,7 @@
 \newcommand{\denote}[1]{\mbox{ $[\![ #1 ]\!]$}}
 \newcommand{\red}[1]{{\textcolor{Red}{#1}}}
 
-\title{Incremental, non-monotonic understanding of conjunctive generic sentences}
+\title{Syntactic expectations modulate pragmatic interpretations of generic sentences}
  
 \author{{\large \bf Michael Henry Tessler (tessler@mit.edu)} \\
   Department of Brain and Cognitive Sciences, MIT \\
@@ -150,14 +150,37 @@ We test this prediction in a set of language understanding tasks where participa
 
 \section{Computational Model}
 
-Extending an analysis of generics to handle complex-predicates poses unique challenges.
-A sentence of the form ``Ks F and G'' introduces an ambiguity:
+We extend the generic interpretation model of \citeA{Tessler2019:genLang} to incorporate an incremental processing mechanism that allows a listener to understand meaningful chunks of a full utterance.
+The basic model interprets a generic utterance predicating a property of a category (``Elephants eat 300 pounds of food in a day'') as meaning that the \emph{prevalence} $x$ or probability of the property given the category---$P($eats 300 lb. of food in a day$\mid$ is an elephant$)$---is greater than an \emph{a priori} uncertain threshold $\theta$. 
+The literal meaning of the generic---an uncertain threshold function---combines with a listener's prior knowledge about the prevalence of the feature $P(x)$ within a relevant set of alternative categories (e.g., other animals) to compute a posterior distribution over prevalence $x$. 
+\begin{equation}
+P(x \mid u) = \int_{\theta} P(x, \theta \mid u)  d\theta \propto P(x) \cdot P(\theta) \cdot \delta_{\denote{u}(x, \theta)} 
+\label{eq:L0}
+\end{equation}
+\noindent where $\delta_{\denote{u}(x, \theta)}$ is the Kronecker delta function assigning a value of 1 for utterances that are literally true (in the case of a generic: where $x > \theta$) and 0 for utterances that are false.
 
-\begin{enumerate}
-\tightlist
-\item $\denote{gen}(K) [F \land G]$
-\item $\denote{gen}(K) [F] \land \denote{gen}(K) [G]$
-\end{enumerate}
+Equation \ref{eq:L0} is a model of a Bayesian listener interpreting a complete utterance.
+Listeners may begin to form expectations about the complete utterance even before the sentence is over. 
+For example, in the case of interpreting a generic sentence about a conjunctive property (e.g., ``Elephants live in Africa and Asia''), a listener is given the opportunity to form a partial, plausible interpretation of the utterance by the time they read the first conjunct (``Africa''). 
+In order to model incremental interpretations of the utterance, we extend this model to allow a listener to form expectations about plausible continuations from sentence fragments $f$.
+To do this, we assume that a listener has probabilistic expectations about how a speaker will choose to complete the utterance given a fragment $P(u' \mid f)$.
+
+\begin{equation}
+P(x \mid f) = \sum_{u'}) P(x \mid u') P(u' \mid f) 
+\label{eq:L0a}
+\end{equation}
+
+Take the 
+
+
+%Extending an analysis of generics to handle complex-predicates poses unique challenges.
+%A sentence of the form ``Ks F and G'' introduces an ambiguity:
+%
+%\begin{enumerate}
+%\tightlist
+%\item $\denote{gen}(K) [F \land G]$
+%\item $\denote{gen}(K) [F] \land \denote{gen}(K) [G]$
+%\end{enumerate}
 
 
 \section{Experiment}
@@ -168,18 +191,18 @@ A sentence of the form ``Ks F and G'' introduces an ambiguity:
 We recruited N participants through Amazon's Mechanical Turk.
 Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
 
-\subsection{Procedure}
-Participants were told they would be reading a storybook and be asked questions at the end of each chapter. 
-Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2002, Cimpian2010} that read: ``Out of all Ks, what percentage do you think F?'', where K represents a category and F a feature. 
-Responses were recorded using a 101-pt slider bar with end-points labeled 0\% and 100\%, and with the exact value appearing dynamically above the slider. 
-Participants were familiarized with the response variable in a practice trial, where they were asked to report how many dogs bark, birds are male, and ticks carry lyme disease. 
-We used these questions to encourage participants to use the full range of the response scale. 
 
-Following this instructions / familiarization period, participants read a storybook consisting of 16 paragraphs we refer to as \emph{chapters} (items), each of which spanned 2 - 4 screens of text which spanned 2 - 4 lines on the screen. 
-At the end of all but the first chapter, participants answered an implied prevalence question relating to a sentence in the preceding chapter. 
-At the end of the storybook, participants completed a memory check question where they had to select all the facts they had learned in the story from a list of 10 (5 real, 5 distractor); in addition, participants were asked to explain what the experiment was about in very general terms.
+\subsection{Materials}
 
-We used 10 critical chapters (items), each which could be assigned to one of two experimental conditions.
+Participants read a storybook concerned with aliens and animals on a far-away planet without any larger narrative (each chapter concerned different categories or characters).
+Stimuli consisted of \red{16} \emph{chapters}, which contained between 2--4 sentences, broken up across between 2--4 screens.
+Each chapter ended with a generic sentence about conjunctive properties, which differed only in whether the second property was mutually exclusive with the first (\emph{conjunct type}): ``Glippets live on the southern continent of Caro and \emph{on the northern continent of Este /  enjoy the sunshine there.}''
+The preceding content of the chapter was either unrelated to these properties or supported the mutually exclusive interpretation of the properties (e.g., ``Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders and \emph{fisherman} / \emph{incorporate stups into their religion}.'')
+
+Conjunct type was manipulated within participants and within items. 
+In addition to the experimental items, the storybook included \red{N} filler chapters, which concerned similar content to the experimental chapter but which asked about properties 
+
+We used \red{10} critical chapters (items), each which could be assigned to one of two experimental conditions.
 A given chapter in the two experimental conditions differed only in the information present on the final screen of a chapter.
 The penultimate screen of all critical trials ended with the beginning of a conjunctive sentence that was broken up immediately before the ``and'' in the sentence \red{(Figure); e.g., ``They ascribe to the Caboo religion'')}. 
 Text on the page was fully-justified so that the final word on a page always appeared in the bottom-right corner of the screen, giving the appearance that the page naturally ended at that word.
@@ -187,9 +210,22 @@ In the \emph{relevant conjunction} condition, the continuation of the sentence (
 In the \emph{irrelevant conjunction} condition, the continuation was a property that was unrelated to the property on the preceding page (e.g., ``...and follow a strict code of laws.''). 
 In addition, we had 5 filler trials which appeared similar to the \emph{irrelevant conjunction} cases.
 
-\subsection{Materials}
 
-The storybook was concerned with aliens and animals on a far-away planet and read like a children's book without any narrative (each chapter concerned non-interactiving categories and characters).
+\subsection{Procedure}
+Participants were told they would be reading a storybook and be asked questions at the end of each chapter. 
+
+Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2002, Cimpian2010} that read: ``What percentage of Ks do you think F?'', where K represents a category and F a feature. 
+Responses were recorded using a 101-pt slider bar with end-points labeled 0\% and 100\%, and with the exact value appearing dynamically above the slider. 
+Participants were familiarized with the response variable in a practice trial, where they were asked to report how many dogs bark, birds are male, cats get cancer, and lions lay eggs. 
+We used these questions to encourage participants to use the full range of the response scale. 
+
+Following this instructions and practice questions, participants read a storybook consisting of \red{16} paragraphs we refer to as \emph{chapters} (items), each of which spanned 2 - 4 screens of text which spanned 2 - 4 lines on the screen. 
+
+At the end of all but the first chapter, participants answered a pair of implied prevalence questions relating to information present in the chapter. 
+At the end of the storybook, participants completed a memory check question where they had to select all the facts they had learned in the story from a list of 10 (5 real, 5 distractor); in addition, participants were asked to explain what the experiment was about in very broad terms.
+
+
+
 The text of a chapter mostly composed of generic sentences about novel categories (e.g., ``Glippets are intelligent creatures''), though some sentences mentioned specific fictional characters (``Wint lived a long time ago in the mountains.'').
 
 Each chapter of the storybook was on
