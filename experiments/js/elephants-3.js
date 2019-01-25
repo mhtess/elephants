@@ -507,15 +507,26 @@ function init() {
   fillers = _.shuffle(filler_chapters)
     shuffled_chapters = _.shuffle(stims_chapters)
 
+    console.log(shuffled_chapters.length)
+
     exp.interruptingConditions = ["interrupted", "nme_interrupted"]
 
+
     // CONFIGURATION
+    // numFillerControls + numFillerInterrupts + numNmeControls + numNmeInterrupts
+    // >= numCriticalControls + numCriticalInterrupts - 1
+
+    // test trials using conjunctive generics (<= 16)
     const numCriticalControls = 4;
     const numCriticalInterrupts = 4;
+
     const numNmeControls = 2;
     const numNmeInterrupts = 2;
-    const numFillerControls = 4;
-    const numFillerInterrupts = 4;
+
+    // fillers using quantifiers (<= 14)
+    const numFillerControls = 3;
+    const numFillerInterrupts = 3;
+
     const beginningFillers = 2;
 
     const numCriticals = numCriticalControls + numCriticalInterrupts;
