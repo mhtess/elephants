@@ -30,8 +30,8 @@ font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Tim
 	text-justify: inter-word;
 	text-align-last: justify;
 	text-align: justify;
-	margin-left: 40px;
-	margin-right: 40px;
+	margin: auto;
+	width: 720;
 }
 
 .storyText:after {

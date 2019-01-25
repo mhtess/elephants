@@ -540,7 +540,6 @@ var stims_chapters = [
 	    critical: "and seven horns.",
       filler: "and charge without warning.",
 	    nme: "and two tails."
-
 	},
 	critical: true,
 	kind: "landeks",
