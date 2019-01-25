@@ -647,7 +647,7 @@ function init() {
 //   })
 
   exp.stimscopy = exp.stims.slice(0);
-
+  exp.numTrials = exp.stims.length;
   exp.trials = [];
   exp.catch_trials = [];
   exp.data_trials = [];

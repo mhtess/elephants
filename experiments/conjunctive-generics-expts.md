@@ -15,10 +15,16 @@
 - randomize order of chapters
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-2.html)
 
-2. Elephants-3
+3. Elephants-3
 - change "ticks carry lyme disease" to get "cats get cancer", add "lions lay eggs"
 - enrich chapter to provide more context for the mutual exclusivity
 - add items
 - ask about both properties
 - memory check to test actually tested properties
+- [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html) [might be outdated]
+
+4. Elephants-3i
+- interrupted version of experiment 3 (some trials ask questions mid-chapter)
+- added trials where we ask about non-mutually exclusive properties
+- randomize order of trials with constraint that no 2 criticals back-to-back
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
