@@ -5,6 +5,7 @@ date: "1/19/2019"
 output: github_document
 ---
 
+
 ```{r}
 library(rwebppl)
 library(tidyverse)
@@ -13,194 +14,140 @@ library(viridis)
 theme_set(theme_few())
 ```
 
+Here we explore the behavior of variants of an RSA model that can interpret conjunctive generic sentences such as "Elephants live in Africa and Asia". 
+For the simple model variants, the first assumption is that the sentence is parsed as "Elephants live in Africa. Elephants live in Asia."
+
+### Model variants
+
+#### Prior specifications
+
+The important assumption about the prior is that the properties "living in Africa" and  "living in Asia" are (probably) mutually exclusive. One way to cash this out is to impose a constraint on the two prevalence levels: The sum of the % that live in Africa and the % that live in Asia should probably not exceed 100%. 
+
+Otherwise, we assume the marginal distributions on Africa and Asia are symmetric, and either:
+
+1. Uniform(0, 1)
+2. Multimodal with peaks at 0%, 25%, 50%, 75%, 100%
+
+The latter version of the prior will probably match participants' slider bar behavior better.
+
+#### Interpretation models
+
+1. Literal listener
+2. "Unlifted threshold" pragmatic listener
+3. "Lifted threshold" pragmatic listener
+
+For the pragmatic models, there is a choice of the alternative utterances considered by the speaker. Here, we test two sets of alternatives:
+
+A. ["Elephants live in X", silence] where X will be either Africa or Asia depending on the sentence heard.
+B. ["Elephants live in Africa", "Elephants live in Asia", "silence"]
+
+The set where "Elephants live in Africa and Asia" is an alternative is also a possiblity, though with the simple version of the model, we make the strong assumption that the properties are parsed independently (i.e., you run the listener model twice: Once for Africa, once for Asia) so it is a little more complex to keep the conjunctive generic as an alternative (as it requires running the models, twice, etc..)
+
 
 ## Literal Listener 
 
+L0 is run for each prior (uniform and multimodal)
+
 ```{r}
-timestamp()
-rs.eleph <- webppl(program_file = "elephants.wppl")
-timestamp()
-#rs.eleph
+priorParameters <- list(
+  multimodal = list(
+    c1 = data.frame(a = 45 , b = 15), 
+    c2 = data.frame(a = 30, b = 30), 
+    c3 = data.frame(a = 15, b = 45), 
+    c4 = data.frame(a = 50, b = 1)
+    ),
+  uniform = list(c1 = data.frame(a = 1 , b = 1))
+)
+
+rs.l0.eleph <- data.frame()
+for (priorName in names(priorParameters)){
+  
+  rs.eleph <- webppl(program_file = "elephants-L0.wppl",
+                   data = priorParameters[[priorName]], 
+                   data_var = "priorParameters")
+  
+  rs.l0.eleph <- bind_rows(
+    rs.l0.eleph, 
+    bind_rows(
+      as.data.frame(rs.eleph$JointPrevalencePrior) %>%
+        mutate(src = "prior"),
+      as.data.frame(rs.eleph$africaStatePosterior) %>%
+        mutate(src = "AF"),
+      as.data.frame(rs.eleph$AfricaAndAsiaStatePosterior) %>%
+        mutate(src = "AFAS")
+    ) %>% rename(prob = probs, 
+               africa = support.africa,
+               asia = support.asia) %>% 
+      mutate(priorName = priorName)
+  )
+  
+  print(priorName)
+}
+
+rs.l0.samp <- get_samples(rs.l0.eleph, 50000) %>%
+  mutate(src = factor(src, levels = c("prior", "AF", "AFAS")))
 ```
 
-```{r}
-rs.asia <- as.data.frame(rs.eleph$asiaStatePosterior)
-rs.asiaafrica <- as.data.frame(rs.eleph$AfricaAndAsiaStatePosterior)
-rs.asiaafrica.prior <- as.data.frame(rs.eleph$JointPrevalencePrior)
+### Uniform priors 
 
-rs.prior.samp <- get_samples(rs.asiaafrica.prior %>%
-                               rename(prob = probs), 50000)
-```
-### Joint distributions
+#### Joint distributions
 
-#### Prior
+Shown left to Right: Prior disribution on prevalence for living in Africa and Asia; Posterior upon living "Elephants live in Africa", Posterior upon then hearing "Elephants live in Asia" (after already hearing they live in Africa)
 
 ```{r}
-ggplot(rs.prior.samp, aes(x = support.africa, y = support.asia))+
+ggplot(rs.l0.samp %>%
+         filter(priorName == "uniform"), aes(x = asia, y = africa))+
   #geom_bin2d(bins = 10)+
   stat_density_2d(aes(fill = ..density..), 
                   geom = "raster", contour = FALSE) +
   scale_fill_viridis()+
-  xlab("% lives in Africa")+
-  ylab("% lives in Asia")
+  facet_grid(.~src)+
+  xlab("% lives in Asia")+
+  ylab("% lives in Africa")
 ```
 
+#### Marginal distributions
 
-#### "Elephants live in Africa"
+
 
 ```{r}
-rs.africa.samp <- get_samples(rs.asia %>% rename(prob = probs), 50000)
-
-ggplot(rs.africa.samp, aes(x = support.africa, y = support.asia))+
+rs.l0.samp %>%
+  filter(priorName == "uniform") %>%
+  gather(key, val, -src, -priorName) %>%
+ggplot(., aes(x = val))+
   #geom_bin2d(bins = 10)+
-  stat_density_2d(aes(fill = ..density..), 
-                  geom = "raster", contour = FALSE) +
-  scale_fill_viridis()+
-  xlab("% lives in Africa")+
-  ylab("% lives in Asia")
-```
-
-#### "Elephants live in Africa and Asia"
-
-```{r}
-rs.africa.asia.samp <- get_samples(rs.asiaafrica %>% rename(prob = probs), 50000)
-
-ggplot(rs.africa.asia.samp, aes(x = support.africa, y = support.asia))+
-  #geom_bin2d(bins = 10)+
-  stat_density_2d(aes(fill = ..density..), 
-                  geom = "raster", contour = FALSE) +
-  scale_fill_viridis()+
-  xlab("% lives in Africa")+
-  ylab("% lives in Asia")
-```
-
-##### marginals
-
-```{r}
-
-# save(rs.asia.marignals, rs.asiaafrica.marignals,rs.asiaafrica.priors,
-#      file = "../paper/cached_results/modelSims-elephants.RData")
-# 
-
-rs.asiaafrica.priors <- bind_rows(
-  rs.asiaafrica.prior %>%
-    rename(state = support.asia) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "asia"),
-  rs.asiaafrica.prior %>%
-    rename(state = support.africa) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "africa")
-)
-
-rs.asia.marignals <- bind_rows(
-  rs.asia %>%
-    rename(state = support.asia) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "africa"),
-  rs.asia %>%
-    rename(state = support.africa) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "asia")
-)
-
-rs.asiaafrica.marignals <- bind_rows(
-  rs.asiaafrica %>%
-    rename(state = support.asia) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "asia"),
-  rs.asiaafrica %>%
-    rename(state = support.africa) %>%
-    group_by(state) %>%
-    summarize(prob = sum(probs)) %>%
-    mutate(marginal = "africa")
-)
-
-fig.eleph.0 <- get_samples(rs.asiaafrica.priors, 50000) %>%
-  ggplot(., aes(x = state))+
-  geom_density(aes(y = ..scaled..),adjust = 2, fill = 'grey', alpha = 0.3)+
-  facet_wrap(~marginal, ncol = 1)+
-  ggtitle('prevalence priors')+
-  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
-  xlab("")+
-  ylab("Probability density")
-
-fig.eleph.1 <- get_samples(rs.asia.marignals, 50000) %>%
-  ggplot(., aes(x = state))+
   geom_density(aes(y = ..scaled..),adjust = 4, fill = 'grey', alpha = 0.3)+
-  facet_wrap(~marginal, ncol = 1)+
-  ggtitle('"Elephants live in Africa..."')+
-  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
-  xlab("Prevalence")+
-  ylab("Probability density")+
-  theme(axis.title.y = element_blank())
+  facet_grid(key~src)+
+  xlab("marginal prevalence")+
+  ylab("scaled probability density")
+```
 
-fig.eleph.2 <- get_samples(rs.asiaafrica.marignals, 50000) %>%
-  ggplot(., aes(x = state))+
+### Multimodal priors 
+
+```{r}
+ggplot(rs.l0.samp %>%
+         filter(priorName == "multimodal"), aes(x = asia, y = africa))+
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  scale_fill_viridis()+
+  facet_grid(.~src)+
+  xlab("% lives in Asia")+
+  ylab("% lives in Africa")
+```
+
+```{r}
+rs.l0.samp %>%
+  filter(priorName == "multimodal") %>%
+  gather(key, val, -src, -priorName) %>%
+ggplot(., aes(x = val))+
+  #geom_bin2d(bins = 10)+
   geom_density(aes(y = ..scaled..),adjust = 4, fill = 'grey', alpha = 0.3)+
-  facet_wrap(~marginal, ncol = 1)+
-  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
-  xlab("")+
-  ggtitle('"...and Asia"')+
-  ylab("Probability density")+
-  theme(axis.title.y = element_blank())
-
-cowplot::plot_grid(
-  fig.eleph.0,
-  fig.eleph.1,
-  fig.eleph.2,
-  nrow = 1,
-  rel_widths =c(1,1, 1),
-  labels = c("A", "B","C")
-)
+  facet_grid(key~src)+
+  xlab("marginal prevalence")+
+  ylab("scaled probability density")
 ```
 
-
-#### Africa
-
-```{r}
-
-
-ggplot(rs.asia.marignals, aes(x = state, y = prob))+
-  geom_col(position = position_dodge())+
-  facet_wrap(~marginal)
-
-
-```
-
-#### Africa and Asia
-
-
-```{r}
-
-ggplot(rs.asiaafrica.marignals, aes(x = state, y = prob))+
-  geom_col(position = position_dodge())+
-  facet_wrap(~marginal)
-
-
-
-```
-
-
-
-
-#### Prior
-
-```{r}
-get_samples(rs.asiaafrica.priors, 50000) %>%
-  ggplot(., aes(x = state))+
-  geom_density(aes(y = ..scaled..),adjust = 2, fill = 'grey', alpha = 0.3)+
-  facet_wrap(~marginal, ncol = 1)+
-  ggtitle('prevalence priors')+
-  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 1))+
-  xlab("")+
-  ylab("Probability density")
-```
 
 
 ## Pragmatic Listener (lifted threshold)

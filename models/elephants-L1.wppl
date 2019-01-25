@@ -89,10 +89,7 @@ var speaker1 = cache(function(state, thetas, PrevalencePriors, continent){
   Infer({model: function(){
     var utterance = categorical({vs: [continent, "silence"], 
     ps: [0.1, 0.9]}) // alternative is only silence in both cases
-    // display(utterance)
     var L0 = listener0(utterance, thetas, PrevalencePriors)
-    // display(JSON.stringify(state))
-    // display(JSON.stringify(L0))
     factor(alpha * L0.score(state))
     return utterance
   }, method: "enumerate"})
@@ -102,7 +99,6 @@ var listener1 = cache(function(utterance, PrevalencePriors, ThresholdPriors){
   Infer({model: function(){
     var state = sample(PrevalencePriors)
     var thetas = sample(ThresholdPriors)
-    // display(state)
     var S1 = speaker1(state, thetas, PrevalencePriors, utterance)
     observe(S1, utterance)
     return {state, thetas}

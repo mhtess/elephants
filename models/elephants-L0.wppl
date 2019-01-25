@@ -12,16 +12,16 @@ var theta_bins = [
   0.5, 0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95
 ]
 
-var theta = 1;
-var params75 = {a:45, b: 15};
-var params50 = {a:30, b: 30};
-var params25 = {a:15, b: 45};
-var params100 = {a:50, b: 1};
+// var theta = 1;
+// var params75 = {a:45, b: 15};
+// var params50 = {a:30, b: 30};
+// var params25 = {a:15, b: 45};
+// var params100 = {a:50, b: 1};
 
-var allComponents = [params25, params50, params75, params100]
+// var allComponents = [params25, params50, params75, params100]
 //var allComponents = [{a:1, b:1}]
 
-var nullParams = {a:1, b:5};
+// var nullParams = {a:1, b:5};
 
 var makeComponent = function(params){
   return Categorical({
@@ -49,9 +49,14 @@ var JointPrevalencePrior = Infer({model: function(){
 //      {asia: true, africa: true}
 //    ]
 //  });
+  // display(priorParameters[uniformDraw(_.keys(priorParameters))][0])
   var p =  {
-    asia: sample(makeComponent({a: 1, b:1 })),
-    africa: sample(makeComponent({a: 1, b:1 })),
+    asia: sample(makeComponent(
+      priorParameters[uniformDraw(_.keys(priorParameters))][0]
+    )),
+    africa: sample(makeComponent(
+      priorParameters[uniformDraw(_.keys(priorParameters))][0]
+    )),
   }
   var totalPrev = p.asia + p.africa 
   
@@ -76,17 +81,15 @@ var listener0 = function(utterance, worldPriors, thresholdPriors) {
   }, method: "enumerate"})
 }
 
-var elephantsLiveInAsia = listener0("asia", JointPrevalencePrior, ThetaPrior);
+var elephantsLiveInAfrica = listener0("africa", JointPrevalencePrior, ThetaPrior);
 
-var asiaStatePosterior = marginalize(elephantsLiveInAsia, "state")
-var asiaThresholdPosterior =  marginalize(elephantsLiveInAsia, "theta");
+var africaStatePosterior = marginalize(elephantsLiveInAfrica, "state")
+var africaThresholdPosterior =  marginalize(elephantsLiveInAfrica, "theta");
 
-var elephantsLiveinAfricaAndAsia = listener0("africa", 
-    asiaStatePosterior, asiaThresholdPosterior)
+var elephantsLiveinAfricaAndAsia = listener0("asia", 
+    africaStatePosterior, africaThresholdPosterior)
     
 var AfricaAndAsiaStatePosterior = marginalize(elephantsLiveinAfricaAndAsia, "state")
 
-
-var x = {asiaStatePosterior, AfricaAndAsiaStatePosterior, JointPrevalencePrior}
-
+var x = {africaStatePosterior, AfricaAndAsiaStatePosterior, JointPrevalencePrior}
 x
