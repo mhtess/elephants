@@ -546,7 +546,7 @@ var stims_chapters = [
 	kind: "landeks",
 	property1: "have four horns",
 	property2: "have seven horns",
-  proeprty3: "have two tails",
+  property3: "have two tails",
 	type: "critical"
     },
     {

@@ -163,7 +163,7 @@ function make_slides(f) {
         // if this.stim.critical {
         // && this.stim.query
 
-        switch (this.stim.type){
+          switch (this.stim.type){
          case "critical":
           if (this.page < this.last_page){
             $(".storyText").html(this.stim.main_text[this.page]);
@@ -190,16 +190,19 @@ function make_slides(f) {
                   $(".storyText").html(this.stim.continuation.filler)
                 }
                 break;
-            }
-
+	    case "nme_interrupted":
+		$(".storyText").html(this.stim.continuation.filler);
+	      break;
+	      case "nme_uninterrupted":
+	      $(".storyText").html(this.stim.continuation.nme);
+	      break;
           }
-          break;
+	  }
+	      break;
 
         case "filler": // filler trials
-	    console.log(this.last_page)
           switch (this.stim.condition){
             case "uninterrupted":
-
                 if (this.page == this.last_page) {
                   $(".storyText").css("text-align-last", "left");
 		  $(".storyText").addClass("leftJustify");
@@ -234,10 +237,18 @@ function make_slides(f) {
         this.question_order = _.sample(["same", "reverse"])
 
         var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
-          "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";
-
+            "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";
+	  this.query_pred1 = this.stim.property1;
+	  var query_prompt1 = ""
+	  if (this.stim.condition == "nme_interrupted" || this.stim.condition == "nme_uninterrupted") {
+	      query_prompt1 = "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong>" + this.stim.property3 + "</strong>?\n";
+	      this.query_pred2 = this.stim.property3;
+	  }
+	  else {
         var query_prompt1 = "What percentage of <strong>"  + this.stim.kind +
-          "</strong> do you think <strong>" + this.stim.property2 + "</strong>?\n";
+            "</strong> do you think <strong>" + this.stim.property2 + "</strong>?\n";
+	  }
+	  	     this.query_pred2 = this.stim.property2;
 
         $("#query0").html(this.question_order == "same" ? query_prompt0 : query_prompt1);
         $("#query1").html(this.question_order == "same" ? query_prompt1 : query_prompt0);
@@ -285,7 +296,7 @@ function make_slides(f) {
 	      this.present_page();
 	    }
 	    else if (this.page == this.last_page - 1) { // came from second to last page: decide if we need to query
-	      if (this.stim.condition == "interrupted" && this.stim.query) { // go to question
+		if (exp.interruptingConditions.includes(this.stim.condition) && this.stim.query) { // go to question
 	 	       this.page = null;
 		         this.present_question();
 	      }
@@ -295,7 +306,7 @@ function make_slides(f) {
 	      }
 	    }
 	    else if (this.page == this.last_page) { // last page, but might still need to ask question
-	      if (this.stim.condition != "interrupted" && this.stim.query) { // go to question
+		if (!exp.interruptingConditions.includes(this.stim.condition) && this.stim.query) { // go to question
 		this.page ++;
 		this.present_question();
 	      }
@@ -320,7 +331,9 @@ function make_slides(f) {
           "condition": this.stim.condition,
           "chapter_num": this.trial_num,
           "page_num": this.page == null ? -1 : this.page,
-          "page_content": $(".storyText").html(),
+            "page_content": $(".storyText").html(),
+	    "query_predicate_1": this.query_pred1,
+	    "query_predicate_2": this.query_pred2,
           "response_1" : this.question_order == "same" ? exp.sliderPost[0] : exp.sliderPost[1],
           "response_2" : this.question_order == "same" ? exp.sliderPost[1] : exp.sliderPost[0],
           "rt":this.rt,
@@ -492,36 +505,22 @@ function init() {
   })();
 
   fillers = _.shuffle(filler_chapters)
-  shuffled_chapters = _.shuffle(stims_chapters)
+    shuffled_chapters = _.shuffle(stims_chapters)
+
+    exp.interruptingConditions = ["interrupted", "nme_interrupted"]
 
     // CONFIGURATION
     const numCriticalControls = 4;
     const numCriticalInterrupts = 4;
+    const numNmeControls = 2;
+    const numNmeInterrupts = 2;
     const numFillerControls = 4;
     const numFillerInterrupts = 4;
     const beginningFillers = 2;
 
     const numCriticals = numCriticalControls + numCriticalInterrupts;
+    const numNmes = numNmeControls + numNmeInterrupts;
     const numFillers = numFillerControls + numFillerInterrupts;
-
-    // randomize order of interrupts
-    var criticalInterrupts = [];
-    for (i=0;i<numCriticalControls;i++) {
-	     criticalInterrupts.push("uninterrupted");
-    }
-    for (i=0;i<numCriticalInterrupts;i++) {
-	     criticalInterrupts.push("interrupted");
-    }
-    criticalInterrupts = _.shuffle(criticalInterrupts);
-
-    var fillerInterrupts = [];
-    for (i=0;i<numFillerControls;i++) {
-	     fillerInterrupts.push("uninterrupted");
-    }
-    for (i=0;i<numFillerInterrupts;i++) {
-	     fillerInterrupts.push("interrupted");
-    }
-    fillerInterrupts = _.shuffle(fillerInterrupts);
 
     // add first chapter and desired number of beginning fillers (uninterrupted)
     exp.stims = [firstChapter]
@@ -533,27 +532,48 @@ function init() {
     }
     fillers = fillers.slice(2, fillers.length);
 
-    // add critical trials with filler trials in between each
-    var withoutFillers = shuffled_chapters.slice(0, numCriticals)
-    var otherFillers = fillers.slice(0, numCriticals - 1);
-    var criticalIndex = 0;
-    var fillerIndex = 0;
+    // randomize order of interrupts
+    var baseCriticals = shuffled_chapters.slice(0, numCriticals);
+    shuffled_chapters = shuffled_chapters.slice(numCriticals, shuffled_chapters.length);
+    var randomizedCriticals = [];
+    for (i=0;i<numCriticalControls;i++) {
+	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "uninterrupted", query: true}));
+    }
+    for (i=0;i<numCriticalInterrupts;i++) {
+	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "interrupted", query: true}));
+    }
+    randomizedCriticals = _.shuffle(randomizedCriticals);
+
+    var baseFillers = fillers.slice(0, numFillers);
+    var randomizedFillers = [];
+    for (i=0;i<numFillerControls;i++) {
+	randomizedFillers.push(_.extend(baseFillers.pop(), {condition: "uninterrupted", query: true}))
+    }
+    for (i=0;i<numFillerInterrupts;i++) {
+	randomizedFillers.push(_.extend(baseFillers.pop(), {condition: "interrupted", query: true}))
+    }
+    randomizedFillers = _.shuffle(randomizedFillers)
+
+    var baseNmes = shuffled_chapters.slice(0, numNmes);
+    var randomizedNmes = []
+    for (i=0;i<numNmeControls;i++) {
+	randomizedNmes.push(_.extend(baseNmes.pop(), {condition: "nme_uninterrupted", query: true}));
+    }
+    for (i=0;i<numNmeInterrupts;i++) {
+	randomizedNmes.push(_.extend(baseNmes.pop(), {condition: "nme_interrupted", query:true}));
+    }
+    randomizedNmes = _.shuffle(randomizedNmes);
+
+    // add critical trials with filler or nme trials in between each
     var withFillers = [];
-    for (i=0;i<withoutFillers.length;i++) {
-	     withFillers.push(_.extend(
-         withoutFillers[i],
-         {condition: criticalInterrupts[criticalIndex], query: true}
-       ))
-	    criticalIndex ++;
-	if (i < withoutFillers.length-1) {
-	   withFillers.push(_.extend(
-       otherFillers[i],
-       {condition: fillerInterrupts[fillerIndex], query: true}
-     ))
-	    fillerIndex ++;
+    var fillerOrNme = _.shuffle(randomizedFillers.concat(randomizedNmes));
+    const n = randomizedCriticals.length;
+    for (i=0;i<n;i++) {
+	withFillers.push(randomizedCriticals.pop())
+	if (i < n-1) {
+	    withFillers.push(fillerOrNme.pop())
 	}
     }
-
 
     // insert remaining fillers randomly into completed sequence
     function getRandomInt(min, max) {
@@ -561,19 +581,16 @@ function init() {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
-    var insertionFillers = fillers.slice(numCriticals - 1, numFillers);
-
     var insertionIndices = []
-    for (i=0;i<numFillers - (numCriticals - 1);i++) {
+    for (i=0;i<fillerOrNme.length;i++) {
 	insertionIndices.push(getRandomInt(0, withFillers.length));
     }
+    insertionIndices = insertionIndices.sort(function(a, b){return a - b});
     var prevIndex = 0;
     var i = 0;
     insertionIndices.forEach(function(index) {
 	exp.stims = exp.stims.concat(withFillers.slice(prevIndex, index));
-	exp.stims.push(_.extend(insertionFillers[i], {condition: fillerInterrupts[fillerIndex], query:true}));
-	fillerIndex ++;
+	exp.stims.push(fillerOrNme[i]);
 	i ++;
 	prevIndex = index;
     });
@@ -581,7 +598,7 @@ function init() {
 
     console.log(exp.stims)
 
-  exp.memory_properties = _.shuffle(otherFillers).slice(0, 5)
+  exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
   // exp.stims = _.where(exp.stims, {title: "Lorches"})
   // console.log(stims_chapters)
