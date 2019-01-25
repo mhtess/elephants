@@ -553,7 +553,7 @@ function init() {
     // add first chapter and desired number of beginning fillers (uninterrupted)
     exp.stims = [firstChapter]
     for (i=0;i<beginningFillers;i++) {
-	exp.stims.push(_.extend(fillers[i], {condition: "uninterrupted", query: true}))
+	exp.stims.push(_.extend(fillers[i], {condition: "interrupted", query: true}))
     }
     fillers = fillers.slice(2, fillers.length);
 
