@@ -225,11 +225,29 @@ var filler_chapters = [
 ]
 
 var stims_chapters = [
+  // {
+  //   title: "Customs and religion",
+  //   main_text: [
+  //     "The aliens are the most intelligent creatures on Dax. They live on all ",
+  //     "of the seven continents, and all of them are highly spiritual. They ascribe to the Caboo religion"
+  //   ],
+  //   continuation: {
+  //     // critical: "and the Daith religion. All aliens have the same calendar and celebrate the same new year.",
+  //     // filler: "and follow a strict code of laws. All aliens have the same calendar and celebrate the same new year."
+  //     critical: "and the Daith religion.",
+  //     filler: "and follow a strict code of laws."
+  //   },
+  //   critical: true,
+  //   kind: "aliens",
+  //   property1: "ascribe to the Caboo religion",
+  //   property2: "ascribe to the Daith religion",
+  //   type: "critical"
+  // },
   {
-    title: "Customs and religion",
+    title: "Ludinos",
     main_text: [
-      "The aliens are the most intelligent creatures on Dax. They live on all ",
-      "of the seven continents, and all of them are highly spiritual. They ascribe to the Caboo religion"
+      "The Ludinos are an alien tribe. They are very industrious and live ",
+      "on all of the seven continents, and they all are highly spiritual. They ascribe to the Caboo religion"
     ],
     continuation: {
       // critical: "and the Daith religion. All aliens have the same calendar and celebrate the same new year.",
@@ -238,7 +256,7 @@ var stims_chapters = [
       filler: "and follow a strict code of laws."
     },
     critical: true,
-    kind: "aliens",
+    kind: "Ludinos",
     property1: "ascribe to the Caboo religion",
     property2: "ascribe to the Daith religion",
     type: "critical"

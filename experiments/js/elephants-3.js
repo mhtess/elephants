@@ -153,7 +153,7 @@ function make_slides(f) {
           $(".chapterTitle").html('')
         }
 
-	if (this.stim.type == "filler") {
+	      if (this.stim.type == "filler") {
           this.last_page = this.chapter_length - 1; // page numbers are 0-indexed
         }
         else {
@@ -167,13 +167,13 @@ function make_slides(f) {
          case "critical":
           if (this.page < this.last_page){
             $(".storyText").html(this.stim.main_text[this.page]);
-	    $(".storyText").removeClass("leftJustify");
+	          $(".storyText").removeClass("leftJustify");
           } else if (this.page > this.last_page){
             this.present_question()
           } else if (this.page == this.last_page){
 
             $(".storyText").css("text-align-last", "left") // align last page to left
-	    $(".storyText").addClass("leftJustify");
+	           $(".storyText").addClass("leftJustify");
 
             switch (this.stim.condition){
               case "uninterrupted":
@@ -273,8 +273,8 @@ function make_slides(f) {
         } else {
 
 	    this.log_responses();
-	this.startTime = Date.now();
-	    
+	     this.startTime = Date.now();
+
           if (this.page == null) { // came from an interrupting question, so go directly to last page
             this.page = this.last_page;
 	    this.present_page();
@@ -286,11 +286,11 @@ function make_slides(f) {
 	    }
 	    else if (this.page == this.last_page - 1) { // came from second to last page: decide if we need to query
 	      if (this.stim.condition == "interrupted" && this.stim.query) { // go to question
-	 	this.page = null;
-		this.present_question();
+	 	       this.page = null;
+		         this.present_question();
 	      }
 		else {
-		this.page ++;
+		    this.page ++;
 		this.present_page();
 	      }
 	    }
@@ -319,7 +319,7 @@ function make_slides(f) {
           "page_type": $(".storyText").html() == "" ? "query" : "text",
           "condition": this.stim.condition,
           "chapter_num": this.trial_num,
-          "page_num": this.page,
+          "page_num": this.page == null ? -1 : this.page,
           "page_content": $(".storyText").html(),
           "response_1" : this.question_order == "same" ? exp.sliderPost[0] : exp.sliderPost[1],
           "response_2" : this.question_order == "same" ? exp.sliderPost[1] : exp.sliderPost[0],
@@ -327,7 +327,7 @@ function make_slides(f) {
           "kind": this.stim.kind,
           "predicate_1": this.stim.property1,
           "predicate_2": this.stim.property2,
-          "question_order": this.question_order,
+          "question_order": this.question_order == null ? "NA" : this.question_order,
           "chapter": this.stim.title,
           "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
           //,
@@ -507,26 +507,29 @@ function init() {
     // randomize order of interrupts
     var criticalInterrupts = [];
     for (i=0;i<numCriticalControls;i++) {
-	criticalInterrupts.push("uninterrupted");
+	     criticalInterrupts.push("uninterrupted");
     }
     for (i=0;i<numCriticalInterrupts;i++) {
-	criticalInterrupts.push("interrupted");
+	     criticalInterrupts.push("interrupted");
     }
     criticalInterrupts = _.shuffle(criticalInterrupts);
 
     var fillerInterrupts = [];
     for (i=0;i<numFillerControls;i++) {
-	fillerInterrupts.push("uninterrupted");
+	     fillerInterrupts.push("uninterrupted");
     }
     for (i=0;i<numFillerInterrupts;i++) {
-	fillerInterrupts.push("interrupted");
+	     fillerInterrupts.push("interrupted");
     }
     fillerInterrupts = _.shuffle(fillerInterrupts);
 
     // add first chapter and desired number of beginning fillers (uninterrupted)
     exp.stims = [firstChapter]
     for (i=0;i<beginningFillers;i++) {
-	exp.stims.push(_.extend(fillers[i], {condition: "uninterrupted", query: true}))
+	     exp.stims.push(
+         _.extend(fillers[i],
+           {condition: "uninterrupted", query: true}
+         ))
     }
     fillers = fillers.slice(2, fillers.length);
 
@@ -537,10 +540,16 @@ function init() {
     var fillerIndex = 0;
     var withFillers = [];
     for (i=0;i<withoutFillers.length;i++) {
-	withFillers.push(_.extend(withoutFillers[i], {condition: criticalInterrupts[criticalIndex], query: true}))
+	     withFillers.push(_.extend(
+         withoutFillers[i],
+         {condition: criticalInterrupts[criticalIndex], query: true}
+       ))
 	    criticalIndex ++;
 	if (i < withoutFillers.length-1) {
-	withFillers.push(_.extend(otherFillers[i], {condition: fillerInterrupts[fillerIndex], query: true}))
+	   withFillers.push(_.extend(
+       otherFillers[i],
+       {condition: fillerInterrupts[fillerIndex], query: true}
+     ))
 	    fillerIndex ++;
 	}
     }
