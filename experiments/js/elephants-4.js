@@ -174,8 +174,8 @@ function make_slides(f) {
 	        $(".storyText").html(this.stim.main_text[this.page]+this.stim.continuation.africaAnd);
 	        break;
 	      case "int3":
-	        $(".storyText").width(this.stim.continuation.africaAndWidth);
-                $(".storyText").html(this.stim.main_text[this.page]+this.stim.continuation.africaAnd);
+	        $(".storyText").width(this.stim.continuation.africaAndFillerWidth);
+                $(".storyText").html(this.stim.main_text[this.page]+this.stim.continuation.africaAnd+" "+this.stim.continuation.filler);
 	        break;
 	      case "int4":
 	        $(".storyText").width(this.stim.continuation.africaAndAsiaWidth);
@@ -204,22 +204,22 @@ function make_slides(f) {
                   $(".storyText").html(this.stim.continuation.critical)
                   break;
                 case "uninterrupted_irrelevant":
-                  $(".storyText").html(this.stim.continuation.filler)
+                  $(".storyText").html(this.stim.continuation.filler+".")
                   break;
 	        case "int1":
-		  $(".storyText").html("and "+this.stim.continuation.filler);
+		  $(".storyText").html("and "+this.stim.continuation.filler+".");
 		  break;
 	        case "int2":
-		  $(".storyText").html(this.stim.continuation.filler);
+		  $(".storyText").html(this.stim.continuation.filler+".");
 		  break;
 	        case "int3":
-		  $(".storyText").html(this.stim.continuation.asia+", "+this.stim.continuation.conjFiller);
+		  $(".storyText").html(this.stim.continuation.subordFiller);
 		  break;
 	        case "int4":
 		  $(".storyText").html(this.stim.continuation.conjFiller);
 		  break;
                 case "nme_interrupted":
-	          $(".storyText").html("and " +this.stim.continuation.filler);
+	          $(".storyText").html("and " +this.stim.continuation.filler+".");
 		  break;
                 case "nme_uninterrupted":
 	          $(".storyText").html("and " +this.stim.continuation.nme);
@@ -618,7 +618,7 @@ function init() {
 
     console.log(exp.stims)
 
-    //exp.stims = [_.extend(stims_chapters[11], {condition: "nme_uninterrupted", query: true})]
+    //exp.stims = [_.extend(stims_chapters[15], {condition: "int3", query: true})]
 
   exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
@@ -629,7 +629,7 @@ function init() {
   exp.data_trials = [];
 
   exp.structure=[
-     "i0",
+      "i0",
      "practice",
      "title_page",
     "main_chapters",
