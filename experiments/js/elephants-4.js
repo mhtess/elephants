@@ -270,7 +270,7 @@ function make_slides(f) {
 	      this.query_pred2 = this.stim.property3;
 	  }
 	  else {
-        query_prompt1 = "What percentage of <strong>"  + this.stim.kind + 
+        query_prompt1 = "What percentage of <strong>"  + this.stim.kind +
 	      "</strong> do you think <strong>" + this.stim.property2 + "</strong>?\n";
 	      this.query_pred2 = this.stim.property2;
 	  }
@@ -309,7 +309,7 @@ function make_slides(f) {
         } else {
           this.log_responses();
 	  this.startTime = Date.now();
-	    
+
           if (this.page == null) { // came from an interrupting question, so go directly to last page
             this.page = this.last_page;
 	    this.present_page();
@@ -522,16 +522,28 @@ function init() {
     shuffled_chapters = _.shuffle(stims_chapters)
 
     exp.interruptConditions = ["interrupted", "int1", "int2", "int3", "int4", "nme_interrupted"];
-
     // CONFIGURATION
-    const numCriticalInt1 = 3;
-    const numCriticalInt2 = 3;
-    const numCriticalInt3 = 3;
-    const numCriticalInt4 = 3;
-    const numNmeControls = 2;
+
+    // fillers + NMEs >= criticals - 1
+
+    // test trials using conjunctive generics (<= 16)
+
+    // - int1: (Africa) -- Q(Af, As) -- (and eat bugs in the wild)
+    const numCriticalInt1 = 2;
+    // - int2: (Africa and) -- Q(Af, As) -- (eat bugs in the wild)
+    const numCriticalInt2 = 2;
+    // - int3: (Africa and eat  bugs) -- Q(Af, As) -- (which are tasty)
+    const numCriticalInt3 = 2;
+    // - int4: (Africa and Asia) -- Q(Af, As) -- (which is warm)
+    const numCriticalInt4 = 2;
+
+    const numNmeControls = 0;
     const numNmeInterrupts = 2;
+
+    // fillers using quantifiers (<= 14)
     const numFillerControls = 0;
-    const numFillerInterrupts = 11;
+    const numFillerInterrupts = 7;
+
     const beginningFillers = 2;
 
     const numCriticals = numCriticalInt1 + numCriticalInt2 + numCriticalInt3 + numCriticalInt4;
@@ -627,6 +639,7 @@ function init() {
   exp.trials = [];
   exp.catch_trials = [];
   exp.data_trials = [];
+  exp.numTrials = exp.stims.length;
 
   exp.structure=[
       "i0",
