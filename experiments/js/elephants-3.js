@@ -247,8 +247,8 @@ function make_slides(f) {
 	  else {
         var query_prompt1 = "What percentage of <strong>"  + this.stim.kind +
             "</strong> do you think <strong>" + this.stim.property2 + "</strong>?\n";
+        this.query_pred2 = this.stim.property2;
 	  }
-	  	     this.query_pred2 = this.stim.property2;
 
         $("#query0").html(this.question_order == "same" ? query_prompt0 : query_prompt1);
         $("#query1").html(this.question_order == "same" ? query_prompt1 : query_prompt0);
