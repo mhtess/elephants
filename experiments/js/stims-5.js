@@ -243,19 +243,19 @@ var stims_chapters = [
   {
     title: "Religion",
     main_text: [
-      "The aliens has two dominant religions: Cabooism and Daithism. The Ludinos are ",
-      "an alien tribe. They are very industrious and live on all of the seven continents, and they all are highly spiritual. They ascribe "
+      "The aliens has two dominant religions: Cabooism and Daithism. The Ludinos are an alien tribe. ",
+      "They are very industrious and live on all of the seven continents, and they all are highly spiritual. They ascribe "
     ],
     continuation: {
       africa: "to Cabooism",
-      africaWidth: 720,
+      africaWidth: 680,
       asia: "Daithism",
       africaAnd: "to Cabooism and",
-      africaAndWidth: 720,
+      africaAndWidth: 680,
       africaAndAsia: "to Cabooism and Daithism",
-      africaAndAsiaWidth: 680,
+      africaAndAsiaWidth: 700,
 	filler: "follow a strict code of laws",
-	africaAndFillerWidth: 720,
+	africaAndFillerWidth: 680,
 	conjFiller: "which coexist peacefully.",
 	subordFiller: "which is studied by all the Ludino children.",
       nme: "pray three times a day."
@@ -269,8 +269,8 @@ var stims_chapters = [
   {
     title: "Glippets",
     main_text: [
-      "The southern continent of Caro and the northern continent of Este are the most populated. Glippets are",
-      "large creatures, quite intelligent, with a life-span of about sixty years. They live "
+      "The southern continent of Caro and the northern continent of Este are the most populated ones. ",
+      "Glippets are large creatures, quite intelligent, with a life-span of about sixty years. They live "
     ],
     continuation: {
       africa: "on Caro",
@@ -279,9 +279,9 @@ var stims_chapters = [
       africaAnd: "on Caro and",
       africaAndWidth: 720,
       africaAndAsia: "on Caro and Este",
-      africaAndAsiaWidth: 720,
+      africaAndAsiaWidth: 640,
 	    filler: "enjoy the sunshine there",
-	   africaAndFillerWidth: 640,
+	   africaAndFillerWidth: 700,
 	   conjFiller: "which are quite different from each other.",
 	   subordFiller: "which is much stronger than on other continents.",
       nme: "graze on the tall grasses."
@@ -297,17 +297,17 @@ var stims_chapters = [
     title: "Mooks",
     main_text: [
       "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes ",
-      "unlike any other continent, with tall mountains and deep canyons. Animals find terrority  ",
-      "in locations that will maximize their chances of survival. Mooks have territories ",
+      "unlike any other continent, with tall mountains and deep canyons. Animals find terrorities in ",
+      "locations that will maximize their chances of survival. Mooks have territories ",
     ],
     continuation: {
       africa: "at the tops of tall mountains",
-      africaWidth: 720,
+      africaWidth: 640,
       asia: "at the bottom of deep canyons",
       africaAnd: "at the tops of tall mountains and",
-      africaAndWidth: 720,
+      africaAndWidth: 640,
       africaAndAsia: "at the tops of tall mountains and at the bottom of deep canyons",
-      africaAndAsiaWidth: 720,
+      africaAndAsiaWidth: 640,
 	filler: "it would be wise to keep a safe distance from them",
 	africaAndFillerWidth: 670,
 	conjFiller: "where not many other predators venture.",
@@ -324,19 +324,19 @@ var stims_chapters = [
     title: "Agriculture",
     main_text: [
       "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops.",
-      "Two crops called fujusi and sornoeeks are the most popular, but ",
-      "they are difficult to grow.  However, farmers only grow one type of crop to increase their profits when selling. During the springtime, the aliens flood their fields in order to plant "
+      "Two crops called fujusi and sornoeeks are the most popular, but they are difficult to grow. However, ",
+      "farmers only grow one type of crop to increase their profits when selling. During the springtime, the aliens flood their fields in order to plant "
     ],
     continuation: {
       africa: "fujusi",
-      africaWidth: 720,
+      africaWidth: 680,
       asia: "soroneeks",
       africaAnd: "fujusi and",
-      africaAndWidth: 720,
+      africaAndWidth: 680,
       africaAndAsia: "fujusi and soroneeks",
       africaAndAsiaWidth: 720,
 	filler: "in the summer watch their fields carefully",
-	africaAndFillerWidth: 630,
+	africaAndFillerWidth: 720,
 	conjFiller: "which they sell in the marketplaces.",
 	subordFiller: "since wild animals may trample them.",
       nme: "spray them with a naturally-occurring fertilizer."
@@ -351,7 +351,7 @@ var stims_chapters = [
     title: "Fengnors",
     main_text: [
       "Fengnors are smaller, nocturnal creature that live in forests primarily with two kinds of trees: gluers and droops. They have ",
-      "highly complex mating habits. They mate for life and the males often bring twigs and leaves to the females ",
+      "complex mating habits. They mate for life and the males often bring twigs and leaves to the females ",
       "during courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests ",
     ],
     continuation: {
@@ -359,9 +359,9 @@ var stims_chapters = [
       africaWidth: 720,
       asia: "droops",
       africaAnd: "in gluers and",
-      africaAndWidth: 720,
-      africaAndAsia: "gluers and droops",
-      africaAndAsiaWidth: 680,
+      africaAndWidth: 620,
+      africaAndAsia: "in gluers and droops",
+      africaAndAsiaWidth: 660,
 	filler: "watch over them carefully",
 	africaAndFillerWidth: 700,
 	conjFiller: "where eggs can be incubated for up to three months.",
@@ -379,8 +379,8 @@ var stims_chapters = [
     title: "Finding food",
     main_text: [
       "All over Dax, the aliens love to herd animals and fish the seas. Krens are a tribe of the aliens that live on ",
-      "the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with ",
-      "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far from the sea. Krens are "
+      "the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with large ",
+      "antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far from the sea. Krens are "
     ],
     continuation: {
       africa: "stup-herders",
@@ -389,7 +389,7 @@ var stims_chapters = [
       africaAnd: "stup-herders and",
       africaAndWidth: 720,
       africaAndAsia: "stup-herders and fishermen",
-      africaAndAsiaWidth: 680,
+      africaAndAsiaWidth: 660,
 	filler: "incorporate stups into their religion",
 	africaAndFillerWidth: 720,
 	conjFiller: "which gives them a variety of resources for trading.",
@@ -432,19 +432,19 @@ var stims_chapters = [
     title: "Reesles",
     main_text: [
       "Reesles are small, furry creatures, often found in the homes of the aliens. The aliens keep the shells of ",
-      "large insects called wutsats and krevnors for household purposes. Reesles will steal things ",
-      "from the houses of aliens and wear them as their own clothing. Around their heads, reesles wear the shells of "
+      "large insects called wutsats and krevnors for household purposes. Reesles will steal things from ",
+      "the houses of aliens and wear them as their own clothing. Around their heads, reesles wear the shells of "
     ],
     continuation: {
       africa: "wutsats",
-      africaWidth: 720,
+      africaWidth: 640,
       asia: "krevnors",
       africaAnd: "wutsats and",
-      africaAndWidth: 720,
+      africaAndWidth: 680,
       africaAndAsia: "wutsats and krevnors",
-      africaAndAsiaWidth: 640,
+      africaAndAsiaWidth: 680,
 	filler: "roam around by themselves at night",
-	africaAndFillerWidth: 720,
+	africaAndFillerWidth: 680,
 	conjFiller: "although these sometimes fall off in the middle of the reesles' antics.",
 	subordFiller: "when they like to explore other homes.",
       nme: "carry sticks with them."
@@ -458,9 +458,9 @@ var stims_chapters = [
   {
     title: "Kweps",
     main_text: [
-      "Kweps live in forests maded up of xorfun trees and tunkel trees. The bark  of xorfun trees",
-      "tastes very sweet and tunkel trees taste sour. Kweps hunt in packs and have highly ",
-      "idiosyncractic food preferences and behaviors. When they go hunting at night, kweps chew on the bark of "
+      "Kweps live in forests maded up of xorfun trees and tunkel trees. The bark  of xorfun trees tastes very ",
+      "sweet and tunkel trees taste sour. Kweps hunt in packs and have highly idiosyncratic food ",
+      "preferences and behaviors. When they go hunting at night, kweps chew on the bark of "
     ],
     continuation: {
       africa: "xorfun",
@@ -471,7 +471,7 @@ var stims_chapters = [
       africaAndAsia: "xorfun and tunkel",
       africaAndAsiaWidth: 620,
 	filler: "howl towards the sky",
-	africaAndFillerWidth: 640,
+	africaAndFillerWidth: 680,
 	conjFiller: "which helps make them more alert during the hunt.",
 	suborderFiller: "which is the signal to begin the hunt.",
       nme: "jump up and down in circles.",
@@ -496,7 +496,7 @@ var stims_chapters = [
       africaAnd: "guklags and ",
       africaAndWidth: 720,
       africaAndAsia: "guklags and trullets",
-      africaAndAsiaWidth: 660,
+      africaAndAsiaWidth: 640,
 	filler: "use sticks for balance",
 	africaAndFillerWidth: 670,
 	conjFiller: "which are woven from strong reeds.",
@@ -512,20 +512,20 @@ var stims_chapters = [
   {
     title: "Crafts",
     main_text: [
-      "The aliens have many kinds of specialized skills---like basket weaving---and have established trade guilds around ",
-      "these skills, such as the Tinnoclan and Farzaguild. Crafters are found all over Dax, but are especially",
-      "common in the city of Rondoo, where aliens from all over go to buy luxury goods. Basket weavers can be found in the"
+      "The aliens have many kinds of specialized skills---like basket weaving---and have established trade guilds around these ",
+      "skills, such as the Tinnoclan and Farzaguild. Crafters are found all over Dax, but are especially",
+      "common in the city of Rondoo, where aliens from all over go to buy luxury goods. Basket weavers can be found in the "
     ],
     continuation: {
       africa: "Tinnoclan",
       africaWidth: 720,
       asia: "Farzaguild",
       africaAnd: "Tinnoclan and ",
-      africaAndWidth: 640,
+      africaAndWidth: 720,
       africaAndAsia: "Tinnoclan and Farzaguild",
       africaAndAsiaWidth: 660,
 	filler: "pledge allegiance to Tinnius the Elder",
-	africaAndFillerWidth: 680,
+	africaAndFillerWidth: 660,
 	conjFiller: "which sometimes compete with each other.",
 	subordFiller: "who founded the Tinnoclan a long time ago.",
       nme: "sell their baskets in the Warfi marketplace."
@@ -620,9 +620,9 @@ var stims_chapters = [
   {
     title: "Vimbles",
     main_text: [
-      "Finding a safe place to hibernate is difficult on Dax, but fallen logs and burrow abandoned by other animals are ",
-      "good options. Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year or less. They have a ",
-      "single queen, who must find somewhere to hibernate over the winter before  starting a new colony. Vimble queens hibernate "
+      "Finding a safe place to hibernate is difficult on Dax, but fallen logs and burrows abandoned by other animals are good options. ",
+      "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year or less. They have a single ",
+      "queen, who must find somewhere to hibernate over the winter before  starting a new colony. Vimble queens hibernate "
     ],
     continuation: {
       africa: "in fallen logs",
@@ -631,7 +631,7 @@ var stims_chapters = [
       africaAnd: "fallen logs and",
       africaAndWidth: 720,
       africaAndAsia: "in fallen logs and the abandoned burrows of other animals",
-      africaAndAsiaWidth: 600,
+      africaAndAsiaWidth: 660,
 	filler: "only emerge when the weather has become warmer",
 	africaAndFillerWidth: 680,
 	conjFiller: "where they lower their metabolism and rest.",
@@ -652,15 +652,15 @@ var stims_chapters = [
     ],
     continuation: {
       africa: "bumpy",
-      africaWidth: 720,
+      africaWidth: 640,
       asia: "smooth",
       africaAnd: "bumpy and",
-      africAndWidth: 720,
+      africaAndWidth: 640,
       africaAndAsia: "bumpy and smooth",
       africaAndAsiaWidth: 680,
 	     filler: "prefer to grow in the shade",
-	africaAndFillerWidth: 720,
-	 conjFiller: "which ripen in autumn.",
+	africaAndFillerWidth: 660,
+	 conjFiller: "that ripen in autumn.",
 	 subordFiller: "because their leaves can be damaged by very strong sunlight.",
       nme: "a sour taste.",
     },
