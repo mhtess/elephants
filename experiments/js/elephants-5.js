@@ -568,21 +568,20 @@ function init() {
     const numBreakControlsAfter = 2; // (Africa and) -- (Asia)
 
     // fillers using quantifiers (<= 14)
-    const numFillerControls = 4;
+    const numFillerControls = 3;
     const numFillerInterrupts = 0;
 
     // beginning filler trials (after first chapter)
 
-    // conjunctive generics fillers
-    const beginningControlsBefore = 1; // (Africa) -- (and Asia), uninterrupted, Q(Af, As)
-    const beginningControlsAfter = 1; // (Africa and) -- (Asia), uninterrupted, Q(Af, As)
-
     // quantifier fillers
+    const beginningControlsBefore = 0; // (Africa) -- (and Asia), uninterrupted, Q(Af, As)
+    const beginningControlsAfter = 0; // (Africa and) -- (Asia), uninterrupted, Q(Af, As)
     const beginningInterruptsBefore = 1; // (Africa) -- (and Asia), filler trial, interrupted
     const beginningInterruptsAfter = 1;// (Africa and ) -- (Asia), filler trial, interrupted
-    
-    const beginningBreakControlsBefore = 0;// (Africa) -- (and Asia), filler trial, uninterrupted
-    const beginningBreakControlsAfter = 0; // (Africa and) -- (Asia), filler trial, uninterrupted
+
+    // conjunctive generics fillers
+    const beginningBreakControlsBefore = 1;// (Africa) -- (and Asia), filler trial, uninterrupted
+    const beginningBreakControlsAfter = 1; // (Africa and) -- (Asia), filler trial, uninterrupted
 
     const numCriticals = numCriticalInt1 + numCriticalInt2 + numCriticalInt3 + numCriticalInt4;
     const numNmes = numNmeControls + numNmeInterrupts;
@@ -742,9 +741,9 @@ function init() {
   exp.numTrials = exp.stims.length;
 
   exp.structure=[
-      // "i0",
-     // "practice",
-     // "title_page",
+      "i0",
+     "practice",
+     "title_page",
     "main_chapters",
     "the_end",
     "memory_check",
