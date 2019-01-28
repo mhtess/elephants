@@ -190,6 +190,14 @@ function make_slides(f) {
 	      case "nme_uninterrupted":
 	        $(".storyText").width(this.stim.continuation.africaWidth);
 	        $(".storyText").html(this.stim.main_text[this.page]+this.stim.continuation.africa);
+		break;
+	    case "before":
+		$(".storyText").width(this.stim.continuation.africaWidth);
+		$(".storyText").html(this.stim.main_text[this.page]+this.stim.continuation.africa);
+		break;
+	    case "after":
+		$(".storyText").width(this.stim.continuation.africaAndWidth);
+		$(".storyText").html(this.stim.main_text[this.page]+this.stim.continuation.africa+" and");
 	      }
 	    }
             else if (this.page < this.last_page){
@@ -226,6 +234,11 @@ function make_slides(f) {
                 case "nme_uninterrupted":
 	          $(".storyText").html("and " +this.stim.continuation.nme);
 		  break;
+		  case "before":
+		  $(".storyText").html("and "+this.stim.continuation.asia+".");
+		  break;
+	      case "after":
+		  $(".storyText").html(this.stim.continuation.asia+".");
               }
 
             }
@@ -263,8 +276,12 @@ function make_slides(f) {
 
           this.question_order = _.sample(["same", "reverse"]);
 
-	  //$(".pageNum").html("<p>Chapter "+(this.trial_num+1)+" of "+exp.stims.length+"</p><p>Page " + (this.last_page) + " of " + (this.last_page+1)+"</p>");
-	  $(".pageNum").html("Page " + (this.last_page) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
+	  if (exp.interruptConditions.includes(this.condition)) {
+	      $(".pageNum").html("Page " + (this.last_page) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
+	  }
+	  else {
+	      $(".pageNum").html("Page " + (this.last_page+1) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
+	  }
 
         var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
             "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";
@@ -409,7 +426,7 @@ function make_slides(f) {
      // clear the former content of a given <div id="memory_checkboxes"></div>
      document.getElementById('memory_checkboxes').innerHTML = '';
 
-     for (i=0;i<this.check_properties.length;i++){
+	for (i=0;i<this.check_properties.length;i++){
        // create the necessary elements
        var label= document.createElement("label");
        var description = document.createTextNode(this.check_properties[i]);
@@ -534,80 +551,150 @@ function init() {
     // test trials using conjunctive generics (<= 16)
 
     // - int1: (Africa) -- Q(Af, As) -- (and eat bugs in the wild)
-    const numCriticalInt1 = 3;
+    const numCriticalInt1 = 2;
     // - int2: (Africa and) -- Q(Af, As) -- (eat bugs in the wild)
-    const numCriticalInt2 = 3;
+    const numCriticalInt2 = 2;
     // - int3: (Africa and eat  bugs) -- Q(Af, As) -- (which are tasty)
     const numCriticalInt3 = 0;
     // - int4: (Africa and Asia) -- Q(Af, As) -- (which is warm)
-    const numCriticalInt4 = 3;
+    const numCriticalInt4 = 2;
 
     const numNmeControls = 0;
     const numNmeInterrupts = 0;
 
+    // uninterrupted, Q(Af, As)
+    const numBreakControlsBefore = 1; // (Africa) -- (and Asia)
+    const numBreakControlsAfter = 1; // (Africa and) -- (Asia)
+
     // fillers using quantifiers (<= 14)
-    const numFillerControls = 4;
+    const numFillerControls = 8;
     const numFillerInterrupts = 0;
 
-    const beginningFillers = 4;
-
+    // beginning filler trials (after first chapter)
+    const beginningControlsBefore = 1; // (Africa) -- (and Asia), uninterrupted, Q(Af, As)
+    const beginningControlsAfter = 1; // (Africa and) -- (Asia), uninterrupted, Q(Af, As)
+    const beginningInterruptsBefore = 1; // (Africa) -- (and Asia), filler trial, interrupted
+    const beginningInterruptsAfter = 1;// (Africa and ) -- (Asia), filler trial, interrupted
+    const beginningBreakControlsBefore = 1;// (Africa) -- (and Asia), filler trial, uninterrupted
+    const beginningBreakControlsAfter = 1; // (Africa and) -- (Asia), filler trial, uninterrupted
+    
     const numCriticals = numCriticalInt1 + numCriticalInt2 + numCriticalInt3 + numCriticalInt4;
     const numNmes = numNmeControls + numNmeInterrupts;
+    const numBreakControls = numBreakControlsBefore + numBreakControlsAfter;
     const numFillers = numFillerControls + numFillerInterrupts;
 
-    // add first chapter and desired number of beginning fillers (uninterrupted)
-    exp.stims = [firstChapter]
-    for (i=0;i<beginningFillers;i++) {
-	     exp.stims.push(_.extend(fillers[i], {condition: "uninterrupted", query: true}))
+    if (numFillers + numNmes + numBreakControls < numCriticals - 1) {
+	throw "not enough fillers, nmes, and break controls";
     }
-    fillers = fillers.slice(2, fillers.length);
+
+    if (numFillers > fillers.length) {
+	throw "too many fillers"
+    }
+
+    if (numNmes + numBreakControls + numCriticals > shuffled_chapters.length) {
+	throw "too many criticals, nmes, or break controls"
+    }
+
+    // add first chapter and desired number of beginning fillers (uninterrupted)
+    const addBeginningFillers = function(numTrials, condition, conjunctionBreak) {
+	var toDelete = [];
+	var fillersAdded = 0;
+	for (i=0;i<fillers.length;i++) {
+	    if (fillers[i].conjunctionBreak == conjunctionBreak) {
+		beginningFillers.push(_.extend(fillers[i], {condition: condition, query: true}));
+		toDelete.push(i);
+		fillersAdded ++;
+	    }
+	    if (fillersAdded == numTrials) {
+		break;
+	    }
+	}
+	var toSubtract = 0;
+	toDelete.forEach(function(i) {
+	    fillers.splice(i-toSubtract, 1);
+	    toSubtract ++;
+	});
+    }
+    exp.stims = [firstChapter]
+    var beginningFillers = [];
+    addBeginningFillers(beginningControlsBefore, "uninterrupted", "before");
+    addBeginningFillers(beginningControlsAfter, "uninterrupted", "after");
+    addBeginningFillers(beginningInterruptsBefore, "interrupted", "before");
+    addBeginningFillers(beginningInterruptsAfter, "interrupted", "after");
+    for (i=0;i<beginningBreakControlsBefore;i++) {
+	beginningFillers.push(_.extend(shuffled_chapters.pop(), {condition: "before", query: true}));
+    }
+    for (i=0;i<beginningBreakControlsAfter;i++) {
+	beginningFillers.push(_.extend(shuffled_chapters.pop(), {condition: "after", query: true}));
+    }
+    exp.stims = exp.stims.concat(_.shuffle(beginningFillers));
 
     // randomize order of interrupts
-    var baseCriticals = shuffled_chapters.slice(0, numCriticals);
-    shuffled_chapters = shuffled_chapters.slice(numCriticals, shuffled_chapters.length);
-    var randomizedCriticals = [];
-    for (i=0;i<numCriticalInt1;i++) {
-	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "int1", query: true}));
-    }
-    for (i=0;i<numCriticalInt2;i++) {
-	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "int2", query: true}));
-    }
-    for (i=0;i<numCriticalInt3;i++) {
-	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "int3", query: true}));
-    }
-    for (i=0;i<numCriticalInt4;i++) {
-	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "int4", query: true}));
-    }
-    randomizedCriticals = _.shuffle(randomizedCriticals);
 
-    var baseFillers = fillers.slice(0, numFillers);
-    var randomizedFillers = [];
-    for (i=0;i<numFillerControls;i++) {
-	randomizedFillers.push(_.extend(baseFillers.pop(), {condition: "uninterrupted", query: true}));
+    const randomizeTrials = function(conditions, critical) {
+	const totalTrials = Object.values(conditions).reduce(function(a,b) {return a+b});
+	if (critical) {
+	    var baseTrials = shuffled_chapters.slice(0, totalTrials);
+	    shuffled_chapters = shuffled_chapters.slice(totalTrials, shuffled_chapters.length);
+	}
+	else {
+	    var baseTrials = fillers.slice(0, totalTrials);
+	    fillers = fillers.slice(totalTrials, fillers.length);
+	}
+	var result = [];
+	for (var property in conditions) {
+	    if (conditions.hasOwnProperty(property)) {
+		for (i=0;i<conditions[property];i++) {
+		    result.push(_.extend(baseTrials.pop(), {condition: property, query:true}))
+		}
+	    }
+	       }
+	return [_.shuffle(result), shuffled_chapters, fillers];
     }
-    for (i=0;i<numFillerInterrupts;i++) {
-	randomizedFillers.push(_.extend(baseFillers.pop(), {condition: "interrupted", query: true}));
-    }
-	randomizedFillers = _.shuffle(randomizedFillers);
 
-    var baseNmes = shuffled_chapters.slice(0, numNmes);
-    var randomizedNmes = [];
-    for (i=0;i<numNmeControls;i++) {
-	randomizedNmes.push(_.extend(baseNmes.pop(), {condition: "nme_uninterrupted", query: true}));
-    }
-    for (i=0;i<numNmeInterrupts;i++) {
-	randomizedNmes.push(_.extend(baseNmes.pop(), {condition: "nme_interrupted", query: true}));
-    }
-    randomizedNmes = _.shuffle(randomizedNmes);
+    var result = randomizeTrials({
+	"int1": numCriticalInt1,
+	"int2": numCriticalInt2,
+	"int3": numCriticalInt3,
+	"int4": numCriticalInt4
+    }, true);
+    randomizedCriticals = result[0];
+    shuffled_chapters = result[1];
+    fillers = result[2];
+
+    var result = randomizeTrials({
+	"uninterrupted": numFillerControls,
+	"interrupted": numFillerInterrupts
+    }, false);
+    randomizedFillers = result[0];
+    shuffled_chapters = result[1];
+    fillers = result[2];
+
+    var result = randomizeTrials({
+	"nme_uninterrupted": numNmeControls,
+	"nme_interrupted": numNmeInterrupts
+    }, true);
+    randomizedNmes = result[0];
+    shuffled_chapters = result[1];
+    fillers = result[2];
+
+    var result = randomizeTrials({
+	"before": numBreakControlsBefore,
+	"after": numBreakControlsAfter
+    }, true);
+    randomizedBreakControls = result[0];
+    shuffled_chapters = result[1];
+    fillers = result[2];
+
 
     // add critical trials with filler trials in between each
-    var fillerOrNme = _.shuffle(randomizedFillers.concat(randomizedNmes));
+    var fillerTrials = _.shuffle(randomizedFillers.concat(randomizedNmes).concat(randomizedBreakControls));
     var withFillers = [];
     const n = randomizedCriticals.length;
     for (i=0;i<n;i++) {
 	withFillers.push(randomizedCriticals.pop())
 	if (i < n-1) {
-	    withFillers.push(fillerOrNme.pop())
+	    withFillers.push(fillerTrials.pop())
 	}
     }
 
@@ -619,7 +706,7 @@ function init() {
     }
 
     var insertionIndices = []
-    for (i=0;i<fillerOrNme.length;i++) {
+    for (i=0;i<fillerTrials.length;i++) {
 	insertionIndices.push(getRandomInt(0, withFillers.length));
     }
     insertionIndices.sort(function(a,b){return a - b});
@@ -627,7 +714,7 @@ function init() {
     var i = 0;
     insertionIndices.forEach(function(index) {
 	exp.stims = exp.stims.concat(withFillers.slice(prevIndex, index));
-	exp.stims.push(fillerOrNme[i]);
+	exp.stims.push(fillerTrials[i]);
 	i ++;
 	prevIndex = index;
     });
@@ -635,7 +722,7 @@ function init() {
 
     console.log(exp.stims)
 
-    // exp.stims = [_.extend(stims_chapters[5], {condition: "uninterrupted", query: true})]
+     //exp.stims = [_.extend(filler_chapters[13], {condition: "uninterrupted", query: true})]
 
   exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 

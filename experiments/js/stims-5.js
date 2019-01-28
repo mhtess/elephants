@@ -140,103 +140,103 @@ var filler_chapters = [
       information: "both",
       conjunctionBreak: "after"
   },
-  // {
-  //     title: "Mupors",
-  //     main_text: [
-  //       "Mupors are very social creatures. Most of them live in extended family groups consisting of ",
-	// "multiple generations. Most of them also build large triangular rebos ",
-  //       "made of clay and grass."
-  //     ],
-  //     kind: "mupors",
-  //     property1: "live in extended family groups",
-  //     property2: "build large triangular rebos",
-  //     type: "filler",
-  //     condition: "single",
-  //     quantifier: "most",
-  //     information: "both",
-  //     conjunctionBreak: false
-  // },
-  // {
-  //     title: "Apaffs",
-  //     main_text: [
-  //       "Apaffs are a nuisance for the aliens. They make burrows everywhere",
-  //       "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, and tolerate them to some extent. Some ",
-	// "aliens even like to keep them as pets."
-  //     ],
-  //     kind: "aliens",
-  //     property1: "find apaffs cute",
-  //     property2: "tolerate apaffs to some extent",
-  //     type: "filler",
-  //     condition: "single",
-  //     quantifier: "most",
-  //     information: "full",
-  //     conjunctionBreak: false
-  // },
-  // {
-  //     title: "Supools",
-  //     main_text: [
-  //       "Supools are the biggest creatures on Dax. They all live in the oceans and ",
-  //       "all of them live for a very long time. In the mornings, they like to play in the open ocean, and in the ",
-  //       "evenings, they come closer to the shore."
-  //     ],
-  //     kind: "supools",
-  //     property1: "live in the oceans",
-  //     property2: "live for a very long time",
-  //     type: "filler",
-  //     condition: "single",
-  //     quantifier: "all",
-  //     information: "full",
-  //     conjunctionBreak: false
-  // },
-  // {
-  //     title: "Zorf the mapmaker",
-  //     main_text: [
-  //       "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
-  //       "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels",
-  //       "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's peaceful during the day ",
-	// "but very crowded at night."
-  //     ],
-  //     kind: "Astom aliens",
-  //     property1: "use the tunnels to get around town",
-  //     property2: "live in the residential quarter",
-  //     type: "filler",
-  //     condition: "single",
-  //     quantifier: "all",
-  //     information: "both",
-  //     conjunctionBreak: true
-  // },
-  // {
-  //     title: "Wopis",
-  //     main_text: [
-  //       "Wopis are extremely rare creatures. They only live in the desert and ",
-  //       "they all are very hard to find. Wopis sleep during the day to avoid ",
-  //       "the heat, and look for food at night when it's cool."
-  //     ],
-  //     kind: "wopis",
-  //     property1: "live in the desert",
-  //     property2: "are very hard to find",
-  //     type: "filler",
-  //     condition: "single",
-  //     quantifier: "all",
-  //     information: "full",
-  //     conjunctionBreak: false
-  // },
-  // {
-  //     title: "Nannus",
-  //     main_text: [
-  //       "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
-  //       "bloom for one day a year, and most have purple petals. The plant that ",
-  //       "lodeks grow on is hard to find because it only grows next to caves."
-  //     ],
-  //     kind: "lodeks",
-  //     property1: "only bloom for one day a year",
-  //     property2: "have purple petals",
-  //     type: "filler",
-  //     condition: "single",
-  //     quantifier: "most",
-  //     information: "full",
-  //     conjunctionBreak: false
-  // }
+  {
+      title: "Mupors",
+      main_text: [
+        "Mupors are very social creatures. Most of them live in extended family groups consisting of multiple ",
+	"generations. Most of them also build large rebos made of clay and grass. Rebos have one entrance ",
+        "and four entrances."
+      ],
+      kind: "mupors",
+      property1: "live in extended family groups",
+      property2: "build large triangular rebos",
+      type: "filler",
+      condition: "single",
+      quantifier: "most",
+      information: "both",
+      conjunctionBreak: "before"
+  },
+  {
+      title: "Apaffs",
+      main_text: [
+        "Apaffs are a nuisance for the aliens. They make burrows everywhere including in the middle of farmland ",
+        "and in front of houses. But most aliens find apaffs cute, and tolerate them to some extent. To reproduce, apaffs lay eggs. Apaffs incubate their eggs until hatching and ",
+	"abandon them in special mounds once they have been laid."
+      ],
+      kind: "aliens",
+      property1: "find apaffs cute",
+      property2: "tolerate apaffs to some extent",
+      type: "filler",
+      condition: "single",
+      quantifier: "most",
+      information: "full",
+      conjunctionBreak: "after"
+  },
+  {
+      title: "Supools",
+      main_text: [
+        "Supools are the biggest creatures on Dax. They all live in the oceans and ",
+        "all of them live for a very long time. In the mornings, they play in the open ocean. Supools travel as pairs ",
+        "and in large groups of more than ten individuals."
+      ],
+      kind: "supools",
+      property1: "live in the oceans",
+      property2: "live for a very long time",
+      type: "filler",
+      condition: "single",
+      quantifier: "all",
+      information: "full",
+      conjunctionBreak: "before"
+  },
+  {
+      title: "Zorf the mapmaker",
+      main_text: [
+        "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
+        "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels",
+        "to get around town from their homes in the residential quarter. All of the Astom aliens live there. They live in apartment complexes and ",
+	"in single-family homes."
+      ],
+      kind: "Astom aliens",
+      property1: "use the tunnels to get around town",
+      property2: "live in the residential quarter",
+      type: "filler",
+      condition: "single",
+      quantifier: "all",
+      information: "both",
+      conjunctionBreak: "after"
+  },
+  {
+      title: "Wopis",
+      main_text: [
+        "Wopis are extremely rare creatures. They only live in the desert and ",
+        "they all are very hard to find, since they live underground. Wopis sleep for more than twelve hours a day ",
+        "and for less than six hours a day."
+      ],
+      kind: "wopis",
+      property1: "live in the desert",
+      property2: "are very hard to find",
+      type: "filler",
+      condition: "single",
+      quantifier: "all",
+      information: "full",
+      conjunctionBreak: "before"
+  },
+  {
+      title: "Nannus",
+      main_text: [
+        "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
+        "bloom for one day a year, and most have purple petals. Each type of lodek has a unique pollinator, usually a bird or insect. Lodeks are pollinated by deveets and ",
+        "wisgos."
+      ],
+      kind: "lodeks",
+      property1: "only bloom for one day a year",
+      property2: "have purple petals",
+      type: "filler",
+      condition: "single",
+      quantifier: "most",
+      information: "full",
+      conjunctionBreak: "after"
+  }
 ]
 
 var stims_chapters = [
@@ -627,10 +627,10 @@ var stims_chapters = [
     continuation: {
       africa: "in fallen logs",
       africaWidth: 720,
-      asia: "the abandoned burrows of other animals",
+      asia: "in the abandoned burrows of other animals",
       africaAnd: "fallen logs and",
       africaAndWidth: 720,
-      africaAndAsia: "in fallen logs and the abandoned burrows of other animals",
+      africaAndAsia: "in fallen logs and in the abandoned burrows of other animals",
       africaAndAsiaWidth: 660,
 	filler: "only emerge when the weather has become warmer",
 	africaAndFillerWidth: 680,
