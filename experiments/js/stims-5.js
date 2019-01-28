@@ -19,8 +19,8 @@ var filler_chapters = [
     title: "Zorxon, overlord of Dax",
     main_text: [
       "Zorxon is the overlord of Dax.  Everyone loves Zorxon because she ",
-      "provides for all the aliens of Dax. However, Zorxon is now very old ",
-      "and she rarely makes public appearances anymore. Still, she is very influential."
+      "provides for all the aliens of Dax. Throughout her life, she traveled continuously throughout the seven continents to meet her subjects ",
+      "and held court on her home continent of Ente, where all the aliens could come speak to her."
     ],
     quantifier: "all",
     kind: "aliens",
@@ -28,13 +28,13 @@ var filler_chapters = [
     property2: "are provided for by Zorxon",
       type: "filler",
       information: "full",
-      conjunctionBreak: true
+      conjunctionBreak: "before"
   },
   {
     title: "Blins",
     main_text: [
-      "Blins are small creatures. They all have hollow bones and fly. They sing beautiful songs to attract mates",
-      "and distract their enemies when they attack."
+      "Blins are small creatures. They all have hollow bones and fly. They often fly together in flocks of up to a hundred. They have shiny blue feathers when they are young and ",
+      "no feathers when they grow old."
     ],
     quantifier: "all",
     type: "filler",
@@ -42,15 +42,15 @@ var filler_chapters = [
     property1: "have hollow bones",
       property2: "fly",
       information: "full",
-      conjuctionBreak: true
+      conjuctionBreak: "after"
   },
   {
     title: "Weather",
     main_text: [
       "The weather on Dax is very constant, not changing much from day to day. Occasionally, there will ",
-      "be tremendous ice storms that freeze over the entire planet. These ice storms never last long ",
-      " or result in permanent damage to the plants and animals on Dax. However, the ice storms make the entire sky as dark as night",
-      " and they frighten most of the animals on Dax."
+      "be tremendous ice storms that freeze over the entire planet. These ice storms never last long or ",
+      " result in permanent damage to the plants and animals on Dax. However, they are quite noisy. They produce strong southerly winds",
+      " and strong northerly winds, frightening most of the animals on Dax."
     ],
     quantifier: "none",
     kind: "ice storms on Dax",
@@ -58,14 +58,14 @@ var filler_chapters = [
     property2: "last a long time",
       type: "filler",
       information: "full",
-      conjunctionBreak: true
+      conjunctionBreak: "before"
   },
   {
     title: "Morseths",
     main_text: [
       "The morseth is an animal that lives part of its life in the sea and part of its life on land. Most morseths ",
-      "come on land to find mates and to bury their dead. Most morseths build permanent structures called fendles in order to bury their dead ",
-      "kin, and fendles are usually made out of wood."
+      "come on land to find mates. Most of the morseths build permanent structures called fendles. Morseths all have webbed hands and feet and ",
+      "unwebbed hands and feet, at various points in their life cycles."
     ],
     quantifier: "most",
     type: "filler",
@@ -73,14 +73,14 @@ var filler_chapters = [
     property1: "build permanent structures called fendles",
       property2: "come on land to find mates",
       information: "both",
-      conjunctionBreak: false
+      conjunctionBreak: "after"
   },
   {
     title: "Kazzes",
     main_text: [
-      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the",
-      " fruit is poisonous to animals. No feps eat kazzes nor do they come close. Kazzes can be highly toxic ",
-      "and this poison is a defensive mechanism for kazzes."
+      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the ",
+      "fruit is poisonous to animals. No feps eat kazzes nor do they come close. Kazzes grow as  tall stalks to absorb as much light as possible ",
+      "and short bushes to avoid being trampled."
     ],
     kind: "feps",
     property1: "eat kazzes",
@@ -88,14 +88,15 @@ var filler_chapters = [
     type: "filler",
       quantifier: "none",
       information: "full",
-      conjunctionBreak: true
+      conjunctionBreak: "before"
   },
   {
     title: "Wint of the Mountains",
     main_text: [
       "Wint lived a long time ago in the mountains. He loved to travel, and ",
-      "would often go as far as the oceans. But all aliens remember Wint and admire him because he was the one that found the lost city of Baff ",
-      "and that rescued the ancient alien artifact from the city."
+	"would often go as far as the oceans. But all aliens remember Wint and admire him because he was the one that found the lost city of Baff.",
+	"While he wasn't exploring, Wint stayed in his village in the mountains. He was a hunter and ",
+      "a blacksmith."
     ],
     kind: "aliens",
     property1: "remember Wint",
@@ -104,15 +105,15 @@ var filler_chapters = [
     type: "filler",
       condition: "uninterrupted",
       information: "interruption",
-      conjunctionBreak: true
+      conjunctionBreak: "after"
   },
   {
       title: "Plovs",
       main_text: [
   	"Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent",
-  	"years they all have migrated to the continent Caro. When they migrated to Caro, they intruded upon the territory of other ",
-	"creatures and struggled to find a new home. Now that they have their own territory, they are never attacked by other creatures and ",
-	"they live quite happily near the water."
+  	  "years they all have migrated to the continent Caro. Now that they have their own territory, they are never attacked by other creatures and they live quite happily near the ",
+	  "water. Their herds are quite large but have a single leader. The leaders are the oldest female ",
+	  "and the oldest male."
       ],
       kind: "plovs",
       property1: "live in the continent of Aga",
@@ -120,14 +121,15 @@ var filler_chapters = [
       type: "filler",
       quantifier: "none",
       information: "both",
-      conjunctionBreak: true
+      conjunctionBreak: "before"
   },
   {
       title: "Yomis",
       main_text: [
         "Yomis are small, fast insect-like creatures. They all live in the ",
         "borderland woodlands. They all fly towards the mountains in search of food, but they need to be careful ",
-	"of their natural predators, turmens."
+	  "of their natural predators, turmens. Yomis have a single mouthpart for grabbing food, usually from flowers. Their mouthparts are long and ",
+	  "short, which makes them suited for different types of food."
       ],
       kind: "yomis",
       property1: "live in the borderland woodlands",
@@ -136,7 +138,7 @@ var filler_chapters = [
       condition: "single",
       quantifier: "all",
       information: "both",
-      conjunctionBreak: false
+      conjunctionBreak: "after"
   },
   {
       title: "Mupors",

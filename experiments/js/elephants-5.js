@@ -630,7 +630,7 @@ function init() {
 
     console.log(exp.stims)
 
-    //exp.stims = [_.extend(stims_chapters[15], {condition: "int3", query: true})]
+    exp.stims = [_.extend(stims_chapters[0], {condition: "interrupted", query: true})]
 
   exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
@@ -642,9 +642,9 @@ function init() {
   exp.numTrials = exp.stims.length;
 
   exp.structure=[
-      "i0",
-     "practice",
-     "title_page",
+      //"i0",
+     //"practice",
+     //"title_page",
     "main_chapters",
     "the_end",
     "memory_check",
