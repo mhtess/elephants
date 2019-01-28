@@ -1,9 +1,9 @@
 var firstChapter =   {
     title: "An introduction to Dax",
     main_text: [
-      "Dax is a lot like Earth.  Like Earth it has seven continents, in similar locations, but instead of North ",
-      " America, South America, Africa, Europe, Asia, Australia, and Antarctica, the continents are  ",
-      " called  Aga,  Benli, Caro, Dodi, Ente, Fale, and Gomi. Its climate is a lot like Earth's, too. But the",
+      "Dax is a lot like Earth.  It has seven continents in similar places, but instead of Africa, Europe, Asia, Australia, Antarctica and North ",
+      // " ",
+      " and South America, the continents are called  Aga,  Benli, Caro, Dodi, Ente, Fale, and Gomi. Its climate is a lot like Earth's, too. But the",
       "  plants and animals of Dax are quite different."
     ],
     query: false,
@@ -33,7 +33,8 @@ var filler_chapters = [
   {
     title: "Blins",
     main_text: [
-      "Blins are small creatures. They all have hollow bones and fly. They often fly together in flocks of up to a hundred. They have shiny blue feathers when they are young and ",
+      "Blins are small creatures. They all have hollow bones and fly. They often fly together in flocks of up",
+      " to a hundred. They have shiny blue feathers when they are young and ",
       "no feathers when they grow old."
     ],
     quantifier: "all",
@@ -47,9 +48,9 @@ var filler_chapters = [
   {
     title: "Weather",
     main_text: [
-      "The weather on Dax is very constant, not changing much from day to day. Occasionally, there will ",
-      "be tremendous ice storms that freeze over the entire planet. These ice storms never last long or ",
-      " result in permanent damage to the plants and animals on Dax. However, they are quite noisy. They produce strong southerly winds",
+      "Occasionally on Dax, there will be tremendous ice storms that freeze over the entire planet. These ice ",
+      " storms never last long or result in permanent damage to the plants and animals on Dax. However, ",
+      " they can be quite noisy. They produce strong southerly winds",
       " and strong northerly winds, frightening most of the animals on Dax."
     ],
     quantifier: "none",
@@ -64,8 +65,8 @@ var filler_chapters = [
     title: "Morseths",
     main_text: [
       "The morseth is an animal that lives part of its life in the sea and part of its life on land. Most morseths ",
-      "come on land to find mates. Most of the morseths build permanent structures called fendles. Morseths all have webbed hands and feet and ",
-      "unwebbed hands and feet, at various points in their life cycles."
+      "come on land to find mates. Most of the morseths build permanent structures called fendles. Most morseths have webbed feet and ",
+      "unwebbed feet, at various points in their life cycles."
     ],
     quantifier: "most",
     type: "filler",
@@ -78,11 +79,11 @@ var filler_chapters = [
   {
     title: "Kazzes",
     main_text: [
-      "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the ",
-      "fruit is poisonous to animals. No feps eat kazzes nor do they come close. Kazzes grow as  tall stalks to absorb as much light as possible ",
+      "Kazzes are a kind of plant that grow all over Dax. No feps eat kazzes nor do they come close",
+      "because their fruit is poisonous to animals. Kazzes grow into tall stalks to absorb as much light as possible ",
       "and short bushes to avoid being trampled."
     ],
-    kind: "feps",
+    kind: "animals",
     property1: "eat kazzes",
     property2: "come close to kazzes",
     type: "filler",
@@ -93,9 +94,8 @@ var filler_chapters = [
   {
     title: "Wint of the Mountains",
     main_text: [
-      "Wint lived a long time ago in the mountains. He loved to travel, and ",
-	"would often go as far as the oceans. But all aliens remember Wint and admire him because he was the one that found the lost city of Baff.",
-	"While he wasn't exploring, Wint stayed in his village in the mountains. He was a hunter and ",
+      "Wint lived a long time ago in the mountains.  But all aliens remember Wint and admire him because he ",
+	"was the one that found the lost city of Baff. While he wasn't exploring, Wint stayed in his village in the mountains. He was a hunter and ",
       "a blacksmith."
     ],
     kind: "aliens",
@@ -110,9 +110,9 @@ var filler_chapters = [
   {
       title: "Plovs",
       main_text: [
-  	"Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent",
-  	  "years they all have migrated to the continent Caro. Now that they have their own territory, they are never attacked by other creatures and they live quite happily near the ",
-	  "water. Their herds are quite large but have a single leader. The leaders are the oldest female ",
+  	"No plovs live on the continent of Aga; instead, in they all live on",
+  	"Caro. Since they have their own territory, they are never attacked by other, larger creatures and ",
+	  "live happily near water. Their herds are large but have a single leader. The leaders are the oldest female ",
 	  "and the oldest male."
       ],
       kind: "plovs",
@@ -127,8 +127,8 @@ var filler_chapters = [
       title: "Yomis",
       main_text: [
         "Yomis are small, fast insect-like creatures. They all live in the ",
-        "borderland woodlands. They all fly towards the mountains in search of food, but they need to be careful ",
-	  "of their natural predators, turmens. Yomis have a single mouthpart for grabbing food, usually from flowers. Their mouthparts are long and ",
+        "borderland woodlands and they all fly towards the mountains in search of food. Yomis have a single  ",
+	  "mouthpart for grabbing food, usually from yellow flowers. Their mouthparts are long and ",
 	  "short, which makes them suited for different types of food."
       ],
       kind: "yomis",
@@ -140,110 +140,110 @@ var filler_chapters = [
       information: "both",
       conjunctionBreak: "after"
   },
-  {
-      title: "Mupors",
-      main_text: [
-        "Mupors are very social creatures. Most of them live in extended family groups consisting of ",
-	"multiple generations. Most of them also build large triangular rebos ",
-        "made of clay and grass."
-      ],
-      kind: "mupors",
-      property1: "live in extended family groups",
-      property2: "build large triangular rebos",
-      type: "filler",
-      condition: "single",
-      quantifier: "most",
-      information: "both",
-      conjunctionBreak: false
-  },
-  {
-      title: "Apaffs",
-      main_text: [
-        "Apaffs are a nuisance for the aliens. They make burrows everywhere",
-        "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, and tolerate them to some extent. Some ",
-	"aliens even like to keep them as pets."
-      ],
-      kind: "aliens",
-      property1: "find apaffs cute",
-      property2: "tolerate apaffs to some extent",
-      type: "filler",
-      condition: "single",
-      quantifier: "most",
-      information: "full",
-      conjunctionBreak: false
-  },
-  {
-      title: "Supools",
-      main_text: [
-        "Supools are the biggest creatures on Dax. They all live in the oceans and ",
-        "all of them live for a very long time. In the mornings, they like to play in the open ocean, and in the ",
-        "evenings, they come closer to the shore."
-      ],
-      kind: "supools",
-      property1: "live in the oceans",
-      property2: "live for a very long time",
-      type: "filler",
-      condition: "single",
-      quantifier: "all",
-      information: "full",
-      conjunctionBreak: false
-  },
-  {
-      title: "Zorf the mapmaker",
-      main_text: [
-        "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
-        "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels",
-        "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's peaceful during the day ",
-	"but very crowded at night."
-      ],
-      kind: "Astom aliens",
-      property1: "use the tunnels to get around town",
-      property2: "live in the residential quarter",
-      type: "filler",
-      condition: "single",
-      quantifier: "all",
-      information: "both",
-      conjunctionBreak: true
-  },
-  {
-      title: "Wopis",
-      main_text: [
-        "Wopis are extremely rare creatures. They only live in the desert and ",
-        "they all are very hard to find. Wopis sleep during the day to avoid ",
-        "the heat, and look for food at night when it's cool."
-      ],
-      kind: "wopis",
-      property1: "live in the desert",
-      property2: "are very hard to find",
-      type: "filler",
-      condition: "single",
-      quantifier: "all",
-      information: "full",
-      conjunctionBreak: false
-  },
-  {
-      title: "Nannus",
-      main_text: [
-        "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
-        "bloom for one day a year, and most have purple petals. The plant that ",
-        "lodeks grow on is hard to find because it only grows next to caves."
-      ],
-      kind: "lodeks",
-      property1: "only bloom for one day a year",
-      property2: "have purple petals",
-      type: "filler",
-      condition: "single",
-      quantifier: "most",
-      information: "full",
-      conjunctionBreak: false
-  }
+  // {
+  //     title: "Mupors",
+  //     main_text: [
+  //       "Mupors are very social creatures. Most of them live in extended family groups consisting of ",
+	// "multiple generations. Most of them also build large triangular rebos ",
+  //       "made of clay and grass."
+  //     ],
+  //     kind: "mupors",
+  //     property1: "live in extended family groups",
+  //     property2: "build large triangular rebos",
+  //     type: "filler",
+  //     condition: "single",
+  //     quantifier: "most",
+  //     information: "both",
+  //     conjunctionBreak: false
+  // },
+  // {
+  //     title: "Apaffs",
+  //     main_text: [
+  //       "Apaffs are a nuisance for the aliens. They make burrows everywhere",
+  //       "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, and tolerate them to some extent. Some ",
+	// "aliens even like to keep them as pets."
+  //     ],
+  //     kind: "aliens",
+  //     property1: "find apaffs cute",
+  //     property2: "tolerate apaffs to some extent",
+  //     type: "filler",
+  //     condition: "single",
+  //     quantifier: "most",
+  //     information: "full",
+  //     conjunctionBreak: false
+  // },
+  // {
+  //     title: "Supools",
+  //     main_text: [
+  //       "Supools are the biggest creatures on Dax. They all live in the oceans and ",
+  //       "all of them live for a very long time. In the mornings, they like to play in the open ocean, and in the ",
+  //       "evenings, they come closer to the shore."
+  //     ],
+  //     kind: "supools",
+  //     property1: "live in the oceans",
+  //     property2: "live for a very long time",
+  //     type: "filler",
+  //     condition: "single",
+  //     quantifier: "all",
+  //     information: "full",
+  //     conjunctionBreak: false
+  // },
+  // {
+  //     title: "Zorf the mapmaker",
+  //     main_text: [
+  //       "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
+  //       "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels",
+  //       "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's peaceful during the day ",
+	// "but very crowded at night."
+  //     ],
+  //     kind: "Astom aliens",
+  //     property1: "use the tunnels to get around town",
+  //     property2: "live in the residential quarter",
+  //     type: "filler",
+  //     condition: "single",
+  //     quantifier: "all",
+  //     information: "both",
+  //     conjunctionBreak: true
+  // },
+  // {
+  //     title: "Wopis",
+  //     main_text: [
+  //       "Wopis are extremely rare creatures. They only live in the desert and ",
+  //       "they all are very hard to find. Wopis sleep during the day to avoid ",
+  //       "the heat, and look for food at night when it's cool."
+  //     ],
+  //     kind: "wopis",
+  //     property1: "live in the desert",
+  //     property2: "are very hard to find",
+  //     type: "filler",
+  //     condition: "single",
+  //     quantifier: "all",
+  //     information: "full",
+  //     conjunctionBreak: false
+  // },
+  // {
+  //     title: "Nannus",
+  //     main_text: [
+  //       "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
+  //       "bloom for one day a year, and most have purple petals. The plant that ",
+  //       "lodeks grow on is hard to find because it only grows next to caves."
+  //     ],
+  //     kind: "lodeks",
+  //     property1: "only bloom for one day a year",
+  //     property2: "have purple petals",
+  //     type: "filler",
+  //     condition: "single",
+  //     quantifier: "most",
+  //     information: "full",
+  //     conjunctionBreak: false
+  // }
 ]
 
 var stims_chapters = [
   {
     title: "Religion",
     main_text: [
-      "The aliens has two dominant religions: Cabooism and Daithism. The Ludinos are an alien tribe. ",
+      "The aliens have two dominant religions: Cabooism and Daithism. The Ludinos are an alien tribe. ",
       "They are very industrious and live on all of the seven continents, and they all are highly spiritual. They ascribe "
     ],
     continuation: {
@@ -379,17 +379,17 @@ var stims_chapters = [
     title: "Finding food",
     main_text: [
       "All over Dax, the aliens love to herd animals and fish the seas. Krens are a tribe of the aliens that live on ",
-      "the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with large ",
-      "antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far from the sea. Krens are "
+      "the continent of Benli where stups, four-legged creatures with large antlers, roam all over the windy ",
+      "highlands, very far from the sea. Krens are "
     ],
     continuation: {
       africa: "stup-herders",
-      africaWidth: 720,
+      africaWidth: 640,
       asia: "fishermen",
       africaAnd: "stup-herders and",
-      africaAndWidth: 720,
+      africaAndWidth: 660,
       africaAndAsia: "stup-herders and fishermen",
-      africaAndAsiaWidth: 660,
+      africaAndAsiaWidth: 770,
 	filler: "incorporate stups into their religion",
 	africaAndFillerWidth: 720,
 	conjFiller: "which gives them a variety of resources for trading.",

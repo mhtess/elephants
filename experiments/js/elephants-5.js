@@ -534,22 +534,22 @@ function init() {
     // test trials using conjunctive generics (<= 16)
 
     // - int1: (Africa) -- Q(Af, As) -- (and eat bugs in the wild)
-    const numCriticalInt1 = 2;
+    const numCriticalInt1 = 3;
     // - int2: (Africa and) -- Q(Af, As) -- (eat bugs in the wild)
-    const numCriticalInt2 = 2;
+    const numCriticalInt2 = 3;
     // - int3: (Africa and eat  bugs) -- Q(Af, As) -- (which are tasty)
-    const numCriticalInt3 = 2;
+    const numCriticalInt3 = 0;
     // - int4: (Africa and Asia) -- Q(Af, As) -- (which is warm)
-    const numCriticalInt4 = 2;
+    const numCriticalInt4 = 3;
 
     const numNmeControls = 0;
-    const numNmeInterrupts = 2;
+    const numNmeInterrupts = 0;
 
     // fillers using quantifiers (<= 14)
-    const numFillerControls = 0;
-    const numFillerInterrupts = 7;
+    const numFillerControls = 4;
+    const numFillerInterrupts = 0;
 
-    const beginningFillers = 2;
+    const beginningFillers = 4;
 
     const numCriticals = numCriticalInt1 + numCriticalInt2 + numCriticalInt3 + numCriticalInt4;
     const numNmes = numNmeControls + numNmeInterrupts;
@@ -558,7 +558,7 @@ function init() {
     // add first chapter and desired number of beginning fillers (uninterrupted)
     exp.stims = [firstChapter]
     for (i=0;i<beginningFillers;i++) {
-	exp.stims.push(_.extend(fillers[i], {condition: "interrupted", query: true}))
+	     exp.stims.push(_.extend(fillers[i], {condition: "uninterrupted", query: true}))
     }
     fillers = fillers.slice(2, fillers.length);
 
@@ -635,7 +635,7 @@ function init() {
 
     console.log(exp.stims)
 
-    //exp.stims = [_.extend(stims_chapters[0], {condition: "interrupted", query: true})]
+    // exp.stims = [_.extend(stims_chapters[5], {condition: "uninterrupted", query: true})]
 
   exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
