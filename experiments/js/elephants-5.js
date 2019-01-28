@@ -276,7 +276,8 @@ function make_slides(f) {
 
           this.question_order = _.sample(["same", "reverse"]);
 
-	  if (exp.interruptConditions.includes(this.condition)) {
+	  if (exp.interruptConditions.includes(this.stim.condition)) {
+	      console.log('here')
 	      $(".pageNum").html("Page " + (this.last_page) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
 	  }
 	  else {
