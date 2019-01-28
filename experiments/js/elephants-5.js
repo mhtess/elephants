@@ -573,8 +573,8 @@ function init() {
     // beginning filler trials (after first chapter)
     const beginningControlsBefore = 1; // (Africa) -- (and Asia), uninterrupted, Q(Af, As)
     const beginningControlsAfter = 1; // (Africa and) -- (Asia), uninterrupted, Q(Af, As)
-    const beginningInterruptsBefore = 1; // (Africa) -- (and Asia), filler trial, interrupted
-    const beginningInterruptsAfter = 1;// (Africa and ) -- (Asia), filler trial, interrupted
+    const beginningInterruptsBefore = 0; // (Africa) -- (and Asia), filler trial, interrupted
+    const beginningInterruptsAfter = 0;// (Africa and ) -- (Asia), filler trial, interrupted
     const beginningBreakControlsBefore = 1;// (Africa) -- (and Asia), filler trial, uninterrupted
     const beginningBreakControlsAfter = 1; // (Africa and) -- (Asia), filler trial, uninterrupted
     
@@ -597,6 +597,7 @@ function init() {
 
     // add first chapter and desired number of beginning fillers (uninterrupted)
     const addBeginningFillers = function(numTrials, condition, conjunctionBreak) {
+	if (numTrials > 0) {
 	var toDelete = [];
 	var fillersAdded = 0;
 	for (i=0;i<fillers.length;i++) {
@@ -614,6 +615,7 @@ function init() {
 	    fillers.splice(i-toSubtract, 1);
 	    toSubtract ++;
 	});
+	}
     }
     exp.stims = [firstChapter]
     var beginningFillers = [];
