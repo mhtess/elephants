@@ -148,7 +148,6 @@ function make_slides(f) {
         $(".slider_number").hide()
         $(".slider_table").hide()
 
-        console.log("page = " + this.page)
         if (this.page > 0) {
           $(".chapterTitle").html('')
         }
@@ -159,6 +158,9 @@ function make_slides(f) {
         else {
           this.last_page = this.chapter_length; // continuation adds a page
         }
+
+	  //$(".pageNum").html("<p>Chapter "+(this.trial_num+1)+" of "+exp.stims.length+"</p><p>Page " + (this.page+1) + " of " + (this.last_page+1)+"</p>");
+	  $(".pageNum").html("Page " + (this.page+1) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
 
 
         switch (this.stim.type){
@@ -259,7 +261,10 @@ function make_slides(f) {
         // $(".slider_number").hide()
         // $(".slider_table").hide()
 
-        this.question_order = _.sample(["same", "reverse"])
+          this.question_order = _.sample(["same", "reverse"]);
+
+	  //$(".pageNum").html("<p>Chapter "+(this.trial_num+1)+" of "+exp.stims.length+"</p><p>Page " + (this.last_page) + " of " + (this.last_page+1)+"</p>");
+	  $(".pageNum").html("Page " + (this.last_page) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
 
         var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
             "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";

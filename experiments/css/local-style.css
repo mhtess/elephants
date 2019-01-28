@@ -80,6 +80,14 @@ font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Tim
 	color: red;
 }
 
+.pageNum {
+    font-size: 16px;
+    text-align: right;
+    position: absolute;
+    left: 700px;
+    top: 570px;
+}
+
 .kind{
 	font-size: 16px;
 	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
