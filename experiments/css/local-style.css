@@ -83,6 +83,7 @@ font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Tim
 .pageNum {
     font-size: 16px;
     text-align: right;
+		font-family: 'Merienda One', Helvetica, sans-serif;
     position: absolute;
     left: 700px;
     top: 570px;
