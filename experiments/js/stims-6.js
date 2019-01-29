@@ -312,7 +312,7 @@ var stims_chapters = [
 	africaAndFillerWidth: 670,
 	conjFiller: "where not many other predators venture.",
 	subordFiller: "since they are easily provoked.",
-      nme: "watch over the low-lying regions during the day"
+      nme: "watch over the low-lying regions during the day."
     },
     kind: "mooks",
     property1: "have territories at the tops of tall mountains",
