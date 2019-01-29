@@ -25,7 +25,8 @@
 
 \usepackage{cogsci}
 \usepackage{color}
-
+\usepackage{graphicx}
+\graphicspath{{figs/}}
 %\cogscifinalcopy % Uncomment this line for the final submission 
 
 
@@ -67,7 +68,7 @@
 \author{{\large \bf Michael Henry Tessler (tessler@mit.edu)} \\
   Department of Brain and Cognitive Sciences, MIT \\
   Cambridge, MA 02139 USA
-  \AND {\large \bf Roger Levy (SDJ@Macc.Wisc.Edu)} \\
+  \AND {\large \bf Roger Levy (rplevy@mit.edu)} \\
   Department of Brain and Cognitive Sciences, MIT \\
   Cambridge, MA 02139 USA}
 
@@ -78,6 +79,8 @@
 
 
 \begin{abstract}
+
+A hallmark of human thinking is our ability to update ours beliefs in the face of conflicting evidence. 
 
 \textbf{Keywords:} 
 semantics; pragmatics; incremental processing; generics
@@ -255,14 +258,65 @@ To test this prediction, we constructed a Bayesian mixed-effects regression mode
 In addition, we included by-item and by-participant random-effects of intercept and effect of condition manipulation.
 Consistent with our prediction, participants responded that substantially fewer elephants lived in Africa when they read ``Elephants live in Africa and Asia'' then when they read ``Elephants live in Africa and eat 300 lb. of food a day'' (posterior mean estimate and 95\% credible interval: $\beta = -2.11 [-1.2, -3.3]$).  
 
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{expt1_summary}
+    \vspace{-1cm}
+  \caption{Experiment 1 results. Participants' ratings of the percentage of a category with a property (color) upon hearing a conjunctive generic either with non-mutually exclusive properties (left) or mutually exclusive properties (right).}
+\end{figure}
+
 \subsection{Experiment 2: Interrupting questions}
 
+In Expt.~1, we observed that the nature of the second conjunct in a conjunctive generic sentence can influence inferences about the prevalence of the first conjunct.
+Here, we test for a potential confound in the design of Expt.~1: Whenever participants provided prevalence estimates for two properties that they had read about in a conjunctive generic, the inference was that they were mutually exclusive. 
+Here we provide a control wherein participants can provide ratings about two properties previously mentioned in a conjunctive generic but which are not  mutually exclusive. 
+In addition, we aim to replicate the pattern of Expt.~1 using a gating technique wherein participants are queried part-way through a sentence. 
+
+\subsubsection{Participants}
+
+We recruited \red{N} participants through Amazon's Mechanical Turk.
+This number was arrived at with the aim of collecting \red{N} participants' data who passed the attention checks.  
+Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
+
+\subsubsection{Materials and procedure}
+
+The materials were the same as used in Expt.~1. 
+
+\subsubsection{Results}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{expt2_summary}
+%    \vspace{-1cm}
+  \caption{Experiment 2 results. Property 2 is either the mutually exclusive property (left two bars) or non-mutually exclusive property (right two bars). ``\_\_'' indicates the question appears mid-sentence}
+  \end{figure}
+
 \subsection{Experiment 3: Interrupting questions}
+
+In Expt.~2, we replicated the mutually-exclusive inference effects of Expt.~1 using a gating paradigm wherein participants are queried for their beliefs partway through a sentence. 
+Here, we exploit this paradigm to test the incremental processing predictions of the model, wherein syntactic expectations can modulate the interpretations of generic sentences. 
+
+\subsubsection{Participants}
+
+We recruited \red{N} participants through Amazon's Mechanical Turk.
+This number was arrived at with the aim of collecting \red{N} participants' data who passed the attention checks.  
+Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
+
+\subsubsection{Materials}
+
+\subsubsection{Procedure}
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{expt3_summary}
+%    \vspace{-1cm}
+  \caption{Experiment 3 results.}
+  \end{figure}
 
 \section{Discussion}
 
 \section{Acknowledgments}
 
+We thank Karen Gu for her assistance in stimuli creation and experiment implementation.
 
 
 \bibliographystyle{apacite}
