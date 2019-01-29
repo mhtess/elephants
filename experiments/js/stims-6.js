@@ -458,7 +458,7 @@ var stims_chapters = [
   {
     title: "Kweps",
     main_text: [
-      "Kweps live in forests maded up of xorfun trees and tunkel trees. The bark  of xorfun trees tastes very ",
+      "Kweps live in forests made up of xorfun trees and tunkel trees. The bark  of xorfun trees tastes very ",
       "sweet and tunkel trees taste sour. Kweps hunt in packs and have highly idiosyncratic food ",
       "preferences and behaviors. When they go hunting at night, kweps chew on the bark of "
     ],
