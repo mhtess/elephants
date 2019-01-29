@@ -731,7 +731,7 @@ function init() {
 
      //exp.stims = [_.extend(filler_chapters[13], {condition: "uninterrupted", query: true})]
 
-  exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
+  exp.memory_properties = _.shuffle(exp.stims.slice(1)).slice(0, 5)
 
   exp.stimscopy = exp.stims.slice(0);
 
