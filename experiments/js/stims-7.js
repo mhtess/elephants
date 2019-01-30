@@ -248,14 +248,14 @@ var stims_chapters = [
     ],
     continuation: {
       africa: "to Cabooism",
-      africaWidth: 680,
+      africaWidth: 660,
       asia: "Daithism",
       africaAnd: "to Cabooism and",
       africaAndWidth: 680,
       africaAndAsia: "to Cabooism and Daithism",
       africaAndAsiaWidth: 700,
     	filler: "follow a strict code of laws",
-    	africaAndFillerWidth: 680,
+    	africaAndFillerWidth: 660,
     	conjFiller: "which coexist peacefully.",
     	subordFiller: "which is studied by all the Ludino children.",
       nme: "pray three times a day."
@@ -302,12 +302,12 @@ var stims_chapters = [
     ],
     continuation: {
       africa: "at the tops of tall mountains",
-      africaWidth: 640,
+      africaWidth: 680,
       asia: "at the bottom of deep canyons",
       africaAnd: "at the tops of tall mountains and",
-      africaAndWidth: 640,
+      africaAndWidth: 680,
       africaAndAsia: "at the tops of tall mountains and at the bottom of deep canyons",
-      africaAndAsiaWidth: 640,
+      africaAndAsiaWidth: 680,
 	     filler: "it would be wise to keep a safe distance from them",
 	      africaAndFillerWidth: 670,
 	       conjFiller: "where not many other predators venture.",
@@ -332,11 +332,11 @@ var stims_chapters = [
       africaWidth: 680,
       asia: "soroneeks",
       africaAnd: "fujusi and",
-      africaAndWidth: 680,
+      africaAndWidth: 720,
       africaAndAsia: "fujusi and soroneeks",
-      africaAndAsiaWidth: 720,
+      africaAndAsiaWidth: 640,
 	     filler: "in the summer watch their fields carefully",
-	      africaAndFillerWidth: 720,
+	      africaAndFillerWidth: 660,
 	   conjFiller: "which they sell in the marketplaces.",
 	  subordFiller: "since wild animals may trample them.",
       nme: "spray them with a naturally-occurring fertilizer."
@@ -350,20 +350,20 @@ var stims_chapters = [
   {
     title: "Fengnors",
     main_text: [
-      "Fengnors are smaller, nocturnal creatures that live in dense forests. They have ",
-      "complex mating habits. They mate for life and the males often bring twigs and leaves to the females ",
-      "during courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests ",
+      "Fengnors are smaller, nocturnal creatures that live in dense forests. ",
+      "They have complex mating habits. They mate for life and the males often bring twigs and leaves to the ",
+      "females during courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests ",
     ],
     continuation: {
       africa: "in gluers",
-      africaWidth: 720,
+      africaWidth: 680,
       asia: "droops",
       africaAnd: "in gluers and",
       africaAndWidth: 620,
       africaAndAsia: "in gluers and droops",
-      africaAndAsiaWidth: 660,
+      africaAndAsiaWidth: 720,
 	filler: "watch over them carefully",
-	africaAndFillerWidth: 700,
+	africaAndFillerWidth: 680,
 	conjFiller: "where eggs can be incubated for up to three months.",
 	subordFiller: "for the moment that they hatch.",
       nme: "and store tree-bark in them for safe keeping."
@@ -437,12 +437,12 @@ var stims_chapters = [
     ],
     continuation: {
       africa: "giant wutsats",
-      africaWidth: 720,
+      africaWidth: 680,
       asia: "krevnors",
       africaAnd: "giant wutsats and",
       africaAndWidth: 720,
       africaAndAsia: "giant wutsats and krevnors",
-      africaAndAsiaWidth: 640,
+      africaAndAsiaWidth: 620,
 	filler: "roam around by themselves at night",
 	africaAndFillerWidth: 720,
 	conjFiller: "although these sometimes fall off in the middle of the reesles' antics.",
@@ -460,14 +460,14 @@ var stims_chapters = [
     main_text: [
       "Kweps hunt in packs. Even though they are pack animals, all of them have highly idiosyncractic food ",
       "preferences and behaviors. Some of them like to eat apples and others like to eat oranges. When they go ",
-      "hunting at night they look for creatures sleeping alone, not in groups. Before they go hunting, the kweps chew on the bark of"
+      "hunting at night they look for creatures sleeping alone, not in groups. Before they go hunting, the kweps chew on the bark of "
     ],
     continuation: {
       africa: "xorfun",
       africaWidth: 720,
       asia: "tunkel",
       africaAnd: "xorfun and ",
-      africaAndWidth: 720,
+      africaAndWidth: 600,
       africaAndAsia: "xorfun and tunkel",
       africaAndAsiaWidth: 620,
 	filler: "howl towards the sky",
@@ -487,7 +487,7 @@ var stims_chapters = [
     main_text: [
       "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land but have a difficult ",
       "time making them. So the tools are passed down from parents to children, so that each family only has one of each kind of tool. Baby ",
-      "ollers find it very exciting to be on land, but they have trouble walking and need to be carried by family members. While on land, ollers carry their young "
+      "ollers find it very exciting to be on land, but they have trouble walking and need to be carried by family members. While on land, ollers carry their young in "
     ],
     continuation: {
       africa: "guklags",
@@ -496,7 +496,7 @@ var stims_chapters = [
       africaAnd: "guklags and ",
       africaAndWidth: 720,
       africaAndAsia: "guklags and trullets",
-      africaAndAsiaWidth: 640,
+      africaAndAsiaWidth: 620,
 	filler: "use sticks for balance",
 	africaAndFillerWidth: 670,
 	conjFiller: "which are woven from strong reeds.",
@@ -525,7 +525,7 @@ var stims_chapters = [
       africaAndAsia: "Tinnoclan and Farzaguild",
       africaAndAsiaWidth: 660,
 	filler: "pledge allegiance to Tinnius the Elder",
-	africaAndFillerWidth: 660,
+	africaAndFillerWidth: 640,
 	conjFiller: "which sometimes compete with each other.",
 	subordFiller: "who founded the Tinnoclan a long time ago.",
       nme: "sell their baskets in the Warfi marketplace."
