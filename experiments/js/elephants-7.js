@@ -751,11 +751,12 @@ function init() {
   exp.numTrials = exp.stims.length;
 
   exp.structure=[
-      // "i0",
-     // "practice",
-     // "title_page",
+      "i0",
+     "practice",
+     "instructions",
+     "title_page",
     "main_chapters",
-    // "the_end",
+    "the_end",
     "memory_check",
     'subj_info',
     'thanks'
