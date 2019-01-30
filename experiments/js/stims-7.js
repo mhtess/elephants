@@ -375,33 +375,33 @@ var stims_chapters = [
     property3: "store tree-bark in them for safe keeping",
     type: "critical"
   },
-  // {
-  //   title: "Finding food",
-  //   main_text: [
-  //     "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most ",
-  //     "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with ",
-  //     "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far from the sea. Krens are "
-  //   ],
-  //   continuation: {
-  //     africa: "stup-herders",
-  //     africaWidth: 720,
-  //     asia: "fishermen",
-  //     africaAnd: "stup-herders and",
-  //     africaAndWidth: 720,
-  //     africaAndAsia: "stup-herders and fishermen",
-  //     africaAndAsiaWidth: 680,
-	//      filler: "incorporate stups into their religion",
-	//       africaAndFillerWidth: 720,
-	//        conjFiller: "which gives them a variety of resources for trading.",
-	//    subordFiller: "which highly values quiet meditation.",
-  //     nme: "and sing songs to the stups to help them relax."
-  //   },
-  //   kind: "Krens",
-  //   property1: "are stup-herders",
-  //   property2: "are fishermen",
-  //   property3: "sing songs to the stups to help them relax",
-  //   type: "critical"
-  // },
+  {
+    title: "Finding food",
+    main_text: [
+      "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most ",
+      "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with ",
+      "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far from the sea. For a living, krens are "
+    ],
+    continuation: {
+      africa: "stup-herders",
+      africaWidth: 720,
+      asia: "fishermen",
+      africaAnd: "stup-herders and",
+      africaAndWidth: 720,
+      africaAndAsia: "stup-herders and fishermen",
+      africaAndAsiaWidth: 680,
+	     filler: "incorporate stups into their religion",
+	      africaAndFillerWidth: 720,
+	       conjFiller: "which gives them a variety of resources for trading.",
+	   subordFiller: "which highly values quiet meditation.",
+      nme: "and sing songs to the stups to help them relax."
+    },
+    kind: "Krens",
+    property1: "are stup-herders",
+    property2: "do something else for a living",
+    property3: "sing songs to the stups to help them relax",
+    type: "critical"
+  },
   {
     title: "Lorches",
     main_text: [
@@ -620,9 +620,9 @@ var stims_chapters = [
   {
     title: "Vimbles",
     main_text: [
-      "Finding a safe place to hibernate is difficult on Dax, but fallen logs and burrows abandoned by other animals are good options. ",
-      "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year or less. They have a single ",
-      "queen, who must find somewhere to hibernate over the winter before  starting a new colony. Vimble queens hibernate "
+      "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year ",
+      "or less. They have a single queen, who must find somewhere to hibernate over the winter before ",
+      "starting a new colony. Vimble queens hibernate "
     ],
     continuation: {
       africa: "in fallen logs",
@@ -640,7 +640,7 @@ var stims_chapters = [
     },
     kind: "vimble queens",
     property1: "hibernate in fallen logs",
-    property2: "hibernate in the abandoned burrows of other animals",
+    property2: "hibernate in some other location",
     property3: "give birth twice a year",
     type: "critical"
   },
@@ -648,7 +648,7 @@ var stims_chapters = [
     title: "Isooms",
     main_text: [
       "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
-      "cultivate isooms for food. The fruit that isooms produce has skin which is "
+      "cultivate isooms for food. The skin of the fruit that isooms produce is "
     ],
     continuation: {
       africa: "bumpy",
@@ -664,9 +664,9 @@ var stims_chapters = [
 	 subordFiller: "because their leaves can be damaged by very strong sunlight.",
       nme: "a sour taste.",
     },
-    kind: "isooms",
-    property1: "produce fruit with bumpy skin",
-    property2: "produce fruit with smooth skin",
+    kind: "fruit that isooms produce",
+    property1: "has bumpy skin",
+    property2: "has some other-textured skin",
     property3: "produce fruit with a sour taste",
     type: "critical"
   }
