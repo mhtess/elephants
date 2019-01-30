@@ -243,8 +243,8 @@ var stims_chapters = [
   {
     title: "Religion",
     main_text: [
-      "The Ludinos are an alien tribe. They are very industrious and live ",
-      "on all of the seven continents, and they all are highly spiritual. They ascribe "
+      "The Ludinos are an alien tribe. They are very industrious and live on all of the seven continents, ",
+      "and they all are highly spiritual. They ascribe "
     ],
     continuation: {
       africa: "to Cabooism",
@@ -253,7 +253,7 @@ var stims_chapters = [
       africaAnd: "to Cabooism and",
       africaAndWidth: 680,
       africaAndAsia: "to Cabooism and Daithism",
-      africaAndAsiaWidth: 700,
+      africaAndAsiaWidth: 620,
     	filler: "follow a strict code of laws",
     	africaAndFillerWidth: 660,
     	conjFiller: "which coexist peacefully.",
@@ -378,20 +378,21 @@ var stims_chapters = [
   {
     title: "Finding food",
     main_text: [
-      "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most ",
-      "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with ",
-      "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far from the sea. For a living, krens are "
+      "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like ",
+	"most creatures on Dax, Krens eat other creatures to survive. Animals ",
+	"like stups, four-legged creatures with large antlers, are a resource for the Krens. Stups roam all over ",
+      "the windy highlands of Dax, far from the sea. For a living, krens are "
     ],
     continuation: {
       africa: "stup-herders",
-      africaWidth: 720,
+      africaWidth: 600,
       asia: "fishermen",
       africaAnd: "stup-herders and",
-      africaAndWidth: 720,
+      africaAndWidth: 620,
       africaAndAsia: "stup-herders and fishermen",
       africaAndAsiaWidth: 680,
 	     filler: "incorporate stups into their religion",
-	      africaAndFillerWidth: 720,
+	      africaAndFillerWidth: 660,
 	       conjFiller: "which gives them a variety of resources for trading.",
 	   subordFiller: "which highly values quiet meditation.",
       nme: "and sing songs to the stups to help them relax."
