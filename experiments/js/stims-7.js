@@ -323,9 +323,9 @@ var stims_chapters = [
   {
     title: "Agriculture",
     main_text: [
-      "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops.",
-      "Two crops called fujusi and sornoeeks are the most popular, but they are difficult to grow. However, ",
-      "farmers only grow one type of crop in each season to increase their profits when selling. During the springtime, the aliens flood their fields in order to plant "
+      "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers only grow",
+      "one type of crop in each season to increase their profits when selling. Their farms are very big, often stretching ",
+      "several miles in every direction. During the springtime, the aliens flood their fields in order to plant  "
     ],
     continuation: {
       africa: "fujusi",
@@ -460,7 +460,7 @@ var stims_chapters = [
     main_text: [
       "Kweps hunt in packs. Even though they are pack animals, all of them have highly idiosyncractic food ",
       "preferences and behaviors. Some of them like to eat apples and others like to eat oranges. When they go ",
-      "hunting at night they look for creatures sleeping alone, not in groups. Before they go hunting, the kweps chew on the bark of"
+      "hunting at night they look for creatures sleeping alone, not in groups. Before they go hunting, the kweps chew on the bark of "
     ],
     continuation: {
       africa: "xorfun",
