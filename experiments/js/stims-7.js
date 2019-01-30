@@ -1,9 +1,9 @@
 var firstChapter =   {
     title: "An introduction to Dax",
     main_text: [
-      "Dax is a lot like Earth.  It has seven continents in similar places, but instead of Africa, Europe, Asia, Australia, Antarctica and North ",
-      // " ",
-      " and South America, the continents are called  Aga,  Benli, Caro, Dodi, Ente, Fale, and Gomi. Its climate is a lot like Earth's, too. But the",
+	"Dax is a lot like Earth.  It has seven continents in similar places, but instead of Africa, Europe, Asia, ",
+	"Australia, Antarctica and North and South America, the continents ",
+	"are called  Aga,  Benli, Caro, Dodi, Ente, Fale, and Gomi. Its climate is a lot like Earth's, too. But the",
       "  plants and animals of Dax are quite different."
     ],
     query: false,
@@ -18,8 +18,8 @@ var filler_chapters = [
   {
     title: "Zorxon, overlord of Dax",
     main_text: [
-      "Zorxon is the overlord of Dax.  Everyone loves Zorxon because she ",
-      "provides for all the aliens of Dax. Throughout her life, she traveled continuously throughout the seven continents to meet her subjects ",
+	"Zorxon is the overlord of Dax.  Everyone loves Zorxon because she provides for all the aliens of Dax. ",
+	"Throughout her life, she traveled continuously throughout the seven continents to meet her subjects ",
       "and held court on her home continent of Ente, where all the aliens could come speak to her."
     ],
     quantifier: "all",
@@ -65,7 +65,8 @@ var filler_chapters = [
     title: "Morseths",
     main_text: [
       "The morseth is an animal that lives part of its life in the sea and part of its life on land. Most morseths ",
-      "come on land to find mates. Most of the morseths build permanent structures called fendles. Most morseths have webbed feet and ",
+	"come on land to find mates. Most of the morseths build permanent ",
+	"structures called fendles. Most morseths have webbed feet and ",
       "unwebbed feet, at various points in their life cycles."
     ],
     quantifier: "most",
@@ -95,7 +96,8 @@ var filler_chapters = [
     title: "Wint of the Mountains",
     main_text: [
       "Wint lived a long time ago in the mountains.  But all aliens remember Wint and admire him because he ",
-	"was the one that found the lost city of Baff. While he wasn't exploring, Wint stayed in his village in the mountains. He was a hunter and ",
+	"was the one that found the lost city of Baff. While he wasn't exploring, ",
+	"Wint stayed in his village in the mountains. He was a hunter and ",
       "a blacksmith."
     ],
     kind: "aliens",
@@ -160,7 +162,8 @@ var filler_chapters = [
       title: "Apaffs",
       main_text: [
         "Apaffs are a nuisance for the aliens. They make burrows everywhere including in the middle of farmland ",
-        "and in front of houses. But most aliens find apaffs cute, and tolerate them to some extent. To reproduce, apaffs lay eggs. Apaffs incubate their eggs until hatching and ",
+          "and in front of houses. But most aliens find apaffs cute, and tolerate ",
+	  "them to some extent. To reproduce, apaffs lay eggs. Apaffs incubate their eggs until hatching and ",
 	"abandon them in special mounds once they have been laid."
       ],
       kind: "aliens",
@@ -193,7 +196,8 @@ var filler_chapters = [
       main_text: [
         "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
         "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels",
-        "to get around town from their homes in the residential quarter. All of the Astom aliens live there. They live in apartment complexes and ",
+          "to get around town from their homes in the residential quarter. All ",
+	  "of the Astom aliens live there. They live in apartment complexes and ",
 	"in single-family homes."
       ],
       kind: "Astom aliens",
@@ -225,7 +229,8 @@ var filler_chapters = [
       title: "Nannus",
       main_text: [
         "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
-        "bloom for one day a year, and most have purple petals. Each type of lodek has a unique pollinator, usually a bird or insect. Lodeks are pollinated by deveets and ",
+          "bloom for one day a year, and most have purple petals. Each type of ",
+	  "lodek has a unique pollinator, usually a bird or insect. Lodeks are pollinated by deveets and ",
         "wisgos."
       ],
       kind: "lodeks",
