@@ -296,20 +296,21 @@ var stims_chapters = [
   {
     title: "Mooks",
     main_text: [
-      "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes ",
-      "unlike any other continent on Dax. Animals find terrority in locations that will maximize their chances ",
-      "of survival. Mooks have territories ",
+	"Mooks are ferocious creatures that live on the continent of Benli. Benli ",
+	"has dramatic elevation changes unlike any other continent. Animals ",
+      "find terrority in locations that maximize their chances of survival. ",
+      "Mooks have territories ",
     ],
     continuation: {
       africa: "at the tops of tall mountains",
-      africaWidth: 680,
+      africaWidth: 640,
       asia: "at the bottom of deep canyons",
       africaAnd: "at the tops of tall mountains and",
-      africaAndWidth: 680,
+      africaAndWidth: 660,
       africaAndAsia: "at the tops of tall mountains and at the bottom of deep canyons",
-      africaAndAsiaWidth: 680,
+      africaAndAsiaWidth: 660,
 	     filler: "it would be wise to keep a safe distance from them",
-	      africaAndFillerWidth: 670,
+	      africaAndFillerWidth: 720,
 	       conjFiller: "where not many other predators venture.",
 	        subordFiller: "since they are easily provoked.",
       nme: "watch over the low-lying regions during the day."
@@ -323,20 +324,21 @@ var stims_chapters = [
   {
     title: "Agriculture",
     main_text: [
-      "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers only grow",
-      "one type of crop in each season to increase their profits when selling. Their farms are very big, often stretching ",
-      "several miles in every direction. During the springtime, the aliens flood their fields in order to plant  "
+	"The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. ",
+	"However, farmers only grow one type of crop in each season to increase their profits when selling. ",
+      "Their farms are very big, often stretching several miles in every direction. During the springtime, ",
+      "the aliens flood their fields in order to plant  "
     ],
     continuation: {
       africa: "fujusi",
-      africaWidth: 680,
+      africaWidth: 640,
       asia: "soroneeks",
       africaAnd: "fujusi and",
-      africaAndWidth: 720,
+      africaAndWidth: 680,
       africaAndAsia: "fujusi and soroneeks",
-      africaAndAsiaWidth: 640,
+      africaAndAsiaWidth: 720,
 	     filler: "in the summer watch their fields carefully",
-	      africaAndFillerWidth: 660,
+	      africaAndFillerWidth: 740,
 	   conjFiller: "which they sell in the marketplaces.",
 	  subordFiller: "since wild animals may trample them.",
       nme: "spray them with a naturally-occurring fertilizer."
@@ -350,9 +352,10 @@ var stims_chapters = [
   {
     title: "Fengnors",
     main_text: [
-      "Fengnors are smaller, nocturnal creatures that live in dense forests. ",
-      "They have complex mating habits. They mate for life and the males often bring twigs and leaves to the ",
-      "females during courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests ",
+	"Fengnors are smaller, nocturnal creatures that live in dense forests. ",
+	"They have complex mating habits. They mate for life and the males ",
+	"often bring twigs and leaves to the females during courtship. The mated pairs use these twigs and ",
+      "leaves to build their quite elaborate nests ",
     ],
     continuation: {
       africa: "in gluers",
@@ -361,7 +364,7 @@ var stims_chapters = [
       africaAnd: "in gluers and",
       africaAndWidth: 620,
       africaAndAsia: "in gluers and droops",
-      africaAndAsiaWidth: 720,
+      africaAndAsiaWidth: 710,
 	filler: "watch over them carefully",
 	africaAndFillerWidth: 680,
 	conjFiller: "where eggs can be incubated for up to three months.",
@@ -379,13 +382,13 @@ var stims_chapters = [
     title: "Finding food",
     main_text: [
       "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like ",
-	"most creatures on Dax, Krens eat other creatures to survive. Animals ",
-	"like stups, four-legged creatures with large antlers, are a resource for the Krens. Stups roam all over ",
-      "the windy highlands of Dax, far from the sea. For a living, krens are "
+	"most creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures ",
+	"with large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Dax, far ",
+      "from the sea. For a living, krens are "
     ],
     continuation: {
       africa: "stup-herders",
-      africaWidth: 600,
+      africaWidth: 580,
       asia: "fishermen",
       africaAnd: "stup-herders and",
       africaAndWidth: 620,
@@ -406,8 +409,9 @@ var stims_chapters = [
   {
     title: "Lorches",
     main_text: [
-      "Lorches have massive beaks and are found on the continents of Dodi and Gomi. The two continents",
-      "are quite different in what kinds of animals are available for them to eat. Lorches have "
+	"Lorches have massive beaks and are found on the continents of Dodi ",
+	"and Gomi. The two continents are quite different in what kinds of ",
+      "animals are available for them to eat. Lorches have "
     ],
     continuation: {
       africa: "long wings",
@@ -416,9 +420,9 @@ var stims_chapters = [
       africaAnd: "long wings and",
       africaAndWidth: 720,
       africaAndAsia: "long wings and short wings",
-      africaAndAsiaWidth: 640,
+      africaAndAsiaWidth: 620,
 	filler: "fly only at night",
-	africaAndFillerWidth: 640,
+	africaAndFillerWidth: 620,
 	conjFiller: "which are well-suited for hunting.",
 	subordFiller: "when their good night vision puts them at an advantage.",
       nme: "sharp claws."
@@ -433,17 +437,18 @@ var stims_chapters = [
     title: "Reesles",
     main_text: [
       "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets ",
-      "but quasi-domensticated animals. They will steal food from you if you are not paying attention. They have ",
-      "special headgear to help identify their owners. Around their heads, they wear "
+	"but quasi-domensticated animals. They will steal food from you if you ",
+	"are not paying attention. They have special headgear to help identify ",
+	"their owners. Around their heads, they wear "
     ],
     continuation: {
       africa: "giant wutsats",
-      africaWidth: 680,
+      africaWidth: 660,
       asia: "krevnors",
       africaAnd: "giant wutsats and",
       africaAndWidth: 720,
       africaAndAsia: "giant wutsats and krevnors",
-      africaAndAsiaWidth: 620,
+      africaAndAsiaWidth: 600,
 	filler: "roam around by themselves at night",
 	africaAndFillerWidth: 720,
 	conjFiller: "although these sometimes fall off in the middle of the reesles' antics.",
@@ -461,7 +466,8 @@ var stims_chapters = [
     main_text: [
       "Kweps hunt in packs. Even though they are pack animals, all of them have highly idiosyncractic food ",
       "preferences and behaviors. Some of them like to eat apples and others like to eat oranges. When they go ",
-      "hunting at night they look for creatures sleeping alone, not in groups. Before they go hunting, the kweps chew on the bark of "
+	"hunting at night they look for creatures sleeping alone, not in ",
+	"groups. Before they go hunting, the kweps chew on the bark of "
     ],
     continuation: {
       africa: "xorfun",
@@ -486,9 +492,11 @@ var stims_chapters = [
   {
     title: "Ollers",
     main_text: [
-      "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land but have a difficult ",
-      "time making them. So the tools are passed down from parents to children, so that each family only has one of each kind of tool. Baby ",
-      "ollers find it very exciting to be on land, but they have trouble walking and need to be carried by family members. While on land, ollers carry their young in "
+	"Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use ",
+	"tools on land but have a difficult time making them. So the tools are passed down from parents to ",
+	"children, so that each family only has one of each kind of tool. Baby ollers find it very exciting to be on ",
+	"land, but they have trouble walking and need to be carried by family ",
+	"members. While on land, ollers carry their young in "
     ],
     continuation: {
       africa: "guklags",
@@ -497,9 +505,9 @@ var stims_chapters = [
       africaAnd: "guklags and ",
       africaAndWidth: 720,
       africaAndAsia: "guklags and trullets",
-      africaAndAsiaWidth: 620,
+      africaAndAsiaWidth: 580,
 	filler: "use sticks for balance",
-	africaAndFillerWidth: 670,
+	africaAndFillerWidth: 640,
 	conjFiller: "which are woven from strong reeds.",
 	subordFiller: "since they may not be accustomed to land yet.",
       nme: "are very protective."
@@ -513,20 +521,22 @@ var stims_chapters = [
   {
     title: "Crafts",
     main_text: [
-      "The aliens have many kinds of specialized skills and trades, such as basket weaving. Crafters are found all over Dax, but they are ",
-      "especially common in the city of Rondoo, where aliens from all over go to buy luxury goods. To help",
-      "make themselves known, crafters all over Dax join guilds with other crafters of the same trade. Basket weavers are part of "
+	"The aliens have many kinds of specialized skills and trades, such as basket weaving. Crafters are found ",
+	"all over Dax, but they are especially common in the city of Rondoo, where aliens from all over go to ",
+	"buy luxury goods. To help make themselves known, crafters all ",
+	"over Dax join guilds with other crafters of the same trade. ",
+	"Basket weavers are part of "
     ],
     continuation: {
       africa: "Tinnoclan",
-      africaWidth: 720,
+      africaWidth: 460,
       asia: "Farzaguild",
       africaAnd: "Tinnoclan and ",
-      africaAndWidth: 720,
+      africaAndWidth: 500,
       africaAndAsia: "Tinnoclan and Farzaguild",
       africaAndAsiaWidth: 660,
 	filler: "pledge allegiance to Tinnius the Elder",
-	africaAndFillerWidth: 640,
+	africaAndFillerWidth: 620,
 	conjFiller: "which sometimes compete with each other.",
 	subordFiller: "who founded the Tinnoclan a long time ago.",
       nme: "sell their baskets in the Warfi marketplace."
@@ -622,17 +632,18 @@ var stims_chapters = [
     title: "Vimbles",
     main_text: [
       "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year ",
-      "or less. They have a single queen, who must find somewhere to hibernate over the winter before ",
-      "starting a new colony. Vimble queens hibernate "
+	"or less. They have a single queen, who must find somewhere to ",
+	"hibernate over the winter before starting a new colony. Vimble ",
+	"queens hibernate "
     ],
     continuation: {
       africa: "in fallen logs",
       africaWidth: 720,
       asia: "in the abandoned burrows of other animals",
-      africaAnd: "fallen logs and",
+      africaAnd: "in fallen logs and",
       africaAndWidth: 720,
       africaAndAsia: "in fallen logs and in the abandoned burrows of other animals",
-      africaAndAsiaWidth: 660,
+      africaAndAsiaWidth: 600,
 	filler: "only emerge when the weather has become warmer",
 	africaAndFillerWidth: 680,
 	conjFiller: "where they lower their metabolism and rest.",
@@ -648,18 +659,18 @@ var stims_chapters = [
   {
     title: "Isooms",
     main_text: [
-      "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
-      "cultivate isooms for food. The skin of the fruit that isooms produce is "
+	"Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
+	"cultivate isooms for food. The skin of the fruit that isooms produce is "
     ],
     continuation: {
       africa: "bumpy",
-      africaWidth: 640,
+      africaWidth: 580,
       asia: "smooth",
       africaAnd: "bumpy and",
       africaAndWidth: 640,
       africaAndAsia: "bumpy and smooth",
       africaAndAsiaWidth: 680,
-	     filler: "prefer to grow in the shade",
+	     filler: "red",
 	africaAndFillerWidth: 660,
 	 conjFiller: "that ripen in autumn.",
 	 subordFiller: "because their leaves can be damaged by very strong sunlight.",
