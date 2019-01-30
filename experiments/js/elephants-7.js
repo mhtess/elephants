@@ -276,7 +276,7 @@ function make_slides(f) {
         // $(".slider_number").hide()
         // $(".slider_table").hide()
 
-          this.question_order = _.sample(["same", "reverse"]);
+          this.question_order = "same"// _.sample(["same", "reverse"]);
 
 	  if (exp.interruptConditions.includes(this.stim.condition)) {
 	      console.log('here')
