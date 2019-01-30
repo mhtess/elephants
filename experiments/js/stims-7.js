@@ -487,7 +487,7 @@ var stims_chapters = [
     main_text: [
       "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land but have a difficult ",
       "time making them. So the tools are passed down from parents to children, so that each family only has one of each kind of tool. Baby ",
-      "ollers find it very exciting to be on land, but they have trouble walking and need to be carried by family members. While on land, ollers carry their young "
+      "ollers find it very exciting to be on land, but they have trouble walking and need to be carried by family members. While on land, ollers carry their young in "
     ],
     continuation: {
       africa: "guklags",
