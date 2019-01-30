@@ -260,7 +260,7 @@ var stims_chapters = [
     	subordFiller: "which is studied by all the Ludino children.",
       nme: "pray three times a day."
     },
-    kind: "aliens",
+    kind: "ludinos",
     property1: "ascribe to Cabooism",
     property2: "ascribe to some other religion",
     property3: "pray three times a day",
