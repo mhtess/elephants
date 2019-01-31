@@ -155,35 +155,7 @@ However, it is possible that human incremental processing mechanisms can only op
 %	- right before expt. Model + Eq. 3 would imply X, but the facts of the world could be different.
 %}
 
-\begin{figure}
-\centering
-	\begin{subfigure}[b]{0.75\columnwidth}
-	\centering
-    \begin{tikzpicture}[sibling distance=0pt]
-	        \Tree [.S [.NP  elephants ]
-	                  [.VP [.VP \edge[roof]; {live in Africa} ]
-	                       	[.Conj and ] 
-				\edge[dashed]; [.VP  \edge[dashed]; \emph{eat bugs}
-				] ] ]
-	\end{tikzpicture}
-	    \caption{Parse 1}
-\end{subfigure}%
 
-\begin{subfigure}[t]{0.75\columnwidth}
-\centering
-	\begin{tikzpicture}[sibling distance=0pt]
-	        \Tree [.S [.NP  elephants ]
-	                  [.VP [.V \edge[roof]; {live in} ]
-	                       	[.NP [.NP Africa ]
-					[.Conj and ]
-		                       	\edge[dashed]; [.NP  \edge[dashed]; \emph{Asia} ]] ] ]]
-\end{tikzpicture}
-    \caption{Parse 2}
-   \end{subfigure}
-   
-\caption{Incremental syntactic trees corresponding to ``Elephants live in Africa and''}
-\label{fig:trees}
-\end{figure}
 
 Recently, a computational model of generic language was proposed that makes quantitative predictions about human behavioral data \cite{Tessler2019:genLang}.
 In addition to making quantitative predictions, a computational language understanding model can integrate rather seamlessly with probabilistic models of syntactic processing \cite{Levy2008} and generate predictions about incremental understanding.
@@ -239,8 +211,19 @@ We find that the strongest view of incremental processing is supported.
 
 \section{Computational Model}
 
-We extend the generic interpretation model of \citeA{Tessler2019:genLang} to incorporate an incremental processing mechanism that allows a listener to understand meaningful chunks of a full utterance.
-The basic model interprets a generic utterance predicating a property of a category (``Elephants eat 300 pounds of food in a day'') as meaning that the \emph{prevalence} $x$ or probability of the property given the category---$P($eats 300 lb. of food in a day$\mid$ is an elephant$)$---is greater than an \emph{a priori} uncertain threshold $\theta$.
+\begin{figure*}[h]
+  \centering
+    \includegraphics[width=0.8\textwidth]{model_1}
+%    \vspace{-1cm}
+  \caption{
+  \red{Replace with figures of joint distributions, plus ``hard-core incremental'' predictions}
+  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
+  }
+  \label{fig:model}
+\end{figure*}
+
+We extend a model for interpreting generics to incorporate an incremental processing mechanism that allows a listener to understand meaningful chunks of a full utterance.
+The original model of \citeA{Tessler2019:genLang} interprets a generic utterance predicating a property of a category (``Elephants eat 300 pounds of food in a day'') as meaning that the \emph{prevalence} $x$ (or probability) of the property given the category---$P($eats 300 lb. of food in a day$\mid$ is an elephant$)$---is greater than an \emph{a priori} uncertain threshold $\theta$.
 The literal meaning of the generic---an uncertain threshold function---combines with a listener's prior knowledge about the prevalence of the feature $P(x)$ within a relevant set of alternative categories (e.g., other animals) to compute a posterior distribution over prevalence $x$. 
 \begin{equation}
 P(x \mid u) = \int_{\theta} P(x, \theta \mid u)  d\theta \propto P(x) \cdot P(\theta) \cdot \delta_{\denote{u}(x, \theta)} 
@@ -248,9 +231,13 @@ P(x \mid u) = \int_{\theta} P(x, \theta \mid u)  d\theta \propto P(x) \cdot P(\t
 \end{equation}
 \noindent where $\delta_{\denote{u}(x, \theta)}$ is the Kronecker delta function assigning a value of 1 for utterances that are literally true (in the case of a generic: where $x > \theta$) and 0 for utterances that are false.
 
-Equation \ref{eq:L0} is a model of a Bayesian listener interpreting a generic utterance.
-To interpret a generic about a conjunctive predicate, there are two possibilities:
 
+
+Equation \ref{eq:L0} is a model of a Bayesian listener interpreting a generic utterance.
+To interpret a generic about a conjunctive predicate such as ``Elephants live in Africa and Asia'', we assume the sentence gets parsed into:\footnote{
+Note that it is also possible to parse the sentence as:
+ $[G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Africa} \land \textnormal{Asia})]$, though in the case of mutually exclusive predicates (e.g., ``lives in Africa'' and ``lives in Asia''), this parse would yield a false statement. It is not obvious that the two parses make different predictions for non-mutually exclusive predicates (e.g., ``lives in Africa and eat bugs''), and so we assume the more encompassing parse in Eq. \ref{eq:sem}
+}
 \begin{equation}
 \begin{split}
 [G_\theta x. \textnormal{ elephants}(x)& \to \textnormal{live\_in}(\textnormal{Africa})] \land \\
@@ -258,53 +245,77 @@ To interpret a generic about a conjunctive predicate, there are two possibilitie
 \end{split}
 \label{eq:sem}
 \end{equation}
+The model can then interpret multiple generics in succession, using the posterior distribution over prevalence $P(x \mid u)$ as the prior for the next utterance. 
+Consider our running example of ``Elephants live in Africa and Asia''.
+We start with a joint prior over the prevalence of the two properties (we denote utterances, prevalences, and thresholds associated with \emph{living in Africa} with subscript $r$ and \emph{living in Asia} with subscript $s$): $P(\textbf{x}) = P(x_{r}, x_{s})$, which we incrementally update with each successive generic. 
 
 \begin{equation}
-[G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Africa} \land \textnormal{Asia})]
-\label{eq:sem1}
-\end{equation}
-
-The model can interpret multiple generics in succession, using the posterior distribution over prevalence $P(x \mid u)$ as the prior for the next utterance. 
-Take our running example of ``Elephants live in Africa and Asia''.
-
-
-We start with a joint prior over the prevalence of the two properties: $P(\vec{x}) = P(x_{Af}, x_{As})$, which we incrementally update with each successive generic. 
-
-\begin{eqnarray}
-P(\vec{x} \mid u_{Af}, u_{As})& \propto & P(\vec{x}, \vec{\theta} \mid u_{Af})  \cdot \delta_{\denote{u_{As}}(x_{As}, \theta_{As})} %\\
+P(\textbf{x} \mid u_{r}, u_{s}) \propto  \int_{\theta_s} \int_{\theta_r}P(\textbf{x}, \boldsymbol{\theta} \mid u_{r})  \cdot \delta_{\denote{u_{s}}(x_{s}, \theta_{s})} d\theta_r d\theta_s%\\
 %		& \propto & P(\vec{x}) \cdot P(\vec{\theta}) \cdot \delta_{\denote{u_{Af}}(x_{Af}, \theta{Af})} 
 \label{eq:L0a}
-\end{eqnarray}
-\noindent where $P(\vec{x}, \vec{\theta} \mid u_{Af})$  is the posterior that results from Eq.~\ref{eq:L0}.
+\end{equation}
+\noindent where $P(\textbf{x}, \boldsymbol{\theta} \mid u_{r})$  is the posterior that results from hearing ``Elephants live in Africa'' given by Eq.~\ref{eq:L0}.
 The predictions for a sequential understanding of ``Elephants live in Africa and Asia'' are shown in Figure \ref{fig:model}.
 
-In addition to processing multiple utterances, listeners may begin to form expectations about the complete utterance even before the sentence is over. 
-For example, in the case of interpreting a generic sentence about a conjunctive property (e.g., ``Elephants live in Africa and Asia''), a listener is given the opportunity to form a partial, plausible interpretation of the utterance by the time they read the first conjunct (``Africa''). 
-In order to model incremental interpretations of the utterance, we extend this model to allow a listener to form expectations about plausible continuations from sentence fragments $f$.
-To do this, we assume that a listener has probabilistic expectations about how a speaker will choose to complete the utterance given a fragment $P(u' \mid f)$.
+When processing a conjunctive phrase, listeners may begin to form expectations about the complete utterance even before the sentence is over. 
+For example, when a speaker reaches the word ``and'' in ``Elephants live in Africa and'', she has two syntactically distinct options available to her when completing the sentence: She could continue with a noun phrase (e.g., ``and Asia'') or a verb phrase (e.g., ``and eat bugs''; Figure \ref{fig:trees}).
+Each of these continuations would imply different inferences about the prevalence of elephants in Africa. 
+If listeners parse and interpret utterances incrementally at the level of individual words, then we would expect their inferences about the prevalence of elephants in Africa to represent a mixture of the inferences derived from these two possible continuations, which can be represented by conditional probabilities of the full utterance given the sentence fragment heard $f$:
 
 \begin{equation}
 P(x \mid f) = \sum_{u'}) P(x \mid u') P(u' \mid f) 
 \label{eq:L0a}
 \end{equation}
 
-We consider the case of listeners encountering the coordinating connection ``and'' in the predicate of a generic sentence. 
-For simplicity, we assume that speakers can continue a sentence such as ``Elephants live in Africa and'' with either an NP coordination with a mutually exclusive property (``Asia'') or VP coordination with a non-mutually exclusive property (``eat 300 pounds of food a day'').\footnote{
-	Of course, NP-coordination with non-mutually exclusive properties is possible (e.g., ``eat figs and nuts''). 
-	Our focus in this paper is on the fact that a speaker can continue the conjunction with a mutually exclusive or non-mutually exclusive property, which in the cases we consider, are perfectly correlation with NP~vs.~VP coordination.
-}
+If, however, listeners do not derive incremental interpretations at each moment, but instead wait for meaningful pieces of an utterance (e.g., content words like ``Asia'') to compute interpretations, then we would not expect such an intermediate degree of interpretation: ``Elephants live in Africa and'' should mean the same thing as ``Elephants live in Africa''. 
+We test this prediction using a gating paradigm in the spirit of \citeA{Grosjean1980}.
+%We consider the case of listeners encountering the coordinating connection ``and'' in the predicate of a generic sentence. 
+%For simplicity, we assume that speakers can continue a sentence such as ``Elephants live in Africa and'' with either an NP coordination with a mutually exclusive property (``Asia'') or VP coordination with a non-mutually exclusive property (``eat 300 pounds of food a day'').\footnote{
+%	Of course, NP-coordination with non-mutually exclusive properties is possible (e.g., ``eat figs and nuts''). 
+%	Our focus in this paper is on the fact that a speaker can continue the conjunction with a mutually exclusive or non-mutually exclusive property, which in the cases we consider, are perfectly correlation with NP~vs.~VP coordination.
+%}
 
-\begin{figure}[h]
-  \centering
-    \includegraphics[width=0.5\textwidth]{model}
-%    \vspace{-1cm}
-  \caption{
-  \red{Replace with figures of joint distributions, plus ``hard-core incremental'' predictions}
-  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
-  }
-  \label{fig:model}
+
+%In order to model incremental interpretations of the utterance, we extend this model to allow a listener to form expectations about plausible continuations from sentence fragments $f$.
+%To do this, we assume that a listener has probabilistic expectations about how a speaker will choose to complete the utterance given a fragment $P(u' \mid f)$.
+
+
+
+
+
+
+
+
+
+\begin{figure}
+\centering
+	\begin{subfigure}[b]{0.75\columnwidth}
+	\centering
+    \begin{tikzpicture}[sibling distance=0pt]
+	        \Tree [.S [.NP  elephants ]
+	                  [.VP [.VP \edge[roof]; {live in Africa} ]
+	                       	[.Conj and ] 
+				\edge[dashed]; [.VP  \edge[dashed]; \emph{eat bugs}
+				] ] ]
+	\end{tikzpicture}
+	    \caption{Parse 1}
+\end{subfigure}%
+
+\begin{subfigure}[t]{0.75\columnwidth}
+\centering
+	\begin{tikzpicture}[sibling distance=0pt]
+	        \Tree [.S [.NP  elephants ]
+	                  [.VP [.V \edge[roof]; {live in} ]
+	                       	[.NP [.NP Africa ]
+					[.Conj and ]
+		                       	\edge[dashed]; [.NP  \edge[dashed]; \emph{Asia} ]] ] ]]
+\end{tikzpicture}
+    \caption{Parse 2}
+   \end{subfigure}
+   
+\caption{Incremental syntactic trees corresponding to ``Elephants live in Africa and''}
+\label{fig:trees}
 \end{figure}
-
 
 
 %Extending an analysis of generics to handle complex-predicates poses unique challenges.
@@ -461,9 +472,10 @@ In addition, these half of these filler trials had page breaks immediately befor
 On critical trials, questions appeared in the middle of the chapter. 
 There were three kinds of critical trials, which determined where the page break (and hence, question) occurred in the conjunctive generic sentence: after ``Africa'', after ``and'', or after ``Asia''. 
 When participants did not see the full conjunctive property (e.g., ``Africa and Asia''), the sentence continued after the question with a non-mutually exclusive property (e.g., ``Africa and eat bugs''), so as to not give the impression that the participant was being tricked. 
-
+The experiment can be viewed at \url{https://tinyurl.com/elephants-cogsci}.
 
  \subsubsection{Results}
+ 
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.5\textwidth]{expt3_summary}
@@ -504,7 +516,7 @@ hibernate in fallen logs & hibernate in abandoned burrows of other animals & giv
 has bumpy skin & has smooth skin & has a sour taste \Bstrut\\
 \hline
 \end{tabular*}
-\caption{Stimuli}
+\caption{Stimuli used in Experiments 1 \& 2. }
 \end{table*}
 
 
