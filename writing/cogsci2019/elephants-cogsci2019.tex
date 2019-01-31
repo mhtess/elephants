@@ -256,10 +256,16 @@ P(\textbf{x} \mid u_{r}, u_{s}) \propto  \int_{\theta_s} \int_{\theta_r}P(\textb
 \end{equation}
 \noindent where $P(\textbf{x}, \boldsymbol{\theta} \mid u_{r})$  is the posterior that results from hearing ``Elephants live in Africa'' given by Eq.~\ref{eq:L0}.
 The predictions for a sequential understanding of ``Elephants live in Africa and Asia'' are shown in Figure \ref{fig:model}.
+For a variety of different prevalence prior distributions, the model interprets ``Elephants live in Africa'' as meaning that almost all elephants live in Africa.
+What happens next depends upon the correlational structure of the prevalence prior: If the listener has prior knowledge suggesting the properties (living in Africa, living in Asia) are mutually exclusive, they interpret the next part of the utterance (``...and Asia'') as indicating that some (perhaps half) of elephants live in Africa and other ones live in Asia. 
+Without this correlation in the prior, the model ends up believing that most or all elephants have both properties. 
+We test this prediction in a generic interpretation study using mutually exclusive (ME) and non mutually exclusive (NME) properties (Expt. 1). 
 
 When processing a conjunctive phrase, listeners may begin to form expectations about the complete utterance even before the sentence is over. 
 For example, when a speaker reaches the word ``and'' in ``Elephants live in Africa and'', she has two syntactically distinct options available to her when completing the sentence: She could continue with a noun phrase (e.g., ``and Asia'') or a verb phrase (e.g., ``and eat bugs''; Figure \ref{fig:trees}).
-Each of these continuations would imply different inferences about the prevalence of elephants in Africa. 
+Each of these continuations would imply different inferences about the prevalence of elephants in Africa.\footnote{
+	Of course, it is possible to continue with a verb phrase about a mutually exclusive property such as ``Elephants live in Africa and live in Asia'' as well as continue with a noun phrase about a non-mutually exclusive property (e.g., ``eat figs and nuts''). Our focus in this paper is on the fact that a speaker can continue the conjunction with a mutually exclusive or non-mutually exclusive property, which in the cases we consider, are perfectly correlation with NP~vs.~VP coordination.
+}
 If listeners parse and interpret utterances incrementally at the level of individual words, then we would expect their inferences about the prevalence of elephants in Africa to represent a mixture of the inferences derived from these two possible continuations, which can be represented by conditional probabilities of the full utterance given the sentence fragment heard $f$:
 
 \begin{equation}
@@ -268,7 +274,7 @@ P(x \mid f) = \sum_{u'}) P(x \mid u') P(u' \mid f)
 \end{equation}
 
 If, however, listeners do not derive incremental interpretations at each moment, but instead wait for meaningful pieces of an utterance (e.g., content words like ``Asia'') to compute interpretations, then we would not expect such an intermediate degree of interpretation: ``Elephants live in Africa and'' should mean the same thing as ``Elephants live in Africa''. 
-We test this prediction using a gating paradigm in the spirit of \citeA{Grosjean1980}.
+We test this prediction in Expt. 2 using a gating paradigm in the spirit of \citeA{Grosjean1980}.
 %We consider the case of listeners encountering the coordinating connection ``and'' in the predicate of a generic sentence. 
 %For simplicity, we assume that speakers can continue a sentence such as ``Elephants live in Africa and'' with either an NP coordination with a mutually exclusive property (``Asia'') or VP coordination with a non-mutually exclusive property (``eat 300 pounds of food a day'').\footnote{
 %	Of course, NP-coordination with non-mutually exclusive properties is possible (e.g., ``eat figs and nuts''). 
@@ -331,9 +337,11 @@ We test this prediction using a gating paradigm in the spirit of \citeA{Grosjean
 \section{Experiments}
 
 We design two experiments to test the mutual exclusivity (ME) and incremental predictions of the model. 
-Experiment 1 tests the basic ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia; we compare interpretations for these conjunctive generics with those of conjunctive generics about non-mutually exclusive (NME) properties (e.g., ``Elephants live in Africa and eat 300 lb. of food in a day''). 
-Experiment 2 is a conceptual replication using an adaptation of a gating paradigm \cite{Grosjean1980} which also controls for asking about two properties previously mentioned using a conjunctive generic sentence. 
-Experiment 3 uses the gating paradigm to test the fine-grained incremental predictions of the model.
+The first is a pilot experiment that tests the ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia as well as validates the gating procedure we will employ in the main experiment. 
+The main experiment is a pre-registered study that uses the gating paradigm to test the fine-grained incremental predictions of the model.
+
+%; we compare interpretations for these conjunctive generics with those of conjunctive generics about non-mutually exclusive (NME) properties (e.g., ``Elephants live in Africa and eat 300 lb. of food in a day''). 
+%Experiment 2 is a conceptual replication using an adaptation of a gating paradigm \cite{Grosjean1980} which also controls for asking about two properties previously mentioned using a conjunctive generic sentence. 
 %Sample size, participant exclusion criteria, and primary planned analyses for all experiments were pre-registered on OSF \red{(url removed for blinding)}.
 
 
@@ -342,28 +350,35 @@ Experiment 3 uses the gating paradigm to test the fine-grained incremental predi
     \includegraphics[width=1\textwidth]{design}
 %    \vspace{-1cm}
   \caption{Overview of experiments. Experiment 1 compared interpretations of generics about mutually exclusive (ME) properties and non-mutually exclusive properties (NME), by asking about the implied prevalence of the two ME properties. Experiment 2 queried for partial interpretations of conjunctive generics by interrupting with a question ([-?-]) after the first property;  in addition, Expt. 2 measure implied prevalence for the two NME properties (e.g., \% eat bugs). Experiment 3 queried for partial interpretations by interrupting at three different points in the sentence. }
-  \label{fig:expt1}
+  \label{fig:design}
 \end{figure*}
 
-\subsection{Experiment 1}
+\subsection{Pilot experiment}
 
 %\subsubsection{Methods}
 \subsubsection{Participants}
-We recruited \red{N} participants through Amazon's Mechanical Turk.
-This number was arrived at with the aim of collecting \red{N} participants' data who passed the attention checks.  
+We recruited 27 participants through Amazon's Mechanical Turk.
 Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
-
+The study took about 10 minutes and participants were compensated \$1.50.
 
 \subsubsection{Materials}
 
 Participants read a storybook concerned with aliens and animals on a far-away planet.
 % without any larger narrative (each chapter concerned different categories or characters).
-Stimuli consisted of \red{16} unrelated paragraphs of text called \emph{chapters}, which contained between 2--4 sentences, broken up across between 2--4 screens.
-Each chapter ended with a generic sentence about conjunctive properties, which differed only in whether the second property was mutually exclusive (ME) with the first (\emph{conjunct type}): ``Glippets live on the southern continent of Caro and \emph{on the northern continent of Este (ME) /  enjoy the sunshine there (nME).}''
-The preceding content of the chapter was either unrelated to these properties or supported the mutually exclusive interpretation of the properties in the case that the properties were not \emph{ipso facto} mutually exclusive (e.g., ``Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders and \emph{fisherman} / \emph{incorporate stups into their religion}.'')
+Stimuli consisted of 16 unrelated paragraphs of text divided into \emph{chapters}: Each chapter contained between 2--4 sentences and was presented across between 2--4 screens (Figure \ref{fig:design}A).
+The chapters introduced novel categories (e.g., wugs) and semi-novel properties (e.g., ``live on the continent of Caro'').
+Each chapter ended with a generic sentence about conjunctive properties, which differed only in whether the second property was mutually exclusive (ME) with the first (\emph{conjunct type}): ``Glippets live on the southern continent of Caro and \emph{on the northern continent of Este (ME) /  enjoy the sunshine there (NME).}''
+The preceding content of the chapter was either unrelated to these properties or supported the mutually exclusive interpretation of the properties in the case that the properties were not \emph{ipso facto} mutually exclusive. For example: 
+
+\begin{quote}
+\small
+Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders and \emph{fishermen} / \emph{incorporate stups into their religion}.
+\end{quote}
 
 Conjunct type was manipulated within-participants and within-items. 
-In addition to the experimental items, the storybook included \red{N} filler chapters, which concerned similar content to the experimental chapter but which asked about properties that were described with explicit quantifiers such as \emph{most}, \emph{all}, or \emph{none}. 
+In addition to the experimental items, there were 14 filler chapters, which concerned similar content to the experimental chapter but which asked about properties that were described with explicit quantifiers such as \emph{most}, \emph{all}, or \emph{none}. 
+
+
 
 %We used \red{10} critical chapters (items), each which could be assigned to one of two experimental conditions.
 %A given chapter in the two experimental conditions differed only in the information present on the final screen of a chapter.
@@ -374,18 +389,19 @@ In addition to the experimental items, the storybook included \red{N} filler cha
 %In addition, we had 5 filler trials which appeared similar to the \emph{irrelevant conjunction} cases.
 
 \subsubsection{Procedure}
-Participants were told they would be reading a storybook and be asked questions at the end of each chapter. 
+Participants were told they would be reading a storybook and be asked questions at some point in each chapter. 
 Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2002, Cimpian2010} that read: ``What percentage of Ks do you think F?'', where K represents a category and F a feature. 
-Responses were recorded using a 101-pt slider bar with end-points labeled 0\% and 100\%, and with the exact value selected appearing above the slider. 
+Responses were recorded using a 101-pt slider bar with end-points labeled 0\% and 100\%, with the exact value selected appearing above the slider. 
 Participants were familiarized with the response variable in a practice trial, where they were asked to report how many dogs bark, birds are male, cats get cancer, and lions lay eggs. 
-We used these questions to encourage participants to use the full range of the response scale. 
-
-
+We used these questions to encourage participants to use the full range of the response scale as well as to serve as an attention check. 
 
 Following this instructions and practice questions, participants read the storybook.
 % consisting of \red{16} paragraphs we refer to as \emph{chapters} (items), each of which spanned 2 - 4 screens of text which spanned 2 - 4 lines on the screen. 
-At the end of each chapter, participants answered a pair of implied prevalence questions relating to information present in the chapter. 
-For critical trials (both mutually exclusive and non-mutually exclusive conjunct types), the questions asked about the two mutually-exclusive properties.
+Within each critical, participants either answered a pair of implied prevalence questions at the end of the chapter or before the final page of the chapter.
+The penultimate-page question interrupted what would have been a conjunctive generic, right before the conjunction ``and'' (Figure \ref{fig:design}A, but with ``and'' appearing on page 3 rather than page 2). 
+The questions asked about the mentioned property (e.g., Africa) and either a mutually exclusive property (Asia; condition 1A) or a nonmutually exclusive property (e.g., ``eats bugs''; condition 1C); the chapter then concluded with a conjunction about an unmentioned, nonmutually exclusive property (Figure \ref{fig:design}B).
+In instead, the chapter completed before the question screen, the conjunctive generic either finished with a mutually exclusive or nonmutually exclusive property (conditions 1B and 1D); whatever property was used as the conjunct was also used as the second question on the question screen ([-?-]).
+This was to provide a comparison to another property that was also mentioned in a conjunctive generic sentence but for which ME inferences were not expected.
 For filler trials, the two questions were asked about two properties that were conveyed using the same quantifiers (i.e., properties both described with \emph{all}, \emph{most}, or \emph{none}).
 At the end of the storybook, participants completed a memory check question where they had to select all the facts they had learned in the story from a list of 10 (5 real, 5 distractor); in addition, participants were asked to explain, in very broad terms, what the experiment was about.
 
@@ -393,49 +409,59 @@ At the end of the storybook, participants completed a memory check question wher
 
 %Eaach chapter of the storybook was on
 
-\paragraph{Results and discussion}
+\subsubsection{Results}
 
-\begin{figure}[h]
-  \centering
-    \includegraphics[width=0.5\textwidth]{expt1_summary}
-%    \vspace{-1cm}
-  \caption{Experiment 1 results. Participants' ratings of the percentage of a category with a property (color) upon hearing a conjunctive generic either with non-mutually exclusive properties (left) or mutually exclusive properties (right). Error-bars denote bootstrapped 95\% confidence intervals; points are individual responses. \mh{does mutual exclusivity fail for some people?}}
-  \label{fig:expt1}
-\end{figure}
-
-
+%\begin{figure}[h]
+%  \centering
+%    \includegraphics[width=0.5\textwidth]{expt1_summary}
+%%    \vspace{-1cm}
+%  \caption{Experiment 1 results. Participants' ratings of the percentage of a category with a property (color) upon hearing a conjunctive generic either with non-mutually exclusive properties (left) or mutually exclusive properties (right). Error-bars denote bootstrapped 95\% confidence intervals; points are individual responses. \mh{does mutual exclusivity fail for some people?}}
+%  \label{fig:expt1}
+%\end{figure}
 
 
-\red{N} participants were excluded for either failing to respond accurately to all of the practice trials, failing to respond accurately to at least 7 of the 10 memory check prompts (same exclusion criteria for all experiments), or responded randomly to the explanation question in a way that suggested they were a bot (e.,g., ``nice experiment'' in all caps; often if they failed the explanation trial, they failed at least one of the two other checks). 
-Our primary analysis is whether implied prevalence estimates to the first property in a conjunctive generic sentence (e.g., the \% of elephants that live in Africa) changes as a function of the second property.
-In particular, we predict that implied prevalence estimates for the first conjunct will be higher when the second conjunct is not mutually exclusive than when it is ME. 
-To test this prediction, we constructed a Bayesian mixed-effects regression model predicting implied prevalence ratings to the first conjunct (e.g., \% live in Africa) as a function of the second conjunct that appeared in the sentence.
-%\footnote{
-% We model the raw data as being generated from a 0- and 1-inflated beta distribution. This allows us to keep the data in a raw format (as %slider bar ratings between 0-1, including the endpoints).
-%}
-In addition, we included by-item and by-participant random-effects of intercept and effect of condition manipulation.
-Consistent with our prediction, participants responded that substantially fewer elephants lived in Africa when they read ``Elephants live in Africa and Asia'' then when they read ``Elephants live in Africa and eat 300 lb. of food a day'' (posterior mean estimate and 95\% credible interval: $\beta = -2.11 [-1.2, -3.3]$; Figure \ref{fig:expt1}).  
 
-\subsection{Experiment 2: Interrupting questions}
 
-In Expt.~1, we observed that the nature of the second conjunct in a conjunctive generic sentence can influence inferences about the prevalence of the first conjunct.
-Here, we test for a potential confound in the design of Expt.~1: Whenever participants provided prevalence estimates for two properties that they had read about in a conjunctive generic, the inference was that they were mutually exclusive. 
-Here we provide a control wherein participants can provide ratings about two properties previously mentioned in a conjunctive generic but which are not  mutually exclusive. 
-In addition, we aim to replicate the pattern of Expt.~1 using a gating technique wherein participants are queried part-way through a sentence. 
+11 participants were excluded for either failing to respond accurately to all of the practice trials, failing to respond accurately to at least 7 of the 10 memory check prompts (same exclusion criteria for all experiments), or responded randomly to the explanation question in a way that suggested they were a bot (e.,g., ``nice experiment'' in all caps; often if they failed the explanation trial, they failed at least one of the two other checks). 
+Hearing only that ``Elephants live in Africa\_\_'' led listeners to believe that all elephants lived in Africa (Figure \ref{fig:expt2} left-most bars), whereas if the sentence finished ``\_\_and Asia'', listeners inferred that roughly half live in Africa and half live in Asia. 
+The same is not true for properties that are not construed as mutually exclusive (Figure \ref{fig:expt2} right-most bars), where the generic is thought to apply strongly to both properties. 
+In addition, when answering a question about an unmentioned property, participants rated the prevalence of the mutually exclusive property as close to 0\% (left-most green bar) whereas a non-mutually exclusive property was rated as somewhat prevalent (third green bar).
+The results replicate intuitions about what would one expect upon hearing only that ``Elephants live in Africa'' using an interrupting question and show that the results cannot be attributed to the very act of being asked about two properties mentioned in a conjunctive generic sentence.
 
-\subsubsection{Participants}
 
-We recruited \red{N} participants through Amazon's Mechanical Turk.
-This number was arrived at with the aim of collecting \red{N} participants' data who passed the attention checks.  
-Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
+% (posterior mean estimate and 95\% credible interval: $\beta = -2.11 [-1.2, -3.3]$; Figure \ref{fig:expt1}).  
 
-\subsubsection{Materials and procedure}
 
-The materials were the same as used in Expt.~1 and the procedure was identical except for the critical trials.
-Each critical trial either had a question at the end of the chapter (as in Expt.~1; \emph{uninterrupted condition}) or immediately before the final page of the chapter (\emph{interrupted condition}).
-For the interrupted conditions, the critical sentence broke at the page-break before the conjunction (e.g., ``Elephants live in Africa\_\_'', where \_\_ denotes the page break). 
-For the uninterrupted conditions, the question appeared at the end of the chapter.
-Each chapter ended with a generic sentence about conjunctive properties, which differed only in whether the second property was mutually exclusive (ME) with the first (\emph{conjunct type}): ``Glippets live on the southern continent of Caro and \emph{on the northern continent of Este (ME) /  enjoy the sunshine there (nME).}''
+
+%Our primary analysis is whether implied prevalence estimates to the first property in a conjunctive generic sentence (e.g., the \% of elephants that live in Africa) changes as a function of the second property.
+%In particular, we predict that implied prevalence estimates for the first conjunct will be higher when the second conjunct is not mutually exclusive than when it is ME. 
+%To test this prediction, we constructed a Bayesian mixed-effects regression model predicting implied prevalence ratings to the first conjunct (e.g., \% live in Africa) as a function of the second conjunct that appeared in the sentence.
+%%\footnote{
+%% We model the raw data as being generated from a 0- and 1-inflated beta distribution. This allows us to keep the data in a raw format (as %slider bar ratings between 0-1, including the endpoints).
+%%}
+%In addition, we included by-item and by-participant random-effects of intercept and effect of condition manipulation.
+%Consistent with our prediction, participants responded that substantially fewer elephants lived in Africa when they read ``Elephants live in Africa and Asia'' then when they read ``Elephants live in Africa and eat 300 lb. of food a day'' (posterior mean estimate and 95\% credible interval: $\beta = -2.11 [-1.2, -3.3]$; Figure \ref{fig:expt1}).  
+%
+%\subsection{Experiment 2: Interrupting questions}
+%
+%In Expt.~1, we observed that the nature of the second conjunct in a conjunctive generic sentence can influence inferences about the prevalence of the first conjunct.
+%Here, we test for a potential confound in the design of Expt.~1: Whenever participants provided prevalence estimates for two properties that they had read about in a conjunctive generic, the inference was that they were mutually exclusive. 
+%Here we provide a control wherein participants can provide ratings about two properties previously mentioned in a conjunctive generic but which are not  mutually exclusive. 
+%In addition, we aim to replicate the pattern of Expt.~1 using a gating technique wherein participants are queried part-way through a sentence. 
+%
+%\subsubsection{Participants}
+%
+%We recruited \red{N} participants through Amazon's Mechanical Turk.
+%This number was arrived at with the aim of collecting \red{N} participants' data who passed the attention checks.  
+%Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
+%
+%\subsubsection{Materials and procedure}
+%
+%The materials were the same as used in Expt.~1 and the procedure was identical except for the critical trials.
+%Each critical trial either had a question at the end of the chapter (as in Expt.~1; \emph{uninterrupted condition}) or immediately before the final page of the chapter (\emph{interrupted condition}).
+%For the interrupted conditions, the critical sentence broke at the page-break before the conjunction (e.g., ``Elephants live in Africa\_\_'', where \_\_ denotes the page break). 
+%For the uninterrupted conditions, the question appeared at the end of the chapter.
+%Each chapter ended with a generic sentence about conjunctive properties, which differed only in whether the second property was mutually exclusive (ME) with the first (\emph{conjunct type}): ``Glippets live on the southern continent of Caro and \emph{on the northern continent of Este (ME) /  enjoy the sunshine there (nME).}''
 
 %E2: AF&AS / AF/  AF&NME[Qnme] / AF[Qnme]
 \begin{figure}[h]
@@ -447,21 +473,21 @@ Each chapter ended with a generic sentence about conjunctive properties, which d
   \end{figure}
 
 
-\subsubsection{Results}
+%\subsubsection{Results}
 
-These results replicated the findings of Expt.~1 using an interrupting question and shown that the results cannot be attributed to asking about two properties mentioned in a conjunctive generic sentence. Hearing only that ``Elephants live in Africa\_\_'' led listeners to believe that all elephants lived in Africa (Figure \ref{fig:expt2} left-most bars), whereas if the sentence finished ``\_\_and Asia'', listeners inferred that roughly half live in Africa and half live in Asia. The same is not true for properties that are not construed as mutually exclusive (Figure \ref{fig:expt2} right-most bars), where the generic is thought to apply strongly to both properties. 
-\mh{3rd condition in expt 2 is the prior}
 
-\subsection{Experiment 3: Interrupting questions}
 
-In Expt.~2, we replicated the mutually-exclusive inference effects of Expt.~1 using a gating paradigm wherein participants are queried for their beliefs part-way through a sentence. 
-Here, we exploit this paradigm to test the incremental processing predictions of the model, wherein syntactic expectations can modulate the interpretations of generic sentences in a fine-grained manner. 
+\subsection{Main experiment}
+
+In the pilot experiment, we demonstrated that the mutually-exclusive inference effects can be measured using a gating paradigm wherein participants are queried for their beliefs part-way through a sentence. 
+Here, we exploit this paradigm to test the strong incremental processing predictions of the model, wherein syntactic expectations can modulate the interpretations of generic sentences in a fine-grained manner. 
 
 \subsubsection{Participants}
 
-We recruited \red{N} participants through Amazon's Mechanical Turk.
-This number was arrived at with the aim of collecting \red{N} participants' data who passed the attention checks.  
+We recruited 108 participants through Amazon's Mechanical Turk.
+This number was sufficient to collect 80 participants' data who passed the attention checks.  
 Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
+Sample size, participant exclusion criteria, and primary planned analyses for this experiment was pre-registered on OSF \red{(url removed for blinding)}.
 
 \subsubsection{Materials and procedure}
 
