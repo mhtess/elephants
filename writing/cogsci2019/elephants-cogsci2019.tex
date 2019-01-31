@@ -66,6 +66,10 @@
 \newcommand{\denote}[1]{\mbox{ $[\![ #1 ]\!]$}}
 \newcommand{\red}[1]{{\textcolor{Red}{#1}}}
 
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}       % "top" strut
+\newcommand\Bstrut{\rule[-1ex]{0pt}{0pt}} % "bottom" strut
+\newcommand{\TBstrut}{\Tstrut\Bstrut} % top&bottom struts
+
 \title{Syntactic expectations modulate pragmatic interpretations of generic sentences}
  
 \author{{\large \bf Michael Henry Tessler (tessler@mit.edu)} \\
@@ -481,14 +485,14 @@ If participants only read that ``Elephants live in Africa'', they tended to infe
 Crucially, if participants saw that the sentence had a conjunction (``Elephants live in Africa and''), their inferences about the implied prevalence of living in Africa was in between the two others (Figure \ref{fig:expt3}).
 
 \begin{table*}[!htb]
-\small\addtolength{\tabcolsep}{-5pt}
-\begin{tabular*}{\textwidth}{p{4cm}p{7cm}p{7cm}}
+\small\addtolength{\tabcolsep}{-5pt}\renewcommand{\arraystretch}{1.1}
+\begin{tabular*}{\textwidth}{p{5.5cm}p{6.5cm}p{6cm}}
 \hline
-Property & Mutually Exclusive (ME) & Non-Mutually Exclusive (NME) \\ \hline
-ascribe to Cabooism & ascribe to Daithism & pray three times a day \\ 
+Property & Mutually Exclusive (ME) & Non-Mutually Exclusive (NME) \TBstrut\\ \hline
+ascribe to Cabooism & ascribe to Daithism & pray three times a day \Tstrut\\ 
 live on the continent of Caro & live on the continent of Este & graze on the tall grasses \\ 
-have territories at the tops of tall mountains & have territories at the bottom of deep canyons & watch over the low-lying regions during the day \\ 
-plant fujusi & plant soroneeks & spray their fields with a naturally-occurring fertilizer \\ 
+have territories at tops of tall mountains & have territories at bottom of deep canyons & watch over low-lying regions during the day \\ 
+plant fujusi & plant soroneeks & spray fields with naturally-occurring fertilizer \\ 
 build nests in gluers & build nests in droops & store tree-bark in them for safe keeping \\ 
 are stup-herders & are fishermen & sing songs to the stups to help them relax \\ 
 have long wings & have short wings & have sharp claws \\ 
@@ -496,8 +500,8 @@ wear wutsats around their heads & wear krevnors around their heads & carry stick
 chew on xorfun bark & chew on tunkel bark & jump up and down in circles \\ 
 carry their young in guklags & carry their young in trullets & are very protective \\ 
 are part of the Tinnoclan & are part of the Farzaguild & sell their baskets in the Warfi marketplace \\ 
-hibernate in fallen logs & hibernate in the abandoned burrows of other animals & give birth twice a year \\ 
-has bumpy skin & has smooth skin & has a sour taste \\
+hibernate in fallen logs & hibernate in abandoned burrows of other animals & give birth twice a year \\ 
+has bumpy skin & has smooth skin & has a sour taste \Bstrut\\
 \hline
 \end{tabular*}
 \caption{Stimuli}
