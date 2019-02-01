@@ -251,32 +251,44 @@ These inferences are robust to a variety of different prevalence prior distribut
 %We test this prediction in a generic interpretation study using mutually exclusive (ME) and non mutually exclusive (NME) properties (Expt. 1). 
 
 \begin{figure}
-\centering
-	\begin{subfigure}[b]{0.75\columnwidth}
-	\centering
-    \begin{tikzpicture}[sibling distance=0pt]
-	        \Tree [.S [.NP  elephants ]
-	                  [.VP [.VP \edge[roof]; {live in Africa} ]
-	                       	[.Conj and ] 
-				\edge[dashed]; [.VP  \edge[dashed]; \emph{eat bugs}
-				] ] ]
+  \definecolor{darkgreen}{RGB}{0,100,0}
+    \definecolor{lightgreen}{RGB}{144,238,144}
+\tikzset{sibling distance=-3pt, level distance=16pt}
+  \centering
+\scriptsize
+\begin{tabular}{cc}
+  \hspace{-0.25cm}
+ \begin{tikzpicture}
+	        \Tree [.S [.NP \edge[roof]; elephants ]
+	                  [.VP [.V live ] [.PP [.P in ] [.NP [.N Africa ] \edge[color=gray, style=dashed]; [.{\textcolor{gray}{RC}} \edge[color=gray, style=dashed, roof]; {\textcolor{gray}{where there are bugs}} ] ] ] ] ]
+                              \end{tikzpicture}
+&\hspace{-1.25cm}
+ \begin{tikzpicture}[sibling distance=0pt]
+	        \Tree [.{\textcolor{gray}{S}} \edge[color=gray]; [.S [.NP \edge[roof]; elephants ]
+                [.VP [.V live ] [.PP [.P in ] [.NP \edge[roof]; Africa ] ] ] ]
+                \edge[color=gray];
+                [.{\textcolor{gray}{SBAR}} \edge[color=gray];  \textcolor{gray}{because} \edge[color=gray]; [.{\textcolor{gray}{S}} \edge[color=gray,style=dashed, roof]; {\textcolor{gray}{it is hot}} ] ] ]
+                              \end{tikzpicture}
+  \\
+    \hspace{-0.5cm}
+      \begin{tikzpicture}[sibling distance=0pt]
+	        \Tree [.S [.NP \edge[roof]; elephants ]
+	                  [.VP [.V live ] [.PP [.P in ]
+	                       	[.NP [.NP Africa ] 
+                                 \edge[color=darkgreen]; [.\textcolor{darkgreen}{Conj} \textcolor{darkgreen}{and} ]
+		                       	\edge[color=lightgreen, style=dashed]; [.\textcolor{lightgreen}{NP}  \edge[color=lightgreen, style=dashed, roof]; \textcolor{lightgreen}{Asia} ]] ] ]]
 	\end{tikzpicture}
-	    \caption{Parse 1}
-\end{subfigure}%
-
-\begin{subfigure}[t]{0.75\columnwidth}
-\centering
-	\begin{tikzpicture}[sibling distance=0pt]
-	        \Tree [.S [.NP  elephants ]
-	                  [.VP [.V \edge[roof]; {live in} ]
-	                       	[.NP [.NP Africa ]
-					[.Conj and ]
-		                       	\edge[dashed]; [.NP  \edge[dashed]; \emph{Asia} ]] ] ]]
-\end{tikzpicture}
-    \caption{Parse 2}
-   \end{subfigure}
+    & \hspace{-1cm}
+\begin{tikzpicture}[sibling distance=0pt]
+	        \Tree [.S [.NP \edge[roof]; elephants ]
+	                  [.VP [.VP \edge[roof]; {live in Africa} ]
+                               \edge[color=darkgreen]; [.\textcolor{darkgreen}{Conj} \edge[color=darkgreen]; \textcolor{darkgreen}{and} ] 
+				\edge[color=lightgreen, style=dashed]; [.\textcolor{lightgreen}{VP}  \edge[color=lightgreen, style=dashed, roof]; \textcolor{lightgreen}{eat bugs}
+				] ] ]
+                              \end{tikzpicture}
+  \end{tabular}
    
-\caption{Incremental syntactic trees corresponding to ``Elephants live in Africa and''}
+\caption{Incremental parse trees and syntactic expectations for upcoming conjunct properties in generic predication.  The string prefix ``Elephants live in Africa\ldots'' is compatible with a variety of continuations, including the four listed above.  The next word, ``\textcolor{darkgreen}{and}'', rules out continuations like those the top row (depicted in gray) and sharpens expectations around a conjunct at some structural level (depicted in light green).  Probabilistic renormalization implies that the probability of an upcoming conjunct mutually exclusive with the first conjunct is increased when ``and'' is encountered, driving the strong incremental predictions depicted in Figure~\ref{fig:incremental}.}
 \label{fig:trees}
 \end{figure}
 
