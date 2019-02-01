@@ -71,6 +71,8 @@
 \newcommand\Bstrut{\rule[-1ex]{0pt}{0pt}} % "bottom" strut
 \newcommand{\TBstrut}{\Tstrut\Bstrut} % top&bottom struts
 
+\newcommand{\key}[1]{\emph{#1}}
+
 %\title{Syntactic expectations modulate pragmatic interpretations of generic sentences}
 %\title{The structure of prior knowledge and syntax in generic language understanding}
 \title{Incremental, non-monotonic understanding of conjunctive generic sentences}
@@ -119,52 +121,15 @@ semantics; pragmatics; incremental processing; generics
 
 
 Much of what we come to learn about the world comes not from direct experience but from knowledge conveyed to us from others, often in the form of linguistic utterances. 
-``Elephants eat 300 pounds of a food in a day'' succinctly conveys information that extends beyond any particular moment in time or space (e.g., it could apply to any elephant, any day of the week). 
+``Elephants eat 300 pounds of a food in a day'' succinctly conveys information extending beyond any particular moment in time or space (e.g., it could apply to any elephant, any day of the week). 
 Utterances that communicate generalizations are called \emph{generic} utterances \cite{Carlson1977, genericBook}, and they are the foremost case study of rich, abstract knowledge conveyed in simple utterances \cite{Gelman2009}.
 
-Generics are rife with philosophical puzzles that make it difficult to develop a unified, formal theory of their meaning \cite<for useful reviews, see:~>{genericBook, Nickel2016}.
-One largely understudied puzzle concerns how generics combine.
-To appreciate the complexity, consider the null hypothesis that generics to mean something analogous to a majority quantifier like \emph{most} or \emph{all} (e.g., ``Most elephants eat 300 pounds of food in day'').
-How can such an account treat a generic about a conjunctive  property like ``Elephants live in Africa and Asia''? 
-No elephant actually lives on both continents; instead, the sentence should be understood as ``Elephants live in Africa, and elephants live in Asia'', but this is impossible if each individual generic sentence means that the majority hold the property \cite<i.e., it is impossible for more than half of elephants to live in Africa and more than half of elephants to live in Asia;>{Nickel2008}.
-This phenomenon is clearly the result of the interaction among the property: Learning about only one of the properties (e.g., ``Wugs live in Africa'') intuitively still conveys that most or all have the property. 
+Generics are rife with philosophical puzzles that make it difficult to develop a unified, formal theory of their meaning \cite<for useful reviews, see:~>{genericBook, Nickel2016}.  One largely understudied puzzle concerns how generic predications combine.  To appreciate the complexity, consider the null hypothesis that generics convey a \key{prevalence} analogous to that conveyed by a majority quantifier like \emph{most} or \emph{all} (e.g., ``Most elephants eat 300 pounds of food in day'').  How can such an account treat a generic involving a conjunctive predication like ``Elephants live in Africa and Asia''?  No elephant actually lives on both continents; instead, the sentence should be understood as ``Elephants live in Africa, and elephants live in Asia'', but this is impossible if each individual generic sentence means that the majority hold the property \cite<i.e., it is impossible for more than half of elephants to live in Africa and more than half of elephants to live in Asia;>{Nickel2008}.  In this case, the prevalence required for endorsement of a generic involving a conjunctive predication seems more lax than if only one of conjuncts were mentioned: ``Wugs live in Africa'' intuitively still conveys that most or all wugs live in Africa.
 %\mh{Collective interpretation of ``all'', ``most'' doesn't run into the issues?}
 
-The puzzle of understanding conjunctive generic sentences deepen when one considers that actual linguistic input is processed incrementally \cite<e.g.,>{Altmann1999}: Listeners may start forming expectations about the intended meaning before the speaker finishes their sentence \cite<e.g.,>{rohde2011anticipating}.. 
-For conjunctive generics about mutually exclusive properties,  incrementality in language understanding would imply non-monotonic reasoning: First, a listener believes that all elephants live in Africa (e.g., when they only hear that ``Elephants live in Africa''), and later believes that roughly half live in Africa (when the sentence completes ``...and Asia'').
-Furthermore, a strong view of incrementality would predict intermediate degrees of belief (in how many elephants live in Africa) at the point of the sentence where a conjunct is introduced (at the ``and''). 
-However, it is possible that human incremental processing mechanisms can only operate on meaningful content words, not function words like ``and''; such a theory would predict any interpretative difference between ``Elephants live in Africa'' and ``Elephants live in Africa and''. 
+The puzzle of understanding conjunctive generic sentences deepen when one considers that actual linguistic input is processed incrementally \cite<e.g.,>{Altmann1999}: Listeners may start forming expectations about the intended meaning before the speaker finishes their sentence \cite<e.g.,>{rohde2011anticipating}.  For conjunctive generics about mutually exclusive properties, strongly incremental language understanding might predict non-monotonic interpretation updates: after the sentence prefix ``Elephants live in Africa\ldots'', a comprehender might infer a higher prevalence than after hearing the sentence completion``\ldots and Asia''.  And if such non-monotonic updates occur, what types of linguistic input trigger them?  
 
-% but recent progress made been in developing a computational account for the meaning of generics \cite{Tessler2019:genLang}.
-
-%Recent progress had been made, however, in developing a computational account for the meaning of generic langauge
-
-%Understanding how generic language updates beliefs holds the key to understanding how young children build rich, intuitive theories \cite{Gelman2009}. 
-
-%\mh{MH: don't attack cohen; instead stay at the level of the logical puzzle}
-%One virtue of having a computational model of generic language is that it can make quantitative predictions about human behavioral data.
-
-%\mh{incremental syntactic processes requires meaningful chunks}
-
-
-%The sentence ``Robins lay eggs'' is true despite the property only applying to female robins, yet the same logic does not make ``Robins are female'' a true or felicitous utterance. 
-
-
-%Crucially, this theory posits that the meaning of a generic is uncertain one which can be updated as more information is available.
-
-%\mh{
-%	we know XYZ, however it's an open question whether Z or Z'.
-%	- incremental interpretation as one way in which we explore.
-%	- right before expt. Model + Eq. 3 would imply X, but the facts of the world could be different.
-%}
-
-
-
-Recently, a computational model of generic language was proposed that makes quantitative predictions about human behavioral data \cite{Tessler2019:genLang}.
-In addition to making quantitative predictions, a computational language understanding model can integrate rather seamlessly with probabilistic models of syntactic processing \cite{Levy2008} and generate predictions about incremental understanding.
-In this paper, we do just this. 
-We test the novel predictions of this model in two behavioral experiments that probe listeners' understanding of conjunctive generic sentences at different points in a sentence, analogous to gating paradigms in psycholinguistics \cite{Grosjean1980}.
-We find that the strongest view of incremental processing is supported.
+In this paper we demonstrate and empirically test two predictions about generic interpretation that address these puzzles.  The first prediction derives from \cite{Tessler2019:genLang}'s model of generics as involving probabilistic  vague language interpretation.  This model predicts that the interpretation of conjoined generic predications depends on prior beliefs about the relationship between the predicated properties in the real world.  When comprehenders believe the properties are likely to be mutually incompatible (as in ``live in Africa and Asia''), they infer lower prevalence than when the properties are compatible.  Second, when this model is integrated with expectation-based probabilistic theories of syntactic processing \cite{hale:2001,Levy2008}, it predicts that comprehenders update their beliefs about property prevalence not just when encountering a second, conjoined property, but immediately upon encountering evidence that a second, conjoined property is likely to be forthcoming.  We test these predictions in two behavioral experiments that probe listeners' understanding of conjunctive generic sentences at different points mid-sentence, analogous to gating paradigms in psycholinguistics \cite{Grosjean1980}.  Our data confirm both these predictions, suggesting that generic language interpretation interacts jointly with world knowledge and strongly incremental syntactic processing according to principles of probabilistic inference under uncertainty.
  
 %Here, we combine a recent model of generic language understanding  \cite{Tessler2019:genLang} with an incremental parsing mechanism to begin to form beliefs about a speaker's intended meaning before the speaker has finished speaking.
 %The basic, non-incremental model understands ``Elephants live in Africa and Asia” as meaning that some elephants live in Africa and that different ones live in Asia, in the case where listeners have prior knowledge suggesting against the existence of elephants that live on both continents (\emph{international elephants}).
@@ -225,8 +190,9 @@ We find that the strongest view of incremental processing is supported.
 \end{figure*}
 
 We extend a model for interpreting generics to incorporate an incremental processing mechanism that allows a listener to understand partial utterances.
-The original model of \citeA{Tessler2019:genLang} interprets a generic utterance predicating a property of a category (``Elephants eat 300 pounds of food in a day'') as meaning that the \emph{prevalence} $x$ (or probability) of the property given the category---$P($eats 300 lb. of food in a day$\mid$ is an elephant$)$---is greater than an \emph{a priori} uncertain threshold $\theta$.
+The original model of \citeA{Tessler2019:genLang} interprets a generic utterance predicating a property of a category (``Elephants eat 300 pounds of food in a day'') as meaning that the prevalence $x$ (or probability) of the property given the category---$P($eats 300 lb. of food in a day$\mid$ is an elephant$)$---is greater than an \emph{a priori} uncertain threshold $\theta$.
 The literal meaning of the generic---an uncertain threshold function, with uniform uncertainty over the threshold $P(\theta$)---combines with a listener's prior knowledge about the prevalence of the feature $P(x)$ within a relevant set of alternative categories (e.g., other animals) to compute a posterior distribution over prevalence $x$:
+%
 \begin{equation}
 P(x \mid u) = \int_{\theta} P(x, \theta \mid u)  d\theta \propto P(x) \cdot P(\theta) \cdot \delta_{\denote{u}(x, \theta)} 
 \label{eq:L0}
@@ -236,14 +202,24 @@ P(x \mid u) = \int_{\theta} P(x, \theta \mid u)  d\theta \propto P(x) \cdot P(\t
 
 
 Equation \ref{eq:L0} is a model of a Bayesian listener interpreting a generic utterance.
-To interpret a generic about a conjunctive predicate such as ``Elephants live in Africa and Asia'', we assume the sentence gets parsed into:\footnote{
-It is also possible to parse the sentence as:
- $[G_\theta i. \textnormal{ elephants}(i) \to \textnormal{live\_in}(\textnormal{Africa} \land \textnormal{Asia})]$, though in the case of mutually exclusive predicates (e.g., ``lives in Africa'' and ``lives in Asia''), this parse would yield a false statement. It is not obvious that the two parses make different predictions for non-mutually exclusive predicates (e.g., ``lives in Africa and eat bugs''), and so we assume the more encompassing parse in Eq. \ref{eq:sem}
-}
+%
+% To interpret a generic about a conjunctive predicate such as ``Elephants live in Africa and Asia'', we assume the sentence gets parsed into:\footnote{
+% It is also possible to parse the sentence as:
+%  $[G_\theta i. \textnormal{ elephants}(i) \to \textnormal{live\_in}(\textnormal{Africa} \land \textnormal{Asia})]$, though in the case of mutually exclusive predicates (e.g., ``lives in Africa'' and ``lives in Asia''), this parse would yield a false statement. It is not obvious that the two parses make different predictions for non-mutually exclusive predicates (e.g., ``lives in Africa and eat bugs''), and so we assume the more encompassing parse in Eq. \ref{eq:sem}
+% }
+% \begin{equation}
+% \begin{split}
+% [G_\theta i. \textnormal{ elephants}(i)& \to \textnormal{live\_in}(\textnormal{Africa})] \land \\
+% [G_\theta i. \textnormal{ elephants}(i)& \to \textnormal{live\_in}(\textnormal{Asia})] 
+%
+To interpret a generic with a conjunctive predicate such as ``Elephants live in Africa and Asia'', we assume the semantic representation (see \citeA{Nickel2008} for supporting arguments):
+% \footnote{It is also possible to parse the sentence as:
+%  $[G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Africa} \land \textnormal{Asia})]$, though in the case of mutually exclusive predicates (e.g., ``lives in Africa'' and ``lives in Asia''), this parse would yield a false statement. It is not obvious that the two parses make different predictions for non-mutually exclusive predicates (e.g., ``lives in Africa and eat bugs''), and so we assume the more encompassing parse in Eq. \ref{eq:sem}
+% }
 \begin{equation}
 \begin{split}
-[G_\theta i. \textnormal{ elephants}(i)& \to \textnormal{live\_in}(\textnormal{Africa})] \land \\
-[G_\theta i. \textnormal{ elephants}(i)& \to \textnormal{live\_in}(\textnormal{Asia})] 
+[G_\theta x. \textnormal{ elephant}(x)& \to \textnormal{live\_in}(\textnormal{Africa})] \land \\
+[G_\theta x. \textnormal{ elephant}(x)& \to \textnormal{live\_in}(\textnormal{Asia})] 
 \end{split}
 \label{eq:sem}
 \end{equation}
