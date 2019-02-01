@@ -238,12 +238,12 @@ P(x \mid u) = \int_{\theta} P(x, \theta \mid u)  d\theta \propto P(x) \cdot P(\t
 Equation \ref{eq:L0} is a model of a Bayesian listener interpreting a generic utterance.
 To interpret a generic about a conjunctive predicate such as ``Elephants live in Africa and Asia'', we assume the sentence gets parsed into:\footnote{
 It is also possible to parse the sentence as:
- $[G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Africa} \land \textnormal{Asia})]$, though in the case of mutually exclusive predicates (e.g., ``lives in Africa'' and ``lives in Asia''), this parse would yield a false statement. It is not obvious that the two parses make different predictions for non-mutually exclusive predicates (e.g., ``lives in Africa and eat bugs''), and so we assume the more encompassing parse in Eq. \ref{eq:sem}
+ $[G_\theta i. \textnormal{ elephants}(i) \to \textnormal{live\_in}(\textnormal{Africa} \land \textnormal{Asia})]$, though in the case of mutually exclusive predicates (e.g., ``lives in Africa'' and ``lives in Asia''), this parse would yield a false statement. It is not obvious that the two parses make different predictions for non-mutually exclusive predicates (e.g., ``lives in Africa and eat bugs''), and so we assume the more encompassing parse in Eq. \ref{eq:sem}
 }
 \begin{equation}
 \begin{split}
-[G_\theta x. \textnormal{ elephants}(x)& \to \textnormal{live\_in}(\textnormal{Africa})] \land \\
-[G_\theta x. \textnormal{ elephants}(x)& \to \textnormal{live\_in}(\textnormal{Asia})] 
+[G_\theta i. \textnormal{ elephants}(i)& \to \textnormal{live\_in}(\textnormal{Africa})] \land \\
+[G_\theta i. \textnormal{ elephants}(i)& \to \textnormal{live\_in}(\textnormal{Asia})] 
 \end{split}
 \label{eq:sem}
 \end{equation}
@@ -334,7 +334,7 @@ We test this prediction in Expt. 2 using a gating paradigm in the spirit of \cit
   \centering
     \includegraphics[width=0.5\textwidth]{incremental}
 %    \vspace{-1cm}
-  \caption{A model that incorporates syntactic expectations at the level of individual words predicts intermediate mutual-exclusivity inferences part-way through the conjunction (at ``and''), whereas a model that waits for content-words (e.g., ``Asia'') to begin to understand the utterances does not show a difference in expected prevalence at the word ``and.''
+  \caption{A model that incorporates syntactic expectations at the level of individual words (\emph{strong incremental}) predicts intermediate mutual-exclusivity inferences part-way through the conjunction (at ``and''), whereas a model that waits for content-words (\emph{weak incremental}) to begin to understand the utterances does not show a difference in expected prevalence at the word ``and.''
 %  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
   }
   \label{fig:incremental}
@@ -596,7 +596,7 @@ When they read that ``Elephants live in Africa and Asia'', they tended to infer 
 Note that participants, on average, infer the prevalence is higher in this condition than 50\% for \emph{Africa}. 
 This is likely the result of asking about ``some other place'', which is substantially less specified that asking about a particular mentioned property.  Still, many participants responded exactly 50/50.
 }
-Finally, as predicted by a strong version of incremental processing, participants began to anticipate a mutually-exclusive conjunct when only the word ``and'' was mentioned, as evidenced by their implied prevalence ratings being substantially less for the ``..live in Africa and\_\_'' condition than the ``live in Africa'' condition (posterior mean estimate and 95\% credible interval: $\beta = -0.08 (-0.13, -0.04)$.
+Finally, as predicted by a strong version of incremental processing, participants began to anticipate a mutually-exclusive conjunct when only the word ``and'' was mentioned, as evidenced by their implied prevalence ratings being substantially less for the ``..live in Africa and\_\_'' condition than the ``live in Africa'' condition (posterior mean estimate and 95\% credible interval: $\beta = -0.08 (-0.13, -0.04)$).
 In addition, these ratings were substantially higher than when the full conjunctive predicate was present ``..live in Africa and Asia'' ($\beta = 0.17 (0.12, 0.23)$  (Figure \ref{fig:expt3}).
 Thus, we find that the participants' implied prevalence ratings of how many elephants lived in Africa monotonically decreased as a function of how many words of the conjunctive predicate they were allowed to see. 
 These results suggest that listeners begin to draw pragmatic interpretations of generics before the end of the sentence and even in the absence of additional content words. 
