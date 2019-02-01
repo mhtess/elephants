@@ -71,7 +71,8 @@
 \newcommand\Bstrut{\rule[-1ex]{0pt}{0pt}} % "bottom" strut
 \newcommand{\TBstrut}{\Tstrut\Bstrut} % top&bottom struts
 
-\title{Syntactic expectations modulate pragmatic interpretations of generic sentences}
+%\title{Syntactic expectations modulate pragmatic interpretations of generic sentences}
+\title{The structure of prior knowledge and syntax in generic language understanding}
  
 \author{{\large \bf Michael Henry Tessler (tessler@mit.edu)} \\
   Department of Brain and Cognitive Sciences, MIT \\
@@ -212,13 +213,12 @@ We find that the strongest view of incremental processing is supported.
 
 \section{Computational Model}
 
-\begin{figure*}[h]
+\begin{figure*}[t]
   \centering
-    \includegraphics[width=0.8\textwidth]{model_1}
+    \includegraphics[width=1\textwidth]{model}
 %    \vspace{-1cm}
-  \caption{
-  \red{Replace with figures of joint distributions, plus ``hard-core incremental'' predictions}
-  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
+  \caption{\red{replace X-axis labels for B ``live in Africa'', ``and'', ``Asia'' (like a time-course)? IMPROVE CAPTION}Model behavior. A: Correlated priors reflected in the joint probability distribution over two features results in a mutual exclusitivity inference given a conjunctive generic (``Elephants live in Africa and Asia''). B: The mutual exclusivity inference holds for priors of different shapes, and never holds if the prior knowledge about the two features is uncorrelated. C: Fully incremental model predicts intermediate inferences part-way through the conjunction (at ``and'').
+%  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
   }
   \label{fig:model}
 \end{figure*}
@@ -261,6 +261,16 @@ For a variety of different prevalence prior distributions, the model interprets 
 What happens next depends upon the correlational structure of the prevalence prior: If the listener has prior knowledge suggesting the properties (living in Africa, living in Asia) are mutually exclusive, they interpret the next part of the utterance (``...and Asia'') as indicating that some (perhaps half) of elephants live in Africa and other ones live in Asia. 
 Without this correlation in the prior, the model ends up believing that most or all elephants have both properties. 
 We test this prediction in a generic interpretation study using mutually exclusive (ME) and non mutually exclusive (NME) properties (Expt. 1). 
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{incremental}
+%    \vspace{-1cm}
+  \caption{\red{replace X-axis labels for B ``live in Africa'', ``and'', ``Asia'' (like a time-course?)} Fully incremental model predicts intermediate inferences part-way through the conjunction (at ``and'').
+%  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
+  }
+  \label{fig:model}
+\end{figure}
 
 When processing a conjunctive phrase, listeners may begin to form expectations about the complete utterance even before the sentence is over. 
 For example, when a speaker reaches the word ``and'' in ``Elephants live in Africa and'', she has two syntactically distinct options available to her when completing the sentence: She could continue with a noun phrase (e.g., ``and Asia'') or a verb phrase (e.g., ``and eat bugs''; Figure \ref{fig:trees}).
@@ -338,7 +348,7 @@ We test this prediction in Expt. 2 using a gating paradigm in the spirit of \cit
 \section{Experiments}
 
 We design two experiments to test the mutual exclusivity (ME) and incremental predictions of the model. 
-The first is a pilot experiment that tests the ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia as well as validates the gating procedure we will employ in the main experiment. 
+The first tests the ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia as well as validates the gating procedure we will employ in the main experiment. 
 The main experiment is a pre-registered study that uses the gating paradigm to test the fine-grained incremental predictions of the model.
 
 %; we compare interpretations for these conjunctive generics with those of conjunctive generics about non-mutually exclusive (NME) properties (e.g., ``Elephants live in Africa and eat 300 lb. of food in a day''). 
@@ -354,7 +364,7 @@ The main experiment is a pre-registered study that uses the gating paradigm to t
   \label{fig:design}
 \end{figure*}
 
-\subsection{Pilot experiment}
+\subsection{Experiment 1: Mutual exclusivity inference}
 
 %\subsubsection{Methods}
 \subsubsection{Participants}
@@ -389,28 +399,28 @@ In addition to the experimental items, there were 14 filler chapters, which conc
 %In the \emph{irrelevant conjunction} condition, the continuation was a property that was unrelated to the property on the preceding page (e.g., ``...and follow a strict code of laws.''). 
 %In addition, we had 5 filler trials which appeared similar to the \emph{irrelevant conjunction} cases.
 
-\begin{table*}[t]
-\small\addtolength{\tabcolsep}{-5pt}\renewcommand{\arraystretch}{1.1}
-\begin{tabular*}{\textwidth}{p{5.5cm}p{6.5cm}p{6cm}}
-\hline
-Property & Mutually Exclusive (ME) & Non-Mutually Exclusive (NME) \TBstrut\\ \hline
-ascribe to Cabooism & ascribe to Daithism & pray three times a day \Tstrut\\ 
-live on the continent of Caro & live on the continent of Este & graze on the tall grasses \\ 
-have territories at tops of tall mountains & have territories at bottom of deep canyons & watch over low-lying regions during the day \\ 
-plant fujusi & plant soroneeks & spray fields with naturally-occurring fertilizer \\ 
-build nests in gluers & build nests in droops & store tree-bark in them for safe keeping \\ 
-are stup-herders & are fishermen & sing songs to the stups to help them relax \\ 
-have long wings & have short wings & have sharp claws \\ 
-wear wutsats around their heads & wear krevnors around their heads & carry sticks with them \\ 
-chew on xorfun bark & chew on tunkel bark & jump up and down in circles \\ 
-carry their young in guklags & carry their young in trullets & are very protective \\ 
-are part of the Tinnoclan & are part of the Farzaguild & sell their baskets in the Warfi marketplace \\ 
-hibernate in fallen logs & hibernate in abandoned burrows of other animals & give birth twice a year \\ 
-has bumpy skin & has smooth skin & has a sour taste \Bstrut\\
-\hline
-\end{tabular*}
-\caption{Stimuli used in Experiments 1 \& 2. }
-\end{table*}
+%\begin{table*}[t]
+%\small\addtolength{\tabcolsep}{-5pt}\renewcommand{\arraystretch}{1.1}
+%\begin{tabular*}{\textwidth}{p{5.5cm}p{6.5cm}p{6cm}}
+%\hline
+%Property & Mutually Exclusive (ME) & Non-Mutually Exclusive (NME) \TBstrut\\ \hline
+%ascribe to Cabooism & ascribe to Daithism & pray three times a day \Tstrut\\ 
+%live on the continent of Caro & live on the continent of Este & graze on the tall grasses \\ 
+%have territories at tops of tall mountains & have territories at bottom of deep canyons & watch over low-lying regions during the day \\ 
+%plant fujusi & plant soroneeks & spray fields with naturally-occurring fertilizer \\ 
+%build nests in gluers & build nests in droops & store tree-bark in them for safe keeping \\ 
+%are stup-herders & are fishermen & sing songs to the stups to help them relax \\ 
+%have long wings & have short wings & have sharp claws \\ 
+%wear wutsats around their heads & wear krevnors around their heads & carry sticks with them \\ 
+%chew on xorfun bark & chew on tunkel bark & jump up and down in circles \\ 
+%carry their young in guklags & carry their young in trullets & are very protective \\ 
+%are part of the Tinnoclan & are part of the Farzaguild & sell their baskets in the Warfi marketplace \\ 
+%hibernate in fallen logs & hibernate in abandoned burrows of other animals & give birth twice a year \\ 
+%has bumpy skin & has smooth skin & has a sour taste \Bstrut\\
+%\hline
+%\end{tabular*}
+%\caption{Stimuli used in Experiments 1 \& 2. }
+%\end{table*}
 
 
 \subsubsection{Procedure}
@@ -457,6 +467,7 @@ Hearing only that ``Elephants live in Africa\_\_'' led listeners to believe that
 The same is not true for properties that are not construed as mutually exclusive (Figure \ref{fig:expt2} right-most bars), where the generic is thought to apply strongly to both properties. 
 In addition, when answering a question about an unmentioned property, participants rated the prevalence of the mutually exclusive property as close to 0\% (left-most green bar) whereas a non-mutually exclusive property was rated as somewhat prevalent (third green bar).
 The results replicate intuitions about what would one expect upon hearing only that ``Elephants live in Africa'' using an interrupting question and show that the results cannot be attributed to the very act of being asked about two properties mentioned in a conjunctive generic sentence.
+\mh{should i run a regression model here or is it unncessary?}
 
 
 % (posterior mean estimate and 95\% credible interval: $\beta = -2.11 [-1.2, -3.3]$; Figure \ref{fig:expt1}).  
@@ -502,14 +513,14 @@ The results replicate intuitions about what would one expect upon hearing only t
   \centering
     \includegraphics[width=0.5\textwidth]{expt2_summary}
 %    \vspace{-1cm}
-  \caption{Experiment 2 results.  Participants rate prevalence for mentioned property (\% live in Africa) and ``Property 2'', either the mutually exclusive property (left two bars) or non-mutually exclusive property (right two bars). ``\_\_'' indicates the question appears mid-sentence.}
+  \caption{Experiment 1 results.  Participants rate prevalence for mentioned property (\% live in Africa) and ``Property 2'', either the mutually exclusive property (left two bars) or non-mutually exclusive property (right two bars). ``\_\_'' indicates the question appears mid-sentence. Error-bars denote bootstrapped 95\% confidence intervals.}
   \label{fig:expt2}
   \end{figure}
 
 
-\subsection{Main experiment}
+\subsection{Experiment 2: Strong incrementality}
 
-In the pilot experiment, we demonstrated that the mutually-exclusive inference effects can be measured using a gating paradigm wherein participants are queried for their beliefs part-way through a sentence. 
+In experiment 1, we demonstrated that the mutually-exclusive inference effects can be measured using a gating paradigm wherein participants are queried for their beliefs part-way through a sentence. 
 Here, we exploit this paradigm to test the strong incremental processing predictions of the model, wherein syntactic expectations can modulate the interpretations of generic sentences in a fine-grained manner. 
 
 \subsubsection{Participants}
@@ -521,7 +532,8 @@ Sample size, participant exclusion criteria, and primary planned analyses for th
 
 \subsubsection{Materials and procedure}
 
-The critical trial materials were the same as those used in the pilot experiment; the fillers were modified to introduce page breaks immediately before and immediately after conjunctions (the word ``and''). 
+The critical trial materials were the same as those used in experiment 1; the fillers were modified to introduce page breaks immediately before and immediately after conjunctions (the word ``and''). 
+\mh{we dropped 3 stimuli from expt1 to 2 because they were biological parts that didn't compose well (?) e.g., ``have six wings and seven wings'' which i think you would really mark explicitly ``have both six wings and seven wings'', or something... they seemed odd to me}
 We did this in order to raise participants' expectations that a sentence might be broken at a conjunction. 
 In addition, we used additional examples of Condition 1B (``live in Africa and Asia.'') to raise participants' expectations about of ME continuations.
 Half of these filler trials had page breaks immediately before the ``and'' and half immediately after.
@@ -537,7 +549,7 @@ The experiment can be viewed at \url{https://tinyurl.com/elephants-cogsci}.
   \centering
     \includegraphics[width=0.5\textwidth]{expt3_summary}
 %    \vspace{-1cm}
-  \caption{Experiment 3 results. Participants are interrupted at various stages of the sentence (either after \emph{Africa}, \emph{and}, or \emph{Asia}) to be asked about the prevalence of \emph{living in Africa} and \emph{living in Asia}, or asked at the end of the sentence (right-most bars). When participants are interrupted before the second conjunct (\emph{Asia}), the sentence continues with a non-mutually exclusive property.}
+  \caption{Experiment 2 results. Participants are interrupted at various stages of the sentence (either after \emph{Africa}, \emph{and}, or \emph{Asia}) to be asked about the prevalence of \emph{living in Africa} and \emph{living in Asia}, or asked at the end of the sentence (right-most bars). When participants are interrupted before the second conjunct (\emph{Asia}), the sentence continues with a non-mutually exclusive property. Error-bars denote bootstrapped 95\% confidence intervals.}
     \label{fig:expt3}
   \end{figure}
   
@@ -600,9 +612,9 @@ It is also an open question what are listeners' baseline levels of syntactic exp
 
 
 
-\section{Acknowledgments}
-
-We thank Karen Gu for her assistance in stimuli creation and experiment implementation.
+%\section{Acknowledgments}
+%
+%We thank Karen Gu for her assistance in stimuli creation and experiment implementation.
 
 
 \bibliographystyle{apacite}
