@@ -3,7 +3,7 @@
 \usepackage[]{color} % use "amsart" instead of "article" for AMSLaTeX format
 \usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                     % ... or a4paper or a5paper or ... 
-\usepackage{apacite}
+\usepackage[notocbib]{apacite}
 %\usepackage{subfigure}
 %\usepackage{alltt}
 %\usepackage{etex}     
@@ -56,7 +56,7 @@ The puzzle of understanding conjunctive generic sentences deepens when one consi
 \end{wrapfigure}
 
 
-To explore the implications of these ideas, we extend a model for interpreting generic language to incorporate an incremental processing mechanism that allows a listener to understand partial utterances.
+To explore these ideas, we extend a model for interpreting generic language to incorporate an incremental processing mechanism that allows a listener to understand partial utterances.
 The original model of \citeA{Tessler2019:genLang} can already adjust the meaning of a generic utterance by reasoning about an underspecified threshold $\theta$.
 To interpret a generic about a conjunctive predicate such as ``Elephants live in Africa and Asia'', we assume the sentence gets parsed into: $[G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Africa})] \land [G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Asia})]$ (see \citeA{Nickel2008} for supporting arguments).
 The model can then interpret multiple generics in succession, using the posterior distribution over prevalence as the prior for the next utterance. 
@@ -127,7 +127,8 @@ These results support a strong view of incrementality, suggesting that listeners
 
 
 
-
+\begingroup
+\renewcommand{\section}[2]{}
 \bibliographystyle{apacite}
 
 \setlength{\bibleftmargin}{.125in}
@@ -144,6 +145,6 @@ These results support a strong view of incrementality, suggesting that listeners
 %\item $\denote{gen}(K) [F \land G]$
 %\item $\denote{gen}(K) [F] \land \denote{gen}(K) [G]$
 %\end{enumerate}
-
+\endgroup
 
 \end{document}
