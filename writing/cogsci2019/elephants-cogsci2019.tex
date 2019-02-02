@@ -288,7 +288,7 @@ These inferences are robust to a variety of different prevalence prior distribut
                               \end{tikzpicture}
   \end{tabular}
    
-\caption{Incremental parse trees and syntactic expectations for upcoming conjunct properties in generic predication.  The string prefix ``Elephants live in Africa\ldots'' is compatible with a variety of continuations, including the four listed above.  The next word, ``\textcolor{darkgreen}{and}'', rules out continuations like those the top row (depicted in gray) and sharpens expectations around a conjunct at some structural level (depicted in light green).  Probabilistic renormalization implies that an upcoming conjunct mutually exclusive with the first conjunct becomes more likely when ``and'' is encountered, driving the strong incremental predictions depicted in Figure~\ref{fig:incremental}.}
+\caption{Incremental parse trees and syntactic expectations for upcoming conjunct properties in generic predication.  The string prefix ``Elephants live in Africa\ldots'' is compatible with a variety of continuations, including the four listed above.  The next word, ``\textcolor{darkgreen}{and}'', rules out continuations like those the top row (depicted in gray) and sharpens expectations around a conjunct at potentially different structural levels (light green).  Probabilistic renormalization implies that an upcoming conjunct mutually exclusive with the first conjunct becomes more likely when ``and'' is encountered, driving the strong incremental predictions depicted in Fig.~\ref{fig:incremental}.}
 \label{fig:trees}
 \end{figure}
 
@@ -300,11 +300,11 @@ Each of these continuations would imply different inferences about the prevalenc
 }
 If listeners parse and interpret utterances incrementally at the level of individual words, then we would expect their inferences about the prevalence of elephants in Africa to represent a mixture of the inferences derived from these two possible continuations, which can be represented by conditional probabilities of the full utterance given the sentence fragment heard $f$:
 
-\vspace{-0.4cm}
+\vspace{-0.3cm}
 \begin{equation}
 P(x \mid f) = \sum_{u'} P(x \mid u') P(u' \mid f) 
 \label{eq:L0a}
-\vspace{-0.30cm}
+\vspace{-0.3cm}
 \end{equation}
 
 If, however, listeners do not derive incremental interpretations at each moment, but instead wait for meaningful pieces of an utterance (e.g., content words like \emph{Asia}) to compute interpretations, then we would not expect such an intermediate degree of interpretation: ``Elephants live in Africa and\ldots'' should mean the same thing as ``Elephants live in Africa\ldots'' (Fig.~\ref{fig:incremental}). 
@@ -352,8 +352,8 @@ We test this prediction in Expt.~2 using a gating paradigm in the spirit of \cit
 \section{Experiments}
 
 We design two experiments to test the mutual exclusivity (ME) and incremental predictions of the model. 
-The first tests the ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia; this experiment also serves to validate the gating procedure we will employ in the second experiment. 
-The second experiment is a pre-registered study that uses the gating paradigm to test the fine-grained incremental predictions of the model.
+Expt.~1 tests the ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia; this experiment also serves to validate the gating procedure we will employ in the second experiment. 
+Expt.~2 is a pre-registered study that uses the gating paradigm to test the fine-grained incremental predictions of the model.
 The experiments and full-list of materials can be viewed at \url{https://tinyurl.com/elephants-cogsci}.
 
 %; we compare interpretations for these conjunctive generics with those of conjunctive generics about non-mutually exclusive (NME) properties (e.g., ``Elephants live in Africa and eat 300 lb. of food in a day''). 
@@ -379,22 +379,24 @@ The study took about 10 minutes and participants were compensated \$1.50.
 
 \subsubsection{Materials}
 
-Participants read a storybook, consisting of several \emph{chapters} about aliens and animals on a far-away planet.
+Participants read a storybook, consisting of several chapters about aliens and animals on a far-away planet.
 % without any larger narrative (each chapter concerned different categories or characters).
-Each chapter contained a short paragraph of text presented across 2--4 screens, with participants having to click a button to ``turn the page'' (Figure \ref{fig:design}A).
-A chapter introduced one or a few novel categories (e.g., ``wugs'') or characters (e.g., ``Wint of the Mountains'') and semi-novel properties (e.g., ``live on the continent of Caro'').
-Chapters that were critical trials ended with a generic sentence about conjunctive properties, which differed only in whether the second property was mutually exclusive (ME) with the first (\emph{conjunct type}): ``Glippets live on the continent of Caro and \emph{on the continent of Este (ME) /  enjoy the sunshine there (NME).}''
+Each chapter contained a short paragraph of text presented across 2--4 screens, with participants having to click a button to ``turn the page'' (Fig.~\ref{fig:design}A).
+A chapter introduced one or a few novel categories (e.g., \emph{wugs}) and semi-novel properties (e.g., \emph{live on the continent of Caro}).
+Critical trial chapters ended with a generic sentence about conjunctive properties, which differed only in whether the second property was mutually exclusive with the first (\emph{conjunct type}): ``Glippets live on the continent of Caro and \emph{on the continent of Este} (ME) /  \emph{enjoy the sunshine there} (not mutually exclusive; NME).''
 
-The other content of the chapter helped to support the mutually exclusive interpretation of the properties, in the case that the properties were not \emph{ipso facto} mutually exclusive. For example: 
+The other content of the chapter supported the mutually exclusive interpretation of the properties, when the properties were not \emph{ipso facto} mutually exclusive. For example: 
 
+\vspace{-0.1cm}
 \begin{quote}
 \small
-Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders and \emph{fishermen} / \emph{incorporate stups into their religion}.
+Krens are a tribe of the aliens that live on the continent of Benli. Animals like stups, four-legged creatures with large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders and \emph{fishermen} / \emph{incorporate stups into their religion}.
 \end{quote}
+\vspace{-0.1cm}
 
 
 Conjunct type (ME~vs.~NME) was manipulated within-participants and within-items. 
-In addition to the experimental items, there were 14 filler chapters, which concerned similar content to the experimental chapter but which asked about properties that were described with explicit quantifiers such as \emph{most}, \emph{all}, or \emph{none}. 
+In addition to the critical items, there were 14 filler chapters, which concerned similar content to the critical chapter but which explicit quantifiers (\emph{most}, \emph{all}, or \emph{none}) to predicate properties of categories. 
 
 
 
@@ -432,7 +434,6 @@ In addition to the experimental items, there were 14 filler chapters, which conc
 %\caption{Stimuli used in Experiments 1 \& 2. }
 %\end{table*}
 
-The storybook consisted of 21 chapters, presented in a pseudo-random order for each participant. 
 
 \subsubsection{Procedure}
 Participants were told they would be reading a storybook and be asked questions at some point in each chapter. 
