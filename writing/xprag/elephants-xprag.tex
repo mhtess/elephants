@@ -42,7 +42,7 @@
 Generic statements convey generalizations about categories, but how generic predications should combine is unclear.
 ``Elephants live in Africa and Asia'' does not mean that individual elephants live on both continents; instead, the sentence should be understood as ``Elephants live in Africa, and elephants live in Asia'', but this is impossible if each individual generic sentence means that the majority hold the property \cite<i.e., it is impossible for more than half of elephants to live in Africa and more than half of elephants to live in Asia;>{Nickel2008}.  
 %In this case, the \emph{prevalence} required for endorsing a generic involving a conjunctive predication seems more lax than if only one of conjuncts were mentioned: ``Wugs live in Africa'' intuitively still conveys that most or all wugs live in Africa.
-The puzzle of understanding conjunctive generic sentences deepens when one considers that actual linguistic input is processed incrementally: Listeners ubiquitously form expectations about the intended meaning before the speaker finishes their sentence \cite<e.g.,>{tanenhaus1995integration}.  For conjunctive generics about mutually exclusive properties, strongly incremental language understanding might produce non-monotonic interpretation updates: after the sentence prefix ``Elephants live in Africa\ldots'', a comprehender might infer a higher prevalence than after hearing the sentence completion ``\ldots and Asia''. 
+The puzzle of understanding conjunctive generic sentences deepens when one considers that actual linguistic input is processed incrementally: Listeners ubiquitously form expectations about the intended meaning before the speaker finishes their sentence \cite<e.g.,>{tanenhaus1995integration}.  For conjunctive generics about mutually exclusive (ME) properties, strongly incremental language understanding might produce non-monotonic interpretation updates: after the sentence prefix ``Elephants live in Africa\ldots'', a comprehender might infer a higher prevalence than after hearing the sentence completion ``\ldots and Asia''. 
 %If such non-monotonic updates occur, what types of linguistic input trigger them?  
 
 \begin{wrapfigure}{r}{0.4\textwidth}
@@ -57,12 +57,12 @@ The puzzle of understanding conjunctive generic sentences deepens when one consi
 
 
 To explore the implications of these ideas, we extend a model for interpreting generic language to incorporate an incremental processing mechanism that allows a listener to understand partial utterances.
-The original model of \citeA{Tessler2019:genLang} can already flexibly adjust the meaning of a generic utterance by reasoning about an underspecified threshold $\theta$.
+The original model of \citeA{Tessler2019:genLang} can already adjust the meaning of a generic utterance by reasoning about an underspecified threshold $\theta$.
 To interpret a generic about a conjunctive predicate such as ``Elephants live in Africa and Asia'', we assume the sentence gets parsed into: $[G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Africa})] \land [G_\theta x. \textnormal{ elephants}(x) \to \textnormal{live\_in}(\textnormal{Asia})]$ (see \citeA{Nickel2008} for supporting arguments).
 The model can then interpret multiple generics in succession, using the posterior distribution over prevalence as the prior for the next utterance. 
-The model makes the prediction that for mutually exclusive properties, conjunctive generics will non-monotonically update beliefs about the prevalence of the feature in the target category. 
+The model makes the prediction that for ME properties, conjunctive generics will non-monotonically update beliefs about the prevalence of the feature in the target category. 
 
-When coupled with probabilistic syntactic expectations \cite{Levy2008}, the model predicts that when a comprehender encounters the conjunct ``and'', they will infer the prevalence of elephants in Africa as a mixture of the inferences derived from different possible continuations, if listeners parse and interpret utterances incrementally at the level of individual words.
+When coupled with probabilistic syntactic expectations \cite{Levy2008}, if listeners parse and interpret utterances incrementally at the level of individual words, the model predicts that when a comprehender encounters the conjunction ``and'', they will infer the prevalence of elephants in Africa as a mixture of the inferences derived from different possible continuations.
 If, however, listeners do not derive incremental interpretations at each moment, but instead wait for meaningful pieces of an utterance (e.g., content words like \emph{Asia}) to compute interpretations, then we would not expect such an intermediate degree of interpretation: ``Elephants live in Africa and\ldots'' should mean the same thing as ``Elephants live in Africa\ldots'' (Fig.~\ref{fig:incremental}). 
 
 %When processing a conjunctive phrase, listeners may form expectations about the complete utterance even before the sentence is over. 
@@ -83,9 +83,9 @@ If, however, listeners do not derive incremental interpretations at each moment,
 \end{figure}
 
 We design two experiments to test the mutual exclusivity (ME) and incremental predictions of the model. 
-The first experiment tests the ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia; this experiment also serves to validate the gating procedure we will employ in the second experiment. 
+The first experiment tests the ME predictions that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia; this experiment also serves to validate the gating procedure we employ in the second experiment. 
 The second experiment is a pre-registered study that uses the gating paradigm to test the fine-grained incremental predictions of the model.
-The experiments and full-list of materials can be viewed at \url{tinyurl.com/elephants-cogsci}
+The experiments and list of materials can be viewed at \url{tinyurl.com/elephants-cogsci}.
 
 %\begin{wrapfigure}{r}{0.5\textwidth}
 %\vspace{-1cm}
@@ -97,9 +97,9 @@ The experiments and full-list of materials can be viewed at \url{tinyurl.com/ele
 %  \label{fig:expt1}
 %\end{wrapfigure}
 
-Both experiments proceed by having participants read a storybook about aliens and animals on a far-away planet. Chapters of the book consist of a few sentence of text teaching about the category. Critical trials end with a conjunctive generic sentence (``Ks F and G''). Participants are asked to rate the \% of Ks with F and the \% of Ks with G using two slider bars ranging from 0\% to 100\%. Filler trials contain sentences using quantifiers \emph{all}, \emph{most}, and \emph{none} and participants are asked to rate the prevalence of the properties described with quantifiers. 
+Both experiments proceed by having participants read a storybook about creatures on a faraway planet. Chapters of the book consist of a few sentences teaching about the category. Critical trials end with a conjunctive generic sentence (``Ks F and G''). Participants are asked to rate the \% of Ks with F and the \% of Ks with G using two slider bars ranging from 0\% to 100\%. Filler trials contain sentences using quantifiers \emph{all}, \emph{most}, and \emph{none} and participants are asked to rate the prevalence of the properties described with quantifiers. 
 
-Expt. 1 contains four conditions, which are randomized within-participant and within-item. In two of the conditions, participants are asked about two mutually exclusive properties (e.g., living in Africa and Asia); in the other two, participants are asked about two non-mutually exclusive properties (e.g., living in Africa and eating bugs). For each of these conditions, participants are either asked at the end of the chapter (i.e., after participants read the full conjunctive generic) or before the final page of the chapter, where the conjunctive generic is broken before the ``and'' (i.e., participants only read ``Elephants live in Africa'' and are asked the question mid-sentence). We find that when asked about mutually exclusive properties, participants exhibit non-monotonic belief updating, first believing that almost all elephants live in Africa and then believing that only half life in Africa; this phenomenon is not observed when asking about non-mutually properties predicated of a category (Fig.~\ref{fig:results}A).
+Expt. 1 contains four conditions, which are randomized within-participant and within-item. In two of the conditions, participants are asked about two ME properties (e.g., living in Africa and Asia); in the other two, participants are asked about two non-ME (NME) properties (e.g., living in Africa and eating bugs). For each of these conditions, participants are either asked at the end of the chapter (i.e., after the full conjunctive generic) or before the final page of the chapter, where the conjunctive generic is broken before the ``and'' (i.e., participants only read ``Elephants live in Africa'' and are asked the question mid-sentence). We find that when asked about mutually exclusive properties, participants exhibit non-monotonic belief updating, first believing that almost all elephants live in Africa and then believing that only half life in Africa; this phenomenon is not observed when asking about non-mutually properties predicated of a category (Fig.~\ref{fig:results}A).
 
 %\begin{wrapfigure}{l}{0.5\textwidth}
 %\vspace{-1cm}
@@ -115,7 +115,7 @@ Expt. 1 contains four conditions, which are randomized within-participant and wi
 
 
 
-Having validated the method, we aimed to test the incremental prediction of the model that when participants only hear ``Elephants live in Africa and'', they will begin to anticipate a mutually-exclusive conjunct and that this would manifest in their implied prevalence ratings being substantially less than when they only hear ``Elephants live in Africa''.
+Having validated the method, we aimed to test the incremental prediction of the model that when participants only hear ``Elephants live in Africa and'', they will begin to anticipate a mutually-exclusive conjunct, and that this would manifest in their implied prevalence ratings being substantially less than when they only hear ``Elephants live in Africa''.
 Expt.~2 contained three conditions, corresponding to the point in the conjunctive generic sentence at which the page-break and prevalence questions occurred: ``Elephants live in Africa\_\_ and\_\_ Asia\_\_'' (where \_\_ denotes the point at which the page broke and the prevalence questions were presented).
 In a pre-registered study, we found that participants provided substantially lower estimates of prevalence when provided with the conjunct ``and'' in a partial sentence (posterior mean estimate and 95\% credible interval: $\beta = -0.08 (-0.13, -0.04)$) and that these ratings were also substantially higher than when participants read the full conjunctive predicate ($\beta = 0.17 (0.12, 0.23)$; Fig.~\ref{fig:results}B). 
 These results support a strong view of incrementality, suggesting that listeners begin to draw pragmatic interpretations of generics before the end of the sentence and even in the absence of additional content words. 
