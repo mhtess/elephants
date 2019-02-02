@@ -96,11 +96,14 @@
 %Talk with the same person for long enough and you will be able to predict what they will say before they have said it.
 %We investigate the interface between
 
-Generic statements convey generalizations about categories, but  how a listener should generalize is not always clear.  
-``Elephants live in Africa and Asia'' implies generalization across distinct subsets of the category (some live in Africa, others live in Asia).
-Such conjunctive generics about mutually exclusive properties (e.g., where each property applies to a distinct subset of the category) also pose interesting questions for theories of incremental processing because the meaning of the sentence can change part-way through. 
+Generic statements convey generalizations about categories, but how generic predications combine is unclear.
+``Elephants live in Africa and Asia'' does not mean that individual elephants live on both continents.
+Such conjunctive generics %about mutually exclusive properties (e.g., where each property applies to a distinct subset of the category) 
+also pose interesting questions for theories of incremental processing because the meaning of the sentence can change part-way through: ``Elephants live in Africa'' would imply most or all do. 
+%Such conjunctive generics about mutually exclusive properties (e.g., where each property applies to a distinct subset of the category) also pose interesting questions for theories of incremental processing because the meaning of the sentence can change part-way through. 
 We extend a recently proposed computational model of generic language understanding with an incremental processing mechanism that makes novel predictions for partial interpretations of conjunctive generic sentences.
-We test these predictions with two behavioral experiments. The results support a strong view of incrementality, wherein listeners  continuously use their expectations about where a speaker will go next with their utterance to update their beliefs.
+We test these predictions with two behavioral experiments. 
+The results support a strong view of incrementality, wherein listeners  continuously use their expectations about where a speaker will go next with their utterance to update their beliefs.
 
 
 %Generics permit exceptions (e.g., not all birds fly, and yet ``Birds fly'' is true) and adequately dealing with the exceptions is a problem for any model of generic language understanding. 
@@ -114,9 +117,6 @@ We test these predictions with two behavioral experiments. The results support a
 semantics; pragmatics; incremental processing; generics
 \end{abstract}
 
-% discussion
-% interactivity between levels of context: here, knowledge of syntax and knowledge about properties
-% how specific to generics are these findings vs. quantification generally? or there judgment differences?
 
 % follow-up: paramteric manipulate the ME
 
@@ -607,29 +607,44 @@ These results suggest that listeners begin to draw pragmatic interpretations of 
 
 Generic sentences exhibit extreme sensitivity to context that make it difficult to precisely define what a single generic conveys. 
 ``Elephants live in Africa and Asia'' means neither that \emph{most elephants live (in both) Africa and Asia} nor that \emph{Most elephants live in Africa, and most elephants live in Asia}.
-Here, we build on the observation of \citeA{Nickel2008} that the range of troubling examples for quantificational views of generics is quite large by empirically measuring interpretations of generics about conjunctive predicates.  
-Notably, the uncertain threshold model of \citeA{Tessler2019:genLang} accounts for these examples seamlessly: An underspecified threshold can be updated as more information comes in. 
+Here, we empirically measured interpretations of generics about conjunctive predicates, building on the observation of \citeA{Nickel2008} of the range of troubling examples for quantificational views of generics.
+Notably, the uncertain threshold model of \citeA{Tessler2019:genLang} accounts for such conjunctive generics seamlessly: An underspecified threshold can be updated as more information comes in. 
 
-The availability of a computational model of generic language understanding permits natural extensions to incorporate other aspects of language understanding. Here, we extend the model of \citeA{Tessler2019:genLang} to include syntactic expectations; the strongest form of incremental syntactic processing, wherein beliefs are continually updated about how a sentence will continue, led to a novel prediction of an intermediate mutual exclusivity inference when interpreting a conjunctive generic sentence. 
-Coupling a modified gating paradigm \cite{Grosjean1980} with an implied prevalence task from the psychology of generics literature \cite{Gelman2002, Cimpian2010} allowed us to probe incremental understanding of generics. 
-We found evidence for a strong form of incremental processing, wherein beliefs are updating continuously even in the absence of content words.
-This calls for more tight-coupling between models of syntactic processing \cite{Levy2008} and pragmatic language understanding \cite{Goodman2016}. 
+We extended that model to include syntactic expectations, and found evidence for the strongest form of incremental syntactic processing, wherein beliefs are continually updated based on expectations of how a sentence will continue. 
+The fact that generic language understanding can be modulated simultaneously by correlations in background knowledge and syntactic expectations calls for more tight-coupling between models of syntactic processing \cite{Levy2008}, pragmatic language understanding \cite{Goodman2016}, and intuitive theories \cite{tenenbaum2011grow}. 
 
-It is largely agreed that the context-sensitivity of generics needs to be accounted for at the level of individual properties in a particular context \cite{Nickel2008, Nickel2016, Sterken2015} as opposed to a purely more general framework where generics about different kinds of properties get ascribed different meanings \cite<e.g.,>{Prasada2013, Leslie2008}.
-Here we show that in fact the same property (``lives in Africa'') can be understood in two different ways when presented in a generic sentence. 
-When listeners hear that ``Elephants live in Africa'', they tend to think all elephants live in Africa; when they hear that ``Elephants live in Africa and Asia'', the implied prevalence of those living in Africa is quite lower. 
-This phenomenon bears some similarity to the \citeA{Nickel2008}'s ``Dobermans have pointy ears'', which in a context of dog-breeders is entirely acceptable, but not so in a discussion of dog genetics (Dobermans are born with floppy ears and breeders clip their ears to make them pointy).
-The unifying thread is that the same generic sentence can have dramatically different interpretations depending on the context. 
-Thus, the work here moves us one step closer to developing a unified treatment of the ways in which context can affect the meaning of generics.
+It remains an open question, however, how specific the effects observed in this paper are to generics as opposed to quantification more generally. 
+For example, it appears that, in some contexts, one can use \emph{most} to convey similar mutually exclusive conjunctions: ``Elephants are the largest land animal on Earth and are one of the gentlest creatures. Most live in Africa and Asia but are brought to other places for the entertainment of humans.''\footnote{
+Example from https://www.theodysseyonline.com/want-to-ride-an-elephant
+}
+Further work is needed to determine the felicity and interpretation of such utterances.
 
-The uncertain threshold model of \citeA{Tessler2019:genLang} models the interpretation of conjunctive generics about mutually exclusive properties such as ``Elephants live in Africa and Asia'' as incrementally updating the threshold beyond which the property holds (generically) in the category (see Model Predictions). 
-The model interprets the sentence as the conjunction of two full-blown generic sentences (``Elephants live in Africa, and elephants live in Asia''). 
-This phenomenon, however, appears as the inverse of the Free Choice effect, wherein listeners apply a conjunctive interpretation (``and'') to a disjunction (``or''), as in ``You can have ice cream or cake''. 
-Thus, an alternative account to the incremental, threshold updating model proposed here is that conjunctive generics about ME properties are the result of a similar kind of pragmatic inference one would use for the Free Choice account. 
-One way to potentially disambiguate the reverse-Free Choice from the incremental threshold updating model would be to investigate quantifier sentences which have a fixed-meaning (e.g., ``Most'' means roughly more than half).
-Naturally occurring examples of this sort exist (e.g., ``Elephants are beautiful, gentle giants that we are viciously taking away from this world. They are the largest land animal on Earth and are one of the gentlest creatures. Most live in Africa and Asia but are brought to other places for the entertainment of humans.'')\footnote{
-Example from \url{https://www.theodysseyonline.com/want-to-ride-an-elephant}
-} but further work is needed to determine the felicity and interpretation of such utterances.
+
+%The uncertain threshold model of \citeA{Tessler2019:genLang} models the interpretation of conjunctive generics about mutually exclusive properties such as ``Elephants live in Africa and Asia'' as incrementally updating the threshold beyond which the property holds (generically) in the category (see Model Predictions). 
+%The model interprets the sentence as the conjunction of two full-blown generic sentences (``Elephants live in Africa, and elephants live in Asia''). 
+%This phenomenon, however, appears as the inverse of the Free Choice effect, wherein listeners apply a conjunctive interpretation (``and'') to a disjunction (``or''), as in ``You can have ice cream or cake''. 
+%Thus, an alternative account to the incremental, threshold updating model proposed here is that conjunctive generics about ME properties are the result of a similar kind of pragmatic inference one would use for the Free Choice account. 
+
+%One way to potentially disambiguate the reverse-Free Choice from the incremental threshold updating model would be to investigate quantifier sentences which have a fixed-meaning (e.g., ``Most'' means roughly more than half).
+
+
+% discussion
+% interactivity between levels of context: here, knowledge of syntax and knowledge about properties
+% how specific to generics are these findings vs. quantification generally? or there judgment differences?
+
+
+%The availability of a computational model of generic language understanding permits natural extensions to incorporate other aspects of language understanding. 
+%Coupling a modified gating paradigm \cite{Grosjean1980} with an implied prevalence task from the psychology of generics literature \cite{Gelman2002, Cimpian2010} allowed us to probe incremental understanding of generics. 
+%We found evidence for a strong form of incremental processing, wherein beliefs are updating continuously even in the absence of content words.
+
+%It is largely agreed that the context-sensitivity of generics needs to be accounted for at the level of individual properties in a particular context \cite{Nickel2008, Nickel2016, Sterken2015} as opposed to a purely more general framework where generics about different kinds of properties get ascribed different meanings \cite<e.g.,>{Prasada2013, Leslie2008}.
+%Here we show that in fact the same property (``lives in Africa'') can be understood in two different ways when presented in a generic sentence. 
+%When listeners hear that ``Elephants live in Africa'', they tend to think all elephants live in Africa; when they hear that ``Elephants live in Africa and Asia'', the implied prevalence of those living in Africa is quite lower. 
+%This phenomenon bears some similarity to the \citeA{Nickel2008}'s ``Dobermans have pointy ears'', which in a context of dog-breeders is entirely acceptable, but not so in a discussion of dog genetics (Dobermans are born with floppy ears and breeders clip their ears to make them pointy).
+%The unifying thread is that the same generic sentence can have dramatically different interpretations depending on the context. 
+%Thus, the work here moves us one step closer to developing a unified treatment of the ways in which context can affect the meaning of generics.
+
+
 
 %In Expt.~3, we manipulated syntactic expectations by providing both additional information about the two mutually exclusive properties as well as additional fillers which contained conjunctive generics about ME properties. 
 %We find suggestive evidence that syntactic expectations can guide incremental pragmatic understanding of generic sentences. 
