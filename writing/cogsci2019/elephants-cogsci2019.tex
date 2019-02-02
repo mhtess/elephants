@@ -543,7 +543,7 @@ Our comparison to the non-mutually exclusive condition shows that the results ca
 
 \subsection{Experiment 2: Strong incrementality}
 
-In Expt.~1, we demonstrated that the mutually-exclusive inference effects can be measured using a gating paradigm wherein participants are queried for their beliefs part-way through a sentence. 
+In Expt.~1, we demonstrated that the mutually exclusive inference effects can be measured using a gating paradigm wherein participants are queried for their beliefs part-way through a sentence. 
 Here, we exploit this paradigm to test the strong incremental processing predictions of the model, wherein syntactic expectations can modulate the interpretations of generic sentences in a fine-grained manner. 
 
 \subsubsection{Participants}
@@ -551,33 +551,34 @@ Here, we exploit this paradigm to test the strong incremental processing predict
 We recruited 108 participants through Amazon's Mechanical Turk.
 This number was sufficient to collect 80 participants' data who passed the attention checks.  
 Participants were restricted to those with verified U.S. IP addresses and had at least a 95\% work approval rating. 
-Sample size, participant exclusion criteria, and primary planned analyses for this experiment was pre-registered on OSF \red{(url removed for blinding)}.
+Sample size, participant exclusion criteria, and analyses for this experiment were pre-registered on OSF (url removed for blinding).
 
 \subsubsection{Materials and procedure}
 
 %The majority of the critical trial materials were the same as those used in Expt.~1.
-The critical conjunctive generics used in Expt.~1 involved conjunctions of different grammatical categories, though always with the same syntactic types (e.g., ``ascribed to the Caboo religion and the Daith religion'' is a conjunction of two determiner phrases). 
-We modified the critical conjunctive generics to involve mostly conjunction of two noun phrases (e.g., ``ascribe to Cabooism and Daithism'') in order to strength correlation between the NP-conjunction and mutual exclusivity. 
-The fillers were modified to introduce page breaks immediately before and immediately after conjunctions (the word ``and'') in order to raise participants' expectations that a sentence might be broken at a conjunction.
-We used additional examples of the Uninterrupted ME condition of Expt.~1 (``live in Africa and Asia.'') to raise participants' expectations about of ME continuations.
+The critical conjunctive generics used in Expt.~1 involved conjunctions of different grammatical categories, though always with the same syntactic types (e.g., \emph{ascribed to the Caboo religion and the Daith religion} is a conjunction of two determiner phrases). 
+We modified the critical conjunctive generics to involve mostly conjunction of two noun phrases (e.g., \emph{ascribe to Cabooism and Daithism}) in order to strength the correlation between the NP-conjunction and mutual exclusivity. 
+The fillers were modified to introduce page breaks immediately before and immediately after conjunctions (``and'') in order to raise participants' expectations that a sentence might be broken at a conjunction.
+We used additional examples of the Uninterrupted ME condition of Expt.~1 (``live in Africa and Asia.'') to raise participants' expectations about ME continuations.
 Half of these filler trials had page breaks immediately before the ``and'' and half immediately after.
 
 On critical trials, questions always interrupted the chapter, appearing right before the last page.
-On the question screen, the page number of the penultimate page remained on the screen to provide an additional cue to participants that the chapter was not complete (Figure \ref{fig:design}A).
-There were three kinds of critical trials corresponding to the point at which the page break occurred in the conjunctive generic sentence: after ``Africa'', after ``and'', or after ``Asia'' (Figure \ref{fig:design}). 
-When participants did not see the full conjunctive property before the question (conditions INT A and A\&), the sentence continued after the question with a non-mutually exclusive property (e.g., ``Africa and eat bugs''), so as to not give the impression that the participant was being tricked. 
+On the question screen, the page number of the penultimate page remained on the screen to provide an additional cue to participants that the chapter was not complete (Fig.~\ref{fig:design}A).
+There were three conditions, corresponding to the point in the conjunctive generic sentence at which the page-break and prevalence questions occurred: ``Elephants live in Africa\_\_ and\_\_ Asia\_\_'' (where \_\_ denotes the point at which the page broke and the prevalence questions were presented).
+In the two conditions where participants did not see the full conjunctive property before the question (INT A and A\&), the sentence continued with a non-mutually exclusive property (e.g., \emph{eat bugs}), so as to not give the impression that the participant was being tricked by being asked about a property that we would eventually reveal. 
 
-Finally, we changed the question about the second property (\% live in Asia) to ask about ``some other X'', where X was the kind of property that was mentioned in the first conjunct (e.g., ``live on some other continent'').
-This change was introduced to raise the plausibility that a second, mutually exclusive property was possible while not explicitly naming a particular property, which would be pragmatically odd given that the property is unmentioned in the INT A and INT A\& conditions. 
-In making this change, we dropped 3 stimuli because they did not lend themselves naturally to this question frame.
+Finally, we changed the question about the second property (\% live in Asia) to ask about ``some other X'', where X was the kind of property that was mentioned in the first conjunct (e.g., \emph{live on some other continent}).
+This change was introduced to raise the plausibility that a second, ME property was possible while not explicitly naming a particular property, which would be pragmatically odd given that the property is unmentioned in the INT A and INT A\& conditions. 
+In making this change, we dropped 3 stimuli because they did not lend themselves naturally to this frame.
  \subsubsection{Results}
  
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.5\textwidth]{expt3_summary}
-%    \vspace{-1cm}
+    \vspace{-1cm}
   \caption{Experiment 2 results. Participants are interrupted at various stages of the sentence (either after \emph{Africa}, \emph{and}, or \emph{Asia}) to be asked about the prevalence of \emph{living in Africa} and \emph{living in some other place}, or asked at the end of the sentence (right-most bars). When participants are interrupted before the second conjunct (\emph{Asia}), the sentence continues with a non-mutually exclusive property. Error-bars denote bootstrapped 95\% confidence intervals.}
     \label{fig:expt3}
+        \vspace{-0.5cm}
   \end{figure}
   
 % \mh{Expt 3: 
@@ -594,11 +595,11 @@ The regression model was created in Stan (http://mc-stan.org/) accessed with the
 
 Replicating the findings of Expt.~1, when participants only read that ``Elephants live in Africa'', they tended to infer that almost all lived in Africa. 
 When they read that ``Elephants live in Africa and Asia'', they tended to infer that the distribution was close to 50\%-50\%.\footnote{
-Note that participants, on average, infer the prevalence is higher in this condition than 50\% for \emph{Africa}. 
-This is likely the result of asking about ``some other place'', which is substantially less specified that asking about a particular mentioned property.  Still, many participants responded exactly 50/50.
+Participants, on average, infer a higher-than-50\% prevalence for \emph{Africa} in this condition. 
+This is likely the result of asking about the substantially less specified ``some other place''.  Still, many participants responded exactly 50/50.
 }
 Finally, as predicted by a strong version of incremental processing, participants began to anticipate a mutually-exclusive conjunct when only the word ``and'' was mentioned, as evidenced by their implied prevalence ratings being substantially less for the ``..live in Africa and\_\_'' condition than the ``live in Africa'' condition (posterior mean estimate and 95\% credible interval: $\beta = -0.08 (-0.13, -0.04)$).
-In addition, these ratings were substantially higher than when the full conjunctive predicate was present ``..live in Africa and Asia'' ($\beta = 0.17 (0.12, 0.23)$  (Figure \ref{fig:expt3}).
+In addition, these ratings were substantially higher than when the full conjunctive predicate was present ``..live in Africa and Asia'' ($\beta = 0.17 (0.12, 0.23)$  (Fig.~\ref{fig:expt3}).
 Thus, we find that the participants' implied prevalence ratings of how many elephants lived in Africa monotonically decreased as a function of how many words of the conjunctive predicate they were allowed to see. 
 These results suggest that listeners begin to draw pragmatic interpretations of generics before the end of the sentence and even in the absence of additional content words. 
 
