@@ -189,7 +189,7 @@ In this paper we demonstrate and empirically test two predictions about generic 
 \begin{figure*}[t]
   \centering
     \includegraphics[width=1\textwidth]{model}
-    \vspace{-0.5cm}
+    \vspace{-0.7cm}
   \caption{Model's sequential interpretation of ``Elephants live in Africa\ldots and Asia.'' A: Correlated priors reflected in the joint probability distribution over two features result in a mutual exclusivity inference. When the model hears only ``\ldots live in Africa'', it believes that probably all live in Africa (middle facet); when it hears they live in Asia as well, the model non-monotonically updates its beliefs about how many live in Africa. B: The mutual exclusivity inference holds for priors of different shapes and never holds if the prior knowledge about the two features is uncorrelated. Points show means of the distributions.}
   \label{fig:model}
           \vspace{-0.5cm}
@@ -290,7 +290,7 @@ These inferences are robust to a variety of different prevalence prior distribut
 				] ] ]
                               \end{tikzpicture}
   \end{tabular}
-   
+   \vspace{-0.3cm}
 \caption{Incremental parse trees and syntactic expectations for upcoming conjunct properties in generic predication.  The string prefix ``Elephants live in Africa\ldots'' is compatible with a variety of continuations, including the four listed above.  The next word, ``\textcolor{darkgreen}{and}'', rules out continuations like those the top row (depicted in gray) and sharpens expectations around a conjunct at potentially different structural levels (light green).  Probabilistic renormalization implies that an upcoming conjunct mutually exclusive with the first conjunct becomes more likely when ``and'' is encountered, driving the strong incremental predictions depicted in Fig.~\ref{fig:incremental}.}
 \label{fig:trees}
         \vspace{-0.5cm}
@@ -335,7 +335,7 @@ We test this prediction in Expt.~2 using a gating paradigm in the spirit of \cit
 \begin{figure}[t]
   \centering
     \includegraphics[width=0.5\textwidth]{incremental}
-    \vspace{-1cm}
+    \vspace{-0.8cm}
   \caption{A model that incorporates syntactic expectations at the level of individual words (\emph{strong incremental}) predicts intermediate mutual-exclusivity inferences part-way through the conjunction (at ``and''), whereas a model that waits for content-words (\emph{weak incremental}) does not show a difference in expected prevalence at the word ``and.''
 %  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
   }
@@ -356,10 +356,10 @@ We test this prediction in Expt.~2 using a gating paradigm in the spirit of \cit
 
 \section{Experiments}
 
-We design two experiments to test the mutual exclusivity (ME) and incremental predictions of the model. 
+We design two experiments to test the mutual exclusivity (ME) and incremental predictions.
 Expt.~1 tests the ME prediction that ``Elephants live in Africa and Asia'' means roughly that half live in Africa and half live in Asia; this experiment also serves to validate the gating procedure we employ in the second experiment. 
 Expt.~2 is a pre-registered study that uses the gating paradigm to test the fine-grained incremental predictions of the model.
-The experiments and full list of materials can be viewed at \url{https://tinyurl.com/elephants-cogsci}.
+The experiments and full list of materials can be viewed at \url{tinyurl.com/elephants-cogsci}.
 
 %; we compare interpretations for these conjunctive generics with those of conjunctive generics about non-mutually exclusive (NME) properties (e.g., ``Elephants live in Africa and eat 300 lb. of food in a day''). 
 %Experiment 2 is a conceptual replication using an adaptation of a gating paradigm \cite{Grosjean1980} which also controls for asking about two properties previously mentioned using a conjunctive generic sentence. 
@@ -369,7 +369,7 @@ The experiments and full list of materials can be viewed at \url{https://tinyurl
 \begin{figure*}[h]
   \centering
     \includegraphics[width=1\textwidth]{design}
-%    \vspace{-1cm}
+    \vspace{-0.8cm}
   \caption{Overview of experiments. A: Example book chapter from Expt.~2, depicting the \emph{Interrupted A\&} condition. ``Africa and asia'' property is shown for illustration; actual stimuli used novel names for properties (``Caro and Este''). B: Overview of conditions for Expts.~1\&2. [-?-] denotes point in the sentence where the question slide appeared. Highlighting shows what properties were mentioned before the question, and what was asked about. See main text for full description of conditions.}
   \label{fig:design}
           \vspace{-0.5cm}
@@ -403,7 +403,7 @@ Krens are a tribe of the aliens that live on the continent of Benli. Animals lik
 
 
 Conjunct type (ME~vs.~NME) was manipulated within-participants and within-items. 
-In addition to the critical items, there were 14 filler chapters, which had content similar to the critical chapters but with explicit quantifiers (\emph{most}, \emph{all}, \emph{none}) to predicate properties of categories. 
+There were also 14 filler chapters, which had content similar to the critical chapters but with explicit quantifiers (\emph{most}, \emph{all}, \emph{none}) to predicate properties. 
 
 
 
@@ -443,11 +443,11 @@ In addition to the critical items, there were 14 filler chapters, which had cont
 
 
 \subsubsection{Procedure}
-Participants were told they would be reading a storybook and be asked questions at some point in each chapter. 
-Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2002, Cimpian2010} that read: ``What percentage of Ks do you think F?'', where K represents a category and F a feature. 
-Responses were recorded using a slider with end-points labeled 0\% and 100\%, with the exact value selected appearing above the slider. 
+Participants were told they would be reading a storybook with a question in each chapter. 
+Questions were all of the same type, an \emph{implied prevalence} question \cite{Gelman2002, Cimpian2010}: ``What percentage of Ks do you think F?'', where K represents a category and F a feature. 
+Responses were recorded using a slider with endpoints labeled 0\% and 100\%, with the exact value selected appearing above the slider. 
 Participants were familiarized with the response variable in a practice trial, where they were asked to report how many \emph{dogs bark}, \emph{birds are male}, \emph{cats get cancer}, and \emph{lions lay eggs}. 
-We used these questions to encourage participants to use the full range of the response scale as well as to serve as a comprehension check. 
+These questions encouraged participants to use the full range of the response scale as well as served as a comprehension check. 
 
 Afterwards, participants read the storybook.
 % consisting of \red{16} paragraphs we refer to as \emph{chapters} (items), each of which spanned 2 - 4 screens of text which spanned 2 - 4 lines on the screen. 
@@ -486,17 +486,17 @@ At the end of the storybook, participants completed a memory check where they ha
 
 
 
-11 participants were excluded for either failing to respond accurately to all of the practice trials or  failing to respond accurately to at least 7 of the 10 memory check prompts (same exclusion criteria for Expt.~2).
-We describe the results from the perspective of the running example of ``Elephants live in Africa and Asia'', but the experimental stimuli used novel categories and relatively novel properties.
+11 participants were excluded for failing to respond accurately to all of the practice trials or  failing to respond accurately to at least 7 of the 10 memory check prompts (same exclusion criteria for Expt.~2).
+We describe the results using the running example of ``Elephants live in Africa and Asia'', but the experimental stimuli used novel categories and relatively novel properties.
 %, or responded randomly to the explanation question in a way that suggested they were a bot (e.,g., ``nice experiment'' in all caps; often if they failed the explanation trial, they failed at least one of the two other checks).
  
  \begin{figure}[h]
   \centering
     \includegraphics[width=0.5\textwidth]{expt2_summary}
-    \vspace{-1cm}
+    \vspace{-1.2cm}
   \caption{Experiment 1 results.  Participants rate prevalence for mentioned property (\% live in Africa) and ``Property 2'', either the mutually exclusive property (left two bars) or non-mutually exclusive property (right two bars). ``\_\_'' indicates the question appears mid-sentence. Error-bars denote bootstrapped 95\% confidence intervals.}
   \label{fig:expt2}
-          \vspace{-0.5cm}
+          \vspace{-0.6cm}
   \end{figure}
  
  Reading only that ``Elephants live in Africa\ldots'' led listeners to believe that all elephants lived in Africa and that none lived in Asia , whereas if the sentence finished ``\ldots and Asia'', listeners inferred that roughly half live in Africa and half live in Asia (Fig.~\ref{fig:expt2}). 
@@ -582,12 +582,12 @@ Finally, we changed the question about the second property (\% live in Asia) to 
 This change was introduced to raise the plausibility that a second, ME property was possible while not  naming one explicitly, which would be pragmatically odd given that the property is unmentioned in the INT A and A\& conditions. 
 In making this change, we dropped 3 stimuli because they did not lend themselves to this frame.
  \subsubsection{Results}
- 
+ \vspace{-0.5cm}
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.5\textwidth]{expt3_summary}
-    \vspace{-1cm}
-  \caption{Experiment 2 results. Participants are interrupted at various stages of the sentence (either after \emph{Africa}, \emph{and}, or \emph{Asia}) to be asked about the prevalence of \emph{living in Africa} and \emph{living in some other place}, or asked at the end of the sentence (right-most bars). When participants are interrupted before the second conjunct (\emph{Asia}), the sentence continues with a non-mutually exclusive property. Error-bars denote bootstrapped 95\% confidence intervals.}
+    \vspace{-1.2cm}
+  \caption{Experiment 2 results. Participants are interrupted at various stages of the sentence (after \emph{Africa}, \emph{and}, or \emph{Asia}) to be asked about the prevalence of \emph{living in Africa} and \emph{living in some other place}, or asked at the end of the sentence (right-most bars). When participants are interrupted before the second conjunct (\emph{Asia}), the sentence continues with a non-mutually exclusive property. Error-bars denote bootstrapped 95\% confidence intervals.}
     \label{fig:expt3}
         \vspace{-0.5cm}
   \end{figure}
