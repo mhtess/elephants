@@ -187,9 +187,10 @@ In this paper we demonstrate and empirically test two predictions about generic 
 \begin{figure*}[t]
   \centering
     \includegraphics[width=1\textwidth]{model}
-%    \vspace{-1cm}
+    \vspace{-0.5cm}
   \caption{Model's sequential interpretation of ``Elephants live in Africa\ldots and Asia.'' A: Correlated priors reflected in the joint probability distribution over two features result in a mutual exclusivity inference. When the model hears only ``\ldots live in Africa'', it believes that probably all live in Africa (middle facet); when it hears they live in Asia as well, the model non-monotonically updates its beliefs about how many live in Africa. B: The mutual exclusivity inference holds for priors of different shapes and never holds if the prior knowledge about the two features is uncorrelated. Points show means of the distributions.}
   \label{fig:model}
+          \vspace{-0.5cm}
 \end{figure*}
 
 We extend a model for interpreting generics to incorporate an incremental processing mechanism that allows a listener to understand partial utterances.
@@ -290,6 +291,7 @@ These inferences are robust to a variety of different prevalence prior distribut
    
 \caption{Incremental parse trees and syntactic expectations for upcoming conjunct properties in generic predication.  The string prefix ``Elephants live in Africa\ldots'' is compatible with a variety of continuations, including the four listed above.  The next word, ``\textcolor{darkgreen}{and}'', rules out continuations like those the top row (depicted in gray) and sharpens expectations around a conjunct at potentially different structural levels (light green).  Probabilistic renormalization implies that an upcoming conjunct mutually exclusive with the first conjunct becomes more likely when ``and'' is encountered, driving the strong incremental predictions depicted in Fig.~\ref{fig:incremental}.}
 \label{fig:trees}
+        \vspace{-0.5cm}
 \end{figure}
 
 
@@ -331,10 +333,11 @@ We test this prediction in Expt.~2 using a gating paradigm in the spirit of \cit
 \begin{figure}[t]
   \centering
     \includegraphics[width=0.5\textwidth]{incremental}
-%    \vspace{-1cm}
+    \vspace{-1cm}
   \caption{A model that incorporates syntactic expectations at the level of individual words (\emph{strong incremental}) predicts intermediate mutual-exclusivity inferences part-way through the conjunction (at ``and''), whereas a model that waits for content-words (\emph{weak incremental}) to begin to understand the utterances does not show a difference in expected prevalence at the word ``and.''
 %  Model interpretation of a conjunctive generic (``Elephants live in Africa and Asia''). A: Intuitive priors for marginal distributions of prevalence for living in Africa and living in Africa. B: Partial interpretation upon hearing utterance (“Elephants live in Africa . . .”). C: Full interpretation upon hearing the end of the sentence (``...and Asia''). Uncertainty about the threshold for generic sentences allows the listener to non-monotonoically update its beliefs about the prevalence of the feature in categories.
   }
+          \vspace{-0.5cm}
   \label{fig:incremental}
 \end{figure}
 
@@ -367,6 +370,7 @@ The experiments and full-list of materials can be viewed at \url{https://tinyurl
 %    \vspace{-1cm}
   \caption{Overview of experiments. A: Example book chapter from Expt.~2, depicting the \emph{Interrupted A\&} condition. ``Africa and asia'' property is shown for illustration; actual stimuli used novel names for properties (``Caro and Este''). B: Overview of conditions for Expts.~1\&2. [-?-] denotes point in the sentence where the question slide appeared. Highlighting shows what properties were mentioned before the question, and what was asked about. See main text for full description of conditions.}
   \label{fig:design}
+          \vspace{-0.5cm}
 \end{figure*}
 
 \subsection{Experiment 1: Mutual exclusivity inference}
@@ -486,9 +490,10 @@ We describe the results from the perspective of the running example of ``Elephan
  \begin{figure}[h]
   \centering
     \includegraphics[width=0.5\textwidth]{expt2_summary}
-%    \vspace{-1cm}
+    \vspace{-1cm}
   \caption{Experiment 1 results.  Participants rate prevalence for mentioned property (\% live in Africa) and ``Property 2'', either the mutually exclusive property (left two bars) or non-mutually exclusive property (right two bars). ``\_\_'' indicates the question appears mid-sentence. Error-bars denote bootstrapped 95\% confidence intervals.}
   \label{fig:expt2}
+          \vspace{-0.5cm}
   \end{figure}
  
  Reading only that ``Elephants live in Africa\ldots'' led listeners to believe that all elephants lived in Africa and that none lived in Asia , whereas if the sentence finished ``\ldots and Asia'', listeners inferred that roughly half live in Africa and half live in Asia (Fig.~\ref{fig:expt2}). 
