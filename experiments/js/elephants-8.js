@@ -172,13 +172,15 @@ function make_slides(f) {
 	      $(".storyText").width(this.stim.continuation[exp.condition+"Width"]);
 	  } else if (this.page < this.last_page){
             $(".storyText").html(this.stim.main_text[this.page]);
-	      $(".storyText").removeClass("leftJustify");
+	    $(".storyText").removeClass("leftJustify");
+	    $(".storyText").width(720);
           } else if (this.page > this.last_page){
             this.present_question()
           } else if (this.page == this.last_page){
 
             $(".storyText").css("text-align-last", "left") // align last page to left
-	           $(".storyText").addClass("leftJustify");
+	      $(".storyText").addClass("leftJustify");
+	      $(".storyText").width(720);
 
             switch (this.stim.condition){
               case "uninterrupted":
@@ -605,8 +607,8 @@ function init() {
 
     exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
-    exp.condition="all"
-    exp.stims = [_.extend(stims_chapters[15], {condition: "interrupted", query: true})]
+    //exp.condition="all"
+    //exp.stims = [_.extend(stims_chapters[15], {condition: "interrupted", query: true})]
 
   exp.stimscopy = exp.stims.slice(0);
   exp.numTrials = exp.stims.length;
@@ -615,9 +617,9 @@ function init() {
   exp.data_trials = [];
 
   exp.structure=[
-     //"i0",
-     //"practice",
-     //"title_page",
+     "i0",
+     "practice",
+     "title_page",
     "main_chapters",
     "the_end",
     "memory_check",
