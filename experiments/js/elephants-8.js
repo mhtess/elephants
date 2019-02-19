@@ -166,7 +166,6 @@ function make_slides(f) {
           switch (this.stim.type){
           case "critical":
 	      if (this.page == this.last_page - 1) {
-	      console.log('continuation', exp.condition);
 	      $(".storyText").html(this.stim.main_text[this.page]+this.stim.continuation[exp.condition])
 	      $(".storyText").removeClass("leftJustify");
 	      $(".storyText").width(this.stim.continuation[exp.condition+"Width"]);
@@ -333,7 +332,8 @@ function make_slides(f) {
        this.rt = Date.now() - this.startTime;
 
         exp.data_trials.push({
-          "trial_type" : this.stim.type,
+            "trial_type" : this.stim.type,
+	    "quantifier_type": exp.condition,
           "page_type": $(".storyText").html() == "" ? "query" : "text",
           "condition": this.stim.condition,
           "chapter_num": this.trial_num,
