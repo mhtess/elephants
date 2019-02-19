@@ -13,6 +13,7 @@ var firstChapter =   {
     property1: "NA",
     property2: "NA",
     condition: "uninterrupted"
+    quantifier: "NA"
   }
 
 var filler_chapters = [
@@ -264,7 +265,7 @@ var stims_chapters = [
 	  allWidth: 720,
       critical: "and live on the northern continent of Este.",
       filler: "and enjoy the sunshine there.",
-      nme: "and graze on the tall grasses."
+      nme: "and graze on the tall grasses there."
     },
     query: true,
     critical: true,
@@ -289,7 +290,7 @@ var stims_chapters = [
 	  all: "All mooks have territories at the tops of tall mountains ",
 	  allWidth: 560,
       critical: "and have territories at the bottom of deep canyons.",
-      filler: "and one would be wise to keep their distance from them.",
+      filler: "and scare away most other animals that come near.",
       nme: "and watch over the low-lying regions during the day."
     },
     critical: true,
@@ -517,7 +518,7 @@ var stims_chapters = [
 	    all: "All batozes have six wings ",
 	    allWidth: 720,
 	    critical: "and have seven wings.",
-	    nme: "and three eyes.",
+	    nme: "and have three eyes.",
       filler: "and can flap their wings very fast."
 	},
 	critical: true,
@@ -542,8 +543,8 @@ var stims_chapters = [
 	    all: "All kaples have striped fur ",
 	    allWidth: 520,
 	    critical: "and have spotted fur.",
-      filler: "and beautiful eyes.",
-	    nme: "and long tails."
+      filler: "and have beautiful eyes.",
+	    nme: "and have long tails."
 	},
 	critical: true,
 	kind: "kaples",
@@ -568,7 +569,7 @@ var stims_chapters = [
 	    allWidth: 700,
 	    critical: "and have seven horns.",
       filler: "and charge without warning.",
-	    nme: "and two tails."
+	    nme: "and have two tails."
 	},
 	critical: true,
 	kind: "landeks",
@@ -593,7 +594,7 @@ var stims_chapters = [
 	    allWidth: 720,
 	    critical: "and hibernate in the abandoned burrows of other animals.",
 	    filler: "and only emerge when the weather has become warmer.",
-      nme:"and give birth twice a year."
+      nme: "and give birth twice a year."
 	},
 	critical: true,
 	kind: "vimble queens",
@@ -603,29 +604,27 @@ var stims_chapters = [
 	type: "critical"
     },
     {
-	title: "Isooms",
-	main_text: [
-	    "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
-	    "cultivate isooms for food. "
-	],
-	continuation: {
-	    generic: "Isooms produce fruit with bumpy skin ",
-	    genericWidth: 720,
-	    most: "Most isooms produce fruit with bumpy skin ",
-	    mostWidth: 540,
-	    all: "All isooms produce fruit with bumpy skin ",
-	    allWidth: 720,
-	    critical: "and produce fruit with smooth skin.",
-	    filler: "and prefer to grow in the shade.",
-      nme: "and a sour taste.",
-	},
-	critical: true,
-	kind: "isooms",
-	property1: "produce fruit with bumpy skin",
-	property2: "produce fruit with smooth skin",
-  property3: "produce fruit with a sour taste",
-	type: "critical"
+      title: "Isooms",
+      main_text: [
+        "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
+        "cultivate isooms for food. "
+      ],
+      continuation: {
+        generic: "Isooms produce fruit with bumpy skin ",
+        genericWidth: 720,
+        most: "Most isooms produce fruit with bumpy skin ",
+        mostWidth: 540,
+        all: "All isooms produce fruit with bumpy skin ",
+        allWidth: 720,
+        critical: "and produce fruit with smooth skin.",
+        filler: "and prefer to grow in the shade.",
+        nme: "and produce fruit with a sour taste.",
+      },
+      critical: true,
+      kind: "isooms",
+      property1: "produce fruit with bumpy skin",
+      property2: "produce fruit with smooth skin",
+      property3: "produce fruit with a sour taste",
+      type: "critical"
     }
 ]
-
-// fix experiment, run pilot, preregistration report

@@ -333,7 +333,6 @@ function make_slides(f) {
 
         exp.data_trials.push({
             "trial_type" : this.stim.type,
-	    "quantifier_type": exp.condition,
           "page_type": $(".storyText").html() == "" ? "query" : "text",
           "condition": this.stim.condition,
           "chapter_num": this.trial_num,
@@ -349,7 +348,7 @@ function make_slides(f) {
           "predicate_2": this.stim.property2,
           "question_order": this.question_order == null ? "NA" : this.question_order,
           "chapter": this.stim.title,
-          "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
+          "quantifier": this.stim.quantifier ? this.stim.quantifier : exp.condition
           //,
           // "explanation": $("#followUpResponse").val()
         });
