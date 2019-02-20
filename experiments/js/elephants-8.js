@@ -186,47 +186,40 @@ function make_slides(f) {
                 $(".storyText").html(this.stim.continuation.critical)
                 break;
               case "uninterrupted_irrelevant":
-                $(".storyText").html(this.stim.continuation.filler)
+                $(".storyText").html("and "+this.stim.continuation.filler +".")
                 break;
               case "interrupted":
                 if (this.stim.query) {
                   console.log("interupt present question")
                   this.present_question()
                 } else {
-                  $(".storyText").html(this.stim.continuation.filler)
+                  $(".storyText").html("and "+this.stim.continuation.filler+".")
                 }
                 break;
 	    case "nme_interrupted":
-		$(".storyText").html(this.stim.continuation.filler);
+		$(".storyText").html("and "+this.stim.continuation.filler+".");
 	      break;
 	      case "nme_uninterrupted":
-	      $(".storyText").html(this.stim.continuation.nme);
+	      $(".storyText").html("and "+this.stim.continuation.nme);
 	      break;
           }
 	  }
 	      break;
 
         case "filler": // filler trials
-          switch (this.stim.condition){
-            case "uninterrupted":
-                if (this.page == this.last_page) {
+	      if (this.page == this.last_page - 1) {
+		  $(".storyText").html(this.stim.main_text[this.page]);
+	      }
+                else if (this.page == this.last_page) {
                   $(".storyText").css("text-align-last", "left");
-		  $(".storyText").addClass("leftJustify");
+		    $(".storyText").addClass("leftJustify");
+		    $(".storyText").html("and " + this.stim.main_text[this.page]);
                 }
-                $(".storyText").html(this.stim.main_text[this.page]);
-              break;
-            case "interrupted":
-              if (this.page == this.last_page){
-                $(".storyText").css("text-align-last", "left")
-	        $(".storyText").addClass("leftJustify");
-              }
-              $(".storyText").html(this.stim.main_text[this.page]);
-              break;
-
-          break;
-        }
+                  else {
+		      $(".storyText").html(this.stim.main_text[this.page]);
+		  }
         break;
-      }
+	  }
 
 
       },
@@ -240,7 +233,10 @@ function make_slides(f) {
         // $(".slider_number").hide()
         // $(".slider_table").hide()
 
-        this.question_order = _.sample(["same", "reverse"])
+          this.question_order = _.sample(["same", "reverse"])
+	  if (this.stim.type == "critical") {
+	      this.question_order = "same"
+	  }
 
         var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
             "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";
@@ -509,7 +505,7 @@ function init() {
     // numFillerControls + numFillerInterrupts + numNmeControls + numNmeInterrupts
     // >= numCriticalControls + numCriticalInterrupts - 1
 
-    // test trials using conjunctive generics (<= 16)
+    // test trials using conjunctive generics (<= 13)
     const numCriticalControls = 4;
     const numCriticalInterrupts = 4;
 
@@ -606,8 +602,8 @@ function init() {
 
     exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
-    //exp.condition="all"
-    //exp.stims = [_.extend(stims_chapters[15], {condition: "interrupted", query: true})]
+    //exp.condition="generic"
+    //exp.stims = [_.extend(stims_chapters[12], {condition: "interrupted", query: true})]
 
   exp.stimscopy = exp.stims.slice(0);
   exp.numTrials = exp.stims.length;
