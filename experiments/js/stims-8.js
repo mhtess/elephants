@@ -260,8 +260,9 @@ var stims_chapters = [
       nme: "pray three times a day."
     },
     kind: "ludinos",
-    property1: "ascribe to Cabooism",
-    property2: "ascribe to some other religion",
+      property1: "ascribe to Cabooism",
+      property2: "ascribe to Daithism",
+    //property2: "ascribe to some other religion",
     property3: "pray three times a day",
     type: "critical"
   },
@@ -294,8 +295,9 @@ var stims_chapters = [
     },
     query: true,
     kind: "glippets",
-    property1: "live on the continent of Caro",
-    property2: "live on some other continent",
+      property1: "live on the continent of Caro",
+      property2: "live on the continent of Este",
+    //property2: "live on some other continent",
     property3: "graze on the tall grasses",
     type: "critical"
   },
@@ -329,8 +331,9 @@ var stims_chapters = [
       nme: "watch over the low-lying regions during the day."
     },
     kind: "mooks",
-    property1: "have territories at the tops of tall mountains",
-    property2: "have territories in other geographical locations",
+      property1: "have territories at the tops of tall mountains",
+      property2: "have territories at the bottom of deep canyons",
+    //property2: "have territories in other geographical locations",
     property3: "watch over the low-lying regions during the day",
     type: "critical"
   },
@@ -364,8 +367,9 @@ var stims_chapters = [
       nme: "spray them with a naturally-occurring fertilizer."
     },
     kind: "farmers in the springtime",
-    property1: "plant fujusi",
-    property2: "plant some other crop",
+      property1: "plant fujusi",
+      property2: "plant soroneeks",
+    //property2: "plant some other crop",
     property3: "spray their fields with a naturally-occurring fertilizer",
     type: "critical"
   },
@@ -399,8 +403,9 @@ var stims_chapters = [
     },
     query: true,
     kind: "fengnor mated pairs",
-    property1: "build nests in gluers",
-    property2: "build nests in other places",
+      property1: "build nests in gluers",
+      property2: "build nests in droops",
+    //property2: "build nests in other places",
     property3: "store tree-bark in them for safe keeping",
     type: "critical"
   },
@@ -434,8 +439,9 @@ var stims_chapters = [
       nme: "sing songs to the stups to help them relax."
     },
     kind: "Krens",
-    property1: "are stup-herders",
-    property2: "do something else for a living",
+      property1: "are stup-herders",
+      property2: "are fishermen",
+    //property2: "do something else for a living",
     property3: "sing songs to the stups to help them relax",
     type: "critical"
   },
@@ -468,8 +474,9 @@ var stims_chapters = [
       nme: "have sharp claws."
     },
     kind: "lorches",
-    property1: "have long wings",
-    property2: "have some other type of wing",
+      property1: "have long wings",
+      property2: "have short wings",
+    //property2: "have some other type of wing",
     property3: "have sharp claws",
     type: "critical"
   },
@@ -503,8 +510,9 @@ var stims_chapters = [
       nme: "carry sticks with them."
     },
     kind: "reesles",
-    property1: "wear wutsats around their heads",
-    property2: "wear something else around their heads",
+      property1: "wear wutsats around their heads",
+      property2: "wear krevnors around their heads",
+    //property2: "wear something else around their heads",
     property3: "carry sticks with them",
     type: "critical"
   },
@@ -538,8 +546,9 @@ var stims_chapters = [
       nme: "jump up and down in circles.",
     },
     kind: "kweps",
-    property1: "chew on xorfun bark",
-    property2: "chew on some other kind of bark",
+      property1: "chew on xorfun bark",
+      property2: "chew on tunkel bark",
+   // property2: "chew on some other kind of bark",
     property3: "jump up and down in circles",
     type: "critical"
   },
@@ -574,8 +583,9 @@ var stims_chapters = [
       nme: "are very protective."
     },
     kind: "oller families",
-    property1: "carry their young in guklags",
-    property2: "carry their young in something else",
+      property1: "carry their young in guklags",
+      property2: "carry their young in trullets",
+    //property2: "carry their young in something else",
     property3: "are very protective",
     type: "critical"
   },
@@ -609,8 +619,9 @@ var stims_chapters = [
       nme: "sell their baskets in the Warfi marketplace."
     },
     kind: "basket weavers",
-    property1: "are part of the Tinnoclan",
-    property2: "are part of some other guild",
+      property1: "are part of the Tinnoclan",
+      property2: "are part of the Farzaguild",
+    //property2: "are part of some other guild",
     property3: "sell their baskets in the Warfi marketplace",
     type: "critical"
   },
@@ -724,8 +735,9 @@ var stims_chapters = [
       nme: "give birth twice a year."
     },
     kind: "vimble queens",
-    property1: "hibernate in fallen logs",
-    property2: "hibernate in some other location",
+      property1: "hibernate in fallen logs",
+      property2: "hibernate in the abandoned burrows of other animals",
+    //property2: "hibernate in some other location",
     property3: "give birth twice a year",
     type: "critical"
   },
@@ -757,8 +769,9 @@ var stims_chapters = [
       nme: "produce fruit with a sour taste.",
     },
     kind: "isooms",
-    property1: "produce fruit with bumpy skin",
-    property2: "produce fruit with some other-textured skin",
+      property1: "produce fruit with bumpy skin",
+      property2: "produce fruit with smooth skin",
+    //property2: "produce fruit with some other-textured skin",
     property3: "produce fruit with a sour taste",
     type: "critical"
   }
