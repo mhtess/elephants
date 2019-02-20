@@ -12,7 +12,7 @@ var firstChapter =   {
     kind: "NA",
     property1: "NA",
     property2: "NA",
-    condition: "uninterrupted"
+    condition: "uninterrupted",
     quantifier: "NA"
   }
 
