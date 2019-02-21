@@ -522,7 +522,7 @@ function init() {
     const numNmes = numNmeControls + numNmeInterrupts;
     const numFillers = numFillerControls + numFillerInterrupts;
 
-    exp.condition = _.sample(["generic", "most", "all"]); // between subjects
+    exp.condition = "generic"; // between subjects
 
     // add first chapter and desired number of beginning fillers (uninterrupted)
     exp.stims = [firstChapter]
