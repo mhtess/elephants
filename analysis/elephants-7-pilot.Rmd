@@ -1,17 +1,24 @@
 ---
-title: "elephants-3i-pilot"
+title: "elephants-5-pilot"
 author: "MH Tessler"
-date: "1/17/2019"
+date: "1/28/2019"
 output: github_document
 ---
 
-[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
+[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-6.html)
 
-### Changes from Pilot 3
 
-- interrupted version of experiment 3 (some trials ask questions mid-chapter)
-- added trials where we ask about non-mutually exclusive properties (NME)
-- randomize order of trials with constraint that no 2 criticals back-to-back
+### Experiment 7 pilot
+
+- revert to stims that don't mention both properties
+- ask about % in some other group
+
+All questions interrupting.
+
+- int1: (Africa) -- Q(Af, As) -- (and eat bugs in the wild)
+- int2: (Africa and) -- Q(Af, As) -- (eat bugs in the wild)
+- int4: (Africa and Asia) -- Q(Af, As) -- (which is warm)
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
@@ -23,8 +30,9 @@ library(tidyboot)
 library(ggpirate)
 theme_set(theme_few())
 project.path <- "~/projects/elephants/"
-expt.prefix <- "elephants-3i"
-data.path <- paste("data", expt.prefix,sep = "/")
+expt.prefix <- "elephants-7-full"
+data.path <- paste("mturk", expt.prefix,sep = "/")
+fig.path <- paste(project.path, "writing/cogsci2019/figs/", sep = "")
 ```
 
 ### Subject information
@@ -54,14 +62,8 @@ Before the experiment, participants practice usign the sliders to rate 3 categor
 
 - dogs bark (coded as correct if x > 0.5)
 - birds are male (coded as correct if 0.25 < x < 0.75)
-- cats get cancer (coded as correct if x < 0.75)
+- cats get cancer (coded as correct if x < 0.75) [being generous with this one]
 - lions lay eggs (coded as correct if x < 0.10)
-
-
-### Memory check
-
-After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
-
 
 ```{r}
 df.attn <- read_csv(
@@ -107,6 +109,12 @@ df.slider_check %>%
 ```
 
 
+### Memory check
+
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+
+
+
 ```{r}
 # memory check data
 df.mmry <- df.attn %>%
@@ -145,20 +153,19 @@ df.expln <- df.attn %>%
   left_join(., df.slider_check.workers %>% select(workerid, n_correct) %>%
               rename(n_slider_correct = n_correct))
 
+bad.expln <- c()
 df.expln %>%
   select(workerid,n_slider_correct,  n_memory_correct, property) %>%
   rename(explanation = property) %>%
   kable(.)
 ```
 
-Subject 12 rated 66% cats get cancer, otherwise seems proficient. In other subjects, attention check mechanisms seem correlated.
 
+
+Memory check questions seem off:
 ```{r}
-workers.to.exclude <- unique(c(workers.fail.memory, workers.fail.sliders))
-workers.to.exclude <- workers.to.exclude[workers.to.exclude != 12]
+length(unique(c(workers.fail.memory, workers.fail.sliders, bad.expln)))
 ```
-
-
 ## Trial data
 
 Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
@@ -182,7 +189,8 @@ df.trials <- left_join(
       condition = gsub("\"", "", condition),
       quantifier = gsub("\"", "", quantifier),
       memory_fail = workerid %in% workers.fail.memory,
-      slider_fail = workerid %in% workers.fail.sliders
+      slider_fail = workerid %in% workers.fail.sliders,
+      bad_expln  = workerid %in% bad.expln
       ),
     df.mmry %>% select(workerid, n_correct)
 )
@@ -191,6 +199,7 @@ df.query <- df.trials %>%
   filter(page_type == "query") %>%
   gather(key, val, response_1, response_2)
 ```
+
 Included/excluded subject numbers
 
 ```{r}
@@ -198,6 +207,8 @@ df.query %>%
   distinct(workerid, memory_fail, slider_fail, bad_expln) %>%
   group_by(memory_fail, slider_fail) %>% count() %>% kable()
 ```
+
+
 ## participant responses
  
 collapsed across trials
@@ -221,6 +232,7 @@ these used quantifiers (and thus we have strong idea about literal meaning)
 ```{r}
 df.query.filler <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
+  #filter(!slider_fail, !bad_expln) %>%
   filter(trial_type == "filler") %>%
   select(workerid, condition, chapter_num, 
          rt, trial_type, quantifier, page_type, key, val)
@@ -228,40 +240,68 @@ df.query.filler <- df.query %>%
 df.query.filler  %>%
   ggplot(., aes( x = val ))+
   geom_histogram()+
-  facet_grid(condition~quantifier)
+  facet_wrap(~quantifier + condition)
 ```
 
 ## critical trials (collapsed across item)
 
+*Conditions*
+
+1. AF: "Elephants live in Africa" -- Q(Africa, Asia) -- "and breathe oxygen"
+2. AF&: "Elephants live in Africa and" -- Q(Africa, Asia) -- "breathe oxygen"
+4. AF&AS: "Elephants live in Africa and Asia" -- Q(Africa, Asia) -- "while alive"
+
+### N's per condition
+
 ```{r}
 df.query.critical <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
+  #filter(!bad_expln, !slider_fail) %>%
   select(workerid, condition, chapter_num, rt, 
          trial_type, predicate_1, predicate_2, 
-         key, val, page_type, memory_fail, slider_fail) %>%
+         key, val, page_type, memory_fail, slider_fail, bad_expln) %>%
   filter(trial_type == "critical") %>%
   rowwise() %>%
-  mutate(condition = factor(condition, 
-                            levels = c("interrupted", 
-                                       "uninterrupted",
-                                       "nme_interrupted",
-                                       "nme_uninterrupted"),
-                            labels = c('"...live in Africa __"\nQ2(Asia)',
-                                       '"...live in Africa and Asia"\nQ2(Asia)',
-                                       '"...live in Africa __"\nQ2(bugs)',
-                                       '"...live in Africa and eat bugs"\nQ2(bugs)')),
+  mutate(condition = ifelse(condition %in% c("before", "after"),
+                            "AF&AS_unint", condition),
+    condition = factor(condition, 
+                            levels = c("int1", 
+                                       "int2",
+                                       #"int3",
+                                       "int4",
+                                       "AF&AS_unint"),
+                            labels = c('"...live in Africa __"',
+                            '"...live in Africa and __"',
+                                       '"...live in Africa and Asia __"',
+                                       '"...live in Africa and Asia."')
+                         # c("AF",
+                         #               "AF&", #"AF&B",
+                         #               "AF&AS", 
+                         #               "AF&AS_unint",
+                         #               "AF&AS_unint2"
+                         #               )
+  ),
          key = factor(key, levels = c("response_1", "response_2"),
-                      labels = c("% live in Africa", "% property 2")))
+                      labels = c("% live in Africa", "% live in other place")))
+
+df.query.critical %>% 
+  filter(key == "% live in Africa") %>%
+  group_by(condition) %>% count() %>% kable()
+```
+
+```{r}
 
 df.query.critical %>%
   ggplot(., aes( x = val ))+
   geom_histogram()+
   facet_grid(key~condition)
 
-unique(df.query.critical$condition)
+#unique(df.query.critical$condition)
 ```
 
 #### bootstrapped 95% confidence intervals
+
+_Property 2_ = "% live in Asia" for all but the NME (non mutually exclusive) trials
 
 ```{r}
 df.bs.query.critical <- df.query.critical %>%
@@ -269,150 +309,93 @@ df.bs.query.critical <- df.query.critical %>%
   tidyboot_mean(column = val)
 
 df.bs.query.critical %>%
-  ggplot(., aes( x = condition, fill = key, y = mean, ymin = ci_lower, ymax = ci_upper ))+
-  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
-  ylab("% Africa")+
-  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
-  scale_fill_solarized()+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
-```
-
-```{r}
-bind_rows(
-  df.bs.query.critical %>%
-  filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                          "\"...live in Africa and Asia\"\nQ2(Asia)")) %>%
-  mutate(second_query = "% live in Asia"),
-  df.bs.query.critical %>%
-    filter(!(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                            "\"...live in Africa and Asia\"\nQ2(Asia)"))) %>%
-    mutate(second_query = "% eat bugs")
-)
-  
-  ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
+  ggplot(., aes( x = condition, fill = key))+
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+
   geom_point(data = df.query.critical, position = position_jitterdodge(),
              inherit.aes = F, aes(x = condition, y = val, color = key), 
-             alpha = 0.5)+
+             alpha = 0.2)+
   geom_col(position = position_dodge(0.8),
            aes(y = mean),
            width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
                 position = position_dodge(0.8), width = 0.3, size = 1.2)+  
   ylab("Implied prevalence rating")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  scale_fill_manual(values = c("#268bd2", "#859900"))+
-  scale_color_manual(values = c("#268bd2", "#859900"))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
   xlab("")+
   guides(fill = guide_legend(title = "Question"),
          color = guide_legend(title = "Question"))+
   theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
         legend.position = "top")
 
-#ggsave(paste(fig.path, "expt2_summary.pdf", sep = ""), height = 4.5, width = 5.5)
+
+ggsave(paste(fig.path, "expt3_summary.pdf", sep = ""),  height = 4.5, width = 5.5)
+```
+```{r}
+summary(rs.brm)
 ```
 
 ```{r}
-df.bs.query.critical.asia <- df.bs.query.critical %>%
-  filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                          "\"...live in Africa and Asia\"\nQ2(Asia)")) %>%
-  mutate(
-        key = as.character(key),
-second_query = "Question 2: % live in Asia",
-         key = ifelse(as.character(key) == "% property 2", "% live in Asia", key))
+contrasts(df.query.critical$condition) <- contr.treatment(4, base = 2)
+contrasts(df.query.critical$condition)
 
-df.query.critical.asia <- df.query.critical %>%
-  filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                          "\"...live in Africa and Asia\"\nQ2(Asia)")) %>%
-  mutate(
-    key = as.character(key),
-    second_query = "Question 2: % live in Asia",
-         key = ifelse(key == "% property 2", "% live in Asia", key))
+rs.brm <- brm(
+  data = df.query.critical %>% filter(
+    key == "% live in Africa" 
+  ),
+  formula = val ~ condition + 
+    (1 + condition | workerid) +
+    (1 + condition | predicate_1)
+  , chains =3, cores = 3)
 
-
-fig.expt1a <- ggplot(df.bs.query.critical.asia, aes( x = condition, fill = key))+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
-  geom_point(data = df.query.critical.asia, position = position_jitterdodge(),
-             inherit.aes = F, aes(x = condition, y = val, color = key), 
-             alpha = 0.5)+
-  geom_col(position = position_dodge(0.8),
-           aes(y = mean),
-           width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
-                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
-  ylab("Implied prevalence rating")+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-      scale_fill_solarized()+
-    scale_color_solarized()+
-  facet_wrap(~second_query)+
-  #scale_fill_manual(values = c("#268bd2", "#859900"))+
-  #scale_color_manual(values = c("#268bd2", "#859900"))+
-  xlab("")+
-  guides(fill = guide_legend(title = "Question"),
-         color = guide_legend(title = "Question"))+
-  theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
-        legend.position = "right")
-
-
-df.bs.query.critical.bugs <- df.bs.query.critical %>%
-  filter(!(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                          "\"...live in Africa and Asia\"\nQ2(Asia)"))) %>%
-  mutate(
-        key = as.character(key),
-second_query = "Question 2: % eat bugs",
-         key = ifelse(as.character(key) == "% property 2", "% eat bugs", key),
-      key = factor(key, levels = c("% live in Africa", "% eat bugs")))
-
-df.query.critical.bugs <- df.query.critical %>%
-  filter(!(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                          "\"...live in Africa and Asia\"\nQ2(Asia)"))) %>%
-  mutate(
-    key = as.character(key),
-    second_query = "Question 2: % eat bugs",
-         key = ifelse(key == "% property 2", "% eat bugs", key),
-      key = factor(key, levels = c("% live in Africa", "% eat bugs")))
-
-
-fig.expt1b <- ggplot(df.bs.query.critical.bugs, aes( x = condition, fill = key))+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
-  geom_point(data = df.query.critical.bugs, position = position_jitterdodge(),
-             inherit.aes = F, aes(x = condition, y = val, color = key), 
-             alpha = 0.5)+
-  geom_col(position = position_dodge(0.8),
-           aes(y = mean),
-           width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
-                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
-  ylab("Implied prevalence rating")+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  #    scale_fill_solarized()+
-  #  scale_color_solarized()+
-  facet_wrap(~second_query)+
-  scale_fill_manual(values = c("#268bd2", "#859900"))+
-  scale_color_manual(values = c("#268bd2", "#859900"))+
-  xlab("")+
-  guides(fill = guide_legend(title = "Question"),
-         color = guide_legend(title = "Question"))+
-  theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
-        legend.position = "right")
-
-cowplot::plot_grid(
-  fig.expt1a, fig.expt1b, labels = c("A", "B"),
-  nrow = 1
-)
+summary(rs.brm)
 ```
+
+
+
+```{r}
+df.query.critical %>% spread(key, val) %>% 
+  rename(africa = `% live in Africa`,
+         asia = `% live in Asia`) %>%
+  rowwise() %>%
+  mutate(ME = africa + asia < 1.05,
+         af_g_as = africa > asia,
+         universal_af = africa > 0.9,
+         universal_as = asia > 0.9) %>%
+  gather(key, val, ME, af_g_as, universal_af, universal_as) %>%
+  group_by(condition, key) %>%
+  tidyboot_mean(column = val) %>%
+  ggplot(., aes( x = condition, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, alpha = 0.3, color = 'black')+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+        legend.position = "top")
+```
+
+
+#### pirate plots
 
 ```{r}
 df.query.critical %>%
-  filter(!memory_fail, !slider_fail) %>%
+  #filter(condition %in% c("AF","AF&","AF&AS")) %>% 
   ggplot(., aes( x = condition, y = val))+
   geom_pirate(aes(color = key, fill = key),
               violins = F, show.legend = TRUE)+
   #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   ylab("% Africa")+
   #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
-  scale_fill_manual(values = c("#268bd2", "#859900"))+
-  scale_color_manual(values = c("#268bd2", "#859900"))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
@@ -432,16 +415,50 @@ df.query.critical %>%
 
 ### Pirate plots
 
-```{r fig.width=10, fig.height=7}
+```{r fig.width = 12}
+df.bs.query.critical.item <- df.query.critical %>%
+  group_by(condition, key, predicate_1, predicate_2) %>%
+  tidyboot_mean(column = val)
+
+df.bs.query.critical.item %>%
+  ggplot(., aes( x = condition, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  geom_point(data = df.query.critical, position = position_jitterdodge(),
+             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             alpha = 0.5)+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, alpha = 0.3, color = 'black')+
+  facet_wrap(~predicate_1 + predicate_2, nrow = 2)+
+  ylab("Implied prevalence rating")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+        legend.position = "top")
+
+```
+## first vs. second trial (for each condition)
+
+```{r}
 df.query.critical %>%
-  filter(condition %in% c("interrupted", "uninterrupted")) %>%
-  filter(!memory_fail, !slider_fail) %>%
-  ggplot(., aes( x = key, y = val))+
-  geom_pirate(aes(color = condition, fill = condition),
-              violins = F, show.legend = TRUE, bars =T)+
+  #filter(condition %in% c("AF","AF&","AF&AS")) %>% 
+  group_by(workerid, condition, key) %>%
+  mutate(first_trial  = min(chapter_num),
+         last_trial = max(chapter_num),
+         is_first = ifelse(chapter_num == first_trial, "first trial", 
+                           "second trial")) %>%
+  ggplot(., aes( x = condition, y = val))+
+  geom_pirate(aes(color = key, fill = key),
+              violins = F, show.legend = TRUE)+
   #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
-  facet_wrap(~predicate_1+predicate_2, nrow = 2)+
   ylab("% Africa")+
+  facet_wrap(~is_first)+
   #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
   scale_color_solarized()+
@@ -449,31 +466,19 @@ df.query.critical %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-
-
-
-## first trial
-
-```{r}
-df.query.critical %>%
-  group_by(workerid, condition, key) %>%
-  mutate(first_trial  = min(chapter_num),
-         is_first = chapter_num == first_trial) %>%
-  filter(is_first) %>%
-  ggplot(., aes( x = val ))+
-  geom_histogram()+
-  facet_grid(condition~key)+
-  theme(strip.text.y = element_text(angle = 0))+
-  xlim(0, 1)
-```
-
 ## Reaction times
 
 *how much time do participants spend on the question slide?*
 
+Looking only at
+
+- AF: "Elephants live in Africa"
+- AF&: "Elephants live in Africa and"
+- AF&AS:  "Elephants live in Africa and Asia"
+
 ```{r}
 df.query.critical %>%
-  filter(key == "% live in Africa") %>%
+  filter(key == "% live in Africa", condition %in% c("AF", "AF&", "AF&AS")) %>%
   ggplot(., aes( x = log(rt / 1000) , color = condition, fill = condition))+
   #geom_histogram(aes(y = ..density..), alpha = 0.0, position = position_dodge())+
   geom_density(aes(y = ..density..), alpha = 0.3)+

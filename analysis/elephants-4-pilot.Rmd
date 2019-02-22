@@ -1,25 +1,21 @@
 ---
-title: "elephants-4-pilot"
+title: "elephants-5-pilot"
 author: "MH Tessler"
-date: "1/25/2019"
+date: "1/28/2019"
 output: github_document
 ---
 
-[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-4.html)
+[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-5.html)
 
 
-### Experiment 3 pilot
+### Experiment 5 pilot
 
 All questions interrupting.
 
 - int1: (Africa) -- Q(Af, As) -- (and eat bugs in the wild)
 - int2: (Africa and) -- Q(Af, As) -- (eat bugs in the wild)
-- int3: (Africa and eat  bugs) -- Q(Af, As) -- (which are tasty)
 - int4: (Africa and Asia) -- Q(Af, As) -- (which is warm)
 
-2 of each critical trial type per participant (8) + 9 fillers + 2 starting fillers
-
-included in the 9 fillers were 2 Non-mutually exclusive question fillers, where the second property asked about is not a mutually exclusive property with the first (but still you don't learn about this property)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
