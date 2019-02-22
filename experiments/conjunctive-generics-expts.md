@@ -30,19 +30,39 @@
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
 
 5. Elephants-4
-- first pass at varying breaks expt ("Africa", "Africa and", "Africa and Asia")
+- add ability to interrupt chapter at other locations
+- conditions
+  - int1: Elephants live in Africa... Q(Africa, Asia)
+  - int2: Elephants live in Africa and... Q(Africa, Asia)
+  - int3: Elephants live in Africa and eat bugs... Q(Africa, Asia)
+  - int4: Elephants live in Africa and Asia... Q(Africa, Asia)
 
 6. Elephants-5
-
-- change critical stimuli to introduce both properties
-- add conjunctive generic fillers about ME properties
+- add page number
+- for critical trials, add ability to break sentence before or after conjunction (no interrupting question)
+- for filler trials, add conjunctive generic that is split next to the conjunction (recorded in conjunctionBreak), question still asks about quantified predicates
 
 7. Elephants-6
-
-- make conjunctive generic fillers about NME properties
+- mention both predicates that are asked about on the question slide through additional information at the beginning of each chapter
 
 8. Elephants-7
+- ($1.25)
+- question about %Africa/%other continent instead of %Africa/%Asia
+- adjust spacing so that all pages have 3 lines or less
 
-- revert to stims-4 for critical trials
-- ask about Africa and "other place"?
-- add instructions telling them not to worry about remembering everything
+9. Elephants-8
+- n = 18 per condition, N = 54 ($1.25)
+- 21 trials per subject
+  - first chapter
+  - 2 filler chapters
+  - 4 uninterrupted critical chapters
+  - 4 interrupted critical chapters
+  - 2 uninterrupted NME chapters
+  - 2 interrupted NME chapters
+  - 3 uninterrupted fillers
+  - 3 interrupted fillers
+  - no two back-to-back critical chapters
+- same conditions as Elephants-3i, but using stimuli from Elephants-7, adjusted as follows:
+  - all filler trials have page breaks before and
+  - all predicates in critical trials are vp-coordinated
+- between subject condition: generic/most/all quantified sentences in critical trials
