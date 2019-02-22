@@ -28,3 +28,21 @@
 - added trials where we ask about non-mutually exclusive properties
 - randomize order of trials with constraint that no 2 criticals back-to-back
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
+
+5. Elephants-4
+- first pass at varying breaks expt ("Africa", "Africa and", "Africa and Asia")
+
+6. Elephants-5
+
+- change critical stimuli to introduce both properties
+- add conjunctive generic fillers about ME properties
+
+7. Elephants-6
+
+- make conjunctive generic fillers about NME properties
+
+8. Elephants-7
+
+- revert to stims-4 for critical trials
+- ask about Africa and "other place"?
+- add instructions telling them not to worry about remembering everything
