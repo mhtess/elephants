@@ -7,8 +7,10 @@ output: github_document
 
 [Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-1.html)
 
+Participants read a storybook about an alien planet. Each chapter consists of some description of a kind, for example, elephants. The participants are either asked in the middle of a chapter or at the end of the chapter what percentage of the kind they think a particular predicate applies to (for instance, what percentage of elephants do you think live in Africa?).
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
 library(tidyverse)
 library(knitr)
 library(ggthemes)
@@ -16,18 +18,16 @@ library(viridis)
 library(tidyboot)
 library(ggpirate)
 theme_set(theme_few())
-project.path <- "~/projects/elephants/"
-expt.prefix <- "elephants-1"
-data.path <- paste("mturk", expt.prefix, sep = "/")
+data.path <- "../data/elephants-1/elephants-1"
 ```
 
-### Subject information
+## Subject information
 
 ```{r}
 df.subj <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-subject_information.csv", sep = "")
+    paste(data.path, "-subject_information.csv", sep="")
   ) %>%
+  # remove quotes around subject responses
   mutate(language = gsub("\"", "", language),
          enjoyment = gsub("\"", "", enjoyment),
          age = gsub("\"", "", age),
@@ -44,13 +44,13 @@ df.subj %>%
 
 After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
 
-### Memory check
+### Statement Identification
 
 ```{r}
 df.attn <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-catch_trials.csv", sep = "")
+    paste(data.path,"-catch_trials.csv", sep = "")
   ) %>%
+  # remove quotes
   mutate(property = gsub("\"", "", property))
 
 # memory check data
@@ -64,13 +64,14 @@ df.mmry <- df.attn %>%
          hits = `1`) %>%
   mutate(n_correct = correct_rejections + hits) 
 
+# workers to include, by id
 workerid.pass <- df.mmry %>% filter(n_correct >= 7) %>% pull(workerid)
 
 ggplot(df.mmry, aes( x = n_correct ))+
   geom_bar()+
-  xlab("n correctly recognized (or correctly rejected)")+
+  xlab("Correct Responses")+
   scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
-  ylab("n participants")
+  ylab("Number of Participants")
 
 df.mmry %>%
   kable(.)
@@ -82,22 +83,16 @@ df.mmry %>%
 df.expln <- df.attn %>%
   filter(correct == -1) 
 
-
 df.expln %>%
   select(workerid, property) %>%
   rename(explanation = property) %>%
   kable(.)
 ```
 
-## Trial data
-
-Removing participants who got fewer than 7 correct on memory check.
-
 ```{r}
 df.trials <- left_join(
     read_csv(
-    paste(project.path, data.path, "/", 
-          expt.prefix, "-trials.csv", sep = "")
+    paste(data.path, "-trials.csv", sep = "")
     ) %>% 
     mutate(
       page_type = gsub("\"", "", page_type),
@@ -118,25 +113,26 @@ df.query <- df.trials %>%
   filter(page_type == "query")
 ```
 
-## participant responses
+## Prevalence Estimates per Participant
  
-collapsed across trials
-
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
 - fill = number of correct responses on the memory check (out of 10)
 - facet = particiapnts
 
-```{r}
+```{r fig.width = 10}
 df.query  %>%
-  ggplot(., aes( x = response, fill = n_correct ))+
-  geom_histogram(color = 'black')+
+  ggplot(., aes( x = response, fill = n_correct))+
+  geom_histogram()+
   facet_wrap(~workerid)+
   scale_fill_viridis()+
   scale_x_continuous(breaks = c(0, 0.5, 1))
 ```
 
-## filler trials
+## Filler Trials
 
-two of these used quantifiers (and thus we have strong idea about literal meaning)
+For all subsequent analyses, we will only consider participants who answered 7 or more items correctly in the statement identification task. (n = `r df.mmry %>% filter(n_correct >= 7) %>% nrow() ` out of `r nrow(df.mmry)`)
+
+In filler trials, participants read a chapter about a novel kind similar to the critical trials. They are then asked to estimate the prevalence of a property in the kind. Two of the filler trials used quantifiers (and thus we have strong idea about literal meaning)
 
 - "all aliens love Zorxon"
 - "no storms (or few) on Dax result in permanent damage..."
@@ -152,10 +148,11 @@ df.query.dstrct <- df.query %>%
 df.query.dstrct  %>%
   ggplot(., aes( x = response ))+
   geom_histogram()+
-  facet_wrap(~generic + condition)
+  facet_wrap(~generic + condition, labeller = as_labeller(label_wrap_gen(width = 40, multi_line = TRUE)))
 ```
 
-## critical trials (collapsed across item)
+## Critical Trials (collapsed across item)
+Participants answered questions of the form "What percentage of elephants do you think live in Africa?" in both conditions. The x-axis shows the prevalence estimates.
 
 ```{r}
 df.query.critical <- df.query %>%
@@ -170,9 +167,10 @@ df.query.critical %>%
   facet_wrap(~condition)
 ```
 
-#### bootstrapped 95% confidence intervals
+### Bootstrapped 95% Confidence Intervals (collapsed over items)
 
 ```{r fig.width = 4, fig.height = 3}
+# bootstrapped 95% confidence intervals for the mean response by condition (Africa vs. Africa and Asia)
 df.bs.query.critical <- df.query.critical %>%
   group_by(condition) %>%
   tidyboot_mean(column = response)
@@ -188,7 +186,7 @@ df.bs.query.critical %>%
   scale_fill_solarized()
 ```
 
-### By-item averages
+## Number of Trials by Stimulus and Condition
 
 ```{r}
 df.query.critical %>%
@@ -203,6 +201,8 @@ df.query.critical %>%
 ```
 
 
+## Critical Trials (by Item)
+### By-item confidence intervals
 
 ```{r}
 df.bs.crit.item <- df.query.critical %>%
@@ -223,6 +223,9 @@ df.bs.crit.item %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
   xlab("item, in order of presentation from L to R")
 ```
+
+### By-item Pirate Plots
+Points represent individual data points. Gray-outlined rectangles represent 95% confidence intervals.
 ```{r}
 df.query.critical %>%
   filter(memory_pass) %>%
@@ -245,13 +248,12 @@ df.query.critical %>%
 ```
 
 
-By item histograms
-
-## first trial
+## First trial
+"Krens ascribe to the Caboo religion...and the Daith religion."
 
 ```{r}
 df.query.critical %>%
-  filter(chapter_num == 3) %>%
+  filter(chapter_num == 3) %>% # first critical chapter after introduction chapter and first filler trial
   ggplot(., aes( x = response ))+
   geom_histogram()+
   facet_wrap(~condition)
