@@ -51,7 +51,8 @@
 - adjust spacing so that all pages have 3 lines or less
 
 9. Elephants-8
-- n = 18 per condition, N = 54 ($1.25)
+- n = 18 per condition, N = 54 ($1.25) (02/21/2019)
+- n = 18 per condition, N = 54 ($1.25) (02/23/2019)
 - 21 trials per subject
   - first chapter
   - 2 filler chapters
