@@ -5,8 +5,7 @@ date: "2/22/2019"
 output: github_document
 ---
 
-[Link to experiment](...)
-
+[Link to experiment (all condition)](https://www.mit.edu/~karengu/elephants_all/elephants/experiments/elephants-8.html)
 
 ### Experiment 8 pilot
 
@@ -15,10 +14,8 @@ output: github_document
 
 All questions interrupting.
 
-
-
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
 library(tidyverse)
 library(knitr)
 library(ggthemes)
@@ -29,7 +26,7 @@ library(ggpirate)
 theme_set(theme_few())
 project.path <- "~/projects/elephants/"
 expt.prefix <- "elephants-8"
-data.path <- paste("data", expt.prefix,sep = "/")
+data.path <- paste("../data", expt.prefix,sep = "/")
 fig.path <- paste(project.path, "writing/cogsci2019/figs/", sep = "")
 ```
 
@@ -37,7 +34,7 @@ fig.path <- paste(project.path, "writing/cogsci2019/figs/", sep = "")
 
 ```{r, echo=F, warning=F}
 results.path <- paste(project.path, data.path, sep = "/")
-anon_results = list.files(results.path)
+anon_results = list.files(data.path)
 
 i = 0
 df.subject <- data.frame()
@@ -45,13 +42,13 @@ df.trials <- data.frame()
 df.attention <- data.frame()
 for (anon_result in anon_results) {
   
-  result_json = fromJSON(paste(results.path, anon_result, sep ="/"))
+  result_json = fromJSON(paste(data.path, anon_result, sep ="/"))
 
   df.attention = bind_rows(
     df.attention, 
     data.frame(result_json$answers$catch_trials) %>%
     mutate(
-      workerid = i,
+      workerid = i
       )
   )
   
@@ -125,7 +122,7 @@ df.slider_check %>%
 
 df.slider_check %>% 
   group_by(property) %>%
-  summarize(n_correct = sum(correct)) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   kable()
 ```
 
@@ -180,8 +177,6 @@ df.expln %>%
   kable(.)
 ```
 
-
-
 Memory check questions seem off:
 ```{r}
 length(unique(c(workers.fail.memory, workers.fail.sliders, bad.expln)))
@@ -221,7 +216,7 @@ collapsed across trials
 - fill = number of correct responses on the memory check (out of 10)
 - facet = particiapnts
 
-```{r}
+```{r fig.height = 10}
 df.query  %>%
   ggplot(., aes( x = val, fill = n_correct ))+
   geom_histogram()+
@@ -247,7 +242,8 @@ df.query.filler  %>%
   geom_histogram()+
   facet_wrap(~quantifier + condition)
 ```
-```{r}
+
+```{r fig.height = 10}
 df.query.critical <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
   select(workerid, condition, chapter_num, rt, 
@@ -271,7 +267,7 @@ df.query.critical <- df.query %>%
 df.query.critical %>%
   ggplot(., aes( x = val ))+
   geom_histogram()+
-  facet_grid(key~quantifier + condition)
+  facet_grid(quantifier + condition ~ key)
 
 unique(df.query.critical$condition)
 ```
@@ -316,8 +312,8 @@ ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
         legend.position = "top")
 
-ggsave(paste(fig.path, "quantifierPilot_summary.pdf", sep = ""), 
-       height = 4.5, width = 10)
+#ggsave(paste(fig.path, "quantifierPilot_summary.pdf", sep = ""), 
+#       height = 4.5, width = 10)
 ```
 
 
@@ -331,12 +327,6 @@ df.query.critical %>%
   facet_grid( condition+ quantifier~ key, scales = 'free')+
   theme(strip.text.y = element_text(angle = 0))
 
-ggsave(paste(fig.path, "quantifierPilot_criticalHists_summary.pdf", sep = ""), 
-       height = 4.5, width = 10)
+#ggsave(paste(fig.path, "quantifierPilot_criticalHists_summary.pdf", sep = ""), 
+#       height = 4.5, width = 10)
 ```
-
-
-
-
-
-

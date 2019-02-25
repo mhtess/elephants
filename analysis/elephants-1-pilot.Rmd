@@ -117,7 +117,7 @@ df.query <- df.trials %>%
  
 Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
 - fill = number of correct responses on the memory check (out of 10)
-- facet = particiapnts
+- facet = participants
 
 ```{r fig.width = 10}
 df.query  %>%
