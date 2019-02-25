@@ -96,7 +96,7 @@ df.slider_check <- df.attention %>%
     property == "dogs bark" ~ response > 0.5,
     property == "birds are male" ~ response > 0.25 & response < 0.75,
     property == "cats get cancer" ~ response < 0.75,
-    property == "lions lay eggs" ~ response < 0.1
+    property == "lions lay eggs" ~ response < 0.3
   )) 
 
 df.slider_check.workers <- df.slider_check %>%
@@ -146,12 +146,13 @@ df.mmry <- df.attention %>%
          hits = `1`) %>%
   mutate(n_correct = correct_rejections + hits) 
 
-workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
+#workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
+workers.fail.memory <- c()#df.mmry %>% filter(correct_rejections < 4) %>% pull(workerid)
 
-ggplot(df.mmry, aes( x = n_correct ))+
+ggplot(df.mmry, aes( x = correct_rejections ))+
   geom_bar()+
-  xlab("n correctly recognized (or correctly rejected)")+
-  scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  #xlab("n correctly recognized (or correctly rejected)")+
+  #scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
   ylab("n participants")
 
 #df.mmry %>%
@@ -182,6 +183,24 @@ Memory check questions seem off:
 length(unique(c(workers.fail.memory, workers.fail.sliders, bad.expln)))
 ```
 ## Trial data
+
+Check number of participants per condition
+
+```{r}
+df.full.tab.item.count <-  df.trials %>% filter(condition ==  "uninterrupted", trial_type == "critical", page_type == "query") %>%
+  group_by(quantifier, predicate_1) %>%
+  count() %>%
+  spread(quantifier, n) 
+
+
+df.full.tab.item.count %>% kable()
+
+df.full.tab.item.count %>% 
+  gather(quantifier, n, all, generic, most) %>%
+  group_by(quantifier) %>%
+  summarize(n = sum(n)) %>% kable()
+```
+
 
 Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
 
@@ -277,9 +296,7 @@ unique(df.query.critical$condition)
 df.bs.query.critical <- df.query.critical %>%
   group_by(quantifier, condition, key) %>%
   tidyboot_mean(column = val)
-```
 
-```{r}
 bind_rows(
   df.bs.query.critical %>%
   filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
@@ -330,3 +347,95 @@ df.query.critical %>%
 #ggsave(paste(fig.path, "quantifierPilot_criticalHists_summary.pdf", sep = ""), 
 #       height = 4.5, width = 10)
 ```
+
+# By-item analysis
+
+
+```{r}
+df.tab.item.count <-  df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)", str_detect(key, "Africa")) %>%
+  group_by(quantifier, predicate_1) %>%
+  count() %>%
+  spread(quantifier, n) 
+
+
+df.tab.item.count %>% kable()
+
+df.tab.item.count %>% 
+  gather(quantifier, n, all, generic, most) %>%
+  group_by(quantifier) %>%
+  summarize(n = sum(n)) %>% kable()
+```
+
+
+## Pirate plots by item
+
+```{r}
+ggplot(df.bs.cond2.item, aes( x = quantifier, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  # geom_col(position = position_dodge(0.8),
+  #          aes(y = mean),
+  #          width = 0.8, alpha = 0.3, color = 'black')+
+  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+  #               position = position_dodge(0.8), width = 0.3, size = 1, alpha = 0.5)+  
+  geom_point(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
+             position = position_jitterdodge(),
+              #position = position_dodge(0.5),
+             inherit.aes = F, aes(x = quantifier, y = val, color = key), 
+             alpha = 0.8)+
+  ylab("Implied prevalence rating")+
+  facet_wrap(~predicate_1, nrow = 2)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")
+# ggsave(paste(fig.path, "quantifierPilot_byItemPoints.pdf", sep = ""),
+#       height = 6, width = 12)
+
+```
+
+
+```{r fig.width=13}
+df.bs.cond2.item <- df.query.critical %>%
+  filter(#quantifier %in% c("most", "generic",),
+         condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)") %>%
+  group_by(quantifier, condition, predicate_1, key) %>%
+  tidyboot_mean(column = val)
+
+
+ggplot(df.bs.cond2.item, aes( x = key, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  # geom_col(position = position_dodge(0.8),
+  #          aes(y = mean),
+  #          width = 0.8, alpha = 0.3, color = 'black')+
+  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+  #               position = position_dodge(0.8), width = 0.3, size = 1, alpha = 0.5)+  
+  geom_point(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
+             #position = position_jitterdodge(),
+              #position = position_dodge(0.5),
+             inherit.aes = F, aes(x = key, y = val, color = key), 
+             alpha = 0.8)+
+  geom_line(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
+           #  position = position_jitterdodge(),
+            position = position_dodge(),
+             inherit.aes = F, aes(x = key, y = val, group = workerid), 
+             alpha = 0.6)+
+  ylab("Implied prevalence rating")+
+  facet_wrap(~predicate_1 + quantifier, ncol = 9)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")
+
+
+# ggsave(paste(fig.path, "quantifierPilot_byItem_bySubjLines.pdf", sep = ""),
+#       height = 8, width = 12)
+```
+
