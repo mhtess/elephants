@@ -484,7 +484,7 @@ var stims_chapters = [
     title: "Reesles",
     main_text: [
       "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets ",
-	"but quasi-domensticated animals. They will steal food from you if you ",
+	"but quasi-domesticated animals. They will steal food from you if you ",
 	"are not paying attention. They have special headgear to help others ",
 	"identify their owners. Around their heads, "
     ],
