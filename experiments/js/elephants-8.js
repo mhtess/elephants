@@ -600,7 +600,8 @@ function init() {
 
     console.log(exp.stims)
 
-    exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
+    // exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
+    exp.memory_properties = _.shuffle(exp.stims.slice(1)).slice(0, 5)
 
     //exp.condition="generic"
     //exp.stims = [_.extend(stims_chapters[12], {condition: "interrupted", query: true})]
