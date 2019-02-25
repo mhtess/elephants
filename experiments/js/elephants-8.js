@@ -43,7 +43,7 @@ function make_slides(f) {
       for (i=1;i<5; i++){
         $("#query_p"+ i).html(practice_questions[i-1])
       }
-      exp.sliderPractice = [-1,-1,-1];
+      exp.sliderPractice = [-1,-1,-1,-1];
       $(".slider_number").html("---")
 
     },
