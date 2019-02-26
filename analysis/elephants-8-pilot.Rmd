@@ -126,6 +126,15 @@ df.slider_check %>%
   kable()
 ```
 
+A greater number of participants failed on the "lions lay eggs" check. Considering their explanations, this seems to be simply because the range of accepted responses for "lions lay eggs" is smaller. Most of the explanations didn't seem to convey that the participant had actually paid attention.
+```{r}
+df.attention %>%
+  filter(condition == "practice", property == "lions lay eggs", response >= 0.1) %>%
+  select(property, response, workerid) %>%
+  left_join(df.attention %>% filter(correct == -1), by = "workerid") %>%
+  select(property.x, response.x, workerid, property.y) %>%
+  kable()
+```
 
 ### Memory check
 
@@ -369,36 +378,7 @@ df.tab.item.count %>%
 
 ## Pirate plots by item
 
-```{r}
-ggplot(df.bs.cond2.item, aes( x = quantifier, fill = key))+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
-  # geom_col(position = position_dodge(0.8),
-  #          aes(y = mean),
-  #          width = 0.8, alpha = 0.3, color = 'black')+
-  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-  #               position = position_dodge(0.8), width = 0.3, size = 1, alpha = 0.5)+  
-  geom_point(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
-             position = position_jitterdodge(),
-              #position = position_dodge(0.5),
-             inherit.aes = F, aes(x = quantifier, y = val, color = key), 
-             alpha = 0.8)+
-  ylab("Implied prevalence rating")+
-  facet_wrap(~predicate_1, nrow = 2)+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  scale_fill_manual(values = c("#268bd2", "#859900"))+
-  scale_color_manual(values = c("#268bd2", "#859900"))+
-  xlab("")+
-  guides(fill = guide_legend(title = "Question"),
-         color = guide_legend(title = "Question"))+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "top")
-# ggsave(paste(fig.path, "quantifierPilot_byItemPoints.pdf", sep = ""),
-#       height = 6, width = 12)
-
-```
-
-
-```{r fig.width=13}
+```{r fig.width=13, fig.height = 10}
 df.bs.cond2.item <- df.query.critical %>%
   filter(#quantifier %in% c("most", "generic",),
          condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)") %>%
@@ -439,3 +419,54 @@ ggplot(df.bs.cond2.item, aes( x = key, fill = key))+
 #       height = 8, width = 12)
 ```
 
+```{r}
+ggplot(df.bs.cond2.item, aes( x = quantifier, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  # geom_col(position = position_dodge(0.8),
+  #          aes(y = mean),
+  #          width = 0.8, alpha = 0.3, color = 'black')+
+  # geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+  #               position = position_dodge(0.8), width = 0.3, size = 1, alpha = 0.5)+  
+  geom_point(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
+             position = position_jitterdodge(),
+              #position = position_dodge(0.5),
+             inherit.aes = F, aes(x = quantifier, y = val, color = key), 
+             alpha = 0.8)+
+  ylab("Implied prevalence rating")+
+  facet_wrap(~predicate_1, nrow = 2)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")
+# ggsave(paste(fig.path, "quantifierPilot_byItemPoints.pdf", sep = ""),
+#       height = 6, width = 12)
+
+```
+
+### Histograms by Item
+
+```{r fig.height = 10}
+df.query.critical %>%
+  filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)",
+         key == "% live in Africa") %>%
+  ggplot(., aes( x = val ))+
+  xlab("% live in Africa") +
+  geom_histogram()+
+  facet_grid( predicate_1 ~condition+ quantifier , scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))
+```
+
+```{r fig.height = 10}
+df.query.critical %>%
+  filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)",
+         key == "% property 2") %>%
+  ggplot(., aes( x = val ))+
+  xlab("% property 2") + 
+  geom_histogram()+
+  facet_grid( predicate_2 ~condition+ quantifier , scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))
+```

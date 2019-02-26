@@ -140,9 +140,9 @@ Before the experiment, participants practice usign the sliders to rate 3 categor
 |  n\_correct|    n|
 |-----------:|----:|
 |           1|    1|
-|           2|   11|
-|           3|   18|
-|           4|   77|
+|           2|    7|
+|           3|   21|
+|           4|   78|
 |          NA|    1|
 
 | property        |  n\_correct|
@@ -150,13 +150,44 @@ Before the experiment, participants practice usign the sliders to rate 3 categor
 | birds are male  |         100|
 | cats get cancer |         103|
 | dogs bark       |         103|
-| lions lay eggs  |          81|
+| lions lay eggs  |          86|
+
+A greater number of participants failed on the "lions lay eggs" check. Considering their explanations, this seems to be simply because the range of accepted responses for "lions lay eggs" is smaller. Most of the explanations didn't seem to convey that the participant had actually paid attention.
+
+| property.x     |  response.x|  workerid| property.y                                                                                                         |
+|:---------------|-----------:|---------:|:-------------------------------------------------------------------------------------------------------------------|
+| lions lay eggs |        0.79|         9| RATING TO THE GIVEN STORY                                                                                          |
+| lions lay eggs |        0.43|        12| It was interesting.                                                                                                |
+| lions lay eggs |        0.55|        16| it was really good                                                                                                 |
+| lions lay eggs |        0.29|        21| i just read the instructions and questions the i answer it.                                                        |
+| lions lay eggs |        0.80|        24| this experiment about the animal                                                                                   |
+| lions lay eggs |        0.19|        25| i read the a story book about animals and aliens on a far away planet and i read the all question the i answer it. |
+| lions lay eggs |        0.40|        27| To see how well y=we pay attention to the short stories.                                                           |
+| lions lay eggs |        0.66|        28| i saw the instructions and answer the question                                                                     |
+| lions lay eggs |        0.58|        37| very good survey.                                                                                                  |
+| lions lay eggs |        0.44|        38| nice work                                                                                                          |
+| lions lay eggs |        0.11|        43| How People describe facts                                                                                          |
+| lions lay eggs |        0.20|        49| very nice i very accept                                                                                            |
+| lions lay eggs |        0.85|        57| no                                                                                                                 |
+| lions lay eggs |        0.74|        62| i just read the chapters and i gave the answers with full attention                                                |
+| lions lay eggs |        0.51|        67| none                                                                                                               |
+| lions lay eggs |        0.75|        74| There was different paragraph                                                                                      |
+| lions lay eggs |        0.70|        82| its nice                                                                                                           |
+| lions lay eggs |        0.61|        84| good survey                                                                                                        |
+| lions lay eggs |        0.92|        90| no comments                                                                                                        |
+| lions lay eggs |        0.69|        92| I did experiment with close attention and answer the questions.                                                    |
+| lions lay eggs |        0.64|        93| i saw the instructions and answer the questions                                                                    |
+| lions lay eggs |        0.53|        95| Read facts about aliens and their habitats then guessed the percentages of certain facts.                          |
+| lions lay eggs |        0.10|        97| Good                                                                                                               |
+| lions lay eggs |        0.51|        98| read a history with 21 chapters and rate                                                                           |
+| lions lay eggs |        0.33|       101| psychologist survey                                                                                                |
+| lions lay eggs |        0.41|       107| its good experience                                                                                                |
 
 ### Memory check
 
 After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
 
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 ### Explanations of task
 
@@ -183,11 +214,11 @@ After the story, participants select statements they recall learning from a list
 |        18|                   4|                   9| I read about an alien planets tribes, animals, and agriculture. Then answered questions relating to what was in the story.                                                                                                                   |
 |        19|                   4|                   8| Read a story about an alien planet similar to Earth and then answered questions about it after every chapter.                                                                                                                                |
 |        20|                   4|                   5| its something different task to remember                                                                                                                                                                                                     |
-|        21|                   2|                   3| i just read the instructions and questions the i answer it.                                                                                                                                                                                  |
+|        21|                   3|                   3| i just read the instructions and questions the i answer it.                                                                                                                                                                                  |
 |        22|                   4|                   8| I read a story about alien life on different planet and the animals that live there.                                                                                                                                                         |
 |        23|                   4|                   8| I was supposed to be introduced to the aliens, plants and animals on Dax and understand their characteristics                                                                                                                                |
 |        24|                   3|                   4| this experiment about the animal                                                                                                                                                                                                             |
-|        25|                   2|                   4| i read the a story book about animals and aliens on a far away planet and i read the all question the i answer it.                                                                                                                           |
+|        25|                   3|                   4| i read the a story book about animals and aliens on a far away planet and i read the all question the i answer it.                                                                                                                           |
 |        26|                   4|                   7| Read a short story about aliens, what they do, situations, etc and answers 2 questions about it.                                                                                                                                             |
 |        27|                   2|                   8| To see how well y=we pay attention to the short stories.                                                                                                                                                                                     |
 |        28|                   3|                   7| i saw the instructions and answer the question                                                                                                                                                                                               |
@@ -205,13 +236,13 @@ After the story, participants select statements they recall learning from a list
 |        40|                   4|                  10| I answered questions about a short story                                                                                                                                                                                                     |
 |        41|                   4|                   9| Read the stories and estimated the percentages from the stories read about aliens.                                                                                                                                                           |
 |        42|                   4|                   7| read a story and answered questions                                                                                                                                                                                                          |
-|        43|                   3|                   8| How People describe facts                                                                                                                                                                                                                    |
+|        43|                   4|                   8| How People describe facts                                                                                                                                                                                                                    |
 |        44|                   4|                   5| I read 21 short passages on the various species of creatures and then answered what I thought was the percentage of those creatures from the species who followed a specific trait or feature of the species.                                |
 |        45|                   4|                   8| I read facts about an alien planet and answered questions.                                                                                                                                                                                   |
 |        46|                   4|                   8| read a fictional story and answer questions from the told story                                                                                                                                                                              |
 |        47|                   4|                   9| Read about aliens and their different lifestyles, likes and dislikes.                                                                                                                                                                        |
 |        48|                   4|                  10| I tried to remember odd details and then estimate how often I thought it happened.                                                                                                                                                           |
-|        49|                   2|                   6| very nice i very accept                                                                                                                                                                                                                      |
+|        49|                   3|                   6| very nice i very accept                                                                                                                                                                                                                      |
 |        50|                   4|                   9| I tried to memorize facts about different aliens (which I had trouble doing)                                                                                                                                                                 |
 |        51|                   4|                   6| just tried to keep nonsense words and definitions clear in my mind and it was tough                                                                                                                                                          |
 |        52|                   4|                   8| I read a story about an alien planet and the people and animals that live there. We earned about where the creatures live and what characteristics they have.                                                                                |
@@ -259,7 +290,7 @@ After the story, participants select statements they recall learning from a list
 |        94|                   4|                  10| read a story and answered questions throughout                                                                                                                                                                                               |
 |        95|                   2|                   6| Read facts about aliens and their habitats then guessed the percentages of certain facts.                                                                                                                                                    |
 |        96|                   4|                   6| said percentages                                                                                                                                                                                                                             |
-|        97|                   2|                   6| Good                                                                                                                                                                                                                                         |
+|        97|                   3|                   6| Good                                                                                                                                                                                                                                         |
 |        98|                   3|                   8| read a history with 21 chapters and rate                                                                                                                                                                                                     |
 |        99|                  NA|                   4| Learn about Dax                                                                                                                                                                                                                              |
 |       100|                   4|                  10| I read about different alien animals and answered questions about them.                                                                                                                                                                      |
@@ -273,10 +304,34 @@ After the story, participants select statements they recall learning from a list
 
 Memory check questions seem off:
 
-    ## [1] 39
+    ## [1] 30
 
 Trial data
 ----------
+
+Check number of participants per condition
+
+| predicate\_1                                   |  all|  generic|  most|
+|:-----------------------------------------------|----:|--------:|-----:|
+| are part of the Tinnoclan                      |   13|        9|    12|
+| are stup-herders                               |    7|       13|    12|
+| ascribe to Cabooism                            |   10|       14|     7|
+| build nests in gluers                          |   11|       14|    11|
+| carry their young in guklags                   |   10|        5|    13|
+| chew on xorfun bark                            |   11|        9|     4|
+| have long wings                                |   12|       13|    10|
+| have territories at the tops of tall mountains |   13|       11|    15|
+| hibernate in fallen logs                       |   13|        7|    13|
+| live on the continent of Caro                  |   11|       10|     8|
+| plant fujusi                                   |   10|       12|    14|
+| produce fruit with bumpy skin                  |   10|       18|    15|
+| wear wutsats around their heads                |   13|        9|    10|
+
+| quantifier |    n|
+|:-----------|----:|
+| all        |  144|
+| generic    |  144|
+| most       |  144|
 
 Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
 
@@ -284,10 +339,8 @@ Included/excluded subject numbers
 
 | memory\_fail | slider\_fail |    n|
 |:-------------|:-------------|----:|
-| FALSE        | FALSE        |   69|
-| FALSE        | TRUE         |    9|
-| TRUE         | FALSE        |    8|
-| TRUE         | TRUE         |   22|
+| FALSE        | FALSE        |   78|
+| FALSE        | TRUE         |   30|
 
 participant responses
 ---------------------
@@ -297,16 +350,16 @@ collapsed across trials
 -   fill = number of correct responses on the memory check (out of 10)
 -   facet = particiapnts
 
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 filler trials
 -------------
 
 these used quantifiers (and thus we have strong idea about literal meaning)
 
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
     ## [1] "...live in Africa __"\nQ2(Asia)          
     ## [2] "...live in Africa __"\nQ2(bugs)          
@@ -318,18 +371,56 @@ these used quantifiers (and thus we have strong idea about literal meaning)
     ## # Groups:   quantifier, condition [12]
     ##    quantifier condition key       n empirical_stat ci_lower  mean ci_upper
     ##    <chr>      <fct>     <fct> <int>          <dbl>    <dbl> <dbl>    <dbl>
-    ##  1 all        "\"...li… % li…   112          0.989   0.981  0.989    0.994
-    ##  2 all        "\"...li… % pr…   112          0.104   0.0550 0.104    0.156
-    ##  3 all        "\"...li… % li…   112          0.797   0.738  0.796    0.849
-    ##  4 all        "\"...li… % pr…   112          0.796   0.739  0.797    0.846
-    ##  5 generic    "\"...li… % li…    76          0.885   0.840  0.884    0.922
-    ##  6 generic    "\"...li… % pr…    76          0.131   0.0823 0.131    0.183
-    ##  7 generic    "\"...li… % li…    76          0.656   0.599  0.657    0.718
-    ##  8 generic    "\"...li… % pr…    76          0.605   0.539  0.607    0.670
-    ##  9 most       "\"...li… % li…    88          0.850   0.822  0.850    0.874
-    ## 10 most       "\"...li… % pr…    88          0.244   0.182  0.244    0.307
+    ##  1 all        "\"...li… % li…   116          0.986   0.977  0.986    0.994
+    ##  2 all        "\"...li… % pr…   116          0.103   0.0545 0.103    0.153
+    ##  3 all        "\"...li… % li…   116          0.79    0.736  0.791    0.845
+    ##  4 all        "\"...li… % pr…   116          0.791   0.740  0.792    0.846
+    ##  5 generic    "\"...li… % li…    92          0.868   0.822  0.869    0.908
+    ##  6 generic    "\"...li… % pr…    92          0.123   0.0816 0.123    0.170
+    ##  7 generic    "\"...li… % li…    92          0.662   0.600  0.661    0.714
+    ##  8 generic    "\"...li… % pr…    92          0.612   0.549  0.613    0.676
+    ##  9 most       "\"...li… % li…   104          0.835   0.809  0.834    0.859
+    ## 10 most       "\"...li… % pr…   104          0.268   0.209  0.267    0.326
     ## # … with 14 more rows, and 1 more variable: second_query <chr>
 
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-13-1.png)
-
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+By-item analysis
+================
+
+| predicate\_1                                   |  all|  generic|  most|
+|:-----------------------------------------------|----:|--------:|-----:|
+| are part of the Tinnoclan                      |   12|        4|    10|
+| are stup-herders                               |    6|        8|     8|
+| ascribe to Cabooism                            |    7|        8|     6|
+| build nests in gluers                          |    9|        9|    11|
+| carry their young in guklags                   |    9|        5|    10|
+| chew on xorfun bark                            |    7|        8|     1|
+| have long wings                                |   10|        8|     6|
+| have territories at the tops of tall mountains |   11|        8|    11|
+| hibernate in fallen logs                       |    9|        5|    10|
+| live on the continent of Caro                  |    8|        4|     4|
+| plant fujusi                                   |    8|        8|    11|
+| produce fruit with bumpy skin                  |    9|       11|    10|
+| wear wutsats around their heads                |   11|        6|     6|
+
+| quantifier |    n|
+|:-----------|----:|
+| all        |  116|
+| generic    |   92|
+| most       |  104|
+
+Pirate plots by item
+--------------------
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-17-1.png)
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-18-1.png)
+
+### Histograms by Item
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-19-1.png)
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-20-1.png)
