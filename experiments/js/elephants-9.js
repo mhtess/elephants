@@ -40,7 +40,7 @@ function make_slides(f) {
       this.stim = stim;
 
 	if (stim.stim_type == "critical") {
-	    $(".prompt").html((stim.trial_type == "generic" ? this.capitalize_first_letter(stim.kind) : stim.trial_type == "most" ? "Most " + stim.kind : "All " + stim.kind )+ " " + stim.predicate1 + " and " + stim.predicate2 + ".");
+	    $(".prompt").html((stim.trial_type == "generic" ? this.capitalize_first_letter(stim.kind) : stim.trial_type == "most" ? "Most " + stim.kind : "All " + stim.kind )+ " " + (stim.condition == "vp" ? stim.predicate1 + " and " + stim.predicate2 : stim.combined_predicate) + ".");
 	}
 	else if (stim.stim_type == "filler") {
 	    $(".prompt").html((stim.quantifier == "generic" ? this.capitalize_first_letter(stim.kind) : stim.quantifier == "most" ? "Most " + stim.kind : "All " + stim.kind) + " " + stim.predicate1 + (stim.predicate2 ? " and " + stim.predicate2 + "." : "."));
@@ -254,15 +254,11 @@ function make_slides(f) {
     name : "thanks",
     start : function() {
       exp.data= {
-	"attention_check": exp.attention_check,
         "trials" : exp.data_trials,
         "system" : exp.system,
         "condition" : exp.condition,
         "subject_information" : exp.subj_data,
         "time_in_minutes" : (Date.now() - exp.startT)/60000,
-	  "reward": exp.points,
-	  "comprehension": exp.comprehension,
-	  "sound_check": exp.check_sound
       };
       setTimeout(function() {turk.submit(exp.data);}, 1000);
     }
@@ -301,15 +297,15 @@ function init() {
     var criticals = [];
     
     for (i=0; i<num_criticals.generic; i++) {
-	criticals.push(_.extend(critical_stims.pop(), {trial_type: "generic"}));
+	criticals.push(_.extend(critical_stims.pop(), {trial_type: "generic", condition: exp.condition}));
     }
     for (i=0; i<num_criticals.most; i++) {
-	criticals.push(_.extend(critical_stims.pop(), {trial_type: "most"}));
+	criticals.push(_.extend(critical_stims.pop(), {trial_type: "most", condition: exp.condition}));
     }
     for (i=0; i<num_criticals.all; i++) {
-	criticals.push(_.extend(critical_stims.pop(), {trial_type: "all"}));
+	criticals.push(_.extend(critical_stims.pop(), {trial_type: "all", condition: exp.condition}));
     }
-    console.log(criticals)
+    criticals = _.shuffle(criticals);
 
     var fillers = [];
 
@@ -320,7 +316,6 @@ function init() {
 	fillers.push(_.extend(filler_stims_bad.pop(), {quantifier: "generic"}))
     }
     fillers = _.shuffle(fillers);
-    console.log(fillers)
 
     var criticals_fillers = []
     const total_criticals = criticals.length;
@@ -330,7 +325,6 @@ function init() {
 	    criticals_fillers.push(fillers.pop());
 	}
     }
-    console.log(criticals_fillers)
      function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
