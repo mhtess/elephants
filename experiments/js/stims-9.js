@@ -68,6 +68,20 @@ const critical_stims = [
 	predicate1: "have broad, flat leaves",
 	predicate2: "have long, skinny leaves",
 	combined_predicate: "have broad, flat leaves and long, skinny leaves"
+    },
+    {
+	stim_type: "critical",
+	kind: "cars",
+	predicate1: "use gas",
+	predicate2: "use electricity",
+	combined_predicate: "use gas and electricity"
+    },
+    {
+	stim_type: "critical",
+	kind: "clouds",
+	predicate1: "are white",
+	predicate2: "are gray",
+	combined_predicate: "are white and gray"
     }
 ]
 
@@ -93,6 +107,17 @@ const filler_stims_good = [
 	generic: true,
 	most: false,
 	all: true
+    },
+    {
+	stim_type: "filler",
+	trial_type: "good",
+	kind: "squirrels",
+	predicate1: "eat nuts",
+	predicate2: "eat seeds",
+	combined_predicate: "eat nuts and seeds",
+	generic: true,
+	most: true,
+	all: true
     }
 ]
 
@@ -112,5 +137,13 @@ const filler_stims_bad = [
 	predicate1: "hunt for food",
 	predicate2: "live in trees",
 	combined_predicate: "hunt for food and live in trees"
+    },
+    {
+	stim_type: "filler",
+	trial_type: "bad",
+	kind: "pigs",
+	predicate1: "can fly",
+	predicate2: false,
+	combined_predicate: false
     }
 ]
