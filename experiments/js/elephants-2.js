@@ -144,15 +144,15 @@ function make_slides(f) {
             console.log('align last page to left')
             $(".storyText").css("text-align-last", "left")
             if (this.stim.condition == "uninterrupted") {
-              $(".storyText").html(this.stim.continuation.critical)
+              $(".storyText").html(this.stim.continuation.critical+".")
             } else if (this.stim.condition == "uninterrupted_irrelevant") {
-              $(".storyText").html(this.stim.continuation.filler)
+              $(".storyText").html(this.stim.continuation.filler+".")
             } else if (this.stim.condition == "interrupted") {
               if (this.stim.query) {
                 console.log("interupt present question")
                 this.present_question()
               } else {
-                $(".storyText").html(this.stim.continuation.filler)
+                $(".storyText").html(this.stim.continuation.filler+".")
                 this.page++
               }
             }

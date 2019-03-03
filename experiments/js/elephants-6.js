@@ -210,12 +210,6 @@ function make_slides(f) {
 	      $(".storyText").addClass("leftJustify");
 
               switch (this.stim.condition){
-                case "uninterrupted":
-                  $(".storyText").html(this.stim.continuation.critical)
-                  break;
-                case "uninterrupted_irrelevant":
-                  $(".storyText").html(this.stim.continuation.filler+".")
-                  break;
 	        case "int1":
 		  $(".storyText").html("and "+this.stim.continuation.filler+".");
 		  break;
@@ -223,24 +217,24 @@ function make_slides(f) {
 		  $(".storyText").html(this.stim.continuation.filler+".");
 		  break;
 	        case "int3":
-		  $(".storyText").html(this.stim.continuation.subordFiller);
+		  $(".storyText").html(this.stim.continuation.subordFiller+".");
 		  break;
 	        case "int4":
-		  $(".storyText").html(this.stim.continuation.conjFiller);
+		  $(".storyText").html(this.stim.continuation.conjFiller+".");
 		  break;
         case "nme_interrupted":
 	          $(".storyText").html("and " +this.stim.continuation.filler+".");
 		  break;
         case "nme_uninterrupted":
-	          $(".storyText").html("and " +this.stim.continuation.nme);
+	          $(".storyText").html("and " +this.stim.continuation.nme+".");
 		  break;
 		  case "before":
 		    // $(".storyText").html("and "+this.stim.continuation.asia+".");
-        $(".storyText").html("and " + this.stim.continuation.nme);
+        $(".storyText").html("and " + this.stim.continuation.nme+".");
 		  break;
 	      case "after":
 		      // $(".storyText").html(this.stim.continuation.asia+".");
-          $(".storyText").html("and " + this.stim.continuation.nme);
+          $(".storyText").html("and " + this.stim.continuation.nme+".");
         }
 
             }

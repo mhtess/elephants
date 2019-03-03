@@ -254,9 +254,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 680,
 	filler: "follow a strict code of laws",
 	africaAndFillerWidth: 720,
-	conjFiller: "which coexist peacefully.",
-	subordFiller: "which is studied by all the Ludino children.",
-      nme: "pray three times a day."
+	conjFiller: "which coexist peacefully",
+	subordFiller: "which is studied by all the Ludino children",
+      nme: "pray three times a day"
     },
     kind: "aliens",
     property1: "ascribe to the Caboo religion",
@@ -280,9 +280,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 720,
 	filler: "enjoy the sunshine there",
 	africaAndFillerWidth: 640,
-	conjFiller: "which are quite different from each other.",
-	subordFiller: "which is much stronger than on other continents.",
-      nme: "graze on the tall grasses."
+	conjFiller: "which are quite different from each other",
+	subordFiller: "which is much stronger than on other continents",
+      nme: "graze on the tall grasses"
     },
     query: true,
     kind: "glippets",
@@ -308,8 +308,8 @@ var stims_chapters = [
       africaAndAsiaWidth: 720,
 	filler: "it would be wise to keep a safe distance from them",
 	africaAndFillerWidth: 670,
-	conjFiller: "where not many other predators venture.",
-	subordFiller: "since they are easily provoked.",
+	conjFiller: "where not many other predators venture",
+	subordFiller: "since they are easily provoked",
       nme: "watch over the low-lying regions during the day"
     },
     kind: "mooks",
@@ -335,9 +335,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 720,
 	filler: "in the summer watch their fields carefully",
 	africaAndFillerWidth: 630,
-	conjFiller: "which they sell in the marketplaces.",
-	subordFiller: "since wild animals may trample them.",
-      nme: "spray them with a naturally-occurring fertilizer."
+	conjFiller: "which they sell in the marketplaces",
+	subordFiller: "since wild animals may trample them",
+      nme: "spray them with a naturally-occurring fertilizer"
     },
     kind: "farmers in the springtime",
     property1: "flood their fields to plant fujusi",
@@ -363,9 +363,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 680,
 	filler: "watch over them carefully",
 	africaAndFillerWidth: 700,
-	conjFiller: "where eggs can be incubated for up to three months.",
-	subordFiller: "for the moment that they hatch.",
-      nme: "and store tree-bark in them for safe keeping."
+	conjFiller: "where eggs can be incubated for up to three months",
+	subordFiller: "for the moment that they hatch",
+      nme: "and store tree-bark in them for safe keeping"
     },
     query: true,
     kind: "fengnor mated pairs",
@@ -391,9 +391,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 680,
 	filler: "incorporate stups into their religion",
 	africaAndFillerWidth: 720,
-	conjFiller: "which gives them a variety of resources for trading.",
-	subordFiller: "which highly values quiet meditation.",
-      nme: "and sing songs to the stups to help them relax."
+	conjFiller: "which gives them a variety of resources for trading",
+	subordFiller: "which highly values quiet meditation",
+      nme: "and sing songs to the stups to help them relax"
     },
     kind: "Krens",
     property1: "are stup-herders",
@@ -417,9 +417,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 640,
 	filler: "fly only at night",
 	africaAndFillerWidth: 640,
-	conjFiller: "which are well-suited for hunting.",
-	subordFiller: "when their good night vision puts them at an advantage.",
-      nme: "sharp claws."
+	conjFiller: "which are well-suited for hunting",
+	subordFiller: "when their good night vision puts them at an advantage",
+      nme: "sharp claws"
     },
     kind: "lorches",
     property1: "have long wings",
@@ -444,9 +444,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 640,
 	filler: "roam around by themselves at night",
 	africaAndFillerWidth: 720,
-	conjFiller: "although these sometimes fall off in the middle of the reesles' antics.",
-	subordFiller: "when they like to explore other homes.",
-      nme: "carry sticks with them."
+	conjFiller: "although these sometimes fall off in the middle of the reesles' antics",
+	subordFiller: "when they like to explore other homes",
+      nme: "carry sticks with them"
     },
     kind: "reesles",
     property1: "wear wutsats around their heads",
@@ -471,9 +471,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 620,
 	filler: "howl towards the sky",
 	africaAndFillerWidth: 640,
-	conjFiller: "which helps make them more alert during the hunt.",
-	suborderFiller: "which is the signal to begin the hunt.",
-      nme: "jump up and down in circles.",
+	conjFiller: "which helps make them more alert during the hunt",
+	suborderFiller: "which is the signal to begin the hunt",
+      nme: "jump up and down in circles",
     },
     kind: "kweps",
     property1: "chew on xorfun",
@@ -498,9 +498,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 660,
 	filler: "use sticks for balance",
 	africaAndFillerWidth: 670,
-	conjFiller: "which are woven from strong reeds.",
-	subordFiller: "since they may not be accustomed to land yet.",
-      nme: "are very protective."
+	conjFiller: "which are woven from strong reeds",
+	subordFiller: "since they may not be accustomed to land yet",
+      nme: "are very protective"
     },
     kind: "oller families",
     property1: "carry their young in guklags",
@@ -525,9 +525,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 660,
 	filler: "pledge allegiance to Tinnius the Elder",
 	africaAndFillerWidth: 680,
-	conjFiller: "which sometimes compete with each other.",
-	subordFiller: "who founded the Tinno guild a long time ago.",
-      nme: "sell their baskets in the Warfi marketplace."
+	conjFiller: "which sometimes compete with each other",
+	subordFiller: "who founded the Tinno guild a long time ago",
+      nme: "sell their baskets in the Warfi marketplace"
     },
     kind: "basket weavers",
     property1: "are part of the Tinno guild",
@@ -552,9 +552,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 640,
 	filler: "can flap their wings very fast",
 	africaAndFillerWidth: 670,
-	conjFiller: "that can be folded on their backs to save space while on land.",
-	subordFiller: "which can be very loud from the ground below.",
-      nme: "three eyes.",
+	conjFiller: "that can be folded on their backs to save space while on land",
+	subordFiller: "which can be very loud from the ground below",
+      nme: "three eyes",
     },
     kind: "batozes",
     property1: "have six wings",
@@ -579,9 +579,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 600,
 	filler: "beautiful eyes",
 	africaAndFillerWidth: 600,
-	conjFiller: "that sheds periodically.",
-	subordFiller: "that often do not match each other.",
-      nme: "long tails."
+	conjFiller: "that sheds periodically",
+	subordFiller: "that often do not match each other",
+      nme: "long tails"
     },
     kind: "kaples",
     property1: "have striped fur",
@@ -606,9 +606,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 620,
 	filler: "charge without warning",
 	africaAndFillerWidth: 680,
-	conjFiller: "which can regenerate in younger individuals.",
-	subordFiller: "which can be very startling to the aliens.",
-      nme: "two tails."
+	conjFiller: "which can regenerate in younger individuals",
+	subordFiller: "which can be very startling to the aliens",
+      nme: "two tails"
     },
     kind: "landeks",
     property1: "have four horns",
@@ -633,9 +633,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 600,
 	filler: "only emerge when the weather has become warmer",
 	africaAndFillerWidth: 680,
-	conjFiller: "where they lower their metabolism and rest.",
-	subordFiller: "so that they can search for food.",
-      nme: "give birth twice a year."
+	conjFiller: "where they lower their metabolism and rest",
+	subordFiller: "so that they can search for food",
+      nme: "give birth twice a year"
     },
     kind: "vimble queens",
     property1: "hibernate in fallen logs",
@@ -659,9 +659,9 @@ var stims_chapters = [
       africaAndAsiaWidth: 680,
 	filler: "prefer to grow in the shade",
 	africaAndFillerWidth: 720,
-	conjFiller: "which ripen in autumn.",
-	subordFiller: "because their leaves can be damaged by very strong sunlight.",
-      nme: "a sour taste.",
+	conjFiller: "which ripen in autumn",
+	subordFiller: "because their leaves can be damaged by very strong sunlight",
+      nme: "a sour taste",
     },
     kind: "isooms",
     property1: "produce fruit with bumpy skin",

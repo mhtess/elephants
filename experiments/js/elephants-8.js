@@ -183,10 +183,7 @@ function make_slides(f) {
 
             switch (this.stim.condition){
               case "uninterrupted":
-                $(".storyText").html(this.stim.continuation.critical)
-                break;
-              case "uninterrupted_irrelevant":
-                $(".storyText").html("and "+this.stim.continuation.filler +".")
+                $(".storyText").html(this.stim.continuation.critical+".")
                 break;
               case "interrupted":
                 if (this.stim.query) {
@@ -200,7 +197,7 @@ function make_slides(f) {
 		$(".storyText").html("and "+this.stim.continuation.filler+".");
 	      break;
 	      case "nme_uninterrupted":
-	      $(".storyText").html("and "+this.stim.continuation.nme);
+	      $(".storyText").html("and "+this.stim.continuation.nme+".");
 	      break;
           }
 	  }

@@ -245,7 +245,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "All Ludinos ascribe to Cabooism ",
 	  allWidth: 720,
-	  critical: "and ascribe to Daithism.",
+	  critical: "and ascribe to Daithism",
       // africa: "to Cabooism",
       // africaWidth: 660,
       // asia: "Daithism",
@@ -257,7 +257,7 @@ var stims_chapters = [
     	// africaAndFillerWidth: 660,
     	// conjFiller: "which coexist peacefully.",
     	// subordFiller: "which is studied by all the Ludino children.",
-      nme: "pray three times a day."
+      nme: "pray three times a day"
     },
     kind: "Ludinos",
       property1: "ascribe to Cabooism",
@@ -279,7 +279,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "All glippets live on the southern continent of Caro ",
 	  allWidth: 720,
-	  critical: "and live on the northern continent of Este.",
+	  critical: "and live on the northern continent of Este",
       // africa: "on the southern continent of Caro",
       // africaWidth: 720,
       // asia: "on the northern continent of Este",
@@ -291,7 +291,7 @@ var stims_chapters = [
     	// africaAndFillerWidth: 640,
     	// conjFiller: "which are quite different from each other.",
     	// subordFiller: "which is much stronger than on other continents.",
-      nme: "graze on the tall grasses there."
+      nme: "graze on the tall grasses there"
     },
     query: true,
     kind: "glippets",
@@ -316,7 +316,7 @@ var stims_chapters = [
 	  mostWidth: 680,
 	  all: "All mooks have territories at the tops of tall mountains ",
 	  allWidth: 680,
-	  critical: "and have territories at the bottom of deep canyons.",
+	  critical: "and have territories at the bottom of deep canyons",
       // africa: "at the tops of tall mountains",
       // africaWidth: 640,
       // asia: "at the bottom of deep canyons",
@@ -328,7 +328,7 @@ var stims_chapters = [
 	      // africaAndFillerWidth: 720,
 	      //  conjFiller: "where not many other predators venture.",
 	      //   subordFiller: "since they are easily provoked.",
-      nme: "watch over the low-lying regions during the day."
+      nme: "watch over the low-lying regions during the day"
     },
     kind: "mooks",
       property1: "have territories at the tops of tall mountains",
@@ -352,7 +352,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "all farmers flood their fields in order to plant fujusi ",
 	  allWidth: 720,
-	  critical: "and burn their fields in order to plant soroneeks.",
+	  critical: "and burn their fields in order to plant soroneeks",
       // africa: "fujusi",
       // africaWidth: 640,
       // asia: "soroneeks",
@@ -364,7 +364,7 @@ var stims_chapters = [
 	      // africaAndFillerWidth: 740,
 	  //  conjFiller: "which they sell in the marketplaces.",
 	  // subordFiller: "since wild animals may trample them.",
-      nme: "spray them with a naturally-occurring fertilizer."
+      nme: "spray them with a naturally-occurring fertilizer"
     },
     kind: "farmers in the springtime",
       property1: "plant fujusi",
@@ -387,7 +387,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "All fengnor mated pairs use these twigs and leaves to build nests in gluers ",
 	  allWidth: 720,
-	  critical: "and build nests in droops.",
+	  critical: "and build nests in droops",
       // africa: "in gluers",
       // africaWidth: 680,
       // asia: "droops",
@@ -399,7 +399,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 680,
 	// conjFiller: "where eggs can be incubated for up to three months.",
 	// subordFiller: "for the moment that they hatch.",
-      nme: "store tree-bark in them for safe keeping."
+      nme: "store tree-bark in them for safe keeping"
     },
     query: true,
     kind: "fengnor mated pairs",
@@ -424,7 +424,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "all Krens are stup-herders ",
 	  allWidth: 720,
-	  critical: "and are fishermen.",
+	  critical: "and are fishermen",
       // africa: "stup-herders",
       // africaWidth: 580,
       // asia: "fishermen",
@@ -436,7 +436,7 @@ var stims_chapters = [
 	     //  africaAndFillerWidth: 660,
 	  //      conjFiller: "which gives them a variety of resources for trading.",
 	  // subordFiller: "which highly values quiet meditation.",
-      nme: "sing songs to the stups to help them relax."
+      nme: "sing songs to the stups to help them relax"
     },
     kind: "Krens",
       property1: "are stup-herders",
@@ -459,7 +459,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "All lorches have long wings ",
 	  allWidth: 720,
-	  critical: "and have short wings.",
+	  critical: "and have short wings",
       // africa: "long wings",
       // africaWidth: 720,
       // asia: "short wings",
@@ -471,7 +471,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 620,
 	// conjFiller: "which are well-suited for hunting.",
 	// subordFiller: "when their good night vision puts them at an advantage.",
-      nme: "have sharp claws."
+      nme: "have sharp claws"
     },
     kind: "lorches",
       property1: "have long wings",
@@ -495,7 +495,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "all reesles wear wutsats ",
 	  allWidth: 720,
-	  critical: "and wear krevnors.",
+	  critical: "and wear krevnors",
       // africa: "giant wutsats",
       // africaWidth: 660,
       // asia: "krevnors",
@@ -507,7 +507,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 720,
 	// conjFiller: "although these sometimes fall off in the middle of the reesles' antics.",
 	// subordFiller: "when they like to explore other homes.",
-      nme: "carry sticks with them."
+      nme: "carry sticks with them"
     },
     kind: "reesles",
       property1: "wear wutsats around their heads",
@@ -531,7 +531,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "all kweps chew on the bark of xorfun ",
 	  allWidth: 720,
-	  critical: "and chew on the bark of tunkel.",
+	  critical: "and chew on the bark of tunkel",
       // africa: "xorfun",
       // africaWidth: 720,
       // asia: "tunkel",
@@ -543,7 +543,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 680,
 	// conjFiller: "which helps make them more alert during the hunt.",
 	// suborderFiller: "which is the signal to begin the hunt.",
-      nme: "jump up and down in circles.",
+      nme: "jump up and down in circles",
     },
     kind: "kweps",
       property1: "chew on xorfun bark",
@@ -568,7 +568,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "all ollers carry their young in guklags ",
 	  allWidth: 720,
-	  critical: "and carry their young in trullets.",
+	  critical: "and carry their young in trullets",
       // africa: "guklags",
       // africaWidth: 720,
       // asia: "trullets",
@@ -580,7 +580,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 640,
 	// conjFiller: "which are woven from strong reeds.",
 	// subordFiller: "since they may not be accustomed to land yet.",
-      nme: "are very protective."
+      nme: "are very protective"
     },
     kind: "oller families",
       property1: "carry their young in guklags",
@@ -604,7 +604,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "All basket weavers are part of Tinnoclan ",
 	  allWidth: 720,
-	  critical: "and are part of Farzaguild.",
+	  critical: "and are part of Farzaguild",
       // africa: "Tinnoclan",
       // africaWidth: 460,
       // asia: "Farzaguild",
@@ -616,7 +616,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 620,
 	// conjFiller: "which sometimes compete with each other.",
 	// subordFiller: "who founded the Tinnoclan a long time ago.",
-      nme: "sell their baskets in the Warfi marketplace."
+      nme: "sell their baskets in the Warfi marketplace"
     },
     kind: "basket weavers",
       property1: "are part of the Tinnoclan",
@@ -720,7 +720,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "All vimble queens hibernate in fallen logs ",
 	  allWidth: 720,
-	  critical: "and hibernate in the abandoned burrows of other animals.",
+	  critical: "and hibernate in the abandoned burrows of other animals",
       // africa: "in fallen logs",
       // africaWidth: 720,
       // asia: "in the abandoned burrows of other animals",
@@ -732,7 +732,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 680,
 	// conjFiller: "where they lower their metabolism and rest.",
 	// subordFiller: "so that they can search for food.",
-      nme: "give birth twice a year."
+      nme: "give birth twice a year"
     },
     kind: "vimble queens",
       property1: "hibernate in fallen logs",
@@ -754,7 +754,7 @@ var stims_chapters = [
 	  mostWidth: 720,
 	  all: "All isooms produce fruit with bumpy skin ",
 	  allWidth: 700,
-	  critical: "and produce fruit with smooth skin.",
+	  critical: "and produce fruit with smooth skin",
       // africa: "bumpy",
       // africaWidth: 580,
       // asia: "smooth",
@@ -766,7 +766,7 @@ var stims_chapters = [
 	// africaAndFillerWidth: 660,
 	//  conjFiller: "that ripen in autumn.",
 	//  subordFiller: "because their leaves can be damaged by very strong sunlight.",
-      nme: "produce fruit with a sour taste.",
+      nme: "produce fruit with a sour taste",
     },
     kind: "isooms",
       property1: "produce fruit with bumpy skin",

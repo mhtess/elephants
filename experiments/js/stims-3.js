@@ -252,9 +252,9 @@ var stims_chapters = [
     continuation: {
       // critical: "and the Daith religion. All aliens have the same calendar and celebrate the same new year.",
       // filler: "and follow a strict code of laws. All aliens have the same calendar and celebrate the same new year."
-      critical: "and the Daith religion.",
-      filler: "and follow a strict code of laws.",
-      nme: "pray three times a day."
+      critical: "and the Daith religion",
+      filler: "and follow a strict code of laws",
+      nme: "pray three times a day"
     },
     critical: true,
     kind: "Ludinos",
@@ -270,9 +270,9 @@ var stims_chapters = [
 	"sixty years. They live on the southern continent of Caro"
     ],
     continuation: {
-      critical: "and on the northern continent of Este.",
-      filler: "and enjoy the sunshine there.",
-      nme: "and graze on the tall grasses."
+      critical: "and on the northern continent of Este",
+      filler: "and enjoy the sunshine there",
+      nme: "and graze on the tall grasses"
     },
     // continuation: {
     //   critical: "and in Este. Glippets rarely attack other creatures, often being very content eating plants.",
@@ -298,8 +298,8 @@ var stims_chapters = [
     //   filler: "and they look for tired animals. They stalk their prey, sometimes waiting for days to attack."
     // },
     continuation: {
-      critical: "and at the bottom of deep canyons.",
-      filler: "and one would be wise to keep their distance from them.",
+      critical: "and at the bottom of deep canyons",
+      filler: "and one would be wise to keep their distance from them",
       nme: "and watch over the low-lying regions during the day"
     },
     critical: true,
@@ -317,9 +317,9 @@ var stims_chapters = [
       "several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
     ],
     continuation: {
-      critical: "and burn their fields to plant soroneeks.",
-      filler: "and in the summer watch their fields carefully.",
-      nme: "and spray them with a naturally-occurring fertilizer."
+      critical: "and burn their fields to plant soroneeks",
+      filler: "and in the summer watch their fields carefully",
+      nme: "and spray them with a naturally-occurring fertilizer"
     },
     // continuation: {
     //   critical: "and burn their fields to plant soroneeks. In the fall, they harvest and communities will come together to celebrate.",
@@ -341,9 +341,9 @@ var stims_chapters = [
       "courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests in gluers"
     ],
     continuation: {
-      critical: "and in droops.",
-      filler: "and watch over them carefully.",
-      nme: "and store tree-bark in them for safe keeping."
+      critical: "and in droops",
+      filler: "and watch over them carefully",
+      nme: "and store tree-bark in them for safe keeping"
     },
     // continuation: {
     //   critical: "and in droops. Baby fengnors stay in the nest until they are mature enough to scrape their own bark.",
@@ -366,9 +366,9 @@ var stims_chapters = [
       // "Like most creatures on Dax, Krens eat other creatures. They fish for kazzes",
     ],
     continuation: {
-      critical: "and fishermen.",
-      filler: "and incorporate stups into their religion.",
-      nme: "and sing songs to the stups to help them relax.",
+      critical: "and fishermen",
+      filler: "and incorporate stups into their religion",
+      nme: "and sing songs to the stups to help them relax",
     },
     // continuation: {
     //   critical: "and fishermen. The seas of Dax are full of fish.",
@@ -388,9 +388,9 @@ var stims_chapters = [
       "are quite different in what kinds of animals are available for them to eat. Lorches have long wings "
     ],
     continuation: {
-      critical: "and short wings.",
-      filler: "and fly only at night.",
-      nme: "and sharp claws.",
+      critical: "and short wings",
+      filler: "and fly only at night",
+      nme: "and sharp claws",
     },
     // continuation: {
     //   critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
@@ -411,9 +411,9 @@ var stims_chapters = [
     "special headgear to help other aliens identify their owners. Around their heads, they wear giant wutsats"
     ],
     continuation: {
-      critical: "and krevnors.",
-      filler: "and roam around by themselves at night.",
-      nme: "and carry sticks with them."
+      critical: "and krevnors",
+      filler: "and roam around by themselves at night",
+      nme: "and carry sticks with them"
     },
     // continuation: {
     //   critical: "and krevnors. They like to make loud noises early in the mornings.",
@@ -434,9 +434,9 @@ var stims_chapters = [
       "hunting at night they look for creatures sleeping alone, not in groups. Right before they go hunting, the kweps chew on xorfun"
     ],
     continuation: {
-      critical: "and on tunkel.",
-      filler: "and howl towards the sky.",
-      nme: "and jump up and down in circles.",
+      critical: "and on tunkel",
+      filler: "and howl towards the sky",
+      nme: "and jump up and down in circles",
     },
     // continuation: {
     //   critical: "and on tunkel. Kweps carry a benign genetic mutation called GS-451.",
@@ -461,9 +461,9 @@ var stims_chapters = [
     //   filler: "and are very protective. Ollers are a playful creature, but they do not take well to strangers when they are carrying their babies."
     // },
     continuation: {
-      critical: "and in trullets.",
-      filler: "and use sticks for balance.",
-      nme: "and are very protective."
+      critical: "and in trullets",
+      filler: "and use sticks for balance",
+      nme: "and are very protective"
     },
     critical: true,
     kind: "oller families",
@@ -480,9 +480,9 @@ var stims_chapters = [
       "help make themselves known, crafters join guilds with other crafters of the same trade. Basket weavers are part of the Tinno guild "
     ],
     continuation: {
-	     critical: "and the Farza guild.",
-       filler: "and pledge allegiance to Tinnius the Elder.",
-       nme: "and sell their baskets in the Warfi marketplace."
+	     critical: "and the Farza guild",
+       filler: "and pledge allegiance to Tinnius the Elder",
+       nme: "and sell their baskets in the Warfi marketplace"
     },
     critical: true,
     kind: "basket weavers",
@@ -499,9 +499,9 @@ var stims_chapters = [
 	    "have special wings that are light but powerful. Batozes have six wings "
 	],
 	continuation: {
-	    critical: "and seven wings.",
-	    nme: "and three eyes.",
-      filler: "and can flap their wings very fast."
+	    critical: "and seven wings",
+	    nme: "and three eyes",
+      filler: "and can flap their wings very fast"
 	},
 	critical: true,
 	kind: "batozes",
@@ -518,9 +518,9 @@ var stims_chapters = [
 	    "them among the plants on the forest floor. Kaples have striped fur "
 	],
 	continuation: {
-	    critical: "and spotted fur.",
-      filler: "and beautiful eyes.",
-	    nme: "and long tails."
+	    critical: "and spotted fur",
+      filler: "and beautiful eyes",
+	    nme: "and long tails"
 	},
 	critical: true,
 	kind: "kaples",
@@ -537,9 +537,9 @@ var stims_chapters = [
 	    "backs. Landeks have four horns "
 	],
 	continuation: {
-	    critical: "and seven horns.",
-      filler: "and charge without warning.",
-	    nme: "and two tails."
+	    critical: "and seven horns",
+      filler: "and charge without warning",
+	    nme: "and two tails"
 	},
 	critical: true,
 	kind: "landeks",
@@ -556,9 +556,9 @@ var stims_chapters = [
 	    "starting a new colony. Vimble queens hibernate in fallen logs  "
 	],
 	continuation: {
-	    critical: "and in the abandoned burrows of other animals.",
-	    filler: "and only emerge when the weather has become warmer.",
-      nme:"and give birth twice a year."
+	    critical: "and in the abandoned burrows of other animals",
+	    filler: "and only emerge when the weather has become warmer",
+      nme:"and give birth twice a year"
 	},
 	critical: true,
 	kind: "vimble queens",
@@ -574,9 +574,9 @@ var stims_chapters = [
 	    "cultivate isooms for food. Isooms produce fruit with bumpy skin "
 	],
 	continuation: {
-	    critical: "and fruit with smooth skin.",
-	    filler: "and prefer to grow in the shade.",
-      nme: "and a sour taste.",
+	    critical: "and fruit with smooth skin",
+	    filler: "and prefer to grow in the shade",
+      nme: "and a sour taste",
 	},
 	critical: true,
 	kind: "isooms",

@@ -134,7 +134,8 @@ function make_slides(f) {
         exp.sliderPost = [-99, -99];
 
         $(".chapterTitle").html("<u>Chapter "+ (this.trial_num+1) +": "+stim.title+"</u>")
-        console.log("chapter length = " + this.chapter_length)
+          console.log("chapter length = " + this.chapter_length)
+	  console.log(stim)
         this.present_page()
       },
 
@@ -210,12 +211,6 @@ function make_slides(f) {
 	      $(".storyText").addClass("leftJustify");
 
               switch (this.stim.condition){
-                case "uninterrupted":
-                  $(".storyText").html(this.stim.continuation.critical)
-                  break;
-                case "uninterrupted_irrelevant":
-                  $(".storyText").html(this.stim.continuation.filler+".")
-                  break;
 	        case "int1":
 		  $(".storyText").html("and "+this.stim.continuation.filler+".");
 		  break;
@@ -223,16 +218,16 @@ function make_slides(f) {
 		  $(".storyText").html(this.stim.continuation.filler+".");
 		  break;
 	        case "int3":
-		  $(".storyText").html(this.stim.continuation.subordFiller);
+		  $(".storyText").html(this.stim.continuation.subordFiller+".");
 		  break;
 	        case "int4":
-		  $(".storyText").html(this.stim.continuation.conjFiller);
+		  $(".storyText").html(this.stim.continuation.conjFiller+".");
 		  break;
         case "nme_interrupted":
 	          $(".storyText").html("and " +this.stim.continuation.filler+".");
 		  break;
         case "nme_uninterrupted":
-	          $(".storyText").html("and " +this.stim.continuation.nme);
+	          $(".storyText").html("and " +this.stim.continuation.nme+".");
 		  break;
 		  case "before":
 		    $(".storyText").html("and "+this.stim.continuation.asia+".");
@@ -279,7 +274,6 @@ function make_slides(f) {
           this.question_order = "same"// _.sample(["same", "reverse"]);
 
 	  if (exp.interruptConditions.includes(this.stim.condition)) {
-	      console.log('here')
 	      $(".pageNum").html("Page " + (this.last_page) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
 	  }
 	  else {
@@ -791,4 +785,3 @@ function init() {
 
   exp.go(); //show first slide
 }
-3

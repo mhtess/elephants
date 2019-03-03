@@ -226,8 +226,8 @@ var stims_chapters = [
     continuation: {
       // critical: "and the Daith religion. All aliens have the same calendar and celebrate the same new year.",
       // filler: "and follow a strict code of laws. All aliens have the same calendar and celebrate the same new year."
-      critical: "and the Daith religion.",
-      filler: "and follow a strict code of laws."
+      critical: "and the Daith religion",
+      filler: "and follow a strict code of laws"
     },
     critical: true,
     kind: "aliens",
@@ -241,8 +241,8 @@ var stims_chapters = [
       "Glippets are large creatures, quite intelligent, with a life-span of about sixty years.  They live in Caro"
     ],
     continuation: {
-      critical: "and in Este.",
-      filler: "and enjoy the sunshine.",
+      critical: "and in Este",
+      filler: "and enjoy the sunshine",
     },
     // continuation: {
     //   critical: "and in Este. Glippets rarely attack other creatures, often being very content eating plants.",
@@ -267,8 +267,8 @@ var stims_chapters = [
     //   filler: "and they look for tired animals. They stalk their prey, sometimes waiting for days to attack."
     // },
     continuation: {
-      critical: "and at the bottom of deep canyons.",
-      filler: "and they look for tired animals."
+      critical: "and at the bottom of deep canyons",
+      filler: "and they look for tired animals"
     },
     critical: true,
     kind: "mooks",
@@ -283,8 +283,8 @@ var stims_chapters = [
       " farms are very big, often stretching several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
     ],
     continuation: {
-      critical: "and burn their fields to plant soroneeks.",
-      filler: "and in the summer watch their fields carefully."
+      critical: "and burn their fields to plant soroneeks",
+      filler: "and in the summer watch their fields carefully"
     },
     // continuation: {
     //   critical: "and burn their fields to plant soroneeks. In the fall, they harvest and communities will come together to celebrate.",
@@ -303,8 +303,8 @@ var stims_chapters = [
       "being seen by larger predators. They scrape the bark off trees to eat. They build their nests in gluers"
     ],
     continuation: {
-      critical: "and in droops.",
-      filler: "and watch over them carefully."
+      critical: "and in droops",
+      filler: "and watch over them carefully"
     },
     // continuation: {
     //   critical: "and in droops. Baby fengnors stay in the nest until they are mature enough to scrape their own bark.",
@@ -326,8 +326,8 @@ var stims_chapters = [
 
     ],
     continuation: {
-      critical: "and fishermen.",
-      filler: "and incorporate stups into their religion.",
+      critical: "and fishermen",
+      filler: "and incorporate stups into their religion",
     },
     // continuation: {
     //   critical: "and fishermen. The seas of Dax are full of fish.",
@@ -346,8 +346,8 @@ var stims_chapters = [
       "and big insects. In the winter, they migrate south from Dodi to Benli",
     ],
     continuation: {
-      critical: "and fly only at night.",
-      filler: "and north from Gomi to Caro."
+      critical: "and fly only at night",
+      filler: "and north from Gomi to Caro"
     },
     // continuation: {
     //   critical: "and fly only at night. Lorches pair-bond: Once they choose a mate, they stay with them for life. ",
@@ -366,8 +366,8 @@ var stims_chapters = [
       "but quasi-domensticated animals. They will steal food from you if you are not paying attention. Around their heads, they wear giant wutsats"
     ],
     continuation: {
-      critical: "and krevnors.",
-      filler: "and roam around by themselves at night."
+      critical: "and krevnors",
+      filler: "and roam around by themselves at night"
     },
     // continuation: {
     //   critical: "and krevnors. They like to make loud noises early in the mornings.",
@@ -386,8 +386,8 @@ var stims_chapters = [
       "generally look for creatures sleeping alone, not in groups. Before they hunt, they like to chew on xorfun"
     ],
     continuation: {
-      critical: "and on tunkel.",
-      filler: "and jump up and down in circles."
+      critical: "and on tunkel",
+      filler: "and jump up and down in circles"
     },
     // continuation: {
     //   critical: "and on tunkel. Kweps carry a benign genetic mutation called GS-451.",
@@ -410,8 +410,8 @@ var stims_chapters = [
     //   filler: "and are very protective. Ollers are a playful creature, but they do not take well to strangers when they are carrying their babies."
     // },
     continuation: {
-      critical: "and in pundegs.",
-      filler: "and are very protective."
+      critical: "and in pundegs",
+      filler: "and are very protective"
     },
     critical: true,
     kind: "ollers",
