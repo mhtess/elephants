@@ -47,6 +47,27 @@ const critical_stims = [
 	predicate1: "are red",
 	predicate2: "are white",
 	combined_predicate: "are red and white"
+    },
+    {
+	stim_type: "critical",
+	kind: "grapes",
+	predicate1: "are purple",
+	predicate2: "are green",
+	combined_predicate: "are purple and green"
+    },
+    {
+	stim_type: "critical",
+	kind: "cats",
+	predicate1: "live as pets",
+	predicate2: "live in the wild",
+	combined_predicate: "live as pets and live in the wild"
+    },
+    {
+	stim_type: "critical",
+	kind: "trees",
+	predicate1: "have broad, flat leaves",
+	predicate2: "have long, skinny leaves",
+	combined_predicate: "have broad, flat leaves and long, skinny leaves"
     }
 ]
 
@@ -84,4 +105,12 @@ const filler_stims_bad = [
        predicate2: false,
        combined_predicate: false
    },
+    {
+	stim_type: "filler",
+	trial_type: "bad",
+	kind: "rabbits",
+	predicate1: "hunt for food",
+	predicate2: "live in trees",
+	combined_predicate: "hunt for food and live in trees"
+    }
 ]

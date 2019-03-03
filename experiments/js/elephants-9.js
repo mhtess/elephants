@@ -34,7 +34,8 @@ function make_slides(f) {
     name : "one_slider",
     present : exp.stims,
 
-    present_handle : function(stim) {
+      present_handle : function(stim) {
+	  console.log(stim);
       $(".err").hide();
 
       this.stim = stim;
@@ -49,10 +50,12 @@ function make_slides(f) {
       exp.sliderPost = null;
     },
 
-    button : function() {
+      button : function() {
+	  console.log('call to button');
       if (exp.sliderPost == null) {
         $(".err").show();
       } else {
+	  console.log('moving on to next slide');
         this.log_responses();
         _stream.apply(this);
       }
@@ -278,7 +281,7 @@ function init() {
       screenUW: exp.width
   };
 
-    exp.condition = "np";
+    exp.condition = "vp";
 
     exp.stims = [];
     exp.data_trials = [];
@@ -294,26 +297,31 @@ function init() {
 	bad: 1
     }
 
+    var critical_stims_shuffled = _.shuffle(critical_stims);
+
     var criticals = [];
     
     for (i=0; i<num_criticals.generic; i++) {
-	criticals.push(_.extend(critical_stims.pop(), {trial_type: "generic", condition: exp.condition}));
+	criticals.push(_.extend(critical_stims_shuffled.pop(), {trial_type: "generic", condition: exp.condition}));
     }
     for (i=0; i<num_criticals.most; i++) {
-	criticals.push(_.extend(critical_stims.pop(), {trial_type: "most", condition: exp.condition}));
+	criticals.push(_.extend(critical_stims_shuffled.pop(), {trial_type: "most", condition: exp.condition}));
     }
     for (i=0; i<num_criticals.all; i++) {
-	criticals.push(_.extend(critical_stims.pop(), {trial_type: "all", condition: exp.condition}));
+	criticals.push(_.extend(critical_stims_shuffled.pop(), {trial_type: "all", condition: exp.condition}));
     }
     criticals = _.shuffle(criticals);
 
+    var filler_stims_good_shuffled = _.shuffle(filler_stims_good);
+    var filler_stims_bad_shuffled = _.shuffle(filler_stims_bad);
+    
     var fillers = [];
 
     for (i=0; i<num_fillers.good; i++) {
-	fillers.push(_.extend(filler_stims_good.pop(), {quantifier: "generic"}))
+	fillers.push(_.extend(filler_stims_good_shuffled.pop(), {quantifier: "generic"}))
     }
     for (i=0; i<num_fillers.bad; i++) {
-	fillers.push(_.extend(filler_stims_bad.pop(), {quantifier: "generic"}))
+	fillers.push(_.extend(filler_stims_bad_shuffled.pop(), {quantifier: "generic"}))
     }
     fillers = _.shuffle(fillers);
 
