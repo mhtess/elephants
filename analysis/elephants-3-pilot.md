@@ -55,6 +55,7 @@ Before the experiment, participants practice usign the sliders to rate 3 categor
 -   dogs bark (coded as correct if x &gt; 0.5)
 -   birds are male (coded as correct if 0.25 &lt; x &lt; 0.75)
 -   cats get cancer (coded as correct if x &lt; 0.50)
+-   lions lay eggs (coded as correct if x &lt; 0.10)
 
 ### Memory check
 
@@ -67,7 +68,16 @@ After the story, participants select statements they recall learning from a list
 | dogs bark       |            27|
 | lions lay eggs  |            24|
 
+|  n\_correct|    n|
+|-----------:|----:|
+|           1|    1|
+|           2|    1|
+|           3|    1|
+|           4|   24|
+
 ![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+    ## [1]  2  5  6  9 20 26 13 22
 
 ### Explanations of task
 
@@ -114,61 +124,86 @@ collapsed across trials
 -   fill = number of correct responses on the memory check (out of 10)
 -   facet = particiapnts
 
-![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
 filler trials
 -------------
 
 these used quantifiers (and thus we have strong idea about literal meaning)
 
-![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 critical trials (collapsed across item)
 ---------------------------------------
 
-![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 #### bootstrapped 95% confidence intervals
 
-![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-11-1.png)
+
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 ### By-item averages
 
 N's per item X condition
 
-| predicate\_1                                   | predicate\_2                                        |  ..live in Africa and IRRELEVANT|  ..live in Africa and Asia|
-|:-----------------------------------------------|:----------------------------------------------------|--------------------------------:|--------------------------:|
-| are part of the Tinno guild                    | are part of the Farza guild                         |                               12|                         14|
-| are stup-herders                               | are fishermen                                       |                               22|                         10|
-| ascribe to the Caboo religion                  | ascribe to the Daith religion                       |                               14|                         16|
-| build nests in gluers                          | build nests in droops                               |                               16|                         12|
-| carry their young in guklags                   | carry their young in trullets                       |                               22|                         10|
-| chew on xorfun                                 | chew on tunkel                                      |                               18|                         14|
-| flood their fields to plant fujusi             | burn their fields to plant soroneeks                |                               18|                         16|
-| have four horns                                | have seven horns                                    |                               14|                         14|
-| have long wings                                | have short wings                                    |                                6|                         24|
-| have six wings                                 | have seven wings                                    |                               10|                         12|
-| have striped fur                               | have spotted fur                                    |                                6|                         14|
-| have territories at the tops of tall mountains | have territories at the bottom of deep canyons      |                                6|                         18|
-| hibernate in fallen logs                       | hibernate in the abandoned burrows of other animals |                               16|                         12|
-| live on the continent of Caro                  | live on the continent of Este                       |                               16|                         12|
-| produce fruit with bumpy skin                  | produce fruit with smooth skin                      |                               14|                         16|
-| wear wutsats around their heads                | wear krevnors around their heads                    |                               18|                         14|
+| predicate\_1                                   | predicate\_2                                        |  "..live in Africa and eat bugs"|  "..live in Africa and Asia"|
+|:-----------------------------------------------|:----------------------------------------------------|--------------------------------:|----------------------------:|
+| are part of the Tinno guild                    | are part of the Farza guild                         |                               12|                           14|
+| are stup-herders                               | are fishermen                                       |                               22|                           10|
+| ascribe to the Caboo religion                  | ascribe to the Daith religion                       |                               14|                           16|
+| build nests in gluers                          | build nests in droops                               |                               16|                           12|
+| carry their young in guklags                   | carry their young in trullets                       |                               22|                           10|
+| chew on xorfun                                 | chew on tunkel                                      |                               18|                           14|
+| flood their fields to plant fujusi             | burn their fields to plant soroneeks                |                               18|                           16|
+| have four horns                                | have seven horns                                    |                               14|                           14|
+| have long wings                                | have short wings                                    |                                6|                           24|
+| have six wings                                 | have seven wings                                    |                               10|                           12|
+| have striped fur                               | have spotted fur                                    |                                6|                           14|
+| have territories at the tops of tall mountains | have territories at the bottom of deep canyons      |                                6|                           18|
+| hibernate in fallen logs                       | hibernate in the abandoned burrows of other animals |                               16|                           12|
+| live on the continent of Caro                  | live on the continent of Este                       |                               16|                           12|
+| produce fruit with bumpy skin                  | produce fruit with smooth skin                      |                               14|                           16|
+| wear wutsats around their heads                | wear krevnors around their heads                    |                               18|                           14|
 
 ### Pirate plots
 
-![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 By item histograms
 
 first trial
 -----------
 
-![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 Reaction times
 --------------
 
 *how much time do participants spend on the question slide?*
 
-![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](elephants-3-pilot_files/figure-markdown_github/unnamed-chunk-17-1.png)
+
+    ##  Family: gaussian 
+    ##   Links: mu = identity; sigma = identity 
+    ## Formula: logrt ~ condition 
+    ##    Data: df.query.critical %>% filter(key == "% live in Afr (Number of observations: 228) 
+    ## Samples: 3 chains, each with iter = 2000; warmup = 1000; thin = 1;
+    ##          total post-warmup samples = 3000
+    ## 
+    ## Population-Level Effects: 
+    ##                                Estimate Est.Error l-95% CI u-95% CI
+    ## Intercept                          2.36      0.06     2.25     2.48
+    ## condition..liveinAfricaandAsia    -0.08      0.08    -0.25     0.08
+    ##                                Eff.Sample Rhat
+    ## Intercept                            3009 1.00
+    ## condition..liveinAfricaandAsia       2944 1.00
+    ## 
+    ## Family Specific Parameters: 
+    ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+    ## sigma     0.64      0.03     0.58     0.71       2454 1.00
+    ## 
+    ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+    ## is a crude measure of effective sample size, and Rhat is the potential 
+    ## scale reduction factor on split chains (at convergence, Rhat = 1).

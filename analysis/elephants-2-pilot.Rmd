@@ -7,8 +7,12 @@ output: github_document
 
 [Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-2.html)
 
+Participants read a storybook about an alien planet. Each chapter consists of some description of a kind, for example, elephants. The participants are either asked in the middle of a chapter or at the end of the chapter what percentage of the kind they think a particular predicate applies to (for instance, what percentage of elephants do you think live in Africa?).
+#### Changes from Pilot 1
+- added practice trial at the beginning
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
 library(tidyverse)
 library(knitr)
 library(ggthemes)
@@ -16,17 +20,14 @@ library(viridis)
 library(tidyboot)
 library(ggpirate)
 theme_set(theme_few())
-project.path <- "~/projects/elephants/"
-expt.prefix <- "elephants-2"
-data.path <- paste("mturk", expt.prefix, sep = "/")
+data.path <- "../data/elephants-2/elephants-2"
 ```
 
-### Subject information
+## Subject information
 
 ```{r}
 df.subj <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-subject_information.csv", sep = "")
+  paste(data.path, "-subject_information.csv", sep = "")
   ) %>%
   mutate(language = gsub("\"", "", language),
          enjoyment = gsub("\"", "", enjoyment),
@@ -44,7 +45,7 @@ df.subj %>%
 
 ### Slider practice
 
-Before the experiment, participants practice usign the sliders to rate 3 category--property pairs:
+Before the experiment, participants practiced using the sliders to rate the prevalence (x) of 3 category-property pairs:
 
 - dogs bark (coded as correct if x > 0.5)
 - birds are male (coded as correct if 0.25 < x < 0.75)
@@ -59,8 +60,7 @@ After the story, participants select statements they recall learning from a list
 
 ```{r}
 df.attn <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-catch_trials.csv", sep = "")
+  paste(data.path, "-catch_trials.csv", sep = "")
   ) %>%
   mutate(property = gsub("\"", "", property),
          condition = gsub("\"", "", condition))
@@ -105,7 +105,6 @@ df.mmry %>%
   kable(.)
 ```
 
-
 ### Explanations of task
 
 ```{r}
@@ -118,15 +117,10 @@ df.expln %>%
   kable(.)
 ```
 
-## Trial data
-
-Removing participants who got fewer than 7 correct on memory check.
-
 ```{r}
 df.trials <- left_join(
     read_csv(
-    paste(project.path, data.path, "/", 
-          expt.prefix, "-trials.csv", sep = "")
+    paste(data.path, "-trials.csv", sep = "")
     ) %>% 
     mutate(
       page_type = gsub("\"", "", page_type),
@@ -148,12 +142,11 @@ df.query <- df.trials %>%
   filter(page_type == "query")
 ```
 
-## participant responses
+## Prevalence Estimates per Participant
  
-collapsed across trials
-
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
 - fill = number of correct responses on the memory check (out of 10)
-- facet = particiapnts
+- facet = participants
 
 ```{r}
 df.query  %>%
@@ -164,7 +157,9 @@ df.query  %>%
   scale_x_continuous(breaks = c(0, 0.5, 1))
 ```
 
-## filler trials
+## Filler Trials
+
+For all subsequent analyses, we will only consider participants who answered 7 or more items correctly in the statement identification task. (n = `r df.mmry %>% filter(n_correct >= 7) %>% nrow() ` out of `r nrow(df.mmry)`)
 
 these used quantifiers (and thus we have strong idea about literal meaning)
 
@@ -186,7 +181,7 @@ df.query.filler  %>%
   facet_wrap(~predicate_1 + condition)
 ```
 
-## critical trials (collapsed across item)
+## Critical Trials (collapsed across item)
 
 ```{r}
 df.query.critical <- df.query %>%
@@ -203,7 +198,7 @@ df.query.critical %>%
   facet_wrap(~condition)
 ```
 
-#### bootstrapped 95% confidence intervals
+### bootstrapped 95% confidence intervals (collapsed across items)
 
 ```{r fig.width = 4, fig.height = 3}
 df.bs.query.critical <- df.query.critical %>%
@@ -218,10 +213,7 @@ df.bs.query.critical %>%
   scale_fill_solarized()
 ```
 
-### By-item averages
-
-
-N's per item X condition
+## Number of Trials by Stimulus and Condition
 
 ```{r}
 df.query.critical %>%
@@ -232,7 +224,8 @@ df.query.critical %>%
   spread(condition, n) %>% kable()
 ```
 
-Pirate plots
+## Critical Trials (by Item)
+### Pirate plots by Item
 
 ```{r}
 df.query.critical %>%
@@ -250,8 +243,7 @@ df.query.critical %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-
-95% CIs
+### 95% CIs by Item
 
 ```{r}
 df.bs.crit.item <- df.query.critical %>%
@@ -269,10 +261,8 @@ df.bs.crit.item %>%
   xlab("item")
 ```
 
-By item histograms
-
-## first trial
-
+## First Trial
+"Krens ascribe to the Caboo religion...and the Daith religion."
 ```{r}
 df.query.critical %>%
   group_by(workerid, condition) %>%

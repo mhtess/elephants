@@ -114,72 +114,86 @@ Trial data
 
 Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
 
-participant responses
----------------------
+### Included/excluded subject numbers
 
-collapsed across trials
+| memory\_fail | slider\_fail |    n|
+|:-------------|:-------------|----:|
+| FALSE        | FALSE        |   16|
+| FALSE        | TRUE         |    2|
+| TRUE         | FALSE        |    5|
+| TRUE         | TRUE         |    4|
 
--   fill = number of correct responses on the memory check (out of 10)
--   facet = particiapnts
+### Prevalence Estimates per Participant
 
-![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-7-1.png)
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check. - fill = number of correct responses on the memory check (out of 10) - facet = participants
+
+![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 filler trials
 -------------
 
 these used quantifiers (and thus we have strong idea about literal meaning)
 
-![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 critical trials (collapsed across item)
 ---------------------------------------
 
-![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-9-1.png)
-
-    ## [1] interrupted       uninterrupted     nme_uninterrupted nme_interrupted  
-    ## Levels: interrupted uninterrupted nme_interrupted nme_uninterrupted
-
-#### bootstrapped 95% confidence intervals
+Histograms (collapsed across item)
+----------------------------------
 
 ![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
+### bootstrapped 95% confidence intervals (collapsed across item)
+
 ![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
-### By-item averages
+### Pirate Plots (collapsed across item)
 
-N's per item X condition
-
-| predicate\_1                                   | predicate\_2                                        |  interrupted|  uninterrupted|  nme\_interrupted|  nme\_uninterrupted|
-|:-----------------------------------------------|:----------------------------------------------------|------------:|--------------:|-----------------:|-------------------:|
-| are part of the Tinno guild                    | are part of the Farza guild                         |            4|             12|                 6|                   6|
-| are stup-herders                               | are fishermen                                       |            8|              2|                 8|                   8|
-| ascribe to the Caboo religion                  | ascribe to the Daith religion                       |           12|              2|                 4|                   2|
-| build nests in gluers                          | build nests in droops                               |            6|             14|                 2|                   2|
-| carry their young in guklags                   | carry their young in trullets                       |            2|              8|                NA|                   6|
-| chew on xorfun                                 | chew on tunkel                                      |           12|             10|                 4|                   2|
-| flood their fields to plant fujusi             | burn their fields to plant soroneeks                |           10|              2|                 4|                   4|
-| have four horns                                | have seven horns                                    |            4|             10|                 6|                   4|
-| have long wings                                | have short wings                                    |           12|             10|                 4|                   2|
-| have six wings                                 | have seven wings                                    |            6|             12|                NA|                   6|
-| have striped fur                               | have spotted fur                                    |           14|              2|                 4|                  NA|
-| have territories at the tops of tall mountains | have territories at the bottom of deep canyons      |            6|             10|                 6|                   2|
-| hibernate in fallen logs                       | hibernate in the abandoned burrows of other animals |           12|             NA|                 8|                   4|
-| live on the continent of Caro                  | live on the continent of Este                       |            6|             14|                 2|                   6|
-| produce fruit with bumpy skin                  | produce fruit with smooth skin                      |            4|              8|                 4|                   8|
-| wear wutsats around their heads                | wear krevnors around their heads                    |           10|             12|                 2|                   2|
-
-### Pirate plots
+![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 ![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+### Pirate Plots: Mutually Exclusive (ME) vs. Non-Mutually Exclusive (NME) (collapsed across item)
+
+![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+Critical Trials (by Item)
+-------------------------
+
+### Number of participants by Item and Condition
+
+| predicate\_1                                   | predicate\_2                                        |  interrupted|  nme\_interrupted|  nme\_uninterrupted|  uninterrupted|
+|:-----------------------------------------------|:----------------------------------------------------|------------:|-----------------:|-------------------:|--------------:|
+| are part of the Tinno guild                    | are part of the Farza guild                         |            4|                 6|                   6|             12|
+| are stup-herders                               | are fishermen                                       |            8|                 8|                   8|              2|
+| ascribe to the Caboo religion                  | ascribe to the Daith religion                       |           12|                 4|                   2|              2|
+| build nests in gluers                          | build nests in droops                               |            6|                 2|                   2|             14|
+| carry their young in guklags                   | carry their young in trullets                       |            2|                 0|                   6|              8|
+| chew on xorfun                                 | chew on tunkel                                      |           12|                 4|                   2|             10|
+| flood their fields to plant fujusi             | burn their fields to plant soroneeks                |           10|                 4|                   4|              2|
+| have four horns                                | have seven horns                                    |            4|                 6|                   4|             10|
+| have long wings                                | have short wings                                    |           12|                 4|                   2|             10|
+| have six wings                                 | have seven wings                                    |            6|                 0|                   6|             12|
+| have striped fur                               | have spotted fur                                    |           14|                 4|                   0|              2|
+| have territories at the tops of tall mountains | have territories at the bottom of deep canyons      |            6|                 6|                   2|             10|
+| hibernate in fallen logs                       | hibernate in the abandoned burrows of other animals |           12|                 8|                   4|              0|
+| live on the continent of Caro                  | live on the continent of Este                       |            6|                 2|                   6|             14|
+| produce fruit with bumpy skin                  | produce fruit with smooth skin                      |            4|                 4|                   8|              8|
+| wear wutsats around their heads                | wear krevnors around their heads                    |           10|                 2|                   2|             12|
+
+### Pirate plots (by Item)
+
+![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 first trial
 -----------
 
-![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-17-1.png)
 
 Reaction times
 --------------
 
 *how much time do participants spend on the question slide?*
 
-![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](elephants-3i-pilot_files/figure-markdown_github/unnamed-chunk-18-1.png)

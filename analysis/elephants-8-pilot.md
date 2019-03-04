@@ -304,7 +304,7 @@ After the story, participants select statements they recall learning from a list
 
 Memory check questions seem off:
 
-    ## [1] 30
+    ## [1] 36
 
 Trial data
 ----------
@@ -333,7 +333,7 @@ Check number of participants per condition
 | generic    |  144|
 | most       |  144|
 
-Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
+Removing participants who didn't get all 4 sliders. (All participants with bad explanations failed one or more sliders.)
 
 Included/excluded subject numbers
 
@@ -372,15 +372,15 @@ these used quantifiers (and thus we have strong idea about literal meaning)
     ##    quantifier condition key       n empirical_stat ci_lower  mean ci_upper
     ##    <chr>      <fct>     <fct> <int>          <dbl>    <dbl> <dbl>    <dbl>
     ##  1 all        "\"...li… % li…   116          0.986   0.977  0.986    0.994
-    ##  2 all        "\"...li… % pr…   116          0.103   0.0545 0.103    0.153
-    ##  3 all        "\"...li… % li…   116          0.79    0.736  0.791    0.845
-    ##  4 all        "\"...li… % pr…   116          0.791   0.740  0.792    0.846
-    ##  5 generic    "\"...li… % li…    92          0.868   0.822  0.869    0.908
-    ##  6 generic    "\"...li… % pr…    92          0.123   0.0816 0.123    0.170
-    ##  7 generic    "\"...li… % li…    92          0.662   0.600  0.661    0.714
-    ##  8 generic    "\"...li… % pr…    92          0.612   0.549  0.613    0.676
-    ##  9 most       "\"...li… % li…   104          0.835   0.809  0.834    0.859
-    ## 10 most       "\"...li… % pr…   104          0.268   0.209  0.267    0.326
+    ##  2 all        "\"...li… % pr…   116          0.103   0.0545 0.102    0.153
+    ##  3 all        "\"...li… % li…   116          0.79    0.735  0.790    0.844
+    ##  4 all        "\"...li… % pr…   116          0.791   0.741  0.792    0.842
+    ##  5 generic    "\"...li… % li…    92          0.868   0.824  0.869    0.911
+    ##  6 generic    "\"...li… % pr…    92          0.123   0.0802 0.123    0.171
+    ##  7 generic    "\"...li… % li…    92          0.662   0.603  0.662    0.716
+    ##  8 generic    "\"...li… % pr…    92          0.612   0.549  0.612    0.677
+    ##  9 most       "\"...li… % li…   104          0.835   0.808  0.835    0.861
+    ## 10 most       "\"...li… % pr…   104          0.268   0.207  0.268    0.330
     ## # … with 14 more rows, and 1 more variable: second_query <chr>
 
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-14-1.png)

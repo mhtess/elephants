@@ -180,7 +180,7 @@ df.expln <- df.attention %>%
   left_join(., df.slider_check.workers %>% select(workerid, n_correct) %>%
               rename(n_slider_correct = n_correct))
 
-bad.expln <- c()
+bad.expln <- c(9, 12, 16, 20, 21, 24, 28, 37, 38, 43, 49, 51, 57, 67, 70, 74, 82, 84, 86, 89, 90, 97, 101, 102, 107)
 df.expln %>%
   select(workerid,n_slider_correct,  n_memory_correct, property) %>%
   rename(explanation = property) %>%
@@ -201,7 +201,6 @@ df.full.tab.item.count <-  df.trials %>% filter(condition ==  "uninterrupted", t
   count() %>%
   spread(quantifier, n) 
 
-
 df.full.tab.item.count %>% kable()
 
 df.full.tab.item.count %>% 
@@ -210,8 +209,7 @@ df.full.tab.item.count %>%
   summarize(n = sum(n)) %>% kable()
 ```
 
-
-Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
+Removing participants who didn't get all 4 sliders. (All participants with bad explanations failed one or more sliders.)
 
 ```{r}
 df.trials <- df.trials %>%
@@ -221,7 +219,6 @@ df.trials <- df.trials %>%
   left_join(., 
       df.mmry %>% select(workerid, n_correct)
 )
-
 
 df.query <- df.trials %>%
   filter(page_type == "query") %>%

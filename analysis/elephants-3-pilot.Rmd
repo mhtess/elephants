@@ -16,7 +16,7 @@ output: github_document
 - memory check to test actually tested properties
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
 library(tidyverse)
 library(knitr)
 library(ggthemes)
@@ -25,18 +25,14 @@ library(tidyboot)
 library(ggpirate)
 library(brms)
 theme_set(theme_few())
-project.path <- "~/projects/elephants/"
-expt.prefix <- "elephants-3"
-data.path <- paste("mturk", expt.prefix,sep = "/")
-fig.path <- paste(project.path, "writing/cogsci2019/figs/", sep = "")
+data.path <- "../data/elephants-3/elephants-3"
 ```
 
 ### Subject information
 
 ```{r}
 df.subj <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-subject_information.csv", sep = "")
+  paste(data.path, "-subject_information.csv", sep = "")
   ) %>%
   mutate(language = gsub("\"", "", language),
          enjoyment = gsub("\"", "", enjoyment),
@@ -69,8 +65,7 @@ After the story, participants select statements they recall learning from a list
 
 ```{r}
 df.attn <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-catch_trials.csv", sep = "")
+  paste(data.path, "-catch_trials.csv", sep = "")
   ) %>%
   mutate(property = gsub("\"", "", property),
          condition = gsub("\"", "", condition))
@@ -156,8 +151,7 @@ Removing participants who got fewer than 7 correct on memory check.
 ```{r}
 df.trials <- left_join(
     read_csv(
-    paste(project.path, data.path, "/", 
-          expt.prefix, "-trials.csv", sep = "")
+    paste(data.path, "-trials.csv", sep = "")
     ) %>% 
     mutate(
       page_type = gsub("\"", "", page_type),
@@ -182,12 +176,11 @@ df.query <- df.trials %>%
   gather(key, val, response_1, response_2)
 ```
 
-## participant responses
+## Prevalence Estimates per Participant
  
-collapsed across trials
-
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
 - fill = number of correct responses on the memory check (out of 10)
-- facet = particiapnts
+- facet = participants
 
 ```{r}
 df.query  %>%
@@ -264,7 +257,7 @@ df.bs.query.critical %>%
          color = guide_legend(title = "Question"))+
   theme(axis.text.x = element_text(angle = 15, vjust = 0.5, hjust = 0.5))
 
-ggsave(paste(fig.path, "expt1_summary.pdf", sep = ""), height = 3.8, width = 5.5)
+#ggsave(paste(fig.path, "expt1_summary.pdf", sep = ""), height = 3.8, width = 5.5)
 ```
 
 ```{r}

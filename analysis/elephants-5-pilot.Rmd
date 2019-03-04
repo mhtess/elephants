@@ -18,7 +18,7 @@ All questions interrupting.
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
 library(tidyverse)
 library(knitr)
 library(ggthemes)
@@ -26,17 +26,14 @@ library(viridis)
 library(tidyboot)
 library(ggpirate)
 theme_set(theme_few())
-project.path <- "~/projects/elephants/"
-expt.prefix <- "elephants-5"
-data.path <- paste("mturk", expt.prefix,sep = "/")
+data.path <- "../data/elephants-5/elephants-5"
 ```
 
 ### Subject information
 
 ```{r}
 df.subj <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-subject_information.csv", sep = "")
+  paste(data.path, "-subject_information.csv", sep = "")
   ) %>%
   mutate(language = gsub("\"", "", language),
          enjoyment = gsub("\"", "", enjoyment),
@@ -63,8 +60,7 @@ Before the experiment, participants practice usign the sliders to rate 3 categor
 
 ```{r}
 df.attn <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-catch_trials.csv", sep = "")
+  paste(data.path, "-catch_trials.csv", sep = "")
   ) %>%
   mutate(property = gsub("\"", "", property),
          condition = gsub("\"", "", condition))
@@ -107,9 +103,8 @@ df.slider_check %>%
 
 ### Memory check
 
-After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
-
-
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.  
+Note: for this pilot, memory checks were mistakenly asked even though the participant did not see the corresponding chapter. This was resolved for future experiments, beginning at elephants-6.
 
 ```{r}
 # memory check data
@@ -138,7 +133,6 @@ ggplot(df.mmry, aes( x = n_correct ))+
 
 ```
 
-
 ### Explanations of task
 
 ```{r}
@@ -156,12 +150,6 @@ df.expln %>%
   kable(.)
 ```
 
-
-
-Memory check questions seem off:
-```{r}
-unique(c(bad.expln, workers.fail.sliders))
-```
 ## Trial data
 
 Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
@@ -169,8 +157,7 @@ Removing participants who got fewer than 7 correct on memory check and didn't ge
 ```{r}
 df.trials <- left_join(
     read_csv(
-    paste(project.path, data.path, "/", 
-          expt.prefix, "-trials.csv", sep = "")
+    paste(data.path, "-trials.csv", sep = "")
     ) %>% 
     mutate(
       page_type = gsub("\"", "", page_type),
@@ -196,7 +183,7 @@ df.query <- df.trials %>%
   gather(key, val, response_1, response_2)
 ```
 
-Included/excluded subject numbers
+### Included/excluded subject numbers
 
 ```{r}
 df.query %>%
@@ -204,13 +191,11 @@ df.query %>%
   group_by(memory_fail, slider_fail,bad_expln) %>% count() %>% kable()
 ```
 
-
-## participant responses
+### Prevalence Estimates per Participant
  
-collapsed across trials
-
-- fill = number of correct responses on the memory check (out of 10)
-- facet = particiapnts
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.  
+- fill = number of correct responses on the memory check (out of 10)  
+- facet = participants  
 
 ```{r}
 df.query  %>%
@@ -295,7 +280,7 @@ df.query.critical %>%
 #unique(df.query.critical$condition)
 ```
 
-#### bootstrapped 95% confidence intervals
+### bootstrapped 95% confidence intervals
 
 _Property 2_ = "% live in Asia" for all but the NME (non mutually exclusive) trials
 
@@ -324,10 +309,10 @@ df.bs.query.critical %>%
          color = guide_legend(title = "Question"))+
   theme(axis.text.x = element_text(angle = 15, vjust = 0.5, hjust = 0.5))
 
-ggsave(paste(fig.path, "expt3_summary.pdf", sep = ""), height = 3.4, width = 7)
+#ggsave(paste(fig.path, "expt3_summary.pdf", sep = ""), height = 3.4, width = 7)
 ```
 
-#### pirate plots
+### pirate plots
 
 ```{r}
 df.query.critical %>%
@@ -344,16 +329,24 @@ df.query.critical %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
+### Bootstrapped 95% Confidence Intervals for Relationships Between Prevalence Estimates (collapsed across items)
+
+The relationships between prevalence estimates of the mentioned property (property 1) and the other property (property 2) could be:
+- mutually exclusive: both properties cannot occur at the same time, so the sum of prevalence estimates cannot exceed 1  
+- prevalence for property 1 is greater than property 2  
+- property 1 is interpreted as a universal  
+- property 2 is interpreted as a universal  
+* These conditions are not mutually exclusive; a participant can fall into one or more of the categories for a given trial.
 
 ```{r}
 df.query.critical %>% spread(key, val) %>% 
   rename(africa = `% live in Africa`,
          asia = `% live in Asia`) %>%
   rowwise() %>%
-  mutate(ME = africa + asia < 1.05,
-         af_g_as = africa > asia,
-         universal_af = africa > 0.9,
-         universal_as = asia > 0.9) %>%
+  mutate(ME = africa + asia < 1.05, # mutually exclusive: both properties cannot exceed 100%
+         af_g_as = africa > asia, # prevalence for Africa greater than prevalence for Asia
+         universal_af = africa > 0.9, # Africa as universal
+         universal_as = asia > 0.9) %>% # Asia as universal
   gather(key, val, ME, af_g_as, universal_af, universal_as) %>%
   group_by(condition, key) %>%
   tidyboot_mean(column = val) %>%
@@ -374,7 +367,7 @@ df.query.critical %>% spread(key, val) %>%
 
 ### By-item averages
 
-N's per item X condition
+### Number of participants by Item and Condition
 
 ```{r}
 df.query.critical %>%
@@ -382,10 +375,12 @@ df.query.critical %>%
   ungroup() %>%
   group_by(condition, predicate_1, predicate_2) %>%
   count() %>%
-  spread(condition, n) %>% kable()
+  spread(condition, n) %>% 
+  replace(is.na(.), 0) %>% # missing combinations of condition and predicate means no trials were collected
+  kable()
 ```
 
-### Pirate plots
+### Pirate plots (by item)
 
 ```{r fig.width=14, fig.height=7}
 df.query.critical %>%
@@ -401,11 +396,13 @@ df.query.critical %>%
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "top")
 
 ```
 
-## first vs. second trial (for each condition)
+## first trial vs. other trials (for each condition)
+
+### Pirate Plots (first vs. other trials)
 
 ```{r}
 df.query.critical %>%
@@ -414,7 +411,7 @@ df.query.critical %>%
   mutate(first_trial  = min(chapter_num),
          last_trial = max(chapter_num),
          is_first = ifelse(chapter_num == first_trial, "first trial", 
-                           "second trial")) %>%
+                           "other trials")) %>%
   ggplot(., aes( x = condition, y = val))+
   geom_pirate(aes(color = key, fill = key),
               violins = F, show.legend = TRUE)+
@@ -440,7 +437,9 @@ Looking only at
 
 ```{r}
 df.query.critical %>%
-  filter(key == "% live in Africa", condition %in% c("AF", "AF&", "AF&AS")) %>%
+  filter(key == "% live in Africa", condition %in% c('"...live in Africa __"',
+                            '"...live in Africa and __"',
+                                       '"...live in Africa and Asia __"')) %>%
   ggplot(., aes( x = log(rt / 1000) , color = condition, fill = condition))+
   #geom_histogram(aes(y = ..density..), alpha = 0.0, position = position_dodge())+
   geom_density(aes(y = ..density..), alpha = 0.3)+

@@ -14,7 +14,7 @@ output: github_document
 - randomize order of trials with constraint that no 2 criticals back-to-back
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
 library(tidyverse)
 library(knitr)
 library(ggthemes)
@@ -22,17 +22,14 @@ library(viridis)
 library(tidyboot)
 library(ggpirate)
 theme_set(theme_few())
-project.path <- "~/projects/elephants/"
-expt.prefix <- "elephants-3i"
-data.path <- paste("data", expt.prefix,sep = "/")
+data.path <- data.path <- "../data/elephants-3i/elephants-3i"
 ```
 
 ### Subject information
 
 ```{r}
 df.subj <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-subject_information.csv", sep = "")
+  paste(data.path, "-subject_information.csv", sep = "")
   ) %>%
   mutate(language = gsub("\"", "", language),
          enjoyment = gsub("\"", "", enjoyment),
@@ -65,8 +62,7 @@ After the story, participants select statements they recall learning from a list
 
 ```{r}
 df.attn <- read_csv(
-  paste(project.path, data.path, "/", 
-        expt.prefix, "-catch_trials.csv", sep = "")
+  paste(data.path, "-catch_trials.csv", sep = "")
   ) %>%
   mutate(property = gsub("\"", "", property),
          condition = gsub("\"", "", condition))
@@ -94,12 +90,14 @@ workers.fail.sliders <- df.slider_check.workers %>%
   filter(not_all_correct) %>%
   pull(workerid)
 
+# number of participants grouped by number of correct sliders
 df.slider_check %>% 
   group_by(workerid) %>%
   summarize(n_correct = sum(correct)) %>%
   group_by(n_correct) %>% count() %>%
   kable()
 
+# number of correct responses grouped by slider question
 df.slider_check %>% 
   group_by(property) %>%
   summarize(n_correct = sum(correct)) %>%
@@ -166,8 +164,7 @@ Removing participants who got fewer than 7 correct on memory check and didn't ge
 ```{r}
 df.trials <- left_join(
     read_csv(
-    paste(project.path, data.path, "/", 
-          expt.prefix, "-trials.csv", sep = "")
+    paste(data.path, "-trials.csv", sep = "")
     ) %>% 
     mutate(
       page_type = gsub("\"", "", page_type),
@@ -191,19 +188,19 @@ df.query <- df.trials %>%
   filter(page_type == "query") %>%
   gather(key, val, response_1, response_2)
 ```
-Included/excluded subject numbers
+### Included/excluded subject numbers
 
 ```{r}
 df.query %>%
   distinct(workerid, memory_fail, slider_fail, bad_expln) %>%
   group_by(memory_fail, slider_fail) %>% count() %>% kable()
 ```
-## participant responses
- 
-collapsed across trials
 
+### Prevalence Estimates per Participant
+ 
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
 - fill = number of correct responses on the memory check (out of 10)
-- facet = particiapnts
+- facet = participants
 
 ```{r}
 df.query  %>%
@@ -233,6 +230,7 @@ df.query.filler  %>%
 
 ## critical trials (collapsed across item)
 
+## Histograms (collapsed across item)
 ```{r}
 df.query.critical <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
@@ -258,10 +256,10 @@ df.query.critical %>%
   geom_histogram()+
   facet_grid(key~condition)
 
-unique(df.query.critical$condition)
+#unique(df.query.critical$condition)
 ```
 
-#### bootstrapped 95% confidence intervals
+### bootstrapped 95% confidence intervals (collapsed across item)
 
 ```{r}
 df.bs.query.critical <- df.query.critical %>%
@@ -277,17 +275,18 @@ df.bs.query.critical %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
+### Pirate Plots (collapsed across item)
 ```{r}
-bind_rows(
-  df.bs.query.critical %>%
-  filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                          "\"...live in Africa and Asia\"\nQ2(Asia)")) %>%
-  mutate(second_query = "% live in Asia"),
-  df.bs.query.critical %>%
-    filter(!(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                            "\"...live in Africa and Asia\"\nQ2(Asia)"))) %>%
-    mutate(second_query = "% eat bugs")
-)
+# bind_rows(
+#   df.bs.query.critical %>%
+#   filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
+#                           "\"...live in Africa and Asia\"\nQ2(Asia)")) %>%
+#   mutate(second_query = "% live in Asia"),
+#   df.bs.query.critical %>%
+#     filter(!(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
+#                             "\"...live in Africa and Asia\"\nQ2(Asia)"))) %>%
+#     mutate(second_query = "% eat bugs")
+# )
   
   ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
@@ -312,6 +311,22 @@ bind_rows(
 #ggsave(paste(fig.path, "expt2_summary.pdf", sep = ""), height = 4.5, width = 5.5)
 ```
 
+```{r}
+df.query.critical %>%
+  filter(!memory_fail, !slider_fail) %>%
+  ggplot(., aes( x = condition, y = val))+
+  geom_pirate(aes(color = key, fill = key),
+              violins = F, show.legend = TRUE)+
+  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+
+### Pirate Plots: Mutually Exclusive (ME) vs. Non-Mutually Exclusive (NME) (collapsed across item)
 ```{r}
 df.bs.query.critical.asia <- df.bs.query.critical %>%
   filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
@@ -402,39 +417,26 @@ cowplot::plot_grid(
 )
 ```
 
-```{r}
-df.query.critical %>%
-  filter(!memory_fail, !slider_fail) %>%
-  ggplot(., aes( x = condition, y = val))+
-  geom_pirate(aes(color = key, fill = key),
-              violins = F, show.legend = TRUE)+
-  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
-  ylab("% Africa")+
-  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
-  scale_fill_manual(values = c("#268bd2", "#859900"))+
-  scale_color_manual(values = c("#268bd2", "#859900"))+
-  scale_y_continuous(breaks = c(0, 0.5, 1))+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
-```
+## Critical Trials (by Item)
 
-### By-item averages
-
-N's per item X condition
+### Number of participants by Item and Condition
 
 ```{r}
-df.query.critical %>%
-  filter(!memory_fail, !slider_fail) %>%
-  ungroup() %>%
+df.query %>%
+  filter(!memory_fail, !slider_fail, trial_type == "critical") %>%
   group_by(condition, predicate_1, predicate_2) %>%
   count() %>%
-  spread(condition, n) %>% kable()
+  spread(condition, n) %>% 
+  replace(is.na(.), 0) %>% # missing combinations of condition and predicate means no trials were collected
+  kable()
 ```
 
-### Pirate plots
+### Pirate plots (by Item)
 
 ```{r fig.width=10, fig.height=7}
 df.query.critical %>%
-  filter(condition %in% c("interrupted", "uninterrupted")) %>%
+  filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
+                          "\"...live in Africa and Asia\"\nQ2(Asia)"))  %>%
   filter(!memory_fail, !slider_fail) %>%
   ggplot(., aes( x = key, y = val))+
   geom_pirate(aes(color = condition, fill = condition),
@@ -446,11 +448,8 @@ df.query.critical %>%
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "top")
 ```
-
-
-
 
 ## first trial
 
@@ -480,4 +479,3 @@ df.query.critical %>%
   xlab("log time in seconds")
   #facet_wrap(~condition, nrow = 2)
 ```
-
