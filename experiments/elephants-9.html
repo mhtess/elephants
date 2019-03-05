@@ -83,6 +83,43 @@
    <!-- <p id="credit">Image used from <a href='https://zalarieunique.ru'>https://zalarieunique.ru</a>.</p> -->
   </div>
 
+  <div class="slide" id="practice">
+    <h3>Instructions</h3>
+    <div>
+    For each trial, you will see a sentence.
+    You will be asked to decide whether the sentence is good or bad, or somewhere in between. You can submit your answer using the slider bar provided.
+      Try answering the questions below.
+    </div>
+    <br>
+    <div>
+      <div>How good is this sentence?</div>
+      <div class="practice_query" id="query_p1"></div>
+    </div>
+    <table id="slider_table_p1" class="slider_table">
+      <tr><td class="left">It's a bad sentence.</td><td colspan="2"><div id="single_slider_p1" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
+    </table>
+    <br>
+    <div>
+      <div>How good is this sentence?</div>
+      <div class="practice_query" id="query_p2"></div>
+    </div>
+    <table id="slider_table_p2" class="slider_table">
+      <tr><td class="left">It's a bad sentence</td><td colspan="2"><div id="single_slider_p2" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
+    </table>
+        <br>
+    <div>
+      <div>How good is this sentence?</div>
+      <div class="practice_query" id="query_p3"></div>
+    </div>
+    <table id="slider_table_p3" class="slider_table">
+      <tr><td class="left">It's a bad sentence</td><td colspan="2"><div id="single_slider_p3" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
+    </table>
+
+    <button onclick="_s.button()">Continue</button>
+    <p class="err">Please respond to all of the questions.</p>
+
+  </div>
+
   <div class="slide" id="single_trial">
     <p>Here is a single trial. Depending on the condition, you'll see different words below:</p>
     <p class="display_condition">{{}}</p>
@@ -92,10 +129,11 @@
   </div>
 
   <div class="slide" id="one_slider">
+    <br><br><br>
     <p>How good is this sentence?</p>
     <p class="prompt"></p>
     <table id="slider_table" class="slider_table">
-      <tr><td class="left">completely disagree</td><td colspan="2"><div id="single_slider" class="slider"></div></td><td class="right">completely agree</td></tr>
+      <tr><td class="left">It's a bad sentence.</td><td colspan="2"><div id="single_slider" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
     </table>
     <button onclick="_s.button()">Continue</button>
     <div class="err">Please adjust the slider before continuing.</div>

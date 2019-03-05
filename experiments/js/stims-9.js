@@ -69,7 +69,7 @@ const critical_stims = [
 	predicate2: "have long, skinny leaves",
 	combined_predicate: "have broad, flat leaves and long, skinny leaves"
     },
-    {
+    { // engines
 	stim_type: "critical",
 	kind: "cars",
 	predicate1: "use gas",
@@ -84,6 +84,9 @@ const critical_stims = [
 	combined_predicate: "are white and gray"
     }
 ]
+// elephants live in africa and asia
+// google items of this form (np vp and vp)
+// male vs. female, juvenile vs. adult
 
 const filler_stims_good = [
     {
@@ -147,3 +150,4 @@ const filler_stims_bad = [
 	combined_predicate: false
     }
 ]
+// cover story? computer program comes up with sentences

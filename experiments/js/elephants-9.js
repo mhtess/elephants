@@ -10,6 +10,67 @@ function make_slides(f) {
     }
   });
 
+    slides.practice = slide({
+    name : "practice",
+    start: function() {
+      $(".err").hide();
+
+      this.init_sliders(1);
+	this.init_sliders(2);
+	this.init_sliders(3)
+      practice_questions = [
+        "Anna laughed on Jon.\n",
+          "The train was late this morning.\n",
+	  "The burning candle spelled wrong.\n"
+      ]
+      for (i=1;i<4; i++){
+        $("#query_p"+ i).html(practice_questions[i-1])
+      }
+	exp.sliderPractice = [-1,-1, -1];
+
+    },
+    init_sliders : function(i) {
+        utils.make_slider("#single_slider_p" + i, this.make_slider_callback(i));
+    },
+    make_slider_callback : function(i) {
+      return function(event, ui) {
+        exp.sliderPractice[i-1] = ui.value;
+      };
+    },
+    button : function() {
+      if (exp.sliderPractice.indexOf(-1) >= 0) {
+        $(".err").show();
+      } else {
+
+        exp.catch_trials.push({
+          condition: "practice",
+          check_index: 1,
+          sentence: "Anna laughed on Jon.",
+          response: exp.sliderPractice[0],
+          correct:  exp.sliderPractice[0] < 0.5
+        })
+
+        exp.catch_trials.push({
+          condition: "practice",
+          check_index: 2,
+          sentence: "The train was late this morning.",
+          response: exp.sliderPractice[1],
+          correct:  exp.sliderPractice[1] > 0.5
+        })
+
+	  exp.catch_trials.push({
+          condition: "practice",
+          check_index: 3,
+          sentence: "The burning candle spelled wrong.",
+          response: exp.sliderPractice[1],
+          correct:  exp.sliderPractice[1] > 0.5
+        })
+
+        exp.go(); //use exp.go() if and only if there is no "present" data.
+      }
+    }
+  });
+
   slides.single_trial = slide({
     name: "single_trial",
     start: function() {
@@ -51,11 +112,9 @@ function make_slides(f) {
     },
 
       button : function() {
-	  console.log('call to button');
       if (exp.sliderPost == null) {
         $(".err").show();
       } else {
-	  console.log('moving on to next slide');
         this.log_responses();
         _stream.apply(this);
       }
@@ -261,7 +320,8 @@ function make_slides(f) {
         "system" : exp.system,
         "condition" : exp.condition,
         "subject_information" : exp.subj_data,
-        "time_in_minutes" : (Date.now() - exp.startT)/60000,
+          "time_in_minutes" : (Date.now() - exp.startT)/60000,
+	  "catch_trials": exp.catch_trials
       };
       setTimeout(function() {turk.submit(exp.data);}, 1000);
     }
@@ -285,17 +345,18 @@ function init() {
 
     exp.stims = [];
     exp.data_trials = [];
+    exp.catch_trials = [];
 
     // CONFIGURATION
     const num_criticals = {
-	generic: 1,
-	most: 1,
-	all: 1
+	generic: 2,
+	most: 2,
+	all: 2
     }
-    const num_fillers = {
-	good: 1,
-	bad: 1
-    }
+    // const num_fillers = {
+    // 	good: 1,
+    // 	bad: 1
+    // }
 
     var critical_stims_shuffled = _.shuffle(critical_stims);
 
@@ -312,51 +373,52 @@ function init() {
     }
     criticals = _.shuffle(criticals);
 
-    var filler_stims_good_shuffled = _.shuffle(filler_stims_good);
-    var filler_stims_bad_shuffled = _.shuffle(filler_stims_bad);
+    // var filler_stims_good_shuffled = _.shuffle(filler_stims_good);
+    // var filler_stims_bad_shuffled = _.shuffle(filler_stims_bad);
     
-    var fillers = [];
+    // var fillers = [];
 
-    for (i=0; i<num_fillers.good; i++) {
-	fillers.push(_.extend(filler_stims_good_shuffled.pop(), {quantifier: "generic"}))
-    }
-    for (i=0; i<num_fillers.bad; i++) {
-	fillers.push(_.extend(filler_stims_bad_shuffled.pop(), {quantifier: "generic"}))
-    }
-    fillers = _.shuffle(fillers);
+    // for (i=0; i<num_fillers.good; i++) {
+    // 	fillers.push(_.extend(filler_stims_good_shuffled.pop(), {quantifier: "generic"}))
+    // }
+    // for (i=0; i<num_fillers.bad; i++) {
+    // 	fillers.push(_.extend(filler_stims_bad_shuffled.pop(), {quantifier: "generic"}))
+    // }
+    // fillers = _.shuffle(fillers);
 
-    var criticals_fillers = []
-    const total_criticals = criticals.length;
-    for (i=0; i<total_criticals; i++) {
-	criticals_fillers.push(criticals.pop());
-	if (i<total_criticals-1) {
-	    criticals_fillers.push(fillers.pop());
-	}
-    }
-     function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    var insertionIndices = []
-    for (i=0;i<fillers.length;i++) {
-	insertionIndices.push(getRandomInt(0, criticals_fillers.length));
-    }
-    insertionIndices = insertionIndices.sort(function(a, b){return a - b});
-    var prevIndex = 0;
-    var i = 0;
-    insertionIndices.forEach(function(index) {
-	exp.stims = exp.stims.concat(criticals_fillers.slice(prevIndex, index));
-	exp.stims.push(fillers[i]);
-	i ++;
-	prevIndex = index;
-    });
-    exp.stims = exp.stims.concat(criticals_fillers.slice(prevIndex, criticals_fillers.length))
+    // var criticals_fillers = []
+    // const total_criticals = criticals.length;
+    // for (i=0; i<total_criticals; i++) {
+    // 	criticals_fillers.push(criticals.pop());
+    // 	if (i<total_criticals-1) {
+    // 	    criticals_fillers.push(fillers.pop());
+    // 	}
+    // }
+    //  function getRandomInt(min, max) {
+    // min = Math.ceil(min);
+    // max = Math.floor(max);
+    // return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+    // var insertionIndices = []
+    // for (i=0;i<fillers.length;i++) {
+    // 	insertionIndices.push(getRandomInt(0, criticals_fillers.length));
+    // }
+    // insertionIndices = insertionIndices.sort(function(a, b){return a - b});
+    // var prevIndex = 0;
+    // var i = 0;
+    // insertionIndices.forEach(function(index) {
+    // 	exp.stims = exp.stims.concat(criticals_fillers.slice(prevIndex, index));
+    // 	exp.stims.push(fillers[i]);
+    // 	i ++;
+    // 	prevIndex = index;
+    // });
+    // exp.stims = exp.stims.concat(criticals_fillers.slice(prevIndex, criticals_fillers.length))
+    exp.stims = criticals;
     console.log(exp.stims)
 
   //blocks of the experiment:
   exp.structure=[
-      'i0',
+      'i0', 'practice',
       'one_slider',
     'subj_info', 'thanks'
   ];
