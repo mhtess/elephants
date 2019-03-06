@@ -1,24 +1,17 @@
 const critical_stims = [
     {
 	stim_type: "critical",
+	kind: "elephants",
+	predicate1: "live in Africa",
+	predicate2: "live in Asia",
+	combined_predicate: "live in Africa and Asia"
+    },
+    {
+	stim_type: "critical",
 	kind: "turtles",
 	predicate1: "live in saltwater",
 	predicate2: "live in freshwater",
 	combined_predicate: "live in saltwater and freshwater"
-    },
-    {
-	stim_type: "critical",
-	kind: "dragon fruit",
-	predicate1: "has red flesh",
-	predicate2: "has white flesh",
-	combined_predicate: "has red flesh and white flesh"
-    },
-    {
-	stim_type: "critical",
-	kind: "whales",
-	predicate1: "are filter feeders",
-	predicate2: "are hunters",
-	combined_predicate: "are filter feeders and hunters"
     },
     {
 	stim_type: "critical",
@@ -43,13 +36,6 @@ const critical_stims = [
     },
     {
 	stim_type: "critical",
-	kind: "roses",
-	predicate1: "are red",
-	predicate2: "are white",
-	combined_predicate: "are red and white"
-    },
-    {
-	stim_type: "critical",
 	kind: "grapes",
 	predicate1: "are purple",
 	predicate2: "are green",
@@ -69,12 +55,12 @@ const critical_stims = [
 	predicate2: "have long, skinny leaves",
 	combined_predicate: "have broad, flat leaves and long, skinny leaves"
     },
-    { // engines
+    {
 	stim_type: "critical",
 	kind: "cars",
-	predicate1: "use gas",
-	predicate2: "use electricity",
-	combined_predicate: "use gas and electricity"
+	predicate1: "use gas engines",
+	predicate2: "use electric engines",
+	combined_predicate: "use gas engines and electric engines"
     },
     {
 	stim_type: "critical",
@@ -82,72 +68,208 @@ const critical_stims = [
 	predicate1: "are white",
 	predicate2: "are gray",
 	combined_predicate: "are white and gray"
+    },
+    {
+	stim_type: "critical",
+	kind: "lions that go hunting",
+	predicate1: "are male",
+	predicate2: "are female",
+	combined_predicate: "are male and female"
+    },
+    {
+	stim_type: "critical",
+	kind: "peacocks",
+	predicate1: "have beautiful feathers",
+	predicate2: "have drab feathers",
+	combined_predicate: "have beautiful feathers and drab feathers"
+    },
+    {
+	stim_type: "critical",
+	kind: "dumplings",
+	predicate1: "have meat fillings",
+	predicate2: "have fruit fillings",
+	combined_predicate: "have meat fillings and fruit fillings"
+    },
+    {
+	stim_type: "critical",
+	kind: "bread",
+	predicate1: "is cooked in the oven",
+	predicate2: "is cooked in a pan",
+	combined_predicate: "is cooked in the oven and in a pan"
+    },
+    {
+	stim_type: "critical",
+	kind: "rice",
+	predicate1: "is white",
+	predicate2: "is brown",
+	combined_predicate: "is white and brown"
+    },
+    {
+	stim_type: "critical",
+	kind: "raisins",
+	predicate1: "are brown",
+	predicate2: "are golden",
+	combined_predicate: "are brown and golden"
+    },
+    {
+	stim_type: "critical",
+	kind: "chocolate",
+	predicate1: "is brown",
+	predicate2: "is white",
+	combined_predicate: "is brown and white"
+    },
+    {
+	stim_type: "critical",
+	kind: "spiders that weave webs",
+	predicate1: "are young",
+	predicate2: "are old",
+	combined_predicate: "are young and old"
+    },
+    {
+	stim_type: "critical",
+	kind: "goldfish",
+	predicate1: "live in fish tanks",
+	predicate2: "live in fish bowls",
+	combined_predicate: "live in fish tanks and fish bowls"
+    },
+    {
+	stim_type: "critical",
+	kind: "priests",
+	predicate1: "work in churches",
+	predicate2: "work in temples",
+	combined_predicate: "work in churches and temples"
+    },
+    {
+	stim_type: "critical",
+	kind: "bridges",
+	predicate1: "go across rivers",
+	predicate2: "go across valleys",
+	combined_predicate: "go across rivers and valleys"
+    },
+    {
+	stim_type: "critical",
+	kind: "flowers",
+	predicate1: "bloom in the spring",
+	predicate2: "bloom in the summer",
+	combined_predicate: "bloom in the spring and summer"
+    },
+    {
+	stim_type: "critical",
+	kind: "birds",
+	predicate1: "build nests in trees",
+	predicate2: "build nests in the ground",
+	combined_predicate: "build nests in trees and in the ground"
+    },
+    {
+	stim_type: "critical",
+	kind: "socks",
+	predicate1: "are made of wool",
+	predicate2: "are made of cotton",
+	combined_predicate: "are made of wool and cotton"
+    },
+    {
+	stim_type: "critical",
+	kind: "cyclones",
+	predicate1: "form in the Atlantic Ocean",
+	predicate2: "form in the Pacific Ocean",
+	combined_precidate: "form in the Atlantic Ocean and Pacific Ocean"
+    },
+    {
+	stim_type: "critical",
+	kind: "monkeys",
+	predicate1: "live in the western hemisphere",
+	predicate2: "live in the eastern hemisphere",
+	combined_predicate: "live in the western hemisphere and eastern hemisphere"
+    },
+    {
+	stim_type: "critical",
+	kind: "bears",
+	predicate1: "live in forests",
+	predicate2: "live in tundras",
+	combined_predicate: "live in forests and tundras"
+    },
+    {
+	stim_type: "critical",
+	kind: "gardeners",
+	predicate1: "grow flowers",
+	predicate2: "grow vegetables",
+	combined_predicate: "grow flowers and vegetables"
+    },
+    {
+	stim_type: "critical",
+	kind: "theaters",
+	predicate1: "show movies",
+	predicate2: "show plays",
+	combined_predicate: "show movies and plays"
+    },
+    {
+	stim_type: "critical",
+	kind: "fishermen",
+	predicate1: "go fishing in oceans",
+	predicate2: "go fishing in lakes",
+	combined_predicate: "go fishing in oceans and lakes"
     }
 ]
-// elephants live in africa and asia
-// google items of this form (np vp and vp)
-// male vs. female, juvenile vs. adult
 
-const filler_stims_good = [
-    {
-	stim_type: "filler",
-	trial_type: "good",
-	kind: "horses",
-	predicate1: "eat grass",
-	predicate2: "eat hay",
-	combined_predicate: "eat grass and hay",
-	generic: true,
-	most: true,
-	all: true
-    },
-    {
-	stim_type: "filler",
-	trial_type: "good",
-	kind: "dinosaurs",
-	predicate1: "are extinct",
-	predicate2: false,
-	combined_predicate: false,
-	generic: true,
-	most: false,
-	all: true
-    },
-    {
-	stim_type: "filler",
-	trial_type: "good",
-	kind: "squirrels",
-	predicate1: "eat nuts",
-	predicate2: "eat seeds",
-	combined_predicate: "eat nuts and seeds",
-	generic: true,
-	most: true,
-	all: true
-    }
-]
+// const filler_stims_good = [
+//     {
+// 	stim_type: "filler",
+// 	trial_type: "good",
+// 	kind: "horses",
+// 	predicate1: "eat grass",
+// 	predicate2: "eat hay",
+// 	combined_predicate: "eat grass and hay",
+// 	generic: true,
+// 	most: true,
+// 	all: true
+//     },
+//     {
+// 	stim_type: "filler",
+// 	trial_type: "good",
+// 	kind: "dinosaurs",
+// 	predicate1: "are extinct",
+// 	predicate2: false,
+// 	combined_predicate: false,
+// 	generic: true,
+// 	most: false,
+// 	all: true
+//     },
+//     {
+// 	stim_type: "filler",
+// 	trial_type: "good",
+// 	kind: "squirrels",
+// 	predicate1: "eat nuts",
+// 	predicate2: "eat seeds",
+// 	combined_predicate: "eat nuts and seeds",
+// 	generic: true,
+// 	most: true,
+// 	all: true
+//     }
+// ]
 
-const filler_stims_bad = [
-   {
-       stim_type: "filler",
-       trial_type: "bad",
-       kind: "penguins",
-       predicate1: "live in the jungle",
-       predicate2: false,
-       combined_predicate: false
-   },
-    {
-	stim_type: "filler",
-	trial_type: "bad",
-	kind: "rabbits",
-	predicate1: "hunt for food",
-	predicate2: "live in trees",
-	combined_predicate: "hunt for food and live in trees"
-    },
-    {
-	stim_type: "filler",
-	trial_type: "bad",
-	kind: "pigs",
-	predicate1: "can fly",
-	predicate2: false,
-	combined_predicate: false
-    }
-]
-// cover story? computer program comes up with sentences
+// const filler_stims_bad = [
+//    {
+//        stim_type: "filler",
+//        trial_type: "bad",
+//        kind: "penguins",
+//        predicate1: "live in the jungle",
+//        predicate2: false,
+//        combined_predicate: false
+//    },
+//     {
+// 	stim_type: "filler",
+// 	trial_type: "bad",
+// 	kind: "rabbits",
+// 	predicate1: "hunt for food",
+// 	predicate2: "live in trees",
+// 	combined_predicate: "hunt for food and live in trees"
+//     },
+//     {
+// 	stim_type: "filler",
+// 	trial_type: "bad",
+// 	kind: "pigs",
+// 	predicate1: "can fly",
+// 	predicate2: false,
+// 	combined_predicate: false
+//     }
+// ]

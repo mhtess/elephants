@@ -20,7 +20,7 @@ function make_slides(f) {
 	this.init_sliders(3)
       practice_questions = [
         "Anna laughed on Jon.\n",
-          "The train was late this morning.\n",
+          "The train from Edmonton to Orlando was late.\n",
 	  "The burning candle spelled wrong.\n"
       ]
       for (i=1;i<4; i++){
@@ -349,9 +349,9 @@ function init() {
 
     // CONFIGURATION
     const num_criticals = {
-	generic: 2,
-	most: 2,
-	all: 2
+	generic: 3,
+	most: 3,
+	all: 3
     }
     // const num_fillers = {
     // 	good: 1,
