@@ -72,7 +72,5 @@
 Results from Elephants-3 may be confounded due to the availability of a group predicate interpretation under NP-coordination. We want to show that VP-coordination doesn't allow a group predicate interpretation using acceptability judgements with quantified statements. (All elephants live in Africa and live in Asia should be unacceptable, while Elephants live in Africa and live in Asia should be acceptable, e.g.)
 - between-subjects: NP vs. VP coordination
 - within-subjects: most vs. all vs. generic
-- fillers
-  - good fillers: non mutually exclusive properties, single properties
-  - bad fillers: two false properties, single false properties
+- practice trials: grammatical but unacceptable sentences
 - sliding scale
