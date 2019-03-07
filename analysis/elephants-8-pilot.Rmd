@@ -7,12 +7,17 @@ output: github_document
 
 [Link to experiment (all condition)](https://www.mit.edu/~karengu/elephants_all/elephants/experiments/elephants-8.html)
 
-### Experiment 8 pilot
+## Experiment 8 Pilot
 
-- VP coordination 
-- most vs. all vs. some
+Based on elephants-3.
 
-All questions interrupting.
+* VP coordination 
+* most vs. all vs. some
+* conditions
+    + interrupted, ME (1)
+    + uninterrupted, ME (2)
+    + interrupted, NME (3)
+    + uninterrupted, NME (4)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
@@ -30,7 +35,7 @@ data.path <- paste("../data", expt.prefix,sep = "/")
 fig.path <- paste(project.path, "writing/cogsci2019/figs/", sep = "")
 ```
 
-### Subject information
+## Subject Information
 
 ```{r, echo=F, warning=F}
 results.path <- paste(project.path, data.path, sep = "/")
@@ -75,11 +80,11 @@ df.subject %>%
   kable(.)
 ```
 
-## Attention check 
+## Attention Checks 
 
-### Slider practice
+### Slider Practice
 
-Before the experiment, participants practice usign the sliders to rate 3 category--property pairs:
+Before the experiment, participants practice using the sliders to rate 3 category-property pairs:
 
 - dogs bark (coded as correct if x > 0.5)
 - birds are male (coded as correct if 0.25 < x < 0.75)
@@ -87,9 +92,6 @@ Before the experiment, participants practice usign the sliders to rate 3 categor
 - lions lay eggs (coded as correct if x < 0.10)
 
 ```{r}
-
-# slider bar check
-
 df.slider_check <- df.attention %>% 
   filter(condition == "practice") %>%
   mutate(correct = case_when(
@@ -114,12 +116,14 @@ workers.fail.sliders <- df.slider_check.workers %>%
 # worker 44 failed to respond to last slider, but they got wrong one other slider
 workers.fail.sliders <- c(workers.fail.sliders, 44)
 
+# number of participants that got a certain number of properties correct
 df.slider_check %>% 
   group_by(workerid) %>%
   summarize(n_correct = sum(correct)) %>%
   group_by(n_correct) %>% count() %>%
   kable()
 
+# number of participants that got each property correct
 df.slider_check %>% 
   group_by(property) %>%
   summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
@@ -136,17 +140,14 @@ df.attention %>%
   kable()
 ```
 
-### Memory check
+### Memory Check
 
-After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
-
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor).
 
 ```{r}
-# memory check data
 df.mmry <- df.attention %>%
   filter(condition == "memory_check") %>%
   mutate(correct = as.numeric(correct)) %>%
-  #filter(correct != -1) %>% # remove explanations
   group_by(workerid, tested_on) %>%
   summarize(n_correct = sum(correct)) %>%
   ungroup() %>%
@@ -163,14 +164,11 @@ ggplot(df.mmry, aes( x = correct_rejections ))+
   #xlab("n correctly recognized (or correctly rejected)")+
   #scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
   ylab("n participants")
-
-#df.mmry %>%
-# kable(.)
-
 ```
 
+### Explanations of Task
 
-### Explanations of task
+After the story, participants are also asked to explain generally what they did in the experiment.
 
 ```{r}
 df.expln <- df.attention %>%
@@ -187,13 +185,9 @@ df.expln %>%
   kable(.)
 ```
 
-Memory check questions seem off:
-```{r}
-length(unique(c(workers.fail.memory, workers.fail.sliders, bad.expln)))
-```
-## Trial data
+## Participants
 
-Check number of participants per condition
+### Number of Participants by Item and Condition
 
 ```{r}
 df.full.tab.item.count <-  df.trials %>% filter(condition ==  "uninterrupted", trial_type == "critical", page_type == "query") %>%
@@ -209,6 +203,7 @@ df.full.tab.item.count %>%
   summarize(n = sum(n)) %>% kable()
 ```
 
+### Included/Excluded Subject Numbers
 Removing participants who didn't get all 4 sliders. (All participants with bad explanations failed one or more sliders.)
 
 ```{r}
@@ -223,23 +218,17 @@ df.trials <- df.trials %>%
 df.query <- df.trials %>%
   filter(page_type == "query") %>%
   gather(key, val, response_1, response_2)
-```
 
-Included/excluded subject numbers
-
-```{r}
 df.query %>%
   distinct(workerid, memory_fail, slider_fail, bad_expln) %>%
   group_by(memory_fail, slider_fail) %>% count() %>% kable()
 ```
 
-
-## participant responses
+### Prevalence Estimates by Participant
  
-collapsed across trials
-
-- fill = number of correct responses on the memory check (out of 10)
-- facet = particiapnts
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.  
+* fill = number of correct responses on the memory check (out of 10)  
+* facet = participants  
 
 ```{r fig.height = 10}
 df.query  %>%
@@ -250,14 +239,13 @@ df.query  %>%
   scale_x_continuous(breaks = c(0, 0.5, 1))
 ```
 
-## filler trials
+## Filler Trials
 
-these used quantifiers (and thus we have strong idea about literal meaning)
+These used quantifiers (and thus we have strong idea about literal meaning).
 
 ```{r}
 df.query.filler <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
-  #filter(!slider_fail, !bad_expln) %>%
   filter(trial_type == "filler") %>%
   select(workerid, condition, chapter_num, 
          rt, trial_type, quantifier, page_type, key, val)
@@ -267,6 +255,10 @@ df.query.filler  %>%
   geom_histogram()+
   facet_wrap(~quantifier + condition)
 ```
+
+## Critical Trials (collapsed across item)
+
+### Histograms of Prevalence Estimates by Condition and Quantifier (collapsed across item)
 
 ```{r fig.height = 10}
 df.query.critical <- df.query %>%
@@ -293,26 +285,14 @@ df.query.critical %>%
   ggplot(., aes( x = val ))+
   geom_histogram()+
   facet_grid(quantifier + condition ~ key)
-
-unique(df.query.critical$condition)
 ```
 
+### Pirate Plots by Condition and Quantifier (collapsed across item)
 
 ```{r}
 df.bs.query.critical <- df.query.critical %>%
   group_by(quantifier, condition, key) %>%
   tidyboot_mean(column = val)
-
-bind_rows(
-  df.bs.query.critical %>%
-  filter(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                          "\"...live in Africa and Asia\"\nQ2(Asia)")) %>%
-  mutate(second_query = "% live in Asia"),
-  df.bs.query.critical %>%
-    filter(!(condition %in% c("\"...live in Africa __\"\nQ2(Asia)",
-                            "\"...live in Africa and Asia\"\nQ2(Asia)"))) %>%
-    mutate(second_query = "% eat bugs")
-)
   
 ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
@@ -339,7 +319,7 @@ ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
 #       height = 4.5, width = 10)
 ```
 
-
+### Histograms of Prevalence Estimates by Quantifier for Condition 2 (collapsed across item)
 
 ```{r}
 df.query.critical %>%
@@ -354,15 +334,15 @@ df.query.critical %>%
 #       height = 4.5, width = 10)
 ```
 
-# By-item analysis
+## By-item Analyses
 
+### Number of Participants by Item and Quantifier
 
 ```{r}
 df.tab.item.count <-  df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)", str_detect(key, "Africa")) %>%
   group_by(quantifier, predicate_1) %>%
   count() %>%
   spread(quantifier, n) 
-
 
 df.tab.item.count %>% kable()
 
@@ -372,8 +352,7 @@ df.tab.item.count %>%
   summarize(n = sum(n)) %>% kable()
 ```
 
-
-## Pirate plots by item
+## Pirate Plots (by item)
 
 ```{r fig.width=13, fig.height = 10}
 df.bs.cond2.item <- df.query.critical %>%
@@ -411,7 +390,6 @@ ggplot(df.bs.cond2.item, aes( x = key, fill = key))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
         legend.position = "top")
 
-
 # ggsave(paste(fig.path, "quantifierPilot_byItem_bySubjLines.pdf", sep = ""),
 #       height = 8, width = 12)
 ```
@@ -439,12 +417,14 @@ ggplot(df.bs.cond2.item, aes( x = quantifier, fill = key))+
          color = guide_legend(title = "Question"))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
         legend.position = "top")
+
 # ggsave(paste(fig.path, "quantifierPilot_byItemPoints.pdf", sep = ""),
 #       height = 6, width = 12)
-
 ```
 
-### Histograms by Item
+### Histograms of Prevalence Estimates by Item
+
+#### % live in Africa
 
 ```{r fig.height = 10}
 df.query.critical %>%
@@ -456,6 +436,8 @@ df.query.critical %>%
   facet_grid( predicate_1 ~condition+ quantifier , scales = 'free')+
   theme(strip.text.y = element_text(angle = 0))
 ```
+
+#### % live in Asia
 
 ```{r fig.height = 10}
 df.query.critical %>%

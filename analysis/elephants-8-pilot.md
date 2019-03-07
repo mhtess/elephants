@@ -5,14 +5,21 @@ MH Tessler
 
 [Link to experiment (all condition)](https://www.mit.edu/~karengu/elephants_all/elephants/experiments/elephants-8.html)
 
-### Experiment 8 pilot
+Experiment 8 Pilot
+------------------
+
+Based on elephants-3.
 
 -   VP coordination
 -   most vs. all vs. some
+-   conditions
+    -   interrupted, ME (1)
+    -   uninterrupted, ME (2)
+    -   interrupted, NME (3)
+    -   uninterrupted, NME (4)
 
-All questions interrupting.
-
-### Subject information
+Subject Information
+-------------------
 
 |  workerid| language   | enjoyment | age | gender | problems                                                                                                                                                      | comments                                                                                                                                                      |
 |---------:|:-----------|:----------|:----|:-------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -125,12 +132,12 @@ All questions interrupting.
 |       106| English    | 1         | 23  | Male   |                                                                                                                                                               |                                                                                                                                                               |
 |       107| english    | 0         | 24  | Male   | nothing                                                                                                                                                       | great                                                                                                                                                         |
 
-Attention check
----------------
+Attention Checks
+----------------
 
-### Slider practice
+### Slider Practice
 
-Before the experiment, participants practice usign the sliders to rate 3 category--property pairs:
+Before the experiment, participants practice using the sliders to rate 3 category-property pairs:
 
 -   dogs bark (coded as correct if x &gt; 0.5)
 -   birds are male (coded as correct if 0.25 &lt; x &lt; 0.75)
@@ -183,13 +190,15 @@ A greater number of participants failed on the "lions lay eggs" check. Consideri
 | lions lay eggs |        0.33|       101| psychologist survey                                                                                                |
 | lions lay eggs |        0.41|       107| its good experience                                                                                                |
 
-### Memory check
+### Memory Check
 
-After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor).
 
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
-### Explanations of task
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
 
 |  workerid|  n\_slider\_correct|  n\_memory\_correct| explanation                                                                                                                                                                                                                                  |
 |---------:|-------------------:|-------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -302,14 +311,10 @@ After the story, participants select statements they recall learning from a list
 |       106|                   4|                   9| Read a story about a bunch of alien planets and their inhabitants and then learned facts about them.                                                                                                                                         |
 |       107|                   3|                   3| its good experience                                                                                                                                                                                                                          |
 
-Memory check questions seem off:
+Participants
+------------
 
-    ## [1] 36
-
-Trial data
-----------
-
-Check number of participants per condition
+### Number of Participants by Item and Condition
 
 | predicate\_1                                   |  all|  generic|  most|
 |:-----------------------------------------------|----:|--------:|-----:|
@@ -333,62 +338,49 @@ Check number of participants per condition
 | generic    |  144|
 | most       |  144|
 
-Removing participants who didn't get all 4 sliders. (All participants with bad explanations failed one or more sliders.)
+### Included/Excluded Subject Numbers
 
-Included/excluded subject numbers
+Removing participants who didn't get all 4 sliders. (All participants with bad explanations failed one or more sliders.)
 
 | memory\_fail | slider\_fail |    n|
 |:-------------|:-------------|----:|
 | FALSE        | FALSE        |   78|
 | FALSE        | TRUE         |   30|
 
-participant responses
----------------------
+### Prevalence Estimates by Participant
 
-collapsed across trials
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
+\* fill = number of correct responses on the memory check (out of 10)
+\* facet = participants
 
--   fill = number of correct responses on the memory check (out of 10)
--   facet = particiapnts
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+Filler Trials
+-------------
+
+These used quantifiers (and thus we have strong idea about literal meaning).
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-10-1.png)
+
+Critical Trials (collapsed across item)
+---------------------------------------
+
+### Histograms of Prevalence Estimates by Condition and Quantifier (collapsed across item)
 
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
-filler trials
--------------
-
-these used quantifiers (and thus we have strong idea about literal meaning)
+### Pirate Plots by Condition and Quantifier (collapsed across item)
 
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
+### Histograms of Prevalence Estimates by Quantifier for Condition 2 (collapsed across item)
+
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
-    ## [1] "...live in Africa __"\nQ2(Asia)          
-    ## [2] "...live in Africa __"\nQ2(bugs)          
-    ## [3] "...live in Africa and Asia"\nQ2(Asia)    
-    ## [4] "...live in Africa and eat bugs"\nQ2(bugs)
-    ## 4 Levels: "...live in Africa __"\nQ2(Asia) ...
+By-item Analyses
+----------------
 
-    ## # A tibble: 24 x 9
-    ## # Groups:   quantifier, condition [12]
-    ##    quantifier condition key       n empirical_stat ci_lower  mean ci_upper
-    ##    <chr>      <fct>     <fct> <int>          <dbl>    <dbl> <dbl>    <dbl>
-    ##  1 all        "\"...li… % li…   116          0.986   0.977  0.986    0.994
-    ##  2 all        "\"...li… % pr…   116          0.103   0.0545 0.102    0.153
-    ##  3 all        "\"...li… % li…   116          0.79    0.735  0.790    0.844
-    ##  4 all        "\"...li… % pr…   116          0.791   0.741  0.792    0.842
-    ##  5 generic    "\"...li… % li…    92          0.868   0.824  0.869    0.911
-    ##  6 generic    "\"...li… % pr…    92          0.123   0.0802 0.123    0.171
-    ##  7 generic    "\"...li… % li…    92          0.662   0.603  0.662    0.716
-    ##  8 generic    "\"...li… % pr…    92          0.612   0.549  0.612    0.677
-    ##  9 most       "\"...li… % li…   104          0.835   0.808  0.835    0.861
-    ## 10 most       "\"...li… % pr…   104          0.268   0.207  0.268    0.330
-    ## # … with 14 more rows, and 1 more variable: second_query <chr>
-
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-14-1.png)
-
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-15-1.png)
-
-By-item analysis
-================
+### Number of Participants by Item and Quantifier
 
 | predicate\_1                                   |  all|  generic|  most|
 |:-----------------------------------------------|----:|--------:|-----:|
@@ -412,15 +404,19 @@ By-item analysis
 | generic    |   92|
 | most       |  104|
 
-Pirate plots by item
---------------------
+Pirate Plots (by item)
+----------------------
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-16-1.png)
+
+### Histograms of Prevalence Estimates by Item
+
+#### % live in Africa
 
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-17-1.png)
 
+#### % live in Asia
+
 ![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-18-1.png)
-
-### Histograms by Item
-
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-19-1.png)
-
-![](elephants-8-pilot_files/figure-markdown_github/unnamed-chunk-20-1.png)

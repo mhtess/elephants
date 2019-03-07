@@ -8,7 +8,8 @@ output: github_document
 [Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-2.html)
 
 Participants read a storybook about an alien planet. Each chapter consists of some description of a kind, for example, elephants. The participants are either asked in the middle of a chapter or at the end of the chapter what percentage of the kind they think a particular predicate applies to (for instance, what percentage of elephants do you think live in Africa?).
-#### Changes from Pilot 1
+
+### Changes from Pilot 1
 - added practice trial at the beginning
 
 ```{r setup, include=FALSE}
@@ -23,7 +24,7 @@ theme_set(theme_few())
 data.path <- "../data/elephants-2/elephants-2"
 ```
 
-## Subject information
+## Subject Information
 
 ```{r}
 df.subj <- read_csv(
@@ -41,22 +42,16 @@ df.subj %>%
   kable(.)
 ```
 
-## Attention check 
+## Attention Checks
 
-### Slider practice
+### Slider Practice
 
 Before the experiment, participants practiced using the sliders to rate the prevalence (x) of 3 category-property pairs:
-
 - dogs bark (coded as correct if x > 0.5)
 - birds are male (coded as correct if 0.25 < x < 0.75)
 - ticks carry lyme disease (coded as correct if x < 0.50)
 
 Several (9) participants rated % of ticks with Lyme disease as > 50% (but got other two slider questions correct). Not excluding anyone using this metric.
-
-### Memory check
-
-After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
-
 
 ```{r}
 df.attn <- read_csv(
@@ -79,12 +74,17 @@ workers.fail.sliders <- df.attn %>%
             not_two_correct = sum(correct) < 2) %>%
   filter(not_two_correct) %>%
   pull(workerid)
+```
 
+### Memory Check
+
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+
+```{r}
 # memory check data
 df.mmry <- df.attn %>%
   filter(condition == "memory_check") %>%
   mutate(correct = as.numeric(correct)) %>%
-  #filter(correct != -1) %>% # remove explanations
   group_by(workerid, tested_on) %>%
   summarize(n_correct = sum(correct)) %>%
   ungroup() %>%
@@ -105,7 +105,9 @@ df.mmry %>%
   kable(.)
 ```
 
-### Explanations of task
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
 
 ```{r}
 df.expln <- df.attn %>%
@@ -117,6 +119,10 @@ df.expln %>%
   kable(.)
 ```
 
+## Participants
+
+For all subsequent analyses, we will only consider participants who answered 7 or more items correctly in the statement identification task. (n = `r df.mmry %>% filter(n_correct >= 7) %>% nrow() ` out of `r nrow(df.mmry)`)
+
 ```{r}
 df.trials <- left_join(
     read_csv(
@@ -126,11 +132,9 @@ df.trials <- left_join(
       page_type = gsub("\"", "", page_type),
       trial_type = gsub("\"", "", trial_type),
       kind = gsub("\"", "", kind),
-      #generic = gsub("\"", "", generic),
       page_content = gsub("\"", "", page_content),
       predicate_1 = gsub("\"", "", predicate_1),
       predicate_2 = gsub("\"", "", predicate_2),
-      #verb = gsub("\"", "", verb),
       chapter = gsub("\"", "", chapter),
       condition = gsub("\"", "", condition),
       memory_fail = workerid %in% workers.fail.memory
@@ -142,11 +146,11 @@ df.query <- df.trials %>%
   filter(page_type == "query")
 ```
 
-## Prevalence Estimates per Participant
+### Prevalence Estimates by Participant
  
 Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
-- fill = number of correct responses on the memory check (out of 10)
-- facet = participants
+* fill = number of correct responses on the memory check (out of 10)
+* facet = participants
 
 ```{r}
 df.query  %>%
@@ -159,10 +163,7 @@ df.query  %>%
 
 ## Filler Trials
 
-For all subsequent analyses, we will only consider participants who answered 7 or more items correctly in the statement identification task. (n = `r df.mmry %>% filter(n_correct >= 7) %>% nrow() ` out of `r nrow(df.mmry)`)
-
-these used quantifiers (and thus we have strong idea about literal meaning)
-
+These used quantifiers (and thus we have strong idea about literal meaning).
 - "no Xs are poisonous to lorches"
 - "some build permanent structures"
 - "all have hollow bones"
@@ -198,7 +199,7 @@ df.query.critical %>%
   facet_wrap(~condition)
 ```
 
-### bootstrapped 95% confidence intervals (collapsed across items)
+### Bootstrapped 95% Confidence Intervals (collapsed across item)
 
 ```{r fig.width = 4, fig.height = 3}
 df.bs.query.critical <- df.query.critical %>%
@@ -213,7 +214,9 @@ df.bs.query.critical %>%
   scale_fill_solarized()
 ```
 
-## Number of Trials by Stimulus and Condition
+## Critical Trials (by item)
+
+### Number of Trials by Item and Condition
 
 ```{r}
 df.query.critical %>%
@@ -224,8 +227,7 @@ df.query.critical %>%
   spread(condition, n) %>% kable()
 ```
 
-## Critical Trials (by Item)
-### Pirate plots by Item
+### Pirate plots (by item)
 
 ```{r}
 df.query.critical %>%
@@ -233,17 +235,15 @@ df.query.critical %>%
   ggplot(., aes( x = condition, fill = condition, y = response))+
   geom_pirate(aes(color = condition, fill = condition),
               violins = F)+
-  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   facet_wrap(~predicate_1, nrow = 2)+
   ylab("% Africa")+
-  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-### 95% CIs by Item
+### Bootstrapped 95% Confidence Intervals (by item)
 
 ```{r}
 df.bs.crit.item <- df.query.critical %>%
@@ -262,11 +262,13 @@ df.bs.crit.item %>%
 ```
 
 ## First Trial
+
 "Krens ascribe to the Caboo religion...and the Daith religion."
+
 ```{r}
 df.query.critical %>%
   group_by(workerid, condition) %>%
-  mutate(first_trial  = min(chapter_num),
+  mutate(first_trial = min(chapter_num),
          is_first = chapter_num == first_trial) %>%
   filter(is_first) %>%
   ggplot(., aes( x = response ))+

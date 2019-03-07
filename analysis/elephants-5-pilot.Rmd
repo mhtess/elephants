@@ -7,15 +7,13 @@ output: github_document
 
 [Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-5.html)
 
-
-### Experiment 5 pilot
+## Experiment 5 pilot
 
 All questions interrupting.
 
 - int1: (Africa) -- Q(Af, As) -- (and eat bugs in the wild)
 - int2: (Africa and) -- Q(Af, As) -- (eat bugs in the wild)
 - int4: (Africa and Asia) -- Q(Af, As) -- (which is warm)
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
@@ -29,7 +27,7 @@ theme_set(theme_few())
 data.path <- "../data/elephants-5/elephants-5"
 ```
 
-### Subject information
+## Subject Information
 
 ```{r}
 df.subj <- read_csv(
@@ -47,11 +45,11 @@ df.subj %>%
   kable(.)
 ```
 
-## Attention check 
+## Attention Checks 
 
-### Slider practice
+### Slider Practice
 
-Before the experiment, participants practice usign the sliders to rate 3 category--property pairs:
+Before the experiment, participants practice using the sliders to rate 3 category-property pairs:
 
 - dogs bark (coded as correct if x > 0.5)
 - birds are male (coded as correct if 0.25 < x < 0.75)
@@ -64,8 +62,6 @@ df.attn <- read_csv(
   ) %>%
   mutate(property = gsub("\"", "", property),
          condition = gsub("\"", "", condition))
-
-# slider bar check
 
 df.slider_check <- df.attn %>% 
   filter(condition == "practice") %>%
@@ -100,10 +96,9 @@ df.slider_check %>%
   kable()
 ```
 
+### Memory Check
 
-### Memory check
-
-After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.  
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor).
 Note: for this pilot, memory checks were mistakenly asked even though the participant did not see the corresponding chapter. This was resolved for future experiments, beginning at elephants-6.
 
 ```{r}
@@ -111,7 +106,6 @@ Note: for this pilot, memory checks were mistakenly asked even though the partic
 df.mmry <- df.attn %>%
   filter(condition == "memory_check") %>%
   mutate(correct = as.numeric(correct)) %>%
-  #filter(correct != -1) %>% # remove explanations
   group_by(workerid, tested_on) %>%
   summarize(n_correct = sum(correct)) %>%
   ungroup() %>%
@@ -127,13 +121,11 @@ ggplot(df.mmry, aes( x = n_correct ))+
   xlab("n correctly recognized (or correctly rejected)")+
   scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
   ylab("n participants")
-
-#df.mmry %>%
-# kable(.)
-
 ```
 
-### Explanations of task
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
 
 ```{r}
 df.expln <- df.attn %>%
@@ -150,9 +142,7 @@ df.expln %>%
   kable(.)
 ```
 
-## Trial data
-
-Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders.
+## Participants
 
 ```{r}
 df.trials <- left_join(
@@ -163,11 +153,9 @@ df.trials <- left_join(
       page_type = gsub("\"", "", page_type),
       trial_type = gsub("\"", "", trial_type),
       kind = gsub("\"", "", kind),
-      #generic = gsub("\"", "", generic),
       page_content = gsub("\"", "", page_content),
       predicate_1 = gsub("\"", "", predicate_1),
       predicate_2 = gsub("\"", "", predicate_2),
-      #verb = gsub("\"", "", verb),
       chapter = gsub("\"", "", chapter),
       condition = gsub("\"", "", condition),
       quantifier = gsub("\"", "", quantifier),
@@ -183,7 +171,8 @@ df.query <- df.trials %>%
   gather(key, val, response_1, response_2)
 ```
 
-### Included/excluded subject numbers
+### Included/Excluded Subject Numbers
+Removing participants who got fewer than 7 correct on memory check and didn't get all 4 sliders. (Participants with bad explanations usually fell into one of these other groups.)
 
 ```{r}
 df.query %>%
@@ -191,11 +180,11 @@ df.query %>%
   group_by(memory_fail, slider_fail,bad_expln) %>% count() %>% kable()
 ```
 
-### Prevalence Estimates per Participant
+### Prevalence Estimates by Participant
  
 Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.  
-- fill = number of correct responses on the memory check (out of 10)  
-- facet = participants  
+* fill = number of correct responses on the memory check (out of 10)  
+* facet = participants  
 
 ```{r}
 df.query  %>%
@@ -206,13 +195,12 @@ df.query  %>%
   scale_x_continuous(breaks = c(0, 0.5, 1))
 ```
 
-## filler trials
+## Filler Trials
 
-these used quantifiers (and thus we have strong idea about literal meaning)
+These used quantifiers (and thus we have strong idea about literal meaning).
 
 ```{r}
 df.query.filler <- df.query %>%
-  #filter(!memory_fail, !slider_fail, !bad.expln) %>%
   filter(!slider_fail, !bad_expln) %>%
   filter(trial_type == "filler") %>%
   select(workerid, condition, chapter_num, 
@@ -224,7 +212,7 @@ df.query.filler  %>%
   facet_wrap(~quantifier + condition)
 ```
 
-## critical trials (collapsed across item)
+## Critical Trials (collapsed across item)
 
 *Conditions*
 
@@ -232,11 +220,10 @@ df.query.filler  %>%
 2. AF&: "Elephants live in Africa and" -- Q(Africa, Asia) -- "breathe oxygen"
 4. AF&AS: "Elephants live in Africa and Asia" -- Q(Africa, Asia) -- "while alive"
 
-### N's per condition
+### Number of Participants by Condition
 
 ```{r}
 df.query.critical <- df.query %>%
-  #filter(!memory_fail, !slider_fail) %>%
   filter(!bad_expln, !slider_fail) %>%
   select(workerid, condition, chapter_num, rt, 
          trial_type, predicate_1, predicate_2, 
@@ -255,12 +242,6 @@ df.query.critical <- df.query %>%
                             '"...live in Africa and __"',
                                        '"...live in Africa and Asia __"',
                                        '"...live in Africa and Asia."')
-                         # c("AF",
-                         #               "AF&", #"AF&B",
-                         #               "AF&AS", 
-                         #               "AF&AS_unint",
-                         #               "AF&AS_unint2"
-                         #               )
   ),
          key = factor(key, levels = c("response_1", "response_2"),
                       labels = c("% live in Africa", "% live in Asia")))
@@ -270,19 +251,18 @@ df.query.critical %>%
   group_by(condition) %>% count() %>% kable()
 ```
 
-```{r}
+### Histograms of Prevalence Estimates by Condition (collapsed across trials)
 
+```{r}
 df.query.critical %>%
   ggplot(., aes( x = val ))+
   geom_histogram()+
   facet_grid(key~condition)
-
-#unique(df.query.critical$condition)
 ```
 
-### bootstrapped 95% confidence intervals
+### Bootstrapped 95% Confidence Intervals (collapsed across item)
 
-_Property 2_ = "% live in Asia" for all but the NME (non mutually exclusive) trials
+_Property 2_ = "% live in Asia" for ME trials and "% eat bugs" for NME trials
 
 ```{r}
 df.bs.query.critical <- df.query.critical %>%
@@ -312,17 +292,14 @@ df.bs.query.critical %>%
 #ggsave(paste(fig.path, "expt3_summary.pdf", sep = ""), height = 3.4, width = 7)
 ```
 
-### pirate plots
+### Pirate Plots (collapsed across item)
 
 ```{r}
 df.query.critical %>%
-  #filter(condition %in% c("AF","AF&","AF&AS")) %>% 
   ggplot(., aes( x = condition, y = val))+
   geom_pirate(aes(color = key, fill = key),
               violins = F, show.legend = TRUE)+
-  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   ylab("% Africa")+
-  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
@@ -365,9 +342,9 @@ df.query.critical %>% spread(key, val) %>%
         legend.position = "top")
 ```
 
-### By-item averages
+## By-item Analyses
 
-### Number of participants by Item and Condition
+### Number of Participants by Item and Condition
 
 ```{r}
 df.query.critical %>%
@@ -384,15 +361,12 @@ df.query.critical %>%
 
 ```{r fig.width=14, fig.height=7}
 df.query.critical %>%
-  #filter(condition %in% c("AF","AF&", "AF&B","AF&AS")) %>%
   filter(!memory_fail, !slider_fail) %>%
   ggplot(., aes( x = condition, y = val))+
   geom_pirate(aes(color = key, fill = key),
               violins = F, show.legend = TRUE)+
-  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   facet_wrap(~predicate_1+predicate_2, nrow = 2)+
   ylab("% Africa")+
-  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
@@ -400,13 +374,10 @@ df.query.critical %>%
 
 ```
 
-## first trial vs. other trials (for each condition)
-
-### Pirate Plots (first vs. other trials)
+## First Trial vs. Other Trials (for each condition)
 
 ```{r}
 df.query.critical %>%
-  #filter(condition %in% c("AF","AF&","AF&AS")) %>% 
   group_by(workerid, condition, key) %>%
   mutate(first_trial  = min(chapter_num),
          last_trial = max(chapter_num),
@@ -415,10 +386,8 @@ df.query.critical %>%
   ggplot(., aes( x = condition, y = val))+
   geom_pirate(aes(color = key, fill = key),
               violins = F, show.legend = TRUE)+
-  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   ylab("% Africa")+
   facet_wrap(~is_first)+
-  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
@@ -441,9 +410,7 @@ df.query.critical %>%
                             '"...live in Africa and __"',
                                        '"...live in Africa and Asia __"')) %>%
   ggplot(., aes( x = log(rt / 1000) , color = condition, fill = condition))+
-  #geom_histogram(aes(y = ..density..), alpha = 0.0, position = position_dodge())+
   geom_density(aes(y = ..density..), alpha = 0.3)+
   xlab("log time in seconds")
-  #facet_wrap(~condition, nrow = 2)
 ```
 

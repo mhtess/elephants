@@ -21,7 +21,7 @@ theme_set(theme_few())
 data.path <- "../data/elephants-1/elephants-1"
 ```
 
-## Subject information
+## Subject Information
 
 ```{r}
 df.subj <- read_csv(
@@ -40,11 +40,11 @@ df.subj %>%
   kable(.)
 ```
 
-## Attention check 
+## Attention Checks
 
-After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+### Memory Check
 
-### Statement Identification
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor).
 
 ```{r}
 df.attn <- read_csv(
@@ -77,7 +77,9 @@ df.mmry %>%
   kable(.)
 ```
 
-### Explanations of task
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
 
 ```{r}
 df.expln <- df.attn %>%
@@ -88,6 +90,8 @@ df.expln %>%
   rename(explanation = property) %>%
   kable(.)
 ```
+
+## Participants
 
 ```{r}
 df.trials <- left_join(
@@ -113,11 +117,11 @@ df.query <- df.trials %>%
   filter(page_type == "query")
 ```
 
-## Prevalence Estimates per Participant
+### Prevalence Estimates by Participant
  
 Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
-- fill = number of correct responses on the memory check (out of 10)
-- facet = participants
+* fill = number of correct responses on the memory check (out of 10)
+* facet = participants
 
 ```{r fig.width = 10}
 df.query  %>%
@@ -137,7 +141,7 @@ In filler trials, participants read a chapter about a novel kind similar to the 
 - "all aliens love Zorxon"
 - "no storms (or few) on Dax result in permanent damage..."
 
-other two are generics about singular properties
+Other two fillers are generics about singular properties.
 
 ```{r}
 df.query.dstrct <- df.query %>%
@@ -186,7 +190,9 @@ df.bs.query.critical %>%
   scale_fill_solarized()
 ```
 
-## Number of Trials by Stimulus and Condition
+## Critical Trials (by Item)
+
+### Number of Trials by Item and Condition
 
 ```{r}
 df.query.critical %>%
@@ -200,8 +206,6 @@ df.query.critical %>%
   spread(condition, n)
 ```
 
-
-## Critical Trials (by Item)
 ### By-item confidence intervals
 
 ```{r}
@@ -224,8 +228,10 @@ df.bs.crit.item %>%
   xlab("item, in order of presentation from L to R")
 ```
 
-### By-item Pirate Plots
+### Pirate Plots (by item)
+
 Points represent individual data points. Gray-outlined rectangles represent 95% confidence intervals.
+
 ```{r}
 df.query.critical %>%
   filter(memory_pass) %>%
@@ -236,10 +242,8 @@ df.query.critical %>%
   ggplot(., aes( x = condition, fill = condition, y = response))+
   geom_pirate(aes(color = condition, fill = condition),
               violins = F)+
-  #geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   facet_wrap(~generic)+
   ylab("% Africa")+
-  #geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
@@ -247,8 +251,8 @@ df.query.critical %>%
   xlab("item, in order of presentation from L to R")
 ```
 
+## First Trial
 
-## First trial
 "Krens ascribe to the Caboo religion...and the Daith religion."
 
 ```{r}
