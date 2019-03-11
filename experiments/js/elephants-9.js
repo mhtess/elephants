@@ -201,96 +201,94 @@ function make_slides(f) {
     },
   });
 
-  slides.vertical_sliders = slide({
-    name : "vertical_sliders",
-    present : _.shuffle([
-      {
-        "bins" : [
-          {
-            "min" : 0,
-            "max" : 10
-          },
-          {
-            "min" : 10,
-            "max" : 20
-          },
-          {
-            "min" : 20,
-            "max" : 30
-          },
-          {
-            "min" : 30,
-            "max" : 40
-          },
-          {
-            "min" : 40,
-            "max" : 50
-          },
-          {
-            "min" : 50,
-            "max" : 60
-          }
-        ],
-        "question": "How tall is tall?"
-      }
-    ]),
-    present_handle : function(stim) {
-      $(".err").hide();
-      this.stim = stim;
+slides.memory_check = slide({
+    name : "memory_check",
+    start: function() {
+    $(".err").hide()
+    console.log(exp.memory_properties)
 
-      $("#vertical_question").html(stim.question);
+     this.tested_properties = _.map(exp.memory_properties, function(x){
+       var quantifier = x.trail_type == "generic" ?
+	   x.trial_type : ""
+       return quantifier + x.kind + " " + x.combined_predicate
+     })
+     console.log(this.tested_properties)
 
-      $("#sliders").empty();
-      $("#bin_labels").empty();
 
-      $("#sliders").append('<td> \
-            <div id="slider_endpoint_labels"> \
-              <div class="top">likely</div> \
-              <div class="bottom">unlikely</div>\
-            </div>\
-          </td>')
-      $("#bin_labels").append('<td></td>')
+     this.catch_properties = [
+       "all lightning storms cause fires and are loud",
+       "squash is round and yellow",
+       "most snakes live in Europe",
+       "grass is green and grows tall",
+       "all flies have wings and have many eyes"
+     ]
 
-      this.n_sliders = stim.bins.length;
-      for (var i=0; i<stim.bins.length; i++) {
-        $("#sliders").append("<td><div id='vslider" + i + "' class='vertical_slider'>|</div></td>");
-        $("#bin_labels").append("<td class='bin_label'>" + stim.bins[i].min + " - " + stim.bins[i].max + "</td>");
-      }
+     this.check_properties = _.shuffle(_.flatten([this.tested_properties, this.catch_properties]))
 
-      this.init_sliders(stim);
-      exp.sliderPost = [];
-    },
+     // clear the former content of a given <div id="memory_checkboxes"></div>
+     document.getElementById('memory_checkboxes').innerHTML = '';
 
+     for (i=0;i<this.check_properties.length;i++){
+       // create the necessary elements
+       var label= document.createElement("label");
+       var description = document.createTextNode(this.check_properties[i]);
+       var checkbox = document.createElement("input");
+
+       checkbox.type = "checkbox";    // make the element a checkbox
+       checkbox.name = "slct1";      // give it a name we can check on the server side
+       checkbox.value = this.check_properties[i];         // make its value "pair"
+
+       label.appendChild(checkbox);   // add the box to the element
+       label.appendChild(description);// add the description to the element
+
+       // add the label element to your div
+       document.getElementById('memory_checkboxes').appendChild(label);
+       document.getElementById('memory_checkboxes').appendChild(document.createElement("br"));
+
+     }
+   },
     button : function() {
-      if (exp.sliderPost.length < this.n_sliders) {
-        $(".err").show();
+      if ($("#explanation").val() == "") {
+        $(".err").show()
       } else {
-        this.log_responses();
-        _stream.apply(this); //use _stream.apply(this); if and only if there is "present" data.
-      }
-    },
+        var checked_options = new Array();
+        var unchecked_options = new Array();
 
-    init_sliders : function(stim) {
-      for (var i=0; i<stim.bins.length; i++) {
-        utils.make_slider("#vslider" + i, this.make_slider_callback(i), "vertical");
-      }
-    },
-    make_slider_callback : function(i) {
-      return function(event, ui) {
-        exp.sliderPost[i] = ui.value;
-      };
-    },
-    log_responses : function() {
-      for (var i=0; i<this.stim.bins.length; i++) {
-        exp.data_trials.push({
-          "trial_type" : "vertical_slider",
-          "question" : this.stim.question,
-          "response" : exp.sliderPost[i],
-          "min" : this.stim.bins[i].min,
-          "max" : this.stim.bins[i].max
+        $.each($("input[name='slct1']:checked"), function() {
+          checked_options.push($(this).val());
         });
+
+        $.each($("input[name='slct1']:not(:checked)"), function() {
+          unchecked_options.push($(this).val());
+        });
+
+        for (i=0;i<this.check_properties.length;i++){
+          var p = this.check_properties[i];
+          var tested_on = this.tested_properties.indexOf(p) > -1 ? 1 : 0;
+          var response = checked_options.indexOf(p) > -1 ? 1 : 0;
+          exp.catch_trials.push({
+            condition: "memory_check",
+            check_index: i,
+            property: p,
+            tested_on: tested_on,
+            response: response,
+            correct: (tested_on == response) ? 1 : 0
+          })
+        }
+
+        exp.catch_trials.push({
+          condition: "explanation",
+          check_index: -1,
+          property: $("#explanation").val(),
+          tested_on: -1,
+          response: -1,
+          correct: -1
+        })
+
+        exp.go(); //use exp.go() if and only if there is no "present" data.
       }
-    },
+
+    }
   });
 
   slides.subj_info =  slide({
@@ -414,12 +412,13 @@ function init() {
     // });
     // exp.stims = exp.stims.concat(criticals_fillers.slice(prevIndex, criticals_fillers.length))
     exp.stims = criticals;
+    exp.memory_properties = _.shuffle(criticals).slice(0,5);
     console.log(exp.stims)
 
   //blocks of the experiment:
   exp.structure=[
       'i0', 'practice',
-      'one_slider',
+      'one_slider', 'memory_check',
     'subj_info', 'thanks'
   ];
 
