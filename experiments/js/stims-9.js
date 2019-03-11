@@ -58,9 +58,9 @@ const critical_stims = [
     {
 	stim_type: "critical",
 	kind: "cars",
-	predicate1: "use gas engines",
-	predicate2: "use electric engines",
-	combined_predicate: "use gas engines and electric engines"
+	predicate1: "have gas engines",
+	predicate2: "have electric engines",
+	combined_predicate: "have gas engines and electric engines"
     },
     {
 	stim_type: "critical",
@@ -92,10 +92,10 @@ const critical_stims = [
     },
     {
 	stim_type: "critical",
-	kind: "bread",
-	predicate1: "is cooked in the oven",
-	predicate2: "is cooked in a pan",
-	combined_predicate: "is cooked in the oven and in a pan"
+	kind: "breads",
+	predicate1: "are cooked in a dutch-oven",
+	predicate2: "are cooked on a pan",
+	combined_predicate: "are cooked in a dutch-oven and on a pan"
     },
     {
 	stim_type: "critical",
@@ -105,11 +105,18 @@ const critical_stims = [
 	combined_predicate: "is white and brown"
     },
     {
+  stim_type: "critical",
+  kind: "beans",
+  predicate1: "are black",
+  predicate2: "are brown",
+  combined_predicate: "are black and brown"
+    },
+    {
 	stim_type: "critical",
 	kind: "raisins",
-	predicate1: "are brown",
+	predicate1: "are purple",
 	predicate2: "are golden",
-	combined_predicate: "are brown and golden"
+	combined_predicate: "are purple and golden"
     },
     {
 	stim_type: "critical",
@@ -134,17 +141,24 @@ const critical_stims = [
     },
     {
 	stim_type: "critical",
-	kind: "priests",
-	predicate1: "work in churches",
-	predicate2: "work in temples",
-	combined_predicate: "work in churches and temples"
+	kind: "religious people",
+	predicate1: "pray in churches",
+	predicate2: "pray in synagogues",
+	combined_predicate: "pray in churches and synagogues"
     },
     {
 	stim_type: "critical",
 	kind: "bridges",
-	predicate1: "go across rivers",
-	predicate2: "go across valleys",
-	combined_predicate: "go across rivers and valleys"
+	predicate1: "go over rivers",
+	predicate2: "go over valleys",
+	combined_predicate: "go over rivers and valleys"
+    },
+    {
+  stim_type: "critical",
+  kind: "tunnels",
+  predicate1: "go through mountains",
+  predicate2: "go through the sea",
+  combined_predicate: "go through mountains and the sea"
     },
     {
 	stim_type: "critical",
@@ -157,8 +171,8 @@ const critical_stims = [
 	stim_type: "critical",
 	kind: "birds",
 	predicate1: "build nests in trees",
-	predicate2: "build nests in the ground",
-	combined_predicate: "build nests in trees and in the ground"
+	predicate2: "build nests on the ground",
+	combined_predicate: "build nests in trees and on the ground"
     },
     {
 	stim_type: "critical",
@@ -169,7 +183,7 @@ const critical_stims = [
     },
     {
 	stim_type: "critical",
-	kind: "cyclones",
+	kind: "hurricanes",
 	predicate1: "form in the Atlantic Ocean",
 	predicate2: "form in the Pacific Ocean",
 	combined_precidate: "form in the Atlantic Ocean and Pacific Ocean"
@@ -190,10 +204,10 @@ const critical_stims = [
     },
     {
 	stim_type: "critical",
-	kind: "gardeners",
-	predicate1: "grow flowers",
-	predicate2: "grow vegetables",
-	combined_predicate: "grow flowers and vegetables"
+	kind: "Iowa farmers",
+	predicate1: "grow corn",
+	predicate2: "grow soy",
+	combined_predicate: "grow corn and soy"
     },
     {
 	stim_type: "critical",
@@ -205,9 +219,9 @@ const critical_stims = [
     {
 	stim_type: "critical",
 	kind: "fishermen",
-	predicate1: "go fishing in oceans",
-	predicate2: "go fishing in lakes",
-	combined_predicate: "go fishing in oceans and lakes"
+	predicate1: "fish in oceans",
+	predicate2: "fish in lakes",
+	combined_predicate: "fish in oceans and lakes"
     }
 ]
 
