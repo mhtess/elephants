@@ -74,3 +74,10 @@ Results from Elephants-3 may be confounded due to the availability of a group pr
 - within-subjects: most vs. all vs. generic
 - practice trials: grammatical but unacceptable sentences
 - sliding scale
+stim types:
+- weather: 2
+- animals: 10
+- plants: 1
+- food: 7
+- artifacts: 5
+- people: 3
