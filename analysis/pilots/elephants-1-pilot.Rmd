@@ -1,0 +1,280 @@
+---
+title: "elephants-1-pilot"
+author: "MH Tessler"
+date: "1/14/2019"
+output: github_document
+---
+
+[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-1.html)
+
+Participants read a storybook about an alien planet. Each chapter consists of some description of a kind, for example, elephants. The participants are either asked in the middle of a chapter or at the end of the chapter what percentage of the kind they think a particular predicate applies to (for instance, what percentage of elephants do you think live in Africa?).
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(viridis)
+library(tidyboot)
+library(ggpirate)
+theme_set(theme_few())
+data.path <- "../../data/elephants-1/elephants-1"
+```
+
+## Subject Information
+
+```{r}
+df.subj <- read_csv(
+    paste(data.path, "-subject_information.csv", sep="")
+  ) %>%
+  # remove quotes around subject responses
+  mutate(language = gsub("\"", "", language),
+         enjoyment = gsub("\"", "", enjoyment),
+         age = gsub("\"", "", age),
+         gender = gsub("\"", "", gender),
+         problems = gsub("\"", "", problems),
+         comments = gsub("\"", "", comments))
+
+df.subj %>%
+  select(workerid, language, enjoyment, age, gender, problems, comments) %>%
+  kable(.)
+```
+
+## Attention Checks
+
+### Memory Check
+
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor).
+
+```{r}
+df.attn <- read_csv(
+    paste(data.path,"-catch_trials.csv", sep = "")
+  ) %>%
+  # remove quotes
+  mutate(property = gsub("\"", "", property))
+
+# memory check data
+df.mmry <- df.attn %>%
+  filter(correct != -1) %>% # remove explanations
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`, 
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits) 
+
+# workers to include, by id
+workerid.pass <- df.mmry %>% filter(n_correct >= 7) %>% pull(workerid)
+
+ggplot(df.mmry, aes( x = n_correct ))+
+  geom_bar()+
+  xlab("Correct Responses")+
+  scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  ylab("Number of Participants")
+
+df.mmry %>%
+  kable(.)
+```
+
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
+
+```{r}
+df.expln <- df.attn %>%
+  filter(correct == -1) 
+
+df.expln %>%
+  select(workerid, property) %>%
+  rename(explanation = property) %>%
+  kable(.)
+```
+
+## Participants
+
+```{r}
+df.trials <- left_join(
+    read_csv(
+    paste(data.path, "-trials.csv", sep = "")
+    ) %>% 
+    mutate(
+      page_type = gsub("\"", "", page_type),
+      trial_type = gsub("\"", "", trial_type),
+      kind = gsub("\"", "", kind),
+      generic = gsub("\"", "", generic),
+      page_content = gsub("\"", "", page_content),
+      predicate = gsub("\"", "", predicate),
+      verb = gsub("\"", "", verb),
+      chapter = gsub("\"", "", chapter),
+      condition = gsub("\"", "", condition),
+      memory_pass = workerid %in% workerid.pass
+      ),
+    df.mmry %>% select(workerid, n_correct)
+)
+
+df.query <- df.trials %>%
+  filter(page_type == "query")
+```
+
+### Prevalence Estimates by Participant
+ 
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
+* fill = number of correct responses on the memory check (out of 10)
+* facet = participants
+
+```{r fig.width = 10}
+df.query  %>%
+  ggplot(., aes( x = response, fill = n_correct))+
+  geom_histogram()+
+  facet_wrap(~workerid)+
+  scale_fill_viridis()+
+  scale_x_continuous(breaks = c(0, 0.5, 1))
+```
+
+## Filler Trials
+
+For all subsequent analyses, we will only consider participants who answered 7 or more items correctly in the statement identification task. (n = `r df.mmry %>% filter(n_correct >= 7) %>% nrow() ` out of `r nrow(df.mmry)`)
+
+In filler trials, participants read a chapter about a novel kind similar to the critical trials. They are then asked to estimate the prevalence of a property in the kind. Two of the filler trials used quantifiers (and thus we have strong idea about literal meaning)
+
+- "all aliens love Zorxon"
+- "no storms (or few) on Dax result in permanent damage..."
+
+Other two fillers are generics about singular properties.
+
+```{r}
+df.query.dstrct <- df.query %>%
+  filter(memory_pass) %>%
+  filter(trial_type == "distractor") %>%
+  select(workerid, condition, chapter_num, rt, trial_type, generic, page_type, response)
+
+df.query.dstrct  %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~generic + condition, labeller = as_labeller(label_wrap_gen(width = 40, multi_line = TRUE)))
+```
+
+## Critical Trials (collapsed across item)
+Participants answered questions of the form "What percentage of elephants do you think live in Africa?" in both conditions. The x-axis shows the prevalence estimates.
+
+```{r}
+df.query.critical <- df.query %>%
+  filter(memory_pass) %>%
+  select(workerid, condition, chapter_num, rt, 
+         trial_type, generic, page_type, response, memory_pass) %>%
+  filter(trial_type == "critical")
+
+df.query.critical %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~condition)
+```
+
+### Bootstrapped 95% Confidence Intervals (collapsed over items)
+
+```{r fig.width = 4, fig.height = 3}
+# bootstrapped 95% confidence intervals for the mean response by condition (Africa vs. Africa and Asia)
+df.bs.query.critical <- df.query.critical %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = response)
+
+df.bs.query.critical %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia"))) %>%
+  ggplot(., aes( x = "manipulation", fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()
+```
+
+## Critical Trials (by Item)
+
+### Number of Trials by Item and Condition
+
+```{r}
+df.query.critical %>%
+  filter(memory_pass) %>%
+    ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia")),
+         generic = factor(generic, levels=unique(generic[order(chapter_num)]), ordered=TRUE)) %>%
+  group_by(condition, generic) %>%
+  count() %>%
+  spread(condition, n)
+```
+
+### By-item confidence intervals
+
+```{r}
+df.bs.crit.item <- df.query.critical %>%
+  filter(memory_pass) %>%
+  group_by(condition, generic, chapter_num) %>%
+  tidyboot_mean(column = response)
+
+df.bs.crit.item %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia")),
+         generic = factor(generic, levels=unique(generic[order(chapter_num)]), ordered=TRUE)) %>%
+  ggplot(., aes( x = generic, fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
+  xlab("item, in order of presentation from L to R")
+```
+
+### Pirate Plots (by item)
+
+Points represent individual data points. Gray-outlined rectangles represent 95% confidence intervals.
+
+```{r}
+df.query.critical %>%
+  filter(memory_pass) %>%
+    ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia")),
+         generic = factor(generic, levels=unique(generic[order(chapter_num)]), ordered=TRUE)) %>%
+  ggplot(., aes( x = condition, fill = condition, y = response))+
+  geom_pirate(aes(color = condition, fill = condition),
+              violins = F)+
+  facet_wrap(~generic)+
+  ylab("% Africa")+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))+
+  xlab("item, in order of presentation from L to R")
+```
+
+## First Trial
+
+"Krens ascribe to the Caboo religion...and the Daith religion."
+
+```{r}
+df.query.critical %>%
+  filter(chapter_num == 3) %>% # first critical chapter after introduction chapter and first filler trial
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_wrap(~condition)
+```
+
+```{r}
+df.query.critical %>%
+  filter(chapter_num == 3) %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = response) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, levels = c("single", "conjunction"),
+                            labels = c("..Africa", "..Africa and Asia"))) %>%
+  ggplot(., aes( x = "manipulation", fill = condition, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("% Africa")+
+  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_solarized()
+```
+
