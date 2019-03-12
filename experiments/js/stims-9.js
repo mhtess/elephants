@@ -174,9 +174,9 @@ const critical_stims = [
     {
   stim_type: "critical",
   kind: "tunnels",
-  predicate1: "go through mountains",
-  predicate2: "go through the sea",
-	combined_predicate: "go through mountains and the sea",
+  predicate1: "go through the sea",
+  predicate2: "go through mountains",
+	combined_predicate: "go through the sea and mountains",
 	domain: "artifacts"
     },
     {
