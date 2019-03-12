@@ -250,6 +250,22 @@ const critical_stims = [
 	predicate2: "fish in lakes",
 	combined_predicate: "fish in oceans and lakes",
 	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "artists",
+	predicate1: "create paintings",
+	predicate2: "create sculptures",
+	combined_predicate: "create paintings and sculptures",
+	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "professional athletes",
+	predicate1: "compete in team sports",
+	predicate2: "compete in individual sports",
+	combined_predicate: "compete in team sports and individual sports",
+	domain: "people"
     }
 ]
 

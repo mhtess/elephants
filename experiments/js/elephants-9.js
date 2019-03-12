@@ -210,18 +210,31 @@ slides.memory_check = slide({
      this.tested_properties = _.map(exp.memory_properties, function(x){
        var quantifier = x.trail_type == "generic" ?
 	   x.trial_type : ""
-       return quantifier + x.kind + " " + x.combined_predicate
+	 var predicate = exp.condition == "np" ?
+	     x.combined_predicate : x.predicate1 + " and " + x.predicate2
+       return quantifier + x.kind + " " + predicate
      })
      console.log(this.tested_properties)
 
 
+	if (exp.condition == "vp") {
      this.catch_properties = [
-       "all lightning storms cause fires and are loud",
-       "squash is round and yellow",
-       "most snakes live in Europe",
-       "grass is green and grows tall",
+	 "all lightning storms cause fires and cause floods",
+	 "squash is round and is yellow",
+       "most snakes live in Europe and live in Asia",
+       "grass is green and is short",
        "all flies have wings and have many eyes"
      ]
+	}
+	else {
+	    this.catch_properties = [
+	"all lightning storms cause fires and floods",
+	 "squash is round and yellow",
+       "most snakes live in Europe and Asia",
+       "grass is green and short",
+       "all flies have wings and many eyes"
+	    ]
+	}
 
      this.check_properties = _.shuffle(_.flatten([this.tested_properties, this.catch_properties]))
 
@@ -347,9 +360,9 @@ function init() {
 
     // CONFIGURATION
     const num_criticals = {
-	generic: 3,
-	most: 3,
-	all: 3
+	generic: 10,
+	most: 10,
+	all: 10
     }
     // const num_fillers = {
     // 	good: 1,

@@ -80,4 +80,4 @@ stim types:
 - plants: 1
 - food: 7
 - artifacts: 5
-- people: 3
+- people: 5
