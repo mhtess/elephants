@@ -208,7 +208,7 @@ const critical_stims = [
 	kind: "hurricanes",
 	predicate1: "form in the Atlantic Ocean",
 	predicate2: "form in the Pacific Ocean",
-	combined_precidate: "form in the Atlantic Ocean and Pacific Ocean",
+	combined_predicate: "form in the Atlantic Ocean and Pacific Ocean",
 	domain: "weather"
     },
     {
