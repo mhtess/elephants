@@ -53,7 +53,7 @@ function make_slides(f) {
         exp.catch_trials.push({
           condition: "practice",
           check_index: 2,
-          sentence: "The train was late this morning.",
+          sentence: "The train from Edmonton to Orlando was late.",
           response: exp.sliderPractice[1],
           correct:  exp.sliderPractice[1] > 0.5
         })
