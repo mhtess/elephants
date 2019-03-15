@@ -1,0 +1,473 @@
+{
+ "AssignmentId": "3FK0YFF9P04WVGS9JCPNCN78H8FVV1",
+ "WorkerId": "58942c47b836401391a0e4d42f28eb25",
+ "HITId": "37VHPF5VYCRZYBS3U0E66X3OM748C9",
+ "AssignmentStatus": "Submitted",
+ "AutoApprovalTime": "2019-03-14T13:40:43.000Z",
+ "AcceptTime": "2019-03-13T13:19:30.000Z",
+ "SubmitTime": "2019-03-13T13:40:43.000Z",
+ "answers": {
+  "trials": [
+   {
+    "stim_type": "critical",
+    "kind": "elephants",
+    "predicate1": "live in Africa",
+    "predicate2": "live in Asia",
+    "combined_predicate": "live in Africa and Asia",
+    "domain": "animals",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 1
+   },
+   {
+    "stim_type": "critical",
+    "kind": "raisins",
+    "predicate1": "are purple",
+    "predicate2": "are golden",
+    "combined_predicate": "are purple and golden",
+    "domain": "food",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0.73
+   },
+   {
+    "stim_type": "critical",
+    "kind": "grapes",
+    "predicate1": "are purple",
+    "predicate2": "are green",
+    "combined_predicate": "are purple and green",
+    "domain": "food",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0.74
+   },
+   {
+    "stim_type": "critical",
+    "kind": "dumplings",
+    "predicate1": "have meat fillings",
+    "predicate2": "have vegetable fillings",
+    "combined_predicate": "have meat fillings and vegetable fillings",
+    "domain": "food",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 1
+   },
+   {
+    "stim_type": "critical",
+    "kind": "clouds",
+    "predicate1": "are white",
+    "predicate2": "are gray",
+    "combined_predicate": "are white and gray",
+    "domain": "weather",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.75
+   },
+   {
+    "stim_type": "critical",
+    "kind": "monkeys",
+    "predicate1": "live in the western hemisphere",
+    "predicate2": "live in the eastern hemisphere",
+    "combined_predicate": "live in the western hemisphere and eastern hemisphere",
+    "domain": "animals",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0.03
+   },
+   {
+    "stim_type": "critical",
+    "kind": "socks",
+    "predicate1": "are made of wool",
+    "predicate2": "are made of cotton",
+    "combined_predicate": "are made of wool and cotton",
+    "domain": "artifacts",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0.63
+   },
+   {
+    "stim_type": "critical",
+    "kind": "chocolate",
+    "predicate1": "is brown",
+    "predicate2": "is white",
+    "combined_predicate": "is brown and white",
+    "domain": "food",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.56
+   },
+   {
+    "stim_type": "critical",
+    "kind": "beans",
+    "predicate1": "are black",
+    "predicate2": "are brown",
+    "combined_predicate": "are black and brown",
+    "domain": "food",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0.6
+   },
+   {
+    "stim_type": "critical",
+    "kind": "tunnels",
+    "predicate1": "go through the sea",
+    "predicate2": "go through mountains",
+    "combined_predicate": "go through the sea and mountains",
+    "domain": "artifacts",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.62
+   },
+   {
+    "stim_type": "critical",
+    "kind": "spiders that weave webs",
+    "predicate1": "are young",
+    "predicate2": "are old",
+    "combined_predicate": "are young and old",
+    "domain": "animals",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0
+   },
+   {
+    "stim_type": "critical",
+    "kind": "bears",
+    "predicate1": "live in forests",
+    "predicate2": "live in tundras",
+    "combined_predicate": "live in forests and tundras",
+    "domain": "animals",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.63
+   },
+   {
+    "stim_type": "critical",
+    "kind": "artists",
+    "predicate1": "create paintings",
+    "predicate2": "create sculptures",
+    "combined_predicate": "create paintings and sculptures",
+    "domain": "people",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.59
+   },
+   {
+    "stim_type": "critical",
+    "kind": "birds",
+    "predicate1": "build nests in trees",
+    "predicate2": "build nests on the ground",
+    "combined_predicate": "build nests in trees and on the ground",
+    "domain": "animals",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0
+   },
+   {
+    "stim_type": "critical",
+    "kind": "hurricanes",
+    "predicate1": "form in the Atlantic Ocean",
+    "predicate2": "form in the Pacific Ocean",
+    "combined_precidate": "form in the Atlantic Ocean and Pacific Ocean",
+    "domain": "weather",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0
+   },
+   {
+    "stim_type": "critical",
+    "kind": "bridges",
+    "predicate1": "go over rivers",
+    "predicate2": "go over valleys",
+    "combined_predicate": "go over rivers and valleys",
+    "domain": "artifacts",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.67
+   },
+   {
+    "stim_type": "critical",
+    "kind": "religious people",
+    "predicate1": "pray in churches",
+    "predicate2": "pray in synagogues",
+    "combined_predicate": "pray in churches and synagogues",
+    "domain": "people",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.66
+   },
+   {
+    "stim_type": "critical",
+    "kind": "tigers",
+    "predicate1": "are orange with black stripes",
+    "predicate2": "are white with brown stripes",
+    "combined_predicate": "are orange with black stripes and white with brown stripes",
+    "domain": "animals",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.52
+   },
+   {
+    "stim_type": "critical",
+    "kind": "cats",
+    "predicate1": "live as pets",
+    "predicate2": "live in the wild",
+    "combined_predicate": "live as pets and live in the wild",
+    "domain": "animals",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.75
+   },
+   {
+    "stim_type": "critical",
+    "kind": "flowers",
+    "predicate1": "bloom in the spring",
+    "predicate2": "bloom in the summer",
+    "combined_predicate": "bloom in the spring and summer",
+    "domain": "plants",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.7
+   },
+   {
+    "stim_type": "critical",
+    "kind": "professional athletes",
+    "predicate1": "compete in team sports",
+    "predicate2": "compete in individual sports",
+    "combined_predicate": "compete in team sports and individual sports",
+    "domain": "people",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0
+   },
+   {
+    "stim_type": "critical",
+    "kind": "Iowa farmers",
+    "predicate1": "grow corn",
+    "predicate2": "grow soy",
+    "combined_predicate": "grow corn and soy",
+    "domain": "people",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.66
+   },
+   {
+    "stim_type": "critical",
+    "kind": "turtles",
+    "predicate1": "live in saltwater",
+    "predicate2": "live in freshwater",
+    "combined_predicate": "live in saltwater and freshwater",
+    "domain": "animals",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.73
+   },
+   {
+    "stim_type": "critical",
+    "kind": "cars",
+    "predicate1": "have gas engines",
+    "predicate2": "have electric engines",
+    "combined_predicate": "have gas engines and electric engines",
+    "domain": "artifacts",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.12
+   },
+   {
+    "stim_type": "critical",
+    "kind": "breads",
+    "predicate1": "are cooked in a dutch-oven",
+    "predicate2": "are cooked on a pan",
+    "combined_predicate": "are cooked in a dutch-oven and on a pan",
+    "domain": "food",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.09
+   },
+   {
+    "stim_type": "critical",
+    "kind": "rice",
+    "predicate1": "is white",
+    "predicate2": "is brown",
+    "combined_predicate": "is white and brown",
+    "domain": "food",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.69
+   },
+   {
+    "stim_type": "critical",
+    "kind": "peacocks",
+    "predicate1": "have beautiful feathers",
+    "predicate2": "have drab feathers",
+    "combined_predicate": "have beautiful feathers and drab feathers",
+    "domain": "animals",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0
+   },
+   {
+    "stim_type": "critical",
+    "kind": "fishermen",
+    "predicate1": "fish in oceans",
+    "predicate2": "fish in lakes",
+    "combined_predicate": "fish in oceans and lakes",
+    "domain": "people",
+    "trial_type": "all",
+    "condition": "vp",
+    "response": 0.01
+   },
+   {
+    "stim_type": "critical",
+    "kind": "goldfish",
+    "predicate1": "live in fish tanks",
+    "predicate2": "live in fish bowls",
+    "combined_predicate": "live in fish tanks and fish bowls",
+    "domain": "animals",
+    "trial_type": "most",
+    "condition": "vp",
+    "response": 0.52
+   },
+   {
+    "stim_type": "critical",
+    "kind": "theaters",
+    "predicate1": "show movies",
+    "predicate2": "show plays",
+    "combined_predicate": "show movies and plays",
+    "domain": "artifacts",
+    "trial_type": "generic",
+    "condition": "vp",
+    "response": 0.66
+   }
+  ],
+  "system": {
+   "Browser": "Chrome",
+   "OS": "Mac",
+   "screenH": 900,
+   "screenW": 1440
+  },
+  "condition": "vp",
+  "subject_information": {
+   "language": "English",
+   "enjoyment": "2",
+   "asses": "Yes",
+   "age": "42",
+   "gender": "Female",
+   "education": "3",
+   "comments": "",
+   "problems": "no",
+   "fairprice": "1.00"
+  },
+  "time_in_minutes": 9.38165,
+  "catch_trials": [
+   {
+    "condition": "practice",
+    "check_index": 1,
+    "sentence": "Anna laughed on Jon.",
+    "response": 0,
+    "correct": true
+   },
+   {
+    "condition": "practice",
+    "check_index": 2,
+    "sentence": "The train was late this morning.",
+    "response": 1,
+    "correct": true
+   },
+   {
+    "condition": "practice",
+    "check_index": 3,
+    "sentence": "The burning candle spelled wrong.",
+    "response": 1,
+    "correct": true
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 0,
+    "property": "flowers bloom in the spring and bloom in the summer",
+    "tested_on": 1,
+    "response": 1,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 1,
+    "property": "religious people pray in churches and pray in synagogues",
+    "tested_on": 1,
+    "response": 1,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 2,
+    "property": "all flies have wings and have many eyes",
+    "tested_on": 0,
+    "response": 0,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 3,
+    "property": "grapes are purple and are green",
+    "tested_on": 1,
+    "response": 1,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 4,
+    "property": "artists create paintings and create sculptures",
+    "tested_on": 1,
+    "response": 1,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 5,
+    "property": "all lightning storms cause fires and cause floods",
+    "tested_on": 0,
+    "response": 0,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 6,
+    "property": "grass is green and is short",
+    "tested_on": 0,
+    "response": 0,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 7,
+    "property": "most snakes live in Europe and live in Asia",
+    "tested_on": 0,
+    "response": 0,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 8,
+    "property": "cars have gas engines and have electric engines",
+    "tested_on": 1,
+    "response": 1,
+    "correct": 1
+   },
+   {
+    "condition": "memory_check",
+    "check_index": 9,
+    "property": "squash is round and is yellow",
+    "tested_on": 0,
+    "response": 0,
+    "correct": 1
+   },
+   {
+    "condition": "explanation",
+    "check_index": -1,
+    "property": "I evaluated sentence for whether they were good or bad.",
+    "tested_on": -1,
+    "response": -1,
+    "correct": -1
+   }
+  ]
+ }
+}
