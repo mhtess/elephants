@@ -63,7 +63,7 @@ function make_slides(f) {
           check_index: 3,
           sentence: "The burning candle spelled wrong.",
           response: exp.sliderPractice[1],
-          correct:  exp.sliderPractice[1] > 0.5
+          correct:  exp.sliderPractice[1] < 0.5
         })
 
         exp.go(); //use exp.go() if and only if there is no "present" data.
