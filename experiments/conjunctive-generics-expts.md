@@ -74,9 +74,9 @@ Results from Elephants-3 may be confounded due to the availability of a group pr
 - within-subjects: most vs. all vs. generic
 - practice trials: grammatical but unacceptable sentences
 - sliding scale
-- memory check with NP vs. VP coordinated distractors
+- memory check with NP vs. VP coordinated distractors-
 - each subject does each item (30 trials total)
-- n = 54; $1.00 
+- n = 54; $1.00
 stim types:
 - weather: 2
 - animals: 10
