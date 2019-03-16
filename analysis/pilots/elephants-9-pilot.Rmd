@@ -23,6 +23,8 @@ library(jsonlite)
 library(viridis)
 library(tidyboot)
 library(ggpirate)
+library(lme4)
+library(lmerTest)
 theme_set(theme_few())
 data.path <- "../../data/elephants-9/"
 ```
@@ -202,7 +204,8 @@ df.trials %>%
 
 df.query <- df.trials %>%
   filter(!memory_fail, !slider_fail) %>%
-  rename(quantifier = trial_type, coordination = condition)
+  rename(quantifier = trial_type, coordination = condition) %>%
+  mutate(quantifier = factor(quantifier, levels = c("generic", "most", "all"), ordered = TRUE))
 ```
 
 ### Number of Participants by Item and Condition
@@ -233,7 +236,9 @@ df.query %>%
   geom_histogram()+
   facet_wrap(~workerid)+
   scale_fill_viridis()+
-  scale_x_continuous(breaks = c(0, 0.5, 1))
+  scale_x_continuous(breaks = c(0, 0.5, 1)) +
+  ylab("Number of Judgements") +
+  xlab("Acceptability Rating")
 ```
 
 ## Histograms of Acceptability Judgements by Coordination and Quantifier (collapsed across item)
@@ -242,7 +247,9 @@ df.query %>%
 df.query %>%
   ggplot(aes( x = response ))+
   geom_histogram()+
-  facet_grid(coordination ~ quantifier)
+  facet_grid(coordination ~ quantifier) +
+  xlab("Acceptability Rating") +
+  ylab("Number of Trials")
 ```
 
 ### Pirate Plots by Coordination and Quantifier (collapsed across item)
@@ -253,6 +260,8 @@ df.bs <- df.query %>%
   tidyboot_mean(column = response)
   
 ggplot(df.bs, aes( x = quantifier))+
+  scale_fill_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
+  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
   geom_jitter(data = df.query,
              inherit.aes = F, aes(x = quantifier, y = response, color = quantifier), 
              alpha = 0.5)+
@@ -267,6 +276,17 @@ ggplot(df.bs, aes( x = quantifier))+
   xlab("")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
         legend.position = "top")
+```
+
+## Generic VP Analysis
+
+```{r}
+df.generic.vp <- df.query %>%
+  filter(quantifier == "generic", coordination == "vp") %>%
+  mutate(response = response - 0.5)
+generic.vp.model <- lmer(response ~ 1 + (1 | workerid) + (1 | combined_predicate),
+                         data = df.generic.vp)
+summary(generic.vp.model)
 ```
 
 ## By-item Analyses
@@ -295,6 +315,7 @@ df.bs.item <- df.query %>%
   tidyboot_mean(column = response)
 
 ggplot(df.bs.item, aes( x = quantifier, fill = quantifier))+
+  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
   geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
                 position = position_dodge(0.8), width = 0.3, size = 1, alpha = 0.5)+  
@@ -302,7 +323,7 @@ ggplot(df.bs.item, aes( x = quantifier, fill = quantifier))+
              position = position_jitterdodge(),
              inherit.aes = F, aes(x = quantifier, y = response, color = quantifier), 
              alpha = 0.8)+
-  ylab("Acceptability rating")+
+  ylab("Acceptability Rating")+
   facet_wrap(~combined_predicate + coordination, ncol = 4)+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   xlab("")+
@@ -314,9 +335,12 @@ ggplot(df.bs.item, aes( x = quantifier, fill = quantifier))+
 
 ```{r fig.height = 15}
 ggplot(df.bs.item, aes(x = combined_predicate, color = quantifier)) +
+  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
   geom_pointrange(aes(y = mean, ymin = ci_lower, ymax = ci_upper),
                  position = position_dodge(0.6)) +
   facet_wrap(~coordination) +
+  xlab("Item") +
+  ylab("Acceptability Rating") +
   coord_flip()
 ```
 

@@ -288,68 +288,68 @@ Removing participants who didn't get the first two sliders and who answered less
 
 ### Number of Participants by Item and Condition
 
-| coordination | combined\_predicate                                        |  all|  generic|  most|
-|:-------------|:-----------------------------------------------------------|----:|--------:|-----:|
-| np           | are black and brown                                        |   12|       16|    11|
-| np           | are cooked in a dutch-oven and on a pan                    |   14|       11|    14|
-| np           | are made of wool and cotton                                |   11|       15|    13|
-| np           | are orange with black stripes and white with brown stripes |   15|       12|    12|
-| np           | are purple and golden                                      |   17|       11|    11|
-| np           | are purple and green                                       |   13|       12|    14|
-| np           | are white and gray                                         |   16|       13|    10|
-| np           | are young and old                                          |   10|       11|    18|
-| np           | bloom in the spring and summer                             |   13|       16|    10|
-| np           | build nests in trees and on the ground                     |   11|       16|    12|
-| np           | compete in team sports and individual sports               |   10|       13|    16|
-| np           | create paintings and sculptures                            |   13|       13|    13|
-| np           | fish in oceans and lakes                                   |   13|       17|     9|
-| np           | form in the Atlantic Ocean and Pacific Ocean               |   17|        9|    13|
-| np           | go over rivers and valleys                                 |   11|       15|    13|
-| np           | go through the sea and mountains                           |   16|       10|    13|
-| np           | grow corn and soy                                          |   19|        5|    15|
-| np           | have beautiful feathers and drab feathers                  |   17|       14|     8|
-| np           | have gas engines and electric engines                      |    9|       13|    17|
-| np           | have meat fillings and vegetable fillings                  |   13|       10|    16|
-| np           | is brown and white                                         |    9|       16|    14|
-| np           | is white and brown                                         |   13|       14|    12|
-| np           | live as pets and live in the wild                          |   11|       17|    11|
-| np           | live in Africa and Asia                                    |   12|       14|    13|
-| np           | live in fish tanks and fish bowls                          |    9|        9|    21|
-| np           | live in forests and tundras                                |   14|        8|    17|
-| np           | live in saltwater and freshwater                           |   12|       17|    10|
-| np           | live in the western hemisphere and eastern hemisphere      |   17|       13|     9|
-| np           | pray in churches and synagogues                            |    9|       19|    11|
-| np           | show movies and plays                                      |   14|       11|    14|
-| vp           | are black and brown                                        |    7|       16|    15|
-| vp           | are cooked in a dutch-oven and on a pan                    |   10|       13|    15|
-| vp           | are made of wool and cotton                                |   15|       11|    12|
-| vp           | are orange with black stripes and white with brown stripes |   13|       15|    10|
-| vp           | are purple and golden                                      |   18|       11|     9|
-| vp           | are purple and green                                       |   16|       12|    10|
-| vp           | are white and gray                                         |   12|       15|    11|
-| vp           | are young and old                                          |    9|       14|    15|
-| vp           | bloom in the spring and summer                             |   13|       13|    12|
-| vp           | build nests in trees and on the ground                     |    8|       11|    19|
-| vp           | compete in team sports and individual sports               |   13|       14|    11|
-| vp           | create paintings and sculptures                            |   13|       13|    12|
-| vp           | fish in oceans and lakes                                   |   11|       17|    10|
-| vp           | form in the Atlantic Ocean and Pacific Ocean               |   15|       13|    10|
-| vp           | go over rivers and valleys                                 |    9|       13|    16|
-| vp           | go through the sea and mountains                           |   11|       17|    10|
-| vp           | grow corn and soy                                          |    9|       13|    16|
-| vp           | have beautiful feathers and drab feathers                  |   13|       12|    13|
-| vp           | have gas engines and electric engines                      |   10|        8|    20|
-| vp           | have meat fillings and vegetable fillings                  |   12|       11|    15|
-| vp           | is brown and white                                         |   17|       15|     6|
-| vp           | is white and brown                                         |   16|       13|     9|
-| vp           | live as pets and live in the wild                          |   14|       13|    11|
-| vp           | live in Africa and Asia                                    |    9|       12|    17|
-| vp           | live in fish tanks and fish bowls                          |    9|       13|    16|
-| vp           | live in forests and tundras                                |   12|       12|    14|
-| vp           | live in saltwater and freshwater                           |   19|       11|     8|
-| vp           | live in the western hemisphere and eastern hemisphere      |   19|        7|    12|
-| vp           | pray in churches and synagogues                            |   11|       15|    12|
-| vp           | show movies and plays                                      |   17|        7|    14|
+| coordination | combined\_predicate                                        |  generic|  most|  all|
+|:-------------|:-----------------------------------------------------------|--------:|-----:|----:|
+| np           | are black and brown                                        |       16|    11|   12|
+| np           | are cooked in a dutch-oven and on a pan                    |       11|    14|   14|
+| np           | are made of wool and cotton                                |       15|    13|   11|
+| np           | are orange with black stripes and white with brown stripes |       12|    12|   15|
+| np           | are purple and golden                                      |       11|    11|   17|
+| np           | are purple and green                                       |       12|    14|   13|
+| np           | are white and gray                                         |       13|    10|   16|
+| np           | are young and old                                          |       11|    18|   10|
+| np           | bloom in the spring and summer                             |       16|    10|   13|
+| np           | build nests in trees and on the ground                     |       16|    12|   11|
+| np           | compete in team sports and individual sports               |       13|    16|   10|
+| np           | create paintings and sculptures                            |       13|    13|   13|
+| np           | fish in oceans and lakes                                   |       17|     9|   13|
+| np           | form in the Atlantic Ocean and Pacific Ocean               |        9|    13|   17|
+| np           | go over rivers and valleys                                 |       15|    13|   11|
+| np           | go through the sea and mountains                           |       10|    13|   16|
+| np           | grow corn and soy                                          |        5|    15|   19|
+| np           | have beautiful feathers and drab feathers                  |       14|     8|   17|
+| np           | have gas engines and electric engines                      |       13|    17|    9|
+| np           | have meat fillings and vegetable fillings                  |       10|    16|   13|
+| np           | is brown and white                                         |       16|    14|    9|
+| np           | is white and brown                                         |       14|    12|   13|
+| np           | live as pets and live in the wild                          |       17|    11|   11|
+| np           | live in Africa and Asia                                    |       14|    13|   12|
+| np           | live in fish tanks and fish bowls                          |        9|    21|    9|
+| np           | live in forests and tundras                                |        8|    17|   14|
+| np           | live in saltwater and freshwater                           |       17|    10|   12|
+| np           | live in the western hemisphere and eastern hemisphere      |       13|     9|   17|
+| np           | pray in churches and synagogues                            |       19|    11|    9|
+| np           | show movies and plays                                      |       11|    14|   14|
+| vp           | are black and brown                                        |       16|    15|    7|
+| vp           | are cooked in a dutch-oven and on a pan                    |       13|    15|   10|
+| vp           | are made of wool and cotton                                |       11|    12|   15|
+| vp           | are orange with black stripes and white with brown stripes |       15|    10|   13|
+| vp           | are purple and golden                                      |       11|     9|   18|
+| vp           | are purple and green                                       |       12|    10|   16|
+| vp           | are white and gray                                         |       15|    11|   12|
+| vp           | are young and old                                          |       14|    15|    9|
+| vp           | bloom in the spring and summer                             |       13|    12|   13|
+| vp           | build nests in trees and on the ground                     |       11|    19|    8|
+| vp           | compete in team sports and individual sports               |       14|    11|   13|
+| vp           | create paintings and sculptures                            |       13|    12|   13|
+| vp           | fish in oceans and lakes                                   |       17|    10|   11|
+| vp           | form in the Atlantic Ocean and Pacific Ocean               |       13|    10|   15|
+| vp           | go over rivers and valleys                                 |       13|    16|    9|
+| vp           | go through the sea and mountains                           |       17|    10|   11|
+| vp           | grow corn and soy                                          |       13|    16|    9|
+| vp           | have beautiful feathers and drab feathers                  |       12|    13|   13|
+| vp           | have gas engines and electric engines                      |        8|    20|   10|
+| vp           | have meat fillings and vegetable fillings                  |       11|    15|   12|
+| vp           | is brown and white                                         |       15|     6|   17|
+| vp           | is white and brown                                         |       13|     9|   16|
+| vp           | live as pets and live in the wild                          |       13|    11|   14|
+| vp           | live in Africa and Asia                                    |       12|    17|    9|
+| vp           | live in fish tanks and fish bowls                          |       13|    16|    9|
+| vp           | live in forests and tundras                                |       12|    14|   12|
+| vp           | live in saltwater and freshwater                           |       11|     8|   19|
+| vp           | live in the western hemisphere and eastern hemisphere      |        7|    12|   19|
+| vp           | pray in churches and synagogues                            |       15|    12|   11|
+| vp           | show movies and plays                                      |        7|    14|   17|
 
 | coordination |     n|
 |:-------------|-----:|
@@ -373,15 +373,40 @@ Histograms of Acceptability Judgements by Coordination and Quantifier (collapsed
 
 ![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
+Generic VP Analysis
+-------------------
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: response ~ 1 + (1 | workerid) + (1 | combined_predicate)
+    ##    Data: df.generic.vp
+    ## 
+    ## REML criterion at convergence: -112.4
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.3541 -0.5565  0.0371  0.5995  3.2332 
+    ## 
+    ## Random effects:
+    ##  Groups             Name        Variance Std.Dev.
+    ##  workerid           (Intercept) 0.024608 0.15687 
+    ##  combined_predicate (Intercept) 0.007038 0.08389 
+    ##  Residual                       0.031385 0.17716 
+    ## Number of obs: 380, groups:  workerid, 38; combined_predicate, 30
+    ## 
+    ## Fixed effects:
+    ##             Estimate Std. Error       df t value Pr(>|t|)
+    ## (Intercept)  0.04431    0.03110 52.12360   1.424     0.16
+
 By-item Analyses
 ----------------
 
 ### Number of Trials by Item and Quantifier
 
-| coordination |  all|  generic|  most|
-|:-------------|----:|--------:|-----:|
-| np           |  390|      390|   390|
-| vp           |  380|      380|   380|
+| coordination |  generic|  most|  all|
+|:-------------|--------:|-----:|----:|
+| np           |      390|   390|  390|
+| vp           |      380|   380|  380|
 
 | quantifier |    n|
 |:-----------|----:|
@@ -392,18 +417,18 @@ By-item Analyses
 Pirate Plots (by item)
 ----------------------
 
-![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 ### Confidence Intervals (by item)
 
-![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 ### Histograms of Acceptability Ratings by Item
 
 ### by Coordination
 
-![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 ### by Quantifier
 
-![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](elephants-9-pilot_files/figure-markdown_github/unnamed-chunk-17-1.png)
