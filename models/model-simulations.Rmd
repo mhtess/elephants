@@ -11,6 +11,7 @@ library(rwebppl)
 library(tidyverse)
 library(ggthemes)
 library(viridis)
+library(cowplot)
 theme_set(theme_few())
 ```
 
@@ -47,6 +48,340 @@ The set where "Elephants live in Africa and Asia" is an alternative is also a po
 ## Literal Listener 
 
 L0 is run for each prior (uniform and multimodal)
+
+```{r}
+priorParameters <- list(
+  multimodal = list(
+    c1 = data.frame(a = 1 , b = 100),
+    #c2 = data.frame(a = 15, b = 15),
+    #c3 = data.frame(a = 15, b = 45),
+    c4 = data.frame(a = 25, b = 1)
+    ),
+  # multimodal2 = list(
+  #   c1 = data.frame(a = 1 , b = 100), 
+  #   #c4 = data.frame(a = 1 , b = 100), 
+  #   c2 = data.frame(a = 30, b = 30), 
+  #   #c3 = data.frame(a = 15, b = 45), 
+  #   c3 = data.frame(a = 50, b = 1),
+  #   c5 = data.frame(a = 50, b = 1)
+  #   ),
+  # multimodal3 = list(
+  #   c1 = data.frame(a = 1 , b = 100), 
+  #   #c4 = data.frame(a = 1 , b = 100),
+  #   c2 = data.frame(a = 30, b = 30), 
+  #   #c3 = data.frame(a = 15, b = 45), 
+  #   c3 = data.frame(a = 50, b = 1),
+  #   #c5 = data.frame(a = 50, b = 1)
+  #   ),
+  # u_shaped = list(
+  #   c1 = data.frame(a = 0.1, b = 1)# 
+  #   #@c3 = data.frame(a = 1, b = 1)
+  #   ),
+  uniform = list(c1 = data.frame(a = 1 , b = 1))
+)
+
+rs.l0.eleph <- data.frame()
+for (correlatedPriors in c(T, F)){
+  for (priorName in names(priorParameters)){
+  
+  rs.eleph <- webppl(program_file = "elephants-L0.wppl",
+                   data = list(correlatedPrior = correlatedPriors, params = priorParameters[[priorName]]), 
+                   data_var = "priorInfo")
+  
+  rs.l0.eleph <- bind_rows(
+    rs.l0.eleph, 
+    bind_rows(
+      as.data.frame(rs.eleph$JointPrevalencePrior) %>%
+        mutate(src = "prior"),
+      as.data.frame(rs.eleph$africaStatePosterior) %>%
+        mutate(src = "AF"),
+      as.data.frame(rs.eleph$AfricaAndAsiaStatePosterior) %>%
+        mutate(src = "AFAS")
+    ) %>% rename(prob = probs, 
+               africa = support.africa,
+               asia = support.asia) %>% 
+      mutate(priorName = priorName,
+             correlatedPriors = correlatedPriors)
+  )
+  
+  print(priorName)
+  }
+}
+
+rs.l0.samp <- get_samples(rs.l0.eleph, 50000) %>%
+  mutate(src = factor(src, levels = c("prior", "AF", "AFAS")))
+```
+
+### Uniform priors 
+
+#### Joint distributions
+
+Shown left to Right: Prior disribution on prevalence for living in Africa and Asia; Posterior upon living "Elephants live in Africa", Posterior upon then hearing "Elephants live in Asia" (after already hearing they live in Africa)
+
+```{r}
+rs.l0.samp %>% 
+  filter(priorName == "uniform") %>%
+    mutate(correlatedPriors = factor(correlatedPriors, levels = c(T, F),
+                                   labels = c("correlated\npriors", "uncorrelated\npriors")),
+         priorName = factor(priorName, levels = c("uniform", "multimodal", "multimodal2", "multimodal3", "bimodal"),
+                      labels = c("Uniform", "Multimodal v1", "Multimodal v2", "multimodal3", "bimodal")),
+         src = factor(src, levels = c("prior", "AF", "AFAS"),
+                      labels = c("Prior", "...live in Africa",
+                                 "...and Asia"))) %>%
+ggplot(., aes(x = asia, y = africa))+
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  theme_black()+
+  scale_fill_viridis(option = "plasma")+
+  facet_grid(correlatedPriors~src)+
+  xlab("% lives in Asia")+
+  ylab("% lives in Africa")+
+  guides(fill = guide_legend(title = "Probability density", reverse = T),
+         color = guide_legend(title = "Question"))+
+  theme(strip.text.y = element_text(angle = 0))+
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 1))+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 1))+
+  coord_fixed()
+
+#ggsave("~/projects/elephants/writing/cogsci2019/figs/model_joint.pdf", width = 8, height = 4)
+
+ggsave("~/Documents/talks/coglunch-0319/figs/elephants-models.pdf", width = 6, height = 3.5)
+
+```
+
+#### Marginal distributions
+
+
+```{r}
+rs.l0.samp.rf <- rs.l0.samp %>%
+  gather(key, val, -src, -priorName, -correlatedPriors) %>%
+  mutate(correlatedPriors = factor(correlatedPriors, levels = c(T, F),
+                                   labels = c("correlated priors", "uncorrelated priors")),
+         key = factor(key, levels = c("africa", "asia"),
+                      labels = c("% live in Africa", "% live in Asia")),
+         # priorName = factor(priorName, levels = c("uniform", "multimodal", "multimodal2", "multimodal3", "bimodal"),
+         #              labels = c("Uniform", "Multimodal v1", "Multimodal v2", "multimodal3", "bimodal")),
+         priorName = factor(priorName, levels = c("uniform",  #"u_shaped", 
+                                                  "multimodal"),
+                      labels = c("Uniform", #"U-shaped", 
+                                 "Multimodal")),
+         src = factor(src, levels = c("prior", "AF", "AFAS"),
+                      labels = c("Prior", "...live in Africa",
+                                 "...live in Africa and Asia")))
+
+
+
+rs.l0.samp.rf.mean <- rs.l0.samp.rf %>%
+  group_by(src, key, correlatedPriors, priorName) %>%
+  summarize(expval = mean(val))
+  #filter(priorName == "uniform", correlatedPriors == T) %>%
+
+ggplot(rs.l0.samp.rf,# %>% filter(priorName %in% c("Multimodal")),
+       aes( x = src, y = val , fill = key))+
+  #facet_wrap(~src)+
+  geom_violin(adjust = 3.5, alpha = 0.3, color = 'black')+
+  geom_point(data = rs.l0.samp.rf.mean,# %>% filter(priorName %in% c("Multimodal")),# %>%
+         #filter(priorName %in% c("Uniform", "Multimodal v1")),
+         inherit.aes = T,
+                 aes( x = src, group = key, y = expval, fill = key),
+             position = position_dodge(width = 0.9),
+             shape = 23, size = 3, stroke = 2)+
+  facet_grid(priorName~correlatedPriors, scales = 'free')+
+  ylab("Implied prevalence rating")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        strip.text.y = element_text(angle = 0),
+        legend.position = "bottom")
+
+ggsave("~/projects/elephants/writing/cogsci2019/figs/model_2.pdf", width = 8, height = 6)
+```
+
+
+
+```{r}
+rs.l0.samp.rf.inc <- rs.l0.samp.rf %>% filter(
+  priorName == "Multimodal", correlatedPriors == "correlated priors",
+  src %in% c("...live in Africa", "...live in Africa and Asia")
+)
+
+rs.l0.samp.rf.inc2<- bind_rows(
+  bind_rows(
+    rs.l0.samp.rf.inc %>% mutate(m = "Strong incremental"),
+    rs.l0.samp.rf.inc %>% mutate(src = "...live in Africa and __",
+                                 m = 'Strong incremental')
+  ),
+  bind_rows(
+    rs.l0.samp.rf.inc %>% mutate(m = "Weak incremental"),
+    rs.l0.samp.rf.inc %>% filter(src == "...live in Africa") %>%
+      mutate(src = "...live in Africa and __",
+                                 m = 'Weak incremental')
+  )
+)
+  
+
+estimate_mode <- function(s) {
+  d <- density(s)
+  return(d$x[which.max(d$y)])
+}
+hdi_upper<- function(s){
+  m <- HPDinterval(mcmc(s))
+  return(m["var1","upper"])
+}
+hdi_lower<- function(s){
+  m <- HPDinterval(mcmc(s))
+  return(m["var1","lower"])
+}
+
+rs.l0.samp.rf.inc2 %>%
+  group_by(priorName, src, correlatedPriors, key, m) %>%
+  summarize(expval = mean(val)) %>%
+  ungroup() %>%
+  mutate(src = factor(src, levels = c("...live in Africa", "...live in Africa and __", "...live in Africa and Asia"),
+                             labels = c("...live in Africa     ", "and", "Asia"))) %>%
+  ggplot(., aes( x = src, y = expval, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'white')+
+  geom_col(position = position_dodge(0.8),
+           width = 0.8, #alpha = 0.3, 
+           size = 0.75, color = 'white')+
+  #geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                #position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  ylab("Implied prevalence rating")+
+  theme_black()+
+  facet_wrap(~m)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  # scale_fill_solarized()+
+  # scale_color_solarized()+
+    scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 0.5),
+        axis.ticks.x = element_blank(),
+        legend.position = "bottom")
+
+#ggsave("~/projects/elephants/writing/cogsci2019/figs/incremental.pdf", width = 5, height = 3.5)
+
+ggsave("~/Documents/talks/coglunch-0319/figs/elephants-models-incremental-expval.pdf", 
+       width = 5, height = 3.5)
+
+```
+
+```{r}
+#rs.l0.samp.rf.inc2 %>%
+rs.l0.samp.rf.mean %>%
+  filter(src %in% c("...live in Africa",  "...live in Africa and Asia"),
+         priorName == "Multimodal") %>%
+  # group_by(priorName, src, correlatedPriors, key, m) %>%
+  # summarize(expval = mean(val)) %>%
+  ungroup() %>%
+  mutate(src = factor(src, levels = c("...live in Africa",  "...live in Africa and Asia"),
+                             labels = c("...live in Africa     ",  "and Asia"))) %>%
+  ggplot(., aes( x = src, y = expval, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_col(position = position_dodge(0.8),
+           width = 0.8, #alpha = 0.3, 
+           size = 0.75, color = 'white')+
+  #geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                #position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  ylab("Implied prevalence rating")+
+  theme_black()+
+  facet_wrap(~correlatedPriors)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  # scale_fill_solarized()+
+  # scale_color_solarized()+
+    scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 0.5),
+        axis.ticks.x = element_blank(),
+        legend.position = "bottom")
+
+ggsave("~/Documents/talks/coglunch-0319/figs/elephants-models-expval.pdf", 
+       width = 5, height = 3.5)
+
+```
+
+
+```{r}
+library(ggridges)
+ggplot(rs.l0.samp.rf %>% filter(priorName %in% c("Multimodal")),
+       aes( x = val, y = src , fill = key))+
+  #facet_wrap(~src)+
+  geom_violin(adjust = 1, alpha = 0.3, color = 'black')+
+  geom_density_ridges(position = position_dodge())+
+  # geom_point(data = rs.l0.samp.rf.mean %>% filter(priorName %in% c("Multimodal")),# %>%
+  #        #filter(priorName %in% c("Uniform", "Multimodal v1")),
+  #        inherit.aes = T,
+  #                aes( x = src, group = key, y = expval, fill = key),
+  #            position = position_dodge(width = 0.9),
+  #            shape = 23, size = 3, stroke = 2)+
+  facet_grid(priorName~correlatedPriors, scales = 'free')+
+  ylab("Implied prevalence rating")+
+  #scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        strip.text.y = element_text(angle = 0),
+        legend.position = "bottom")+
+  coord_flip()
+
+```
+
+```{r}
+rs.l0.samp %>%
+  #filter(priorName == "uniform") %>%
+  gather(key, val, -src, -priorName, -correlatedPriors) %>%
+ggplot(., aes(x = val, color = key))+
+  geom_density(adjust = 2.5, fill = 'white', alpha = 0.3,
+               position = position_dodge(width = 0.05))+
+  facet_grid(correlatedPriors+priorName~src, scales = 'free')+
+  scale_color_solarized()+
+  xlab("marginal prevalence")+
+  ylab("scaled probability density")+
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 1))
+```
+
+### Multimodal priors 
+
+```{r}
+ggplot(rs.l0.samp %>%
+         filter(priorName == "multimodal"), aes(x = asia, y = africa))+
+  #geom_bin2d(bins = 10)+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  scale_fill_viridis()+
+  facet_grid(.~src)+
+  xlab("% lives in Asia")+
+  ylab("% lives in Africa")
+```
+
+```{r}
+rs.l0.samp %>%
+  filter(priorName == "multimodal") %>%
+  gather(key, val, -src, -priorName) %>%
+ggplot(., aes(x = val))+
+  #geom_bin2d(bins = 10)+
+  geom_density(aes(y = ..scaled..),adjust = 4, fill = 'grey', alpha = 0.3)+
+  facet_grid(key~src)+
+  xlab("marginal prevalence")+
+  ylab("scaled probability density")
+```
+
+## Pragmatic Listener (lifted threshold)
+
+L1 is run for each prior (uniform and multimodal), both sets of alternatives (just silence, alternative property + silence), a few settings of rationality and cost
 
 ```{r}
 priorParameters <- list(
@@ -88,69 +423,6 @@ rs.l0.samp <- get_samples(rs.l0.eleph, 50000) %>%
   mutate(src = factor(src, levels = c("prior", "AF", "AFAS")))
 ```
 
-### Uniform priors 
-
-#### Joint distributions
-
-Shown left to Right: Prior disribution on prevalence for living in Africa and Asia; Posterior upon living "Elephants live in Africa", Posterior upon then hearing "Elephants live in Asia" (after already hearing they live in Africa)
-
-```{r}
-ggplot(rs.l0.samp %>%
-         filter(priorName == "uniform"), aes(x = asia, y = africa))+
-  #geom_bin2d(bins = 10)+
-  stat_density_2d(aes(fill = ..density..), 
-                  geom = "raster", contour = FALSE) +
-  scale_fill_viridis()+
-  facet_grid(.~src)+
-  xlab("% lives in Asia")+
-  ylab("% lives in Africa")
-```
-
-#### Marginal distributions
-
-
-
-```{r}
-rs.l0.samp %>%
-  filter(priorName == "uniform") %>%
-  gather(key, val, -src, -priorName) %>%
-ggplot(., aes(x = val))+
-  #geom_bin2d(bins = 10)+
-  geom_density(aes(y = ..scaled..),adjust = 4, fill = 'grey', alpha = 0.3)+
-  facet_grid(key~src)+
-  xlab("marginal prevalence")+
-  ylab("scaled probability density")
-```
-
-### Multimodal priors 
-
-```{r}
-ggplot(rs.l0.samp %>%
-         filter(priorName == "multimodal"), aes(x = asia, y = africa))+
-  #geom_bin2d(bins = 10)+
-  stat_density_2d(aes(fill = ..density..), 
-                  geom = "raster", contour = FALSE) +
-  scale_fill_viridis()+
-  facet_grid(.~src)+
-  xlab("% lives in Asia")+
-  ylab("% lives in Africa")
-```
-
-```{r}
-rs.l0.samp %>%
-  filter(priorName == "multimodal") %>%
-  gather(key, val, -src, -priorName) %>%
-ggplot(., aes(x = val))+
-  #geom_bin2d(bins = 10)+
-  geom_density(aes(y = ..scaled..),adjust = 4, fill = 'grey', alpha = 0.3)+
-  facet_grid(key~src)+
-  xlab("marginal prevalence")+
-  ylab("scaled probability density")
-```
-
-
-
-## Pragmatic Listener (lifted threshold)
 
 ```{r}
 timestamp()

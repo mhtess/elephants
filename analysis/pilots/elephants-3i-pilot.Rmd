@@ -236,12 +236,12 @@ df.query.critical <- df.query %>%
                                        "uninterrupted",
                                        "nme_interrupted",
                                        "nme_uninterrupted"),
-                            labels = c('"...live in Africa __"\nQ2(Asia)',
-                                       '"...live in Africa and Asia"\nQ2(Asia)',
-                                       '"...live in Africa __"\nQ2(bugs)',
-                                       '"...live in Africa and eat bugs"\nQ2(bugs)')),
+                            labels = c('"...live in Africa __"\nQ(Asia)',
+                                       '"...and Asia"\nQ(Asia)',
+                                       '"...live in Africa __"\nQ(bugs)',
+                                       '"...and eat bugs"\nQ(bugs)')),
          key = factor(key, levels = c("response_1", "response_2"),
-                      labels = c("% live in Africa", "% property 2")))
+                      labels = c("% Africa", "% Asia / bugs")))
 
 df.query.critical %>%
   ggplot(., aes( x = val ))+
@@ -268,15 +268,20 @@ df.bs.query.critical %>%
 ### Pirate Plots (collapsed across item)
 ```{r}
 ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  theme_black()+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'white')+
+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, 
+           alpha = 0.5, 
+           color = 'white')+
   geom_point(data = df.query.critical, position = position_jitterdodge(),
              inherit.aes = F, aes(x = condition, y = val, color = key), 
              alpha = 0.5)+
-  geom_col(position = position_dodge(0.8),
-           aes(y = mean),
-           width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
-                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+    geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1.2,
+                color = 'white')+  
   ylab("Implied prevalence rating")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   scale_fill_manual(values = c("#268bd2", "#859900"))+
@@ -284,8 +289,11 @@ ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
   xlab("")+
   guides(fill = guide_legend(title = "Question"),
          color = guide_legend(title = "Question"))+
-  theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+  theme(#axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
         legend.position = "top")
+
+ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt1.pdf", 
+       width = 6, height = 4)
 
 #ggsave(paste(fig.path, "expt2_summary.pdf", sep = ""), height = 4.5, width = 5.5)
 ```
