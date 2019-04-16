@@ -303,7 +303,7 @@ Items can be categorized by the continuation type and the coordination type.
 * coordination type: the "and" conjoins different syntactic categories  
 
 ```{r}
-items <- fromJSON("./items.json")
+items <- fromJSON("./items-1.json")
 items %>%
   group_by(coordination, continuationType) %>%
   count() %>%

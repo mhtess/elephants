@@ -28,7 +28,8 @@ var filler_chapters = [
     property2: "are provided for by Zorxon",
       type: "filler",
       information: "full",
-      conjunctionBreak: "before"
+      conjunctionBreak: "before",
+      coordination: "vp"
   },
   {
     title: "Blins",
@@ -43,7 +44,8 @@ var filler_chapters = [
     property1: "have hollow bones",
       property2: "fly",
       information: "full",
-      conjuctionBreak: "after"
+      conjuctionBreak: "after",
+      coordination: "np"
   },
   {
     title: "Weather",
@@ -59,7 +61,8 @@ var filler_chapters = [
     property2: "last a long time",
       type: "filler",
       information: "full",
-      conjunctionBreak: "before"
+      conjunctionBreak: "before",
+      coordination: "np"
   },
   {
     title: "Morseths",
@@ -75,7 +78,8 @@ var filler_chapters = [
     property1: "build permanent structures called fendles",
       property2: "come on land to find mates",
       information: "both",
-      conjunctionBreak: "after"
+      conjunctionBreak: "after",
+      coordination: "np"
   },
   {
     title: "Kazzes",
@@ -90,7 +94,8 @@ var filler_chapters = [
     type: "filler",
       quantifier: "none",
       information: "full",
-      conjunctionBreak: "before"
+      conjunctionBreak: "before",
+      coordination: "np"
   },
   {
     title: "Wint of the Mountains",
@@ -107,7 +112,8 @@ var filler_chapters = [
     type: "filler",
       condition: "uninterrupted",
       information: "interruption",
-      conjunctionBreak: "after"
+      conjunctionBreak: "after",
+      coordination: "np"
   },
   {
       title: "Plovs",
@@ -123,7 +129,8 @@ var filler_chapters = [
       type: "filler",
       quantifier: "none",
       information: "both",
-      conjunctionBreak: "before"
+      conjunctionBreak: "before",
+      coordination: "np"
   },
   {
       title: "Yomis",
@@ -140,7 +147,8 @@ var filler_chapters = [
       condition: "single",
       quantifier: "all",
       information: "both",
-      conjunctionBreak: "after"
+      conjunctionBreak: "after",
+      coordination: "ap"
   },
   {
       title: "Mupors",
@@ -156,7 +164,8 @@ var filler_chapters = [
       condition: "single",
       quantifier: "most",
       information: "both",
-      conjunctionBreak: "before"
+      conjunctionBreak: "before",
+      coordination: "np"
   },
   {
       title: "Apaffs",
@@ -173,7 +182,8 @@ var filler_chapters = [
       condition: "single",
       quantifier: "most",
       information: "full",
-      conjunctionBreak: "after"
+      conjunctionBreak: "after",
+      coordination: "vp"
   },
   {
       title: "Supools",
@@ -189,7 +199,8 @@ var filler_chapters = [
       condition: "single",
       quantifier: "all",
       information: "full",
-      conjunctionBreak: "before"
+      conjunctionBreak: "before",
+      coordination: "pp"
   },
   {
       title: "Zorf the mapmaker",
@@ -207,7 +218,8 @@ var filler_chapters = [
       condition: "single",
       quantifier: "all",
       information: "both",
-      conjunctionBreak: "after"
+      conjunctionBreak: "after",
+      coordination: "pp"
   },
   {
       title: "Wopis",
@@ -223,7 +235,8 @@ var filler_chapters = [
       condition: "single",
       quantifier: "all",
       information: "full",
-      conjunctionBreak: "before"
+      conjunctionBreak: "before",
+      coordination: "pp"
   },
   {
       title: "Nannus",
@@ -240,7 +253,8 @@ var filler_chapters = [
       condition: "single",
       quantifier: "most",
       information: "full",
-      conjunctionBreak: "after"
+      conjunctionBreak: "after",
+      coordination: "np"
   }
 ]
 
@@ -269,7 +283,9 @@ var stims_chapters = [
     property1: "ascribe to Cabooism",
     property2: "ascribe to some other religion",
     property3: "pray three times a day",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Glippets",
@@ -291,12 +307,13 @@ var stims_chapters = [
     	subordFiller: "which is much stronger than on other continents",
       nme: "graze on the tall grasses"
     },
-    query: true,
     kind: "glippets",
     property1: "live on the continent of Caro",
     property2: "live on some other continent",
     property3: "graze on the tall grasses",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeNames",
+      coordination: "pp"
   },
   {
     title: "Mooks",
@@ -324,7 +341,9 @@ var stims_chapters = [
     property1: "have territories at the tops of tall mountains",
     property2: "have territories in other geographical locations",
     property3: "watch over the low-lying regions during the day",
-    type: "critical"
+      type: "critical",
+      continuationType: "real",
+      coordination: "pp"
   },
   {
     title: "Agriculture",
@@ -352,7 +371,9 @@ var stims_chapters = [
     property1: "plant fujusi",
     property2: "plant some other crop",
     property3: "spray their fields with a naturally-occurring fertilizer",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Fengnors",
@@ -376,12 +397,13 @@ var stims_chapters = [
 	subordFiller: "for the moment that they hatch",
       nme: "and store tree-bark in them for safe keeping"
     },
-    query: true,
     kind: "fengnor mated pairs",
     property1: "build nests in gluers",
     property2: "build nests in other places",
     property3: "store tree-bark in them for safe keeping",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Finding food",
@@ -409,7 +431,9 @@ var stims_chapters = [
     property1: "are stup-herders",
     property2: "do something else for a living",
     property3: "sing songs to the stups to help them relax",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Lorches",
@@ -436,7 +460,9 @@ var stims_chapters = [
     property1: "have long wings",
     property2: "have some other type of wing",
     property3: "have sharp claws",
-    type: "critical"
+      type: "critical",
+      continuationType: "real",
+      coordination: "np"
   },
   {
     title: "Reesles",
@@ -464,7 +490,9 @@ var stims_chapters = [
     property1: "wear wutsats around their heads",
     property2: "wear something else around their heads",
     property3: "carry sticks with them",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Kweps",
@@ -492,7 +520,9 @@ var stims_chapters = [
     property1: "chew on xorfun bark",
     property2: "chew on some other kind of bark",
     property3: "jump up and down in circles",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Ollers",
@@ -521,7 +551,9 @@ var stims_chapters = [
     property1: "carry their young in guklags",
     property2: "carry their young in something else",
     property3: "are very protective",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Crafts",
@@ -550,7 +582,9 @@ var stims_chapters = [
     property1: "are part of the Tinnoclan",
     property2: "are part of some other guild",
     property3: "sell their baskets in the Warfi marketplace",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Vimbles",
@@ -578,7 +612,9 @@ var stims_chapters = [
     property1: "hibernate in fallen logs",
     property2: "hibernate in some other location",
     property3: "give birth twice a year",
-    type: "critical"
+      type: "critical",
+      continuationType: "real",
+      coordination: "pp"
   },
   {
     title: "Isooms",
@@ -604,6 +640,8 @@ var stims_chapters = [
     property1: "has bumpy skin",
     property2: "has some other-textured skin",
     property3: "produce fruit with a sour taste",
-    type: "critical"
+      type: "critical",
+      continuationType: "real",
+      coordination: "ap"
   }
 ]

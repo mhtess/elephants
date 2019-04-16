@@ -238,14 +238,14 @@ Reaction Times
     ## Population-Level Effects: 
     ##                                Estimate Est.Error l-95% CI u-95% CI
     ## Intercept                          2.36      0.06     2.24     2.48
-    ## condition..liveinAfricaandAsia    -0.09      0.09    -0.25     0.08
+    ## condition..liveinAfricaandAsia    -0.08      0.09    -0.25     0.08
     ##                                Eff.Sample Rhat
-    ## Intercept                            3279 1.00
-    ## condition..liveinAfricaandAsia       3678 1.00
+    ## Intercept                            2746 1.00
+    ## condition..liveinAfricaandAsia       2754 1.00
     ## 
     ## Family Specific Parameters: 
     ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sigma     0.64      0.03     0.58     0.71       3391 1.00
+    ## sigma     0.64      0.03     0.59     0.70       3044 1.00
     ## 
     ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
     ## is a crude measure of effective sample size, and Rhat is the potential 

@@ -28,6 +28,7 @@ library(viridis)
 library(tidyboot)
 library(ggpirate)
 library(brms)
+library(jsonlite)
 theme_set(theme_few())
 data.path <- "../../data/elephants-7/elephants-7"
 ```
@@ -364,6 +365,23 @@ summary(rs.brm)
 
 ## By-item Analyses
 
+### Items
+Items can be categorized by the continuation type and the coordination type.  
+
+* continuation type: the interrupted sentence containing the questioned properties varies according to how real the subject matter is.  
+    + real: Sentence and properties are completely real.  
+    + fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).  
+    + fakeDefs: The properties concern completely made-up items.  
+* coordination type: the "and" conjoins different syntactic categories  
+
+```{r}
+items <- fromJSON("./items-2.json")
+items %>%
+  group_by(coordination, continuationType) %>%
+  count() %>%
+  kable()
+```
+
 ### Number of Participants by Item and Condition
 
 ```{r}
@@ -373,6 +391,7 @@ df.query.critical %>%
   group_by(condition, predicate_1, predicate_2) %>%
   count() %>%
   spread(condition, n) %>% 
+  left_join(select(items, property1, property2, continuationType, coordination), by = c("predicate_1" = "property1", "predicate_2" = "property2")) %>%
   replace(is.na(.), 0) %>% # missing combinations of condition and predicate means no trials were collected
   kable()
 ```
@@ -406,6 +425,68 @@ df.bs.query.critical.item %>%
   theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
         legend.position = "top")
 
+```
+
+### Pirate Plots (by Coordination)
+
+```{r fig.width=14, fig.height=7}
+df.bs.query.critical.coordination <- df.query.critical %>%
+  left_join(select(items, property1, property2, continuationType, coordination), by = c("predicate_1" = "property1", "predicate_2" = "property2")) %>%
+  group_by(condition, key, coordination) %>%
+  tidyboot_mean(column = val)
+
+df.bs.query.critical.coordination %>%
+  ggplot(., aes( x = condition, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  geom_point(data = df.query.critical, position = position_jitterdodge(),
+             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             alpha = 0.5)+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, alpha = 0.3, color = 'black')+
+  facet_wrap(~coordination)+
+  ylab("Implied prevalence rating")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+        legend.position = "top")
+```
+
+### Pirate Plots (by Realness)
+
+```{r fig.width=14, fig.height=7}
+df.bs.query.critical.realness <- df.query.critical %>%
+  left_join(select(items, property1, property2, continuationType, coordination), by = c("predicate_1" = "property1", "predicate_2" = "property2")) %>%
+  group_by(condition, key, continuationType) %>%
+  tidyboot_mean(column = val)
+
+df.bs.query.critical.realness %>%
+  ggplot(., aes( x = condition, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  geom_point(data = df.query.critical, position = position_jitterdodge(),
+             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             alpha = 0.5)+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, alpha = 0.3, color = 'black')+
+  facet_wrap(~continuationType)+
+  ylab("Implied prevalence rating")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+        legend.position = "top")
 ```
 
 ## First vs. Other Trials (for each condition)

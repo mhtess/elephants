@@ -270,32 +270,58 @@ Modeling
 By-item Analyses
 ----------------
 
+### Items
+
+Items can be categorized by the continuation type and the coordination type.
+
+-   continuation type: the interrupted sentence containing the questioned properties varies according to how real the subject matter is.
+    -   real: Sentence and properties are completely real.
+    -   fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).
+    -   fakeDefs: The properties concern completely made-up items.
+-   coordination type: the "and" conjoins different syntactic categories
+
+| coordination | continuationType |    n|
+|:-------------|:-----------------|----:|
+| ap           | real             |    1|
+| np           | fakeDefs         |    8|
+| np           | real             |    1|
+| pp           | fakeNames        |    1|
+| pp           | real             |    2|
+
 ### Number of Participants by Item and Condition
 
-| predicate\_1                                   | predicate\_2                                     |  "...live in Africa \_\_"|  "...live in Africa and \_\_"|  "...live in Africa and Asia \_\_"|  "...live in Africa and Asia."|
-|:-----------------------------------------------|:-------------------------------------------------|-------------------------:|-----------------------------:|----------------------------------:|------------------------------:|
-| are part of the Tinnoclan                      | are part of some other guild                     |                         6|                             4|                                  4|                             22|
-| are stup-herders                               | do something else for a living                   |                        10|                             6|                                  4|                             16|
-| ascribe to Cabooism                            | ascribe to some other religion                   |                         8|                             6|                                  8|                             16|
-| build nests in gluers                          | build nests in other places                      |                         8|                             8|                                  4|                             16|
-| carry their young in guklags                   | carry their young in something else              |                         6|                            10|                                  6|                             18|
-| chew on xorfun bark                            | chew on some other kind of bark                  |                        10|                             0|                                  2|                             22|
-| has bumpy skin                                 | has some other-textured skin                     |                         4|                            10|                                  4|                             20|
-| have long wings                                | have some other type of wing                     |                         4|                             2|                                 12|                             20|
-| have territories at the tops of tall mountains | have territories in other geographical locations |                         0|                            12|                                  8|                             14|
-| hibernate in fallen logs                       | hibernate in some other location                 |                        14|                             8|                                  4|                             12|
-| live on the continent of Caro                  | live on some other continent                     |                         2|                             8|                                  2|                             24|
-| plant fujusi                                   | plant some other crop                            |                         0|                             4|                                 16|                             16|
-| wear wutsats around their heads                | wear something else around their heads           |                         8|                             2|                                  6|                             24|
+| predicate\_1                                   | predicate\_2                                     |  "...live in Africa \_\_"|  "...live in Africa and \_\_"|  "...live in Africa and Asia \_\_"|  "...live in Africa and Asia."| continuationType | coordination |
+|:-----------------------------------------------|:-------------------------------------------------|-------------------------:|-----------------------------:|----------------------------------:|------------------------------:|:-----------------|:-------------|
+| are part of the Tinnoclan                      | are part of some other guild                     |                         6|                             4|                                  4|                             22| fakeDefs         | np           |
+| are stup-herders                               | do something else for a living                   |                        10|                             6|                                  4|                             16| fakeDefs         | np           |
+| ascribe to Cabooism                            | ascribe to some other religion                   |                         8|                             6|                                  8|                             16| fakeDefs         | np           |
+| build nests in gluers                          | build nests in other places                      |                         8|                             8|                                  4|                             16| fakeDefs         | np           |
+| carry their young in guklags                   | carry their young in something else              |                         6|                            10|                                  6|                             18| fakeDefs         | np           |
+| chew on xorfun bark                            | chew on some other kind of bark                  |                        10|                             0|                                  2|                             22| fakeDefs         | np           |
+| has bumpy skin                                 | has some other-textured skin                     |                         4|                            10|                                  4|                             20| real             | ap           |
+| have long wings                                | have some other type of wing                     |                         4|                             2|                                 12|                             20| real             | np           |
+| have territories at the tops of tall mountains | have territories in other geographical locations |                         0|                            12|                                  8|                             14| real             | pp           |
+| hibernate in fallen logs                       | hibernate in some other location                 |                        14|                             8|                                  4|                             12| real             | pp           |
+| live on the continent of Caro                  | live on some other continent                     |                         2|                             8|                                  2|                             24| fakeNames        | pp           |
+| plant fujusi                                   | plant some other crop                            |                         0|                             4|                                 16|                             16| fakeDefs         | np           |
+| wear wutsats around their heads                | wear something else around their heads           |                         8|                             2|                                  6|                             24| fakeDefs         | np           |
 
 ### Pirate Plots (by item)
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-17-1.png)
+
+### Pirate Plots (by Coordination)
+
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-18-1.png)
+
+### Pirate Plots (by Realness)
+
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 First vs. Other Trials (for each condition)
 -------------------------------------------
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-20-1.png)
 
 Reaction Times
 --------------
@@ -308,4 +334,4 @@ Looking only at
 -   AF&: "Elephants live in Africa and"
 -   AF&AS: "Elephants live in Africa and Asia"
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-21-1.png)
