@@ -161,11 +161,13 @@ By-item Analyses
 
 ### Items
 
-Items can be categorized by the continuation type and the coordination type. \* continuation type: the interrupted sentence containing the questioned properties varies according to how real the subject matter is.
-+ real: Sentence and properties are completely real.
-+ fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).
-+ fakeDefs: The properties concern completely made-up items.
-\* coordination type: the "and" conjoins different syntactic categories
+Items can be categorized by the continuation type and the coordination type.
+
+-   continuation type: the interrupted sentence containing the questioned properties varies according to how real the subject matter is.
+    -   real: Sentence and properties are completely real.
+    -   fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).
+    -   fakeDefs: The properties concern completely made-up items.
+-   coordination type: the "and" conjoins different syntactic categories
 
 | coordination | continuationType |    n|
 |:-------------|:-----------------|----:|
@@ -236,14 +238,14 @@ Reaction Times
     ## Population-Level Effects: 
     ##                                Estimate Est.Error l-95% CI u-95% CI
     ## Intercept                          2.36      0.06     2.24     2.48
-    ## condition..liveinAfricaandAsia    -0.08      0.08    -0.25     0.08
+    ## condition..liveinAfricaandAsia    -0.09      0.09    -0.25     0.08
     ##                                Eff.Sample Rhat
-    ## Intercept                            3785 1.00
-    ## condition..liveinAfricaandAsia       3952 1.00
+    ## Intercept                            3279 1.00
+    ## condition..liveinAfricaandAsia       3678 1.00
     ## 
     ## Family Specific Parameters: 
     ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sigma     0.64      0.03     0.58     0.71       3068 1.00
+    ## sigma     0.64      0.03     0.58     0.71       3391 1.00
     ## 
     ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
     ## is a crude measure of effective sample size, and Rhat is the potential 

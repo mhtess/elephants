@@ -294,11 +294,12 @@ summary(rs.brm.simple)
 ## By-item Analyses
 
 ### Items
-Items can be categorized by the continuation type and the coordination type.
+Items can be categorized by the continuation type and the coordination type.  
+
 * continuation type: the interrupted sentence containing the questioned properties varies according to how real the subject matter is.  
-+ real: Sentence and properties are completely real.  
-+ fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).  
-+ fakeDefs: The properties concern completely made-up items.  
+    + real: Sentence and properties are completely real.  
+    + fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).  
+    + fakeDefs: The properties concern completely made-up items.  
 * coordination type: the "and" conjoins different syntactic categories  
 
 ```{r}
