@@ -241,7 +241,9 @@ var stims_chapters = [
     property1: "ascribe to the Caboo religion",
     property2: "ascribe to the Daith religion",
     property3: "pray three times a day",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeNames",
+      coordination: "np"
   },
   {
     title: "Glippets",
@@ -254,13 +256,14 @@ var stims_chapters = [
       filler: "and enjoy the sunshine there",
       nme: "and graze on the tall grasses"
     },
-    query: true,
     critical: true,
     kind: "glippets",
     property1: "live on the continent of Caro",
     property2: "live on the continent of Este",
     property3: "graze on the tall grasses",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeNames",
+      coordination: "pp"
   },
   {
     title: "Mooks",
@@ -279,7 +282,9 @@ var stims_chapters = [
     property1: "have territories at the tops of tall mountains",
     property2: "have territories at the bottom of deep canyons",
     property3: "watch over the low-lying regions during the day",
-    type: "critical"
+      type: "critical",
+      continuationType: "real",
+      coordination: "pp"
   },
   {
     title: "Agriculture",
@@ -298,7 +303,9 @@ var stims_chapters = [
     property1: "flood their fields to plant fujusi",
     property2: "burn their fields to plant soroneeks",
     property3: "spray their fields with a naturally-occurring fertilizer",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "vp"
   },
   {
     title: "Fengnors",
@@ -313,13 +320,14 @@ var stims_chapters = [
       filler: "and watch over them carefully",
       nme: "and store tree-bark in them for safe keeping"
     },
-    query: true,
     critical: true,
     kind: "fengnor mated pairs",
     property1: "build nests in gluers",
     property2: "build nests in droops",
     property3: "store tree-bark in them for safe keeping",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "pp"
   },
   {
     title: "Finding food",
@@ -338,7 +346,9 @@ var stims_chapters = [
     property1: "are stup-herders",
     property2: "are fishermen",
     property3: "sing songs to the stups to help them relax",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Lorches",
@@ -356,7 +366,9 @@ var stims_chapters = [
     property1: "have long wings",
     property2: "have short wings",
     property3: "have sharp claws",
-    type: "critical"
+      type: "critical",
+      continuationType: "real",
+      coordination: "np"
   },
   {
     title: "Reesles",
@@ -375,7 +387,9 @@ var stims_chapters = [
     property1: "wear wutsats around their heads",
     property2: "wear krevnors around their heads",
     property3: "carry sticks with them",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "np"
   },
   {
     title: "Kweps",
@@ -394,7 +408,9 @@ var stims_chapters = [
     property1: "chew on xorfun",
     property2: "chew on tunkel",
     property3: "jump up and down in circles",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "pp"
   },
   {
     title: "Ollers",
@@ -413,7 +429,9 @@ var stims_chapters = [
     property1: "carry their young in guklags",
     property2: "carry their young in trullets",
     property3: "are very protective",
-    type: "critical"
+      type: "critical",
+      continuationType: "fakeDefs",
+      coordination: "pp"
   },
     {
     title: "Crafts",
@@ -432,7 +450,9 @@ var stims_chapters = [
     property1: "are part of the Tinno guild",
     property2: "are part of the Farza guild",
     property3: "sell their baskets in the Warfi marketplace",
-    type: "critical"
+	type: "critical",
+	continuationType: "fakeNames",
+	coordination: "np"
   },
     {
 	title: "Batozes",
@@ -451,7 +471,9 @@ var stims_chapters = [
 	property1: "have six wings",
 	property2: "have seven wings",
   property3: "have three eyes",
-	type: "critical"
+	type: "critical",
+	continuationType: "real",
+	coordination: "np"
     },
     {
 	title: "Kaples",
@@ -470,7 +492,9 @@ var stims_chapters = [
 	property1: "have striped fur",
 	property2: "have spotted fur",
   property3: "have long tails",
-	type: "critical"
+	type: "critical",
+	continuationType: "real",
+	coordination: "np"
     },
     {
 	title: "Landeks",
@@ -489,7 +513,9 @@ var stims_chapters = [
 	property1: "have four horns",
 	property2: "have seven horns",
   property3: "have two tails",
-	type: "critical"
+	type: "critical",
+	continuationType: "real",
+	coordination: "np"
     },
     {
 	title: "Vimbles",
@@ -508,7 +534,9 @@ var stims_chapters = [
 	property1: "hibernate in fallen logs",
 	property2: "hibernate in the abandoned burrows of other animals",
   property3: "give birth twice a year",
-	type: "critical"
+	type: "critical",
+	continuationType: "real",
+	coordination: "pp"
     },
     {
 	title: "Isooms",
@@ -526,6 +554,8 @@ var stims_chapters = [
 	property1: "produce fruit with bumpy skin",
 	property2: "produce fruit with smooth skin",
   property3: "produce fruit with a sour taste",
-	type: "critical"
+	type: "critical",
+	continuationType: "real",
+	coordination: "np"
     }
 ]

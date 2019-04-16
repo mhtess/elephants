@@ -26,6 +26,7 @@ library(viridis)
 library(tidyboot)
 library(ggpirate)
 library(brms)
+library(jsonlite)
 theme_set(theme_few())
 data.path <- "../../data/elephants-3/elephants-3"
 ```
@@ -269,7 +270,7 @@ df.query.critical %>%
 
 ## Modeling
 
-```{r eval = F}
+```{r eval = F, cache = TRUE}
 rs.brm <- brm(data = df.query.critical,
     formula = val ~ key * condition + 
       (1 + key*condition | workerid) +
@@ -292,6 +293,22 @@ summary(rs.brm.simple)
 
 ## By-item Analyses
 
+### Items
+Items can be categorized by the continuation type and the coordination type.
+* continuation type: the interrupted sentence containing the questioned properties varies according to how real the subject matter is.  
++ real: Sentence and properties are completely real.  
++ fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).  
++ fakeDefs: The properties concern completely made-up items.  
+* coordination type: the "and" conjoins different syntactic categories  
+
+```{r}
+items <- fromJSON("./items.json")
+items %>%
+  group_by(coordination, continuationType) %>%
+  count() %>%
+  kable()
+```
+
 ### Number of Participants by Item and Condition
 
 ```{r}
@@ -301,6 +318,7 @@ df.query.critical %>%
   group_by(condition, predicate_1, predicate_2) %>%
   count() %>%
   spread(condition, n) %>% 
+  left_join(select(items, property1, property2, continuationType, coordination), by = c("predicate_1" = "property1", "predicate_2" = "property2")) %>%
   replace(is.na(.), 0) %>% # missing combinations of condition and predicate means no trials were collected
   kable()
 ```
@@ -314,6 +332,40 @@ df.query.critical %>%
   geom_pirate(aes(color = condition, fill = condition),
               violins = F, show.legend = TRUE)+
   facet_wrap(~predicate_1+predicate_2, nrow = 2)+
+  ylab("% Africa")+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+
+### Pirate Plots (by Coordination)
+
+```{r fig.width=14, fig.height=7}
+df.query.critical %>%
+  filter(!memory_fail, !slider_fail) %>%
+  left_join(select(items, property1, property2, continuationType, coordination), by = c("predicate_1" = "property1", "predicate_2" = "property2")) %>%
+  ggplot(., aes( x = key, y = val))+
+  geom_pirate(aes(color = condition, fill = condition),
+              violins = F, show.legend = TRUE)+
+  facet_wrap(~coordination)+
+  ylab("% Africa")+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+
+### Pirate Plots (by Realness)
+
+```{r fig.width=14, fig.height=7}
+df.query.critical %>%
+  filter(!memory_fail, !slider_fail) %>%
+  left_join(select(items, property1, property2, continuationType, coordination), by = c("predicate_1" = "property1", "predicate_2" = "property2")) %>%
+  ggplot(., aes( x = key, y = val))+
+  geom_pirate(aes(color = condition, fill = condition),
+              violins = F, show.legend = TRUE)+
+  facet_wrap(~continuationType)+
   ylab("% Africa")+
   scale_fill_solarized()+
   scale_color_solarized()+

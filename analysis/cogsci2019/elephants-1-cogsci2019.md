@@ -5,9 +5,8 @@ MH Tessler
 
 [Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
 
-### 
-
-Experiment 1 for CogSci 2019. (Elephants-3)
+Experiment 1 for CogSci 2019 (Elephants-3)
+------------------------------------------
 
 ### Changes from Pilot 2
 
@@ -160,35 +159,61 @@ Modeling
 By-item Analyses
 ----------------
 
+### Items
+
+Items can be categorized by the continuation type and the coordination type. \* continuation type: the interrupted sentence containing the questioned properties varies according to how real the subject matter is.
++ real: Sentence and properties are completely real.
++ fakeNames: The properties concern real items (like religion), but the name is made-up (Daith).
++ fakeDefs: The properties concern completely made-up items.
+\* coordination type: the "and" conjoins different syntactic categories
+
+| coordination | continuationType |    n|
+|:-------------|:-----------------|----:|
+| np           | fakeDefs         |    2|
+| np           | fakeNames        |    2|
+| np           | real             |    5|
+| pp           | fakeDefs         |    3|
+| pp           | fakeNames        |    1|
+| pp           | real             |    2|
+| vp           | fakeDefs         |    1|
+
 ### Number of Participants by Item and Condition
 
-| predicate\_1                                   | predicate\_2                                        |  "..live in Africa and eat bugs"|  "..live in Africa and Asia"|
-|:-----------------------------------------------|:----------------------------------------------------|--------------------------------:|----------------------------:|
-| are part of the Tinno guild                    | are part of the Farza guild                         |                               12|                           14|
-| are stup-herders                               | are fishermen                                       |                               22|                           10|
-| ascribe to the Caboo religion                  | ascribe to the Daith religion                       |                               14|                           16|
-| build nests in gluers                          | build nests in droops                               |                               16|                           12|
-| carry their young in guklags                   | carry their young in trullets                       |                               22|                           10|
-| chew on xorfun                                 | chew on tunkel                                      |                               18|                           14|
-| flood their fields to plant fujusi             | burn their fields to plant soroneeks                |                               18|                           16|
-| have four horns                                | have seven horns                                    |                               14|                           14|
-| have long wings                                | have short wings                                    |                                6|                           24|
-| have six wings                                 | have seven wings                                    |                               10|                           12|
-| have striped fur                               | have spotted fur                                    |                                6|                           14|
-| have territories at the tops of tall mountains | have territories at the bottom of deep canyons      |                                6|                           18|
-| hibernate in fallen logs                       | hibernate in the abandoned burrows of other animals |                               16|                           12|
-| live on the continent of Caro                  | live on the continent of Este                       |                               16|                           12|
-| produce fruit with bumpy skin                  | produce fruit with smooth skin                      |                               14|                           16|
-| wear wutsats around their heads                | wear krevnors around their heads                    |                               18|                           14|
+| predicate\_1                                   | predicate\_2                                        |  "..live in Africa and eat bugs"|  "..live in Africa and Asia"| continuationType | coordination |
+|:-----------------------------------------------|:----------------------------------------------------|--------------------------------:|----------------------------:|:-----------------|:-------------|
+| are part of the Tinno guild                    | are part of the Farza guild                         |                               12|                           14| fakeNames        | np           |
+| are stup-herders                               | are fishermen                                       |                               22|                           10| fakeDefs         | np           |
+| ascribe to the Caboo religion                  | ascribe to the Daith religion                       |                               14|                           16| fakeNames        | np           |
+| build nests in gluers                          | build nests in droops                               |                               16|                           12| fakeDefs         | pp           |
+| carry their young in guklags                   | carry their young in trullets                       |                               22|                           10| fakeDefs         | pp           |
+| chew on xorfun                                 | chew on tunkel                                      |                               18|                           14| fakeDefs         | pp           |
+| flood their fields to plant fujusi             | burn their fields to plant soroneeks                |                               18|                           16| fakeDefs         | vp           |
+| have four horns                                | have seven horns                                    |                               14|                           14| real             | np           |
+| have long wings                                | have short wings                                    |                                6|                           24| real             | np           |
+| have six wings                                 | have seven wings                                    |                               10|                           12| real             | np           |
+| have striped fur                               | have spotted fur                                    |                                6|                           14| real             | np           |
+| have territories at the tops of tall mountains | have territories at the bottom of deep canyons      |                                6|                           18| real             | pp           |
+| hibernate in fallen logs                       | hibernate in the abandoned burrows of other animals |                               16|                           12| real             | pp           |
+| live on the continent of Caro                  | live on the continent of Este                       |                               16|                           12| fakeNames        | pp           |
+| produce fruit with bumpy skin                  | produce fruit with smooth skin                      |                               14|                           16| real             | np           |
+| wear wutsats around their heads                | wear krevnors around their heads                    |                               18|                           14| fakeDefs         | np           |
 
 ### Pirate Plots (by item)
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-16-1.png)
+
+### Pirate Plots (by Coordination)
+
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-17-1.png)
+
+### Pirate Plots (by Realness)
+
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 First Trial
 -----------
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 Reaction Times
 --------------
@@ -197,7 +222,7 @@ Reaction Times
 
 ### Density Graph of Reaction Times by Condition
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-20-1.png)
 
 ### Modeling of Response Times
 
@@ -210,15 +235,15 @@ Reaction Times
     ## 
     ## Population-Level Effects: 
     ##                                Estimate Est.Error l-95% CI u-95% CI
-    ## Intercept                          2.36      0.06     2.25     2.49
-    ## condition..liveinAfricaandAsia    -0.08      0.09    -0.26     0.08
+    ## Intercept                          2.36      0.06     2.24     2.48
+    ## condition..liveinAfricaandAsia    -0.08      0.08    -0.25     0.08
     ##                                Eff.Sample Rhat
-    ## Intercept                            2456 1.00
-    ## condition..liveinAfricaandAsia       2647 1.00
+    ## Intercept                            3785 1.00
+    ## condition..liveinAfricaandAsia       3952 1.00
     ## 
     ## Family Specific Parameters: 
     ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sigma     0.64      0.03     0.58     0.70       2953 1.00
+    ## sigma     0.64      0.03     0.58     0.71       3068 1.00
     ## 
     ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
     ## is a crude measure of effective sample size, and Rhat is the potential 
