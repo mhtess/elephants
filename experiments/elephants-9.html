@@ -77,7 +77,7 @@
   <div class="slide" id="i0" >
     <img src="./_shared/images/cpl.png" id="cocologo"></img>
     <p id="cocolab">MIT Computational Psycholinguistics Lab</p>
-    <p id="instruct-text">You will see 30 sentences and be asked how good they are. The HIT should take ~8 minutes. Please pay attention, thanks!</p>
+    <p id="instruct-text">You will see 30 sentences and be asked if they are true or false. The HIT should take ~8 minutes. Please pay attention, thanks!</p>
     <button id="start_button" type="button">Start Experiment</button>
     <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Karen Gu, at <a href="mailto://karengu@mit.edu">karengu@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
    <!-- <p id="credit">Image used from <a href='https://zalarieunique.ru'>https://zalarieunique.ru</a>.</p> -->
@@ -87,34 +87,38 @@
     <h3>Instructions</h3>
     <div>
     For each trial, you will see a sentence.
-    You will be asked to decide whether the sentence is good or bad, or somewhere in between. You can submit your answer using the slider bar provided.
+    You will be asked to decide whether the sentence is true or false, or whether you can't decide. You can submit your answer by selecting one of the options below each sentence.
       First, try answering the questions below.
     </div>
     <br>
     <div>
-      <div>How good is this sentence?</div>
+      <div>Is this sentence true?</div>
       <div class="practice_query" id="query_p1"></div>
     </div>
-    <table id="slider_table_p1" class="slider_table">
-      <tr><td class="left">It's a bad sentence.</td><td colspan="2"><div id="single_slider_p1" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
-    </table>
+    <label><input type="radio"  name="answer_p1" value="true"/>True</label>
+    <label><input type="radio"  name="answer_p1" value="can't decide"/>Can't decide</label>
+    <label><input type="radio"  name="answer_p1" value="false"/>False</label>
+    <br>
     <br>
     <div>
-      <div>How good is this sentence?</div>
+      <div>Is this sentence true?</div>
       <div class="practice_query" id="query_p2"></div>
     </div>
-    <table id="slider_table_p2" class="slider_table">
-      <tr><td class="left">It's a bad sentence.</td><td colspan="2"><div id="single_slider_p2" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
-    </table>
-        <br>
+    <label><input type="radio"  name="answer_p2" value="true"/>True</label>
+    <label><input type="radio"  name="answer_p2" value="can't decide"/>Can't decide</label>
+    <label><input type="radio"  name="answer_p2" value="false"/>False</label>
+    <br>
+    <br>
     <div>
-      <div>How good is this sentence?</div>
+      <div>Is this sentence true?</div>
       <div class="practice_query" id="query_p3"></div>
     </div>
-    <table id="slider_table_p3" class="slider_table">
-      <tr><td class="left">It's a bad sentence.</td><td colspan="2"><div id="single_slider_p3" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
-    </table>
-
+    <label><input type="radio"  name="answer_p3" value="true"/>True</label>
+    <label><input type="radio"  name="answer_p3" value="can't decide"/>Can't decide</label>
+    <label><input type="radio"  name="answer_p3" value="false"/>False</label>
+    <br>
+    <br>
+    
     <button onclick="_s.button()">Continue</button>
     <p class="err">Please respond to all of the questions.</p>
 
@@ -130,13 +134,15 @@
 
   <div class="slide" id="one_slider">
     <br><br><br>
-    <p>How good is this sentence?</p>
+    <p>Is this sentence true?</p>
     <p class="prompt"></p>
-    <table id="slider_table" class="slider_table">
-      <tr><td class="left">It's a bad sentence.</td><td colspan="2"><div id="single_slider" class="slider"></div></td><td class="right">It's a good sentence.</td></tr>
-    </table>
+    <label><input type="radio"  name="tf" value="true"/>True</label>
+    <label><input type="radio"  name="tf" value="can't decide"/>Can't decide</label>
+    <label><input type="radio"  name="tf" value="false"/>False</label>
+    <br>
+    <br>
     <button onclick="_s.button()">Continue</button>
-    <div class="err">Please adjust the slider before continuing.</div>
+    <div class="err">Please answer the question before continuing.</div>
   </div>
 
   <div class="slide" id="multi_slider">

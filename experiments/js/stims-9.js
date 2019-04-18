@@ -7,14 +7,14 @@ const critical_stims = [
 	combined_predicate: "live in Africa and Asia",
 	domain: "animals"
     },
-    {
-	stim_type: "critical",
-	kind: "turtles",
-	predicate1: "live in saltwater",
-	predicate2: "live in freshwater",
-	combined_predicate: "live in saltwater and freshwater",
-	domain: "animals"
-    },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "turtles",
+    // 	predicate1: "live in saltwater",
+    // 	predicate2: "live in freshwater",
+    // 	combined_predicate: "live in saltwater and freshwater",
+    // 	domain: "animals"
+    // },
     // {
     // 	stim_type: "critical",
     // 	kind: "dolphins",
@@ -45,14 +45,14 @@ const critical_stims = [
 	combined_predicate: "are purple and green",
 	domain: "food"
     },
-    {
-	stim_type: "critical",
-	kind: "cats",
-	predicate1: "live as pets",
-	predicate2: "live in the wild",
-	combined_predicate: "live as pets and live in the wild",
-	domain: "animals"
-    },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "cats",
+    // 	predicate1: "live as pets",
+    // 	predicate2: "live in the wild",
+    // 	combined_predicate: "live as pets and live in the wild",
+    // 	domain: "animals"
+    // },
     // {
     // 	stim_type: "critical",
     // 	kind: "trees",
@@ -68,14 +68,14 @@ const critical_stims = [
 	combined_predicate: "have gas engines and electric engines",
 	domain: "artifacts"
     },
-    {
-	stim_type: "critical",
-	kind: "clouds",
-	predicate1: "are white",
-	predicate2: "are gray",
-	combined_predicate: "are white and gray",
-	domain: "weather"
-    },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "clouds",
+    // 	predicate1: "are white",
+    // 	predicate2: "are gray",
+    // 	combined_predicate: "are white and gray",
+    // 	domain: "weather"
+    // },
     // {
     // 	stim_type: "critical",
     // 	kind: "lions that go hunting",
@@ -83,22 +83,22 @@ const critical_stims = [
     // 	predicate2: "are female",
     // 	combined_predicate: "are male and female"
     // },
-    {
-	stim_type: "critical",
-	kind: "peacocks",
-	predicate1: "have beautiful feathers",
-	predicate2: "have drab feathers",
-	combined_predicate: "have beautiful feathers and drab feathers",
-	domain: "animals"
-    },
-    {
-	stim_type: "critical",
-	kind: "dumplings",
-	predicate1: "have meat fillings",
-	predicate2: "have vegetable fillings",
-	combined_predicate: "have meat fillings and vegetable fillings",
-	domain: "food"
-    },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "peacocks",
+    // 	predicate1: "have beautiful feathers",
+    // 	predicate2: "have drab feathers",
+    // 	combined_predicate: "have beautiful feathers and drab feathers",
+    // 	domain: "animals"
+    // },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "dumplings",
+    // 	predicate1: "have meat fillings",
+    // 	predicate2: "have vegetable fillings",
+    // 	combined_predicate: "have meat fillings and vegetable fillings",
+    // 	domain: "food"
+    // },
     {
 	stim_type: "critical",
 	kind: "breads",
@@ -139,14 +139,14 @@ const critical_stims = [
 	combined_predicate: "is brown and white",
 	domain: "food"
     },
-    {
-	stim_type: "critical",
-	kind: "spiders that weave webs",
-	predicate1: "are young",
-	predicate2: "are old",
-	combined_predicate: "are young and old",
-	domain: "animals"
-    },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "spiders that weave webs",
+    // 	predicate1: "are young",
+    // 	predicate2: "are old",
+    // 	combined_predicate: "are young and old",
+    // 	domain: "animals"
+    // },
     {
 	stim_type: "critical",
 	kind: "goldfish",
@@ -171,14 +171,14 @@ const critical_stims = [
 	combined_predicate: "go over rivers and valleys",
 	domain: "artifacts"
     },
-    {
-  stim_type: "critical",
-  kind: "tunnels",
-  predicate1: "go through the sea",
-  predicate2: "go through mountains",
-	combined_predicate: "go through the sea and mountains",
-	domain: "artifacts"
-    },
+    // {
+  // stim_type: "critical",
+  // kind: "tunnels",
+  // predicate1: "go through the sea",
+  // predicate2: "go through mountains",
+  // 	combined_predicate: "go through the sea and mountains",
+  // 	domain: "artifacts"
+  //   },
     {
 	stim_type: "critical",
 	kind: "flowers",
@@ -265,6 +265,70 @@ const critical_stims = [
 	predicate1: "compete in team sports",
 	predicate2: "compete in individual sports",
 	combined_predicate: "compete in team sports and individual sports",
+	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "shopping bags",
+	predicate1: "are made of paper",
+	predicate2: "are made of plastic",
+	combined_predicate: "are made of paper and plastic",
+	domain: "artifacts"
+    },
+    {
+	stim_type: "critical",
+	kind: "pilots",
+	predicate1: "fly planes",
+	predicate2: "fly helicopters",
+	combined_predicate: "fly planes and helicopters",
+	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "runners",
+	predicate1: "compete in sprints",
+	predicate2: "compete in marathons",
+	combined_predicate: "compete in sprints and marathons",
+	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "police officers",
+	predicate1: "wear uniforms",
+	predicate2: "wear plainclothes",
+	combined_predicate: "wear uniforms and plainclothes",
+	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "sandwiches",
+	predicate1: "are served hot",
+	predicate2: "are served cold",
+	combined_predicate: "are served hot and cold",
+	domain: "food"
+    },
+    {
+	stim_type: "critical",
+	kind: "coffee",
+	predicate1: "is grown in Brazil",
+	predicate2: "is grown in Colombia",
+	combined_predicate: "is grown in Brazil and Colombia",
+	domain: "food"
+    },
+    {
+	stim_type: "critical",
+	kind: "noodles",
+	predicate1: "are made from wheat",
+	predicate2: "are made from rice",
+	combined_predicate: "are made from wheat and rice",
+	domain: "food"
+    },
+    {
+	stim_type: "critical",
+	kind: "actors",
+	predicate1: "star in movies",
+	predicate2: "star in plays",
+	combined_predicate: "star in movies and plays",
 	domain: "people"
     }
 ]

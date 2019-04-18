@@ -13,21 +13,19 @@ function make_slides(f) {
     slides.practice = slide({
     name : "practice",
     start: function() {
-      $(".err").hide();
+	$(".err").hide();
+	$('input[name="answer_p1"]').attr('checked', false)
+	$('input[name="answer_p2"]').attr('checked', false)
+	$('input[name="answer_p3"]').attr('checked', false)
 
-      this.init_sliders(1);
-	this.init_sliders(2);
-	this.init_sliders(3)
       practice_questions = [
-        "Anna laughed on Jon.\n",
+        "There are ten continents.\n",
           "The train from Edmonton to Orlando was late.\n",
-	  "The burning candle spelled wrong.\n"
+	  "The sun rises in the east.\n"
       ]
-      for (i=1;i<4; i++){
-        $("#query_p"+ i).html(practice_questions[i-1])
-      }
-	exp.sliderPractice = [-1,-1, -1];
-
+	$('#query_p1').html(practice_questions[0]);
+	$('#query_p2').html(practice_questions[1]);
+	$('#query_p3').html(practice_questions[2]);
     },
     init_sliders : function(i) {
         utils.make_slider("#single_slider_p" + i, this.make_slider_callback(i));
@@ -38,32 +36,32 @@ function make_slides(f) {
       };
     },
     button : function() {
-      if (exp.sliderPractice.indexOf(-1) >= 0) {
+      if (!$('input[name="answer_p1"]:checked').val() || !$('input[name="answer_p2"]:checked').val() || !$('input[name="answer_p3"]:checked').val()) {
         $(".err").show();
       } else {
 
         exp.catch_trials.push({
           condition: "practice",
           check_index: 1,
-          sentence: "Anna laughed on Jon.",
-          response: exp.sliderPractice[0],
-          correct:  exp.sliderPractice[0] < 0.5
+          sentence: practice_questions[0],
+            response: $('input[name="answer_p1"]:checked').val(),
+          correct:  $('input[name="answer_p1"]:checked').val() == "false"
         })
 
         exp.catch_trials.push({
           condition: "practice",
           check_index: 2,
-          sentence: "The train from Edmonton to Orlando was late.",
-          response: exp.sliderPractice[1],
-          correct:  exp.sliderPractice[1] > 0.5
+          sentence: practice_questions[1],
+          response: $('input[name="answer_p2"]:checked').val(),
+          correct:  $('input[name="answer_p2"]:checked').val() == "can't decide"
         })
 
 	  exp.catch_trials.push({
           condition: "practice",
           check_index: 3,
-          sentence: "The burning candle spelled wrong.",
-          response: exp.sliderPractice[1],
-          correct:  exp.sliderPractice[1] < 0.5
+          sentence: practice_questions[2],
+          response: $('input[name="answer_p3"]:checked').val(),
+          correct:  $('input[name="answer_p3"]:checked').val() == "true"
         })
 
         exp.go(); //use exp.go() if and only if there is no "present" data.
@@ -97,7 +95,8 @@ function make_slides(f) {
 
       present_handle : function(stim) {
 	  console.log(stim);
-      $(".err").hide();
+	  $(".err").hide();
+	  $('input[name="tf"]').attr('checked', false)
 
       this.stim = stim;
 
@@ -107,12 +106,10 @@ function make_slides(f) {
 	else if (stim.stim_type == "filler") {
 	    $(".prompt").html((stim.quantifier == "generic" ? this.capitalize_first_letter(stim.kind) : stim.quantifier == "most" ? "Most " + stim.kind : "All " + stim.kind) + " " + stim.predicate1 + (stim.predicate2 ? " and " + stim.predicate2 + "." : "."));
 	}
-      this.init_sliders();
-      exp.sliderPost = null;
     },
 
       button : function() {
-      if (exp.sliderPost == null) {
+      if (!$('input[name="tf"]:checked').val()) {
         $(".err").show();
       } else {
         this.log_responses();
@@ -128,7 +125,7 @@ function make_slides(f) {
 
     log_responses : function() {
 	exp.data_trials.push(_.extend(this.stim, {
-        "response" : exp.sliderPost
+        "response" : $('input[name="tf"]:checked').val()
 	}));
     },
 
