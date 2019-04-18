@@ -19,6 +19,6 @@ The analysis folder is separated into pilot analyses and analyses for CogSci 201
 
 ### Analyses for CogSci 2019
 
-[Experiment 1](./cogsci2019/elephants-1-cogsci2019.md)
+[Experiment 1](./analysis/cogsci2019/elephants-1-cogsci2019.md)
 
-[Experiment 2](./cogsci2019/elephants-2-cogsci2019.md)
+[Experiment 2](./analysis/cogsci2019/elephants-2-cogsci2019.md)
