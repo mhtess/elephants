@@ -113,7 +113,6 @@ function make_slides(f) {
   slides.main_chapters = slide({
       name: "main_chapters",
       trial_num : 0,
-      // present : exp.stims,
       present: exp.stims,
       //this gets run only at the beginning of the chapter
       present_handle : function(stim) {
@@ -121,9 +120,6 @@ function make_slides(f) {
         $(".err").hide()
         $(".slider_instruct").hide()
         $("#question_material").hide()
-        // $(".query").hide()
-        // $(".slider_number").hide()
-        // $(".slider_table").hide()
 
         $(".storyText").css("text-align-last", "justify")
         this.startTime = Date.now();
@@ -155,6 +151,8 @@ function make_slides(f) {
 
           this.last_page = this.chapter_length - 1;
 
+	  this.question_order = this.stim.question_order;
+
           switch (this.stim.type){
          case "critical":
           if (this.page < this.last_page){
@@ -169,25 +167,8 @@ function make_slides(f) {
 
             switch (this.stim.condition){
               case "uninterrupted":
-                $(".storyText").html(this.stim.continuation.critical+".");
+                $(".storyText").html(this.stim.main_text[this.page]);
                 break;
-              case "uninterrupted_irrelevant":
-                $(".storyText").html(this.stim.continuation.filler+".");
-                break;
-              case "interrupted":
-                if (this.stim.query) {
-                  console.log("interupt present question")
-                  this.present_question()
-                } else {
-                    $(".storyText").html(this.stim.continuation.filler+".");
-                }
-                break;
-	    case "nme_interrupted":
-		$(".storyText").html(this.stim.continuation.filler+".");
-	      break;
-	      case "nme_uninterrupted":
-	      $(".storyText").html(this.stim.continuation.nme+".");
-	      break;
           }
 	  }
 	      break;
@@ -200,13 +181,6 @@ function make_slides(f) {
 		  $(".storyText").addClass("leftJustify");
                 }
                 $(".storyText").html(this.stim.main_text[this.page]);
-              break;
-            case "interrupted":
-              if (this.page == this.last_page){
-                $(".storyText").css("text-align-last", "left")
-	        $(".storyText").addClass("leftJustify");
-              }
-              $(".storyText").html(this.stim.main_text[this.page]);
               break;
 
           break;
@@ -279,9 +253,19 @@ function make_slides(f) {
 
       button : function() {
 
-        if (exp.sliderPost.indexOf(-1) > 1 && this.page == this.last_page + 1) {
+	  if (this.stim.title == "An introduction to Dax") {
+	      if (this.page == this.last_page) {
+		  _stream.apply(this);
+	      }
+	      else {
+		  this.page ++;
+		  this.present_page();
+	      }
+		}
+	  else {
+        if (exp.sliderPost.indexOf(-1) > 1 && this.page == this.last_page + 2) {
           $(".err").show();
-        } else if (exp.sliderPost.indexOf(-1) < 2 && this.page == this.last_page) {
+        } else if (exp.sliderPost.indexOf(-1) < 2 && this.page == this.last_page+1) {
 	    $(".err").show();
 	}
 	  else {
@@ -289,28 +273,24 @@ function make_slides(f) {
 	    this.log_responses();
 	    this.startTime = Date.now();
 
-            if (this.page == this.last_page) {
+            if (this.page == this.last_page+1) {
 		 this.page ++;
 	    this.present_question(2);
 	  }
-	    else if (this.page < this.last_page - 1) { // middle of chapter
+	    else if (this.page < this.last_page) { // middle of chapter
 		 this.page ++;
 		this.present_page();
 	    }
-	    else if (this.page == this.last_page - 1) { // last page, so present question
-		if (this.stim.title == "An introduction to Dax") {
-		    _stream.apply(this);
-		}
-		else {
+	    else if (this.page == this.last_page) { // last page, so present question
 		 this.page ++;
 		    this.present_question(1);
-		}
 	    }
 	    else { // done with this stim
 		this.trial_num ++;
 	      _stream.apply(this);
 	    }
-        }
+          }
+	  }
       },
      log_responses : function() {
 	 this.rt = Date.now() - this.startTime;
@@ -434,7 +414,6 @@ function make_slides(f) {
   slides.subj_info =  slide({
     name : "subj_info",
     submit : function(e){
-      //if (e.preventDefault) e.preventDefault(); // I don't know what this means.
       exp.subj_data = {
         language : $("#language").val(),
         enjoyment : $("#enjoyment").val(),
@@ -484,11 +463,6 @@ function init() {
   fillers = _.shuffle(filler_chapters)
     shuffled_chapters = _.shuffle(stims_chapters)
 
-    console.log(shuffled_chapters.length)
-
-    exp.interruptingConditions = ["interrupted"]
-
-
     // CONFIGURATION
     // numFillerControls + numFillerInterrupts + numNmeControls + numNmeInterrupts
     // >= numCriticalControls + numCriticalInterrupts - 1
@@ -527,6 +501,8 @@ function init() {
     }
     randomizedFillers = _.shuffle(randomizedFillers)
 
+    exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
+
     var withFillers = [];
     const n = randomizedCriticals.length;
     for (i=0;i<n;i++) {
@@ -559,8 +535,6 @@ function init() {
     exp.stims = exp.stims.concat(withFillers.slice(prevIndex, withFillers.length))
 
     console.log(exp.stims)
-
-  exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
   exp.stimscopy = exp.stims.slice(0);
   exp.numTrials = exp.stims.length;
