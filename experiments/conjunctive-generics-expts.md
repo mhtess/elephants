@@ -84,3 +84,10 @@ stim types:
 - food: 7
 - artifacts: 5
 - people: 5
+
+11. Elephants-10: mutual exclusivity norming experiment
+same story as in elephants-3, without last sentence, ask explicitly about the following probabilities:
+- Pr(Africa and Asia)
+- Pr(~Africa and Asia)
+- Pr(Africa and ~Asia)
+- Pr(~Africa and ~Asia)
