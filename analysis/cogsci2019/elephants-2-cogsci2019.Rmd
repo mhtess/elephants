@@ -98,7 +98,7 @@ df.slider_check %>%
 
 df.slider_check %>% 
   group_by(property) %>%
-  summarize(n_correct = sum(correct)) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   kable()
 ```
 
@@ -190,7 +190,7 @@ Histogram of all of a single participant's prevalence estimates, collapsed acros
 * fill = number of correct responses on the memory check (out of 10)  
 * facet = participants  
 
-```{r}
+```{r fig.height = 15}
 df.query  %>%
   ggplot(., aes( x = val, fill = n_correct ))+
   geom_histogram()+
@@ -212,7 +212,8 @@ df.query.filler <- df.query %>%
 
 df.query.filler  %>%
   ggplot(., aes( x = val ))+
-  geom_histogram()+
+  geom_histogram(aes(y = ..density.. *0.05, binwidth = 0.05))+
+  ylab("Proportion") +
   facet_wrap(~quantifier + condition)
 ```
 
@@ -263,7 +264,8 @@ df.query.critical %>%
 ```{r}
 df.query.critical %>%
   ggplot(., aes( x = val ))+
-  geom_histogram()+
+  geom_histogram(aes(y = ..density.. *0.05, binwidth = 0.05))+
+  ylab("Proportion") +
   facet_grid(key~condition)
 ```
 
@@ -300,9 +302,21 @@ df.bs.query.critical %>%
         legend.position = "top")
 
 
-ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt2.pdf", 
-       width = 5.5, height = 3.5)
+#ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt2.pdf", 
+#       width = 5.5, height = 3.5)
 
+```
+
+### Mutual Exclusivity
+
+```{r}
+df.query.critical %>%
+  spread(key, val) %>%
+  mutate(mutually_exclusive = `% live in Africa` + `% live in other place` <= 1.00) %>%
+  group_by(condition, mutually_exclusive) %>%
+  count() %>%
+  ggplot(aes(x = condition, y = n)) +
+  geom_col(aes(fill = mutually_exclusive))
 ```
 
 ### Bootstrapped 95% Confidence Intervals for Relationships Between Prevalence Estimates (collapsed across items)
@@ -337,6 +351,7 @@ df.query.critical %>% spread(key, val) %>%
   scale_fill_solarized()+
   scale_color_solarized()+
   xlab("")+
+  ylab("Proportion of Responses") +
   theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
         legend.position = "top")
 ```
@@ -392,7 +407,7 @@ items %>%
   kable()
 ```
 
-### Number of Participants by Item and Condition
+### Number of Responses by Item and Condition
 
 ```{r}
 df.query.critical %>%
@@ -532,9 +547,9 @@ Looking only at
 ```{r}
 df.query.critical %>%
   filter(key == "% live in Africa", condition %in% c(
-    '"...live in Africa __"',
-    '"...live in Africa and __"',
-    '"...live in Africa and Asia __"')) %>%
+    '"...live in Africa" [?]',
+    '"... and" [?]',
+    '"...Africa and Asia." [?]')) %>%
   ggplot(., aes( x = log(rt / 1000) , color = condition, fill = condition))+
   geom_density(aes(y = ..density..), alpha = 0.3)+
   xlab("log time in seconds")

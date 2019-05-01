@@ -200,7 +200,8 @@ df.query.filler <- df.query %>%
 
 df.query.filler  %>%
   ggplot(., aes( x = val ))+
-  geom_histogram()+
+  geom_histogram(aes(y = ..density.. *0.05, binwidth = 0.05))+
+  ylab("Proportion") +
   facet_wrap(~quantifier + condition)
 ```
 
@@ -223,6 +224,19 @@ df.query.critical %>%
   geom_histogram()+
   facet_grid(key~condition)
 ```
+
+### Mutual Exclusivity
+
+```{r}
+df.query.critical %>%
+  spread(key, val) %>%
+  mutate(mutually_exclusive = `% live in Africa` + `% live in Asia` <= 1.00) %>%
+  group_by(condition, mutually_exclusive) %>%
+  count() %>%
+  ggplot(aes(x = condition, y = n)) +
+  geom_col(aes(fill = mutually_exclusive))
+```
+
 
 ### Bootstrapped 95% Confidence Intervals (collapsed across item)
 
@@ -310,7 +324,7 @@ items %>%
   kable()
 ```
 
-### Number of Participants by Item and Condition
+### Number of Responses by Item and Condition
 
 ```{r}
 df.query.critical %>%
