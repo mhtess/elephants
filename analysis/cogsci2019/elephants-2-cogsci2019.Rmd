@@ -81,7 +81,7 @@ df.slider_check <- df.attn %>%
 df.slider_check.workers <- df.slider_check %>%
   group_by(workerid) %>% 
   summarize(
-    n_correct = sum(correct),
+    n_correct = sum(correct, na.rm = TRUE),
     not_all_correct = n_correct < 4,
     not_three_correct = n_correct < 3
     )
@@ -92,13 +92,13 @@ workers.fail.sliders <- df.slider_check.workers %>%
 
 df.slider_check %>% 
   group_by(workerid) %>%
-  summarize(n_correct = sum(correct)) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   group_by(n_correct) %>% count() %>%
   kable()
 
 df.slider_check %>% 
   group_by(property) %>%
-  summarize(n_correct = sum(correct)) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   kable()
 ```
 
@@ -125,6 +125,17 @@ ggplot(df.mmry, aes( x = n_correct ))+
   xlab("n correctly recognized (or correctly rejected)")+
   scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
   ylab("n participants")
+```
+
+### Slider Practice and Memory Check
+
+```{r}
+df.mmry %>%
+  select(workerid, n_correct) %>%
+  left_join(df.slider_check.workers %>% select(workerid, n_correct), by=c("workerid")) %>%
+  rename(n_correct_memory = n_correct.x, n_correct_slider = n_correct.y) %>%
+  ggplot() +
+  geom_count(aes(x = n_correct_memory, y = n_correct_slider))
 ```
 
 ### Explanations of Task
@@ -180,7 +191,7 @@ Removing participants who got fewer than 7 correct on memory check and didn't ge
 
 ```{r}
 df.query %>%
-  distinct(workerid, memory_fail, slider_fail, bad_expln) %>%
+  distinct(workerid, memory_fail, slider_fail) %>%
   group_by(memory_fail, slider_fail) %>% count() %>% kable()
 ```
 
@@ -190,7 +201,7 @@ Histogram of all of a single participant's prevalence estimates, collapsed acros
 * fill = number of correct responses on the memory check (out of 10)  
 * facet = participants  
 
-```{r}
+```{r fig.height = 15}
 df.query  %>%
   ggplot(., aes( x = val, fill = n_correct ))+
   geom_histogram()+
@@ -212,7 +223,8 @@ df.query.filler <- df.query %>%
 
 df.query.filler  %>%
   ggplot(., aes( x = val ))+
-  geom_histogram()+
+  geom_histogram(aes(y = ..density.. *0.05, binwidth = 0.05))+
+  ylab("Proportion") +
   facet_wrap(~quantifier + condition)
 ```
 
@@ -263,7 +275,8 @@ df.query.critical %>%
 ```{r}
 df.query.critical %>%
   ggplot(., aes( x = val ))+
-  geom_histogram()+
+  geom_histogram(aes(y = ..density.. *0.05, binwidth = 0.05))+
+  ylab("Proportion") +
   facet_grid(key~condition)
 ```
 
@@ -300,9 +313,21 @@ df.bs.query.critical %>%
         legend.position = "top")
 
 
-ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt2.pdf", 
-       width = 5.5, height = 3.5)
+#ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt2.pdf", 
+#       width = 5.5, height = 3.5)
 
+```
+
+### Mutual Exclusivity
+
+```{r}
+df.query.critical %>%
+  spread(key, val) %>%
+  mutate(mutually_exclusive = `% live in Africa` + `% live in other place` <= 1.00) %>%
+  group_by(condition, mutually_exclusive) %>%
+  count() %>%
+  ggplot(aes(x = condition, y = n)) +
+  geom_col(aes(fill = mutually_exclusive))
 ```
 
 ### Bootstrapped 95% Confidence Intervals for Relationships Between Prevalence Estimates (collapsed across items)
@@ -337,6 +362,7 @@ df.query.critical %>% spread(key, val) %>%
   scale_fill_solarized()+
   scale_color_solarized()+
   xlab("")+
+  ylab("Proportion of Responses") +
   theme(axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
         legend.position = "top")
 ```
@@ -392,7 +418,7 @@ items %>%
   kable()
 ```
 
-### Number of Participants by Item and Condition
+### Number of Responses by Item and Condition
 
 ```{r}
 df.query.critical %>%
@@ -532,9 +558,9 @@ Looking only at
 ```{r}
 df.query.critical %>%
   filter(key == "% live in Africa", condition %in% c(
-    '"...live in Africa __"',
-    '"...live in Africa and __"',
-    '"...live in Africa and Asia __"')) %>%
+    '"...live in Africa" [?]',
+    '"... and" [?]',
+    '"...Africa and Asia." [?]')) %>%
   ggplot(., aes( x = log(rt / 1000) , color = condition, fill = condition))+
   geom_density(aes(y = ..density..), alpha = 0.3)+
   xlab("log time in seconds")

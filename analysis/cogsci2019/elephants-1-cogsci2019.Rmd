@@ -78,10 +78,13 @@ df.slider_check <- df.attn %>%
     property == "lions lay eggs" ~ response < 0.1
   )) 
 
-workers.fail.sliders <- df.slider_check %>%
+df.slider_check.workers <- df.slider_check %>%
   group_by(workerid) %>% 
   summarize(not_all_correct = sum(correct) < 4,
-            not_three_correct = sum(correct) < 3) %>%
+            not_three_correct = sum(correct) < 3,
+            n_correct = sum(correct))
+
+workers.fail.sliders <- df.slider_check.workers %>%
   filter(not_all_correct) %>%
   pull(workerid)
 
@@ -120,6 +123,17 @@ ggplot(df.mmry, aes( x = n_correct ))+
   xlab("n correctly recognized (or correctly rejected)")+
   scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
   ylab("n participants")
+```
+
+### Slider Practice and Memory Check
+
+```{r}
+df.mmry %>%
+  select(workerid, n_correct) %>%
+  left_join(df.slider_check.workers %>% select(workerid, n_correct), by=c("workerid")) %>%
+  rename(n_correct_memory = n_correct.x, n_correct_slider = n_correct.y) %>%
+  ggplot() +
+  geom_count(aes(x = n_correct_memory, y = n_correct_slider))
 ```
 
 ### Explanations of Task
@@ -200,7 +214,8 @@ df.query.filler <- df.query %>%
 
 df.query.filler  %>%
   ggplot(., aes( x = val ))+
-  geom_histogram()+
+  geom_histogram(aes(y = ..density.. *0.05, binwidth = 0.05))+
+  ylab("Proportion") +
   facet_wrap(~quantifier + condition)
 ```
 
@@ -223,6 +238,19 @@ df.query.critical %>%
   geom_histogram()+
   facet_grid(key~condition)
 ```
+
+### Mutual Exclusivity
+
+```{r}
+df.query.critical %>%
+  spread(key, val) %>%
+  mutate(mutually_exclusive = `% live in Africa` + `% live in Asia` <= 1.00) %>%
+  group_by(condition, mutually_exclusive) %>%
+  count() %>%
+  ggplot(aes(x = condition, y = n)) +
+  geom_col(aes(fill = mutually_exclusive))
+```
+
 
 ### Bootstrapped 95% Confidence Intervals (collapsed across item)
 
@@ -310,7 +338,7 @@ items %>%
   kable()
 ```
 
-### Number of Participants by Item and Condition
+### Number of Responses by Item and Condition
 
 ```{r}
 df.query.critical %>%

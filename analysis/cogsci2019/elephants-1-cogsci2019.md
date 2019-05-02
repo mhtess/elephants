@@ -81,6 +81,10 @@ After the story, participants select statements they recall learning from a list
 
 ![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
+### Slider Practice and Memory Check
+
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
 ### Explanations of Task
 
 After the story, participants are also asked to explain generally what they did in the experiment.
@@ -133,25 +137,29 @@ Removing participants who got fewer than 7 correct on memory check and didn't ge
 
 Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check. \* fill = number of correct responses on the memory check (out of 10) \* facet = participants
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 Filler Trials
 -------------
 
 These used quantifiers (and thus we have strong idea about literal meaning).
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 Critical Trials (collapsed across item)
 ---------------------------------------
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
-### Bootstrapped 95% Confidence Intervals (collapsed across item)
+### Mutual Exclusivity
 
 ![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-12-1.png)
+### Bootstrapped 95% Confidence Intervals (collapsed across item)
+
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 Modeling
 --------
@@ -179,7 +187,7 @@ Items can be categorized by the continuation type and the coordination type.
 | pp           | real             |    2|
 | vp           | fakeDefs         |    1|
 
-### Number of Participants by Item and Condition
+### Number of Responses by Item and Condition
 
 | predicate\_1                                   | predicate\_2                                        |  "..live in Africa and eat bugs"|  "..live in Africa and Asia"| continuationType | coordination |
 |:-----------------------------------------------|:----------------------------------------------------|--------------------------------:|----------------------------:|:-----------------|:-------------|
@@ -202,20 +210,20 @@ Items can be categorized by the continuation type and the coordination type.
 
 ### Pirate Plots (by item)
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 ### Pirate Plots (by Coordination)
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 ### Pirate Plots (by Realness)
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-20-1.png)
 
 First Trial
 -----------
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-19-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-21-1.png)
 
 Reaction Times
 --------------
@@ -224,7 +232,7 @@ Reaction Times
 
 ### Density Graph of Reaction Times by Condition
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-20-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-22-1.png)
 
 ### Modeling of Response Times
 
@@ -238,14 +246,14 @@ Reaction Times
     ## Population-Level Effects: 
     ##                                Estimate Est.Error l-95% CI u-95% CI
     ## Intercept                          2.36      0.06     2.24     2.48
-    ## condition..liveinAfricaandAsia    -0.08      0.09    -0.25     0.08
+    ## condition..liveinAfricaandAsia    -0.08      0.09    -0.26     0.08
     ##                                Eff.Sample Rhat
-    ## Intercept                            2746 1.00
-    ## condition..liveinAfricaandAsia       2754 1.00
+    ## Intercept                            2755 1.00
+    ## condition..liveinAfricaandAsia       2929 1.00
     ## 
     ## Family Specific Parameters: 
     ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sigma     0.64      0.03     0.59     0.70       3044 1.00
+    ## sigma     0.64      0.03     0.59     0.70       3129 1.00
     ## 
     ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
     ## is a crude measure of effective sample size, and Rhat is the potential 
