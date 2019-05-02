@@ -146,10 +146,9 @@ Before the experiment, participants practice using the sliders to rate 3 categor
 |  n\_correct|    n|
 |-----------:|----:|
 |           1|    1|
-|           2|    5|
+|           2|    6|
 |           3|   12|
 |           4|   89|
-|          NA|    1|
 
 | property        |  n\_correct|
 |:----------------|-----------:|
@@ -163,6 +162,10 @@ Before the experiment, participants practice using the sliders to rate 3 categor
 After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
 
 ![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+### Slider Practice and Memory Check
+
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 ### Explanations of Task
 
@@ -240,7 +243,7 @@ After the story, participants are also asked to explain generally what they did 
 |        67|                   4|                   7| Read a book in a very stunted and stilted fashion.                                                                                                                                                                                                                                                                      |
 |        68|                   4|                  10| I tried to estimate what percentage of a certain alien group followed a certain norm or not.                                                                                                                                                                                                                            |
 |        69|                   4|                   7| Read the stories and answer the questions in a percentage format                                                                                                                                                                                                                                                        |
-|        70|                  NA|                   5| NIOCE                                                                                                                                                                                                                                                                                                                   |
+|        70|                   2|                   5| NIOCE                                                                                                                                                                                                                                                                                                                   |
 |        71|                   4|                   9| Based on a short story, I estimated how many... aliens/animals/plants did/had or did not have... some characteristics or did something... hard to narrow it down like that in a simple explanation...                                                                                                                   |
 |        72|                   4|                   5| Read a story and occasionally is stopped to ask me questions about my beliefs.                                                                                                                                                                                                                                          |
 |        73|                   4|                   9| I read a story and answered questions about the content of the story, Specifically about creatures and behaviors of those creatures.                                                                                                                                                                                    |
@@ -290,8 +293,8 @@ Removing participants who got fewer than 7 correct on memory check and didn't ge
 |:-------------|:-------------|----:|
 | FALSE        | FALSE        |   80|
 | FALSE        | TRUE         |    6|
-| TRUE         | FALSE        |   10|
-| TRUE         | TRUE         |   12|
+| TRUE         | FALSE        |    9|
+| TRUE         | TRUE         |   13|
 
 ### Prevalence Estimates by Participant
 
@@ -299,14 +302,14 @@ Histogram of all of a single participant's prevalence estimates, collapsed acros
 \* fill = number of correct responses on the memory check (out of 10)
 \* facet = participants
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 Filler Trials
 -------------
 
 These used quantifiers (and thus we have strong idea about literal meaning).
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 Critical Trials (collapsed across item)
 ---------------------------------------
@@ -328,17 +331,17 @@ Critical Trials (collapsed across item)
 
 ### Histograms of Prevalence Estimates by Condition (collapsed across item)
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 ### Bootstrapped 95% Confidence Intervals (collapsed across item)
 
 *Property 2* = "% live in Asia" for ME trials and "% eat bugs" for NME trials
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 ### Mutual Exclusivity
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 ### Bootstrapped 95% Confidence Intervals for Relationships Between Prevalence Estimates (collapsed across items)
 
@@ -348,11 +351,11 @@ The relationships between prevalence estimates of the mentioned property (proper
 - property 2 is interpreted as a universal
 \* These conditions are not mutually exclusive; a participant can fall into one or more of the categories for a given trial.
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 ### Pirate Plots (collapsed across item)
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 Modeling
 --------
@@ -373,16 +376,16 @@ Modeling
     ## Group-Level Effects: 
     ## ~predicate_1 (Number of levels: 13) 
     ##                            Estimate Est.Error l-95% CI u-95% CI Eff.Sample
-    ## sd(Intercept)                  0.03      0.01     0.00     0.06        883
-    ## sd(condition1)                 0.02      0.02     0.00     0.07       1732
-    ## sd(condition3)                 0.03      0.02     0.00     0.08       1769
-    ## sd(condition4)                 0.03      0.02     0.00     0.07        653
-    ## cor(Intercept,condition1)     -0.06      0.45    -0.83     0.79       2905
-    ## cor(Intercept,condition3)     -0.12      0.45    -0.87     0.75       2665
-    ## cor(condition1,condition3)    -0.01      0.45    -0.81     0.80       2183
-    ## cor(Intercept,condition4)     -0.01      0.42    -0.75     0.75       1965
-    ## cor(condition1,condition4)     0.05      0.44    -0.76     0.82       1347
-    ## cor(condition3,condition4)     0.03      0.45    -0.80     0.82       1481
+    ## sd(Intercept)                  0.03      0.01     0.00     0.06        764
+    ## sd(condition1)                 0.02      0.02     0.00     0.07       1325
+    ## sd(condition3)                 0.03      0.02     0.00     0.08       1393
+    ## sd(condition4)                 0.03      0.02     0.00     0.07        829
+    ## cor(Intercept,condition1)     -0.04      0.43    -0.80     0.80       2901
+    ## cor(Intercept,condition3)     -0.11      0.44    -0.85     0.74       2142
+    ## cor(condition1,condition3)    -0.01      0.44    -0.81     0.78       2301
+    ## cor(Intercept,condition4)      0.02      0.43    -0.75     0.82       1502
+    ## cor(condition1,condition4)     0.03      0.43    -0.78     0.81       1277
+    ## cor(condition3,condition4)     0.01      0.45    -0.80     0.83       1467
     ##                            Rhat
     ## sd(Intercept)              1.00
     ## sd(condition1)             1.00
@@ -397,38 +400,38 @@ Modeling
     ## 
     ## ~workerid (Number of levels: 80) 
     ##                            Estimate Est.Error l-95% CI u-95% CI Eff.Sample
-    ## sd(Intercept)                  0.07      0.02     0.04     0.11        676
-    ## sd(condition1)                 0.02      0.02     0.00     0.06       1367
-    ## sd(condition3)                 0.12      0.03     0.06     0.18        205
-    ## sd(condition4)                 0.11      0.02     0.07     0.15        264
-    ## cor(Intercept,condition1)     -0.20      0.46    -0.89     0.76       2418
-    ## cor(Intercept,condition3)     -0.37      0.26    -0.75     0.26        197
-    ## cor(condition1,condition3)     0.09      0.46    -0.78     0.84        114
-    ## cor(Intercept,condition4)     -0.22      0.27    -0.62     0.47        171
-    ## cor(condition1,condition4)     0.05      0.45    -0.79     0.81        100
-    ## cor(condition3,condition4)     0.69      0.18     0.28     0.94        167
+    ## sd(Intercept)                  0.07      0.02     0.04     0.10        545
+    ## sd(condition1)                 0.02      0.02     0.00     0.06       1337
+    ## sd(condition3)                 0.12      0.03     0.07     0.17        425
+    ## sd(condition4)                 0.11      0.02     0.07     0.15        373
+    ## cor(Intercept,condition1)     -0.19      0.45    -0.90     0.72       1581
+    ## cor(Intercept,condition3)     -0.36      0.26    -0.73     0.26        312
+    ## cor(condition1,condition3)     0.10      0.46    -0.80     0.84        115
+    ## cor(Intercept,condition4)     -0.23      0.26    -0.61     0.40        267
+    ## cor(condition1,condition4)     0.03      0.44    -0.81     0.80         83
+    ## cor(condition3,condition4)     0.69      0.16     0.33     0.93        408
     ##                            Rhat
-    ## sd(Intercept)              1.01
+    ## sd(Intercept)              1.00
     ## sd(condition1)             1.00
     ## sd(condition3)             1.01
-    ## sd(condition4)             1.00
+    ## sd(condition4)             1.01
     ## cor(Intercept,condition1)  1.00
     ## cor(Intercept,condition3)  1.01
-    ## cor(condition1,condition3) 1.02
+    ## cor(condition1,condition3) 1.04
     ## cor(Intercept,condition4)  1.01
-    ## cor(condition1,condition4) 1.02
-    ## cor(condition3,condition4) 1.02
+    ## cor(condition1,condition4) 1.04
+    ## cor(condition3,condition4) 1.01
     ## 
     ## Population-Level Effects: 
     ##            Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## Intercept      0.83      0.02     0.79     0.87       2073 1.00
-    ## condition1     0.08      0.02     0.04     0.13       2514 1.00
-    ## condition3    -0.17      0.03    -0.22    -0.12       1939 1.00
-    ## condition4    -0.15      0.02    -0.20    -0.11       1526 1.00
+    ## Intercept      0.83      0.02     0.79     0.86       1567 1.00
+    ## condition1     0.08      0.02     0.04     0.13       1996 1.00
+    ## condition3    -0.17      0.03    -0.22    -0.12       1560 1.00
+    ## condition4    -0.15      0.02    -0.19    -0.11       1459 1.00
     ## 
     ## Family Specific Parameters: 
     ##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sigma     0.18      0.00     0.17     0.19       1063 1.00
+    ## sigma     0.18      0.00     0.17     0.19       1160 1.00
     ## 
     ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
     ## is a crude measure of effective sample size, and Rhat is the potential 
@@ -475,20 +478,20 @@ Items can be categorized by the continuation type and the coordination type.
 
 ### Pirate Plots (by item)
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 ### Pirate Plots (by Coordination)
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-19-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-20-1.png)
 
 ### Pirate Plots (by Realness)
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-20-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-21-1.png)
 
 First vs. Other Trials (for each condition)
 -------------------------------------------
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-21-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-22-1.png)
 
 Reaction Times
 --------------
@@ -501,4 +504,4 @@ Looking only at
 -   AF&: "Elephants live in Africa and"
 -   AF&AS: "Elephants live in Africa and Asia"
 
-![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-22-1.png)
+![](elephants-2-cogsci2019_files/figure-markdown_github/unnamed-chunk-23-1.png)
