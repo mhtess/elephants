@@ -23,7 +23,7 @@
 - memory check to test actually tested properties
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html) [might be outdated]
 
-4. Elephants-3i
+4. Elephants-3i (CogSci Experiment 1)
 - interrupted version of experiment 3 (some trials ask questions mid-chapter)
 - added trials where we ask about non-mutually exclusive properties
 - randomize order of trials with constraint that no 2 criticals back-to-back
@@ -45,7 +45,7 @@
 7. Elephants-6
 - mention both predicates that are asked about on the question slide through additional information at the beginning of each chapter
 
-8. Elephants-7
+8. Elephants-7 (CogSci Experiment 2)
 - ($1.25)
 - question about %Africa/%other continent instead of %Africa/%Asia
 - adjust spacing so that all pages have 3 lines or less

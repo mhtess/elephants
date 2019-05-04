@@ -324,10 +324,12 @@ df.bs.query.critical %>%
 df.query.critical %>%
   spread(key, val) %>%
   mutate(mutually_exclusive = `% live in Africa` + `% live in other place` <= 1.00) %>%
-  group_by(condition, mutually_exclusive) %>%
-  count() %>%
-  ggplot(aes(x = condition, y = n)) +
-  geom_col(aes(fill = mutually_exclusive))
+  group_by(condition) %>%
+  tidyboot_mean(column = mutually_exclusive) %>%
+  ggplot(aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+  geom_col() +
+  geom_errorbar(position = position_dodge(0.8), width = 0.3, color = "red") +
+  ylab("Proportion Mutually Exclusive Responses")
 ```
 
 ### Bootstrapped 95% Confidence Intervals for Relationships Between Prevalence Estimates (collapsed across items)
