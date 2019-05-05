@@ -124,7 +124,11 @@ function make_slides(f) {
         $(".storyText").css("text-align-last", "justify")
         this.startTime = Date.now();
         this.stim = stim
-        this.chapter_length = stim.main_text.length;
+          this.chapter_length = stim.main_text.length;
+
+	  if (this.stim.properties) {
+	      this.property = _.sample(this.stim.properties);
+	  }
 
         this.page = 0
         exp.sliderPost = [-99, -99];
@@ -201,10 +205,10 @@ function make_slides(f) {
 	  this.question_part = question_part;
 
 	  var query_prompts = {
-	      "ab": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong>" + this.stim.property1 + " and " + this.stim.property2 + "</strong>?\n",
-	      "notab": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong> do not " + this.stim.property1 + " and " + this.stim.property2 + "</strong>?\n",
-	      "anotb": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong>" + this.stim.property1 + " and do not " + this.stim.property2 + "</strong>?\n",
-	      "notanotb": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong> do not " + this.stim.property1 + " and do not " + this.stim.property2 + "</strong>?\n"
+	      "ab": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong>" + this.property.property1 + " and " + this.property.property2 + "</strong>?\n",
+	      "notab": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong> do not " + this.property.property1 + " and " + this.property.property2 + "</strong>?\n",
+	      "anotb": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong>" + this.property.property1 + " and do not " + this.property.property2 + "</strong>?\n",
+	      "notanotb": "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong> do not " + this.property.property1 + " and do not " + this.property.property2 + "</strong>?\n"
 	  }
 
         $("#query0").html(query_prompts[this.question_order[0]]);
@@ -308,8 +312,8 @@ function make_slides(f) {
 	    "query_2": this.page > this.last_page - 1 ? (this.question_part == 1 ? this.question_order[1] : this.question_order[3]) : "NA",
           "rt":this.rt,
           "kind": this.stim.kind,
-          "predicate_1": this.stim.property1,
-          "predicate_2": this.stim.property2,
+          "predicate_1": this.property.property1,
+          "predicate_2": this.property.property2,
           "question_order": this.question_order == null ? "NA" : this.question_order,
           "chapter": this.stim.title,
           "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
@@ -325,14 +329,10 @@ function make_slides(f) {
     $(".err").hide()
     console.log(exp.memory_properties)
 
-     this.tested_properties = _.map(exp.memory_properties, function(x){
-       var quantifier = x.quantifier ?
-       x.quantifier == "none" ? "no " :
-        x.quantifier + " ": ""
-       return quantifier + x.kind + " " + x.property1
-     })
+	this.tested_properties = _.map(exp.memory_properties, function(stim) {
+	    return stim.memory
+	})
      console.log(this.tested_properties)
-
 
      this.catch_properties = [
        "lorches have long legs and breathe underwater",
@@ -460,29 +460,14 @@ function init() {
       }
   })();
 
-  fillers = _.shuffle(filler_chapters)
     shuffled_chapters = _.shuffle(stims_chapters)
 
-    // CONFIGURATION
-    // numFillerControls + numFillerInterrupts + numNmeControls + numNmeInterrupts
-    // >= numCriticalControls + numCriticalInterrupts - 1
-
-    const beginningFillers = 2;
-
-    const numCriticals = 8;
-    const numFillers = 8;
+    const numCriticals = 9;
 
     const questions = ["ab", "notab", "anotb", "notanotb"];
 
     // add first chapter and desired number of beginning fillers (uninterrupted)
     exp.stims = [firstChapter]
-    for (i=0;i<beginningFillers;i++) {
-	     exp.stims.push(
-         _.extend(fillers[i],
-		  {condition: "uninterrupted", query: true, question_order: _.shuffle(questions)}
-         ))
-    }
-    fillers = fillers.slice(2, fillers.length);
 
     var baseCriticals = shuffled_chapters.slice(0, numCriticals);
     shuffled_chapters = shuffled_chapters.slice(numCriticals, shuffled_chapters.length);
@@ -491,48 +476,8 @@ function init() {
 	var question_order = _.shuffle(questions)
 	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "uninterrupted", query: true, question_order: question_order}));
     }
-    randomizedCriticals = _.shuffle(randomizedCriticals);
-
-    var baseFillers = fillers.slice(0, numFillers);
-    var randomizedFillers = [];
-    for (i=0;i<numFillers;i++) {
-	var question_order = _.shuffle(questions)
-	randomizedFillers.push(_.extend(baseFillers.pop(), {condition: "uninterrupted", query: true, question_order: question_order}))
-    }
-    randomizedFillers = _.shuffle(randomizedFillers)
-
-    exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
-
-    var withFillers = [];
-    const n = randomizedCriticals.length;
-    for (i=0;i<n;i++) {
-	withFillers.push(randomizedCriticals.pop())
-	if (i < n-1) {
-	    withFillers.push(randomizedFillers.pop())
-	}
-    }
-
-
-    // insert remaining fillers randomly into completed sequence
-    function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    var insertionIndices = []
-    for (i=0;i<randomizedFillers.length;i++) {
-	insertionIndices.push(getRandomInt(0, withFillers.length));
-    }
-    insertionIndices = insertionIndices.sort(function(a, b){return a - b});
-    var prevIndex = 0;
-    var i = 0;
-    insertionIndices.forEach(function(index) {
-	exp.stims = exp.stims.concat(withFillers.slice(prevIndex, index));
-	exp.stims.push(randomizedFillers[i]);
-	i ++;
-	prevIndex = index;
-    });
-    exp.stims = exp.stims.concat(withFillers.slice(prevIndex, withFillers.length))
+    exp.stims = exp.stims.concat(_.shuffle(randomizedCriticals));
+    exp.memory_properties = _.shuffle(randomizedCriticals).slice(0,5);
 
     console.log(exp.stims)
 
