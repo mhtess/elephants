@@ -22,14 +22,14 @@ const critical_stims = [
     // 	predicate2: "live in rivers",
     // 	combined_predicate: "live in the oceans and in rivers"
     // },
-    {
-	stim_type: "critical",
-	kind: "tigers",
-	predicate1: "are orange with black stripes",
-	predicate2: "are white with brown stripes",
-	combined_predicate: "are orange with black stripes and white with brown stripes",
-	domain: "animals"
-    },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "tigers",
+    // 	predicate1: "are orange with black stripes",
+    // 	predicate2: "are white with brown stripes",
+    // 	combined_predicate: "are orange with black stripes and white with brown stripes",
+    // 	domain: "animals"
+    // },
     // {
     // 	stim_type: "critical",
     // 	kind: "jaguars",
@@ -40,9 +40,9 @@ const critical_stims = [
     {
 	stim_type: "critical",
 	kind: "grapes",
-	predicate1: "are purple",
-	predicate2: "are green",
-	combined_predicate: "are purple and green",
+	predicate1: "have purple skin",
+	predicate2: "have green skin",
+	combined_predicate: "have purple skin and green skin",
 	domain: "food"
     },
     // {
@@ -102,43 +102,43 @@ const critical_stims = [
     {
 	stim_type: "critical",
 	kind: "breads",
-	predicate1: "are cooked in a dutch-oven",
-	predicate2: "are cooked on a pan",
-	combined_predicate: "are cooked in a dutch-oven and on a pan",
+	predicate1: "are cooked in dutch-ovens",
+	predicate2: "are cooked in pans",
+	combined_predicate: "are cooked in dutch-ovens and pans",
 	domain: "food"
     },
-    {
-	stim_type: "critical",
-	kind: "rice",
-	predicate1: "is white",
-	predicate2: "is brown",
-	combined_predicate: "is white and brown",
-	domain: "food"
-    },
-    {
-  stim_type: "critical",
-  kind: "beans",
-  predicate1: "are black",
-  predicate2: "are brown",
-	combined_predicate: "are black and brown",
-	domain: "food"
-    },
-    {
-	stim_type: "critical",
-	kind: "raisins",
-	predicate1: "are purple",
-	predicate2: "are golden",
-	combined_predicate: "are purple and golden",
-	domain: "food"
-    },
-    {
-	stim_type: "critical",
-	kind: "chocolate",
-	predicate1: "is brown",
-	predicate2: "is white",
-	combined_predicate: "is brown and white",
-	domain: "food"
-    },
+   //  {
+  // 	stim_type: "critical",
+  // 	kind: "rice",
+  // 	predicate1: "is white",
+  // 	predicate2: "is brown",
+  // 	combined_predicate: "is white and brown",
+  // 	domain: "food"
+  //   },
+  //   {
+  // stim_type: "critical",
+  // kind: "beans",
+  // predicate1: "are black",
+  // predicate2: "are brown",
+  // 	combined_predicate: "are black and brown",
+  // 	domain: "food"
+  //   },
+  //   {
+  // 	stim_type: "critical",
+  // 	kind: "raisins",
+  // 	predicate1: "are purple",
+  // 	predicate2: "are golden",
+  // 	combined_predicate: "are purple and golden",
+  // 	domain: "food"
+  //   },
+  //   {
+  // 	stim_type: "critical",
+  // 	kind: "chocolate",
+  // 	predicate1: "is brown",
+  // 	predicate2: "is white",
+  // 	combined_predicate: "is brown and white",
+  // 	domain: "food"
+  //   },
     // {
     // 	stim_type: "critical",
     // 	kind: "spiders that weave webs",
@@ -191,8 +191,8 @@ const critical_stims = [
 	stim_type: "critical",
 	kind: "birds",
 	predicate1: "build nests in trees",
-	predicate2: "build nests on the ground",
-	combined_predicate: "build nests in trees and on the ground",
+	predicate2: "build nests in cliffs",
+	combined_predicate: "build nests in trees and cliffs",
 	domain: "animals"
     },
     {
@@ -299,20 +299,20 @@ const critical_stims = [
 	combined_predicate: "wear uniforms and plainclothes",
 	domain: "people"
     },
-    {
-	stim_type: "critical",
-	kind: "sandwiches",
-	predicate1: "are served hot",
-	predicate2: "are served cold",
-	combined_predicate: "are served hot and cold",
-	domain: "food"
-    },
+    // {
+    // 	stim_type: "critical",
+    // 	kind: "sandwiches",
+    // 	predicate1: "are served hot",
+    // 	predicate2: "are served cold",
+    // 	combined_predicate: "are served hot and cold",
+    // 	domain: "food"
+    // },
     {
 	stim_type: "critical",
 	kind: "coffee",
-	predicate1: "is grown in Brazil",
-	predicate2: "is grown in Colombia",
-	combined_predicate: "is grown in Brazil and Colombia",
+	predicate1: "is grown in South America",
+	predicate2: "is grown in Africa",
+	combined_predicate: "is grown in South America and Africa",
 	domain: "food"
     },
     {
@@ -329,6 +329,46 @@ const critical_stims = [
 	predicate1: "star in movies",
 	predicate2: "star in plays",
 	combined_predicate: "star in movies and plays",
+	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "football players",
+	predicate1: "play offense",
+	predicate2: "play defense",
+	combined_predicate: "play offense and defense",
+	domain: "people"
+    },
+    {
+	stim_type: "critical",
+	kind: "ships",
+	predicate1: "carry passengers",
+	predicate2: "carry cargo",
+	combined_predicate: "carry passengers and cargo",
+	domain: "artifacts"
+    },
+    {
+	stim_type: "critical",
+	kind: "wine",
+	predicate1: "is made from red grapes",
+	predicate2: "is made from green grapes",
+	combined_predicate: "is made from red grapes and green grapes",
+	domain: "food"
+    },
+    {
+	stim_type: "critical",
+	kind: "museums",
+	predicate1: "contain scientific artifacts",
+	predicate2: "contain works of art",
+	combined_predicate: "contain scientific artifacts and works of art",
+	domain: "artifacts"
+    },
+    {
+	stim_type: "critical",
+	kind: "gamblers",
+	predicate1: "bet at casinos",
+	predicate2: "bet at sporting events",
+	combined_predicate: "bet at casinos and sporting events",
 	domain: "people"
     }
 ]

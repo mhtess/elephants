@@ -19,7 +19,7 @@ function make_slides(f) {
 	$('input[name="answer_p3"]').attr('checked', false)
 
       practice_questions = [
-        "There are ten continents.\n",
+        "There are ten continents on Earth.\n",
           "The train from Edmonton to Orlando was late.\n",
 	  "The sun rises in the east.\n"
       ]
@@ -357,14 +357,10 @@ function init() {
 
     // CONFIGURATION
     const num_criticals = {
-	generic: 10,
-	most: 10,
-	all: 10
+	generic: 15,
+	most: 15,
+	all: 0
     }
-    // const num_fillers = {
-    // 	good: 1,
-    // 	bad: 1
-    // }
 
     var critical_stims_shuffled = _.shuffle(critical_stims);
 
