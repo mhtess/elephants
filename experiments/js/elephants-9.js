@@ -349,7 +349,7 @@ function init() {
       screenUW: exp.width
   };
 
-    exp.condition = "vp";
+    exp.condition = "np";
 
     exp.stims = [];
     exp.data_trials = [];
