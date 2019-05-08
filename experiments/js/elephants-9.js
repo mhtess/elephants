@@ -20,7 +20,7 @@ function make_slides(f) {
 
       practice_questions = [
         "There are ten continents on Earth.\n",
-          "The train from Edmonton to Orlando was late.\n",
+          "Firefighters work on boats.\n",
 	  "The sun rises in the east.\n"
       ]
 	$('#query_p1').html(practice_questions[0]);
@@ -53,7 +53,7 @@ function make_slides(f) {
           check_index: 2,
           sentence: practice_questions[1],
           response: $('input[name="answer_p2"]:checked').val(),
-          correct:  $('input[name="answer_p2"]:checked').val() == "can't decide"
+          correct:  $('input[name="answer_p2"]:checked').val() == "false"
         })
 
 	  exp.catch_trials.push({

@@ -325,7 +325,7 @@ const critical_stims = [
     },
     {
 	stim_type: "critical",
-	kind: "actors",
+	kind: "professional actors",
 	predicate1: "star in movies",
 	predicate2: "star in plays",
 	combined_predicate: "star in movies and plays",
