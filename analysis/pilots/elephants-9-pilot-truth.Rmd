@@ -1,16 +1,18 @@
 ---
 title: "elephants-9-pilot"
 author: "Karen Gu"
-date: "2/22/2019"
+date: "5/08/2019"
 output: github_document
 ---
 
-## Experiment 9 Pilot
+[Link to experiment (VP)](https://www.mit.edu/~karengu/elephants_vp/elephants/experiments/elephants-9.html)
 
-Acceptability task using a sliding scale (0-100%), where participants rate items of the form Elephants live in Africa and Asia.
+## Experiment 9 Pilot (Truth Version)
+
+TVJT using a 2-alternative forced choice, where participants rate items of the form Elephants live in Africa and Asia.
 * between-subjects: VP vs. NP coordination  
-* within-subjects: generic vs. most vs. all  
-* 30 trials per subject (10 generic, 10 most, 10 all)  
+* within-subjects: generic vs. most 
+* 30 trials per subject (15 generic, 15 most)  
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
@@ -24,7 +26,7 @@ library(ggpirate)
 library(lme4)
 library(lmerTest)
 theme_set(theme_few())
-data.path <- "../../data/elephants-9/acceptability/"
+data.path <- "../../data/elephants-9/truth/"
 ```
 
 ## Subject Information
@@ -87,31 +89,12 @@ df.subject %>%
 
 Before the experiment, participants practice using the sliders to rate 3 sentences:
 
-- Anna laughed on Jon. (coded as correct if x < 0.5)
-- The train from Edmonton to Orlando was late. (coded as correct if x > 0.5)
-- The burning candle spelled wrong. (coded as correct if x < 0.5)
-
-Most participants judged the third sentence to be acceptable, so we don't exclude any participants who did so.
-```{r}
-df.attention %>%
-  filter(condition == "practice", sentence == "The burning candle spelled wrong.") %>%
-  ggplot(aes(x = response)) +
-    geom_histogram() +
-    labs(title = "Acceptability Ratings for 'The burning candle spelled wrong.'",
-         x = "Acceptability Rating",
-         y = "Number of Participants")
-```
+- There are ten continents on Earth. (coded as correct if response == false)
+- Firefighters work on boats. (coded as correct if response == false)
+- The sun rises in the east. (coded as correct if response == true)
 
 ```{r}
-df.slider_check <- df.attention %>% 
-  filter(condition == "practice") %>%
-  mutate(correct = case_when(
-    sentence == "Anna laughed on Jon." ~ response < 0.5,
-    sentence == "The train was late this morning." ~ response > 0.5,
-    sentence == "The burning candle spelled wrong." ~ TRUE
-  )) 
-
-df.slider_check.workers <- df.slider_check %>%
+df.slider_check.workers <- df.attention %>%
   group_by(workerid) %>% 
   summarize(
     n_correct = sum(correct),
@@ -123,14 +106,16 @@ workers.fail.sliders <- df.slider_check.workers %>%
   pull(workerid)
 
 # number of participants that got a certain number of properties correct
-df.slider_check %>% 
+df.attention %>% 
+  filter(condition == "practice") %>%
   group_by(workerid) %>%
-  summarize(n_correct = sum(correct)) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   group_by(n_correct) %>% count() %>%
   kable()
 
 # number of participants that got each property correct
-df.slider_check %>% 
+df.attention %>% 
+  filter(condition == "practice") %>%
   group_by(sentence) %>%
   summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   kable()
@@ -203,7 +188,9 @@ df.trials %>%
 df.query <- df.trials %>%
   filter(!memory_fail, !slider_fail) %>%
   rename(quantifier = trial_type, coordination = condition) %>%
-  mutate(quantifier = factor(quantifier, levels = c("generic", "most", "all"), ordered = TRUE))
+  mutate(quantifier = factor(quantifier, levels = c("generic", "most"), ordered = TRUE)) %>%
+  mutate(coordination = factor(coordination, levels = c("vp", "np"), ordered = TRUE)) %>%
+  mutate(response = response == "true")
 ```
 
 ### Number of Participants by Item and Condition
@@ -217,74 +204,47 @@ df.full.tab.item.count <- df.query %>%
 df.full.tab.item.count %>% kable()
 
 df.full.tab.item.count %>% 
-  gather(quantifier, n, all, generic, most) %>%
+  gather(quantifier, n, generic, most) %>%
   group_by(coordination) %>%
   summarize(n = sum(n)) %>% kable()
 ```
 
-### Acceptability Judgements by Participant
- 
-Histogram of all of a single participant's acceptability judgements, collapsed across trials and color coded for the number of correct responses on the memory check.  
-* fill = number of correct responses on the memory check (out of 10)  
-* facet = participants  
-
-```{r fig.height = 10}
-df.query %>%
-  ggplot(., aes( x = response, fill = n_correct ))+
-  geom_histogram()+
-  facet_wrap(~workerid)+
-  scale_fill_viridis()+
-  scale_x_continuous(breaks = c(0, 0.5, 1)) +
-  ylab("Number of Judgements") +
-  xlab("Acceptability Rating")
-```
-
-## Histograms of Acceptability Judgements by Coordination and Quantifier (collapsed across item)
-
-```{r fig.height = 8}
-df.query %>%
-  ggplot(aes( x = response ))+
-  geom_histogram()+
-  facet_grid(coordination ~ quantifier) +
-  xlab("Acceptability Rating") +
-  ylab("Number of Trials")
-```
-
-### Pirate Plots by Coordination and Quantifier (collapsed across item)
+### Confidence Intervals by Coordination and Quantifier (collapsed across item)
 
 ```{r}
-df.bs <- df.query %>%
-  group_by(quantifier, coordination) %>%
-  tidyboot_mean(column = response)
-  
-ggplot(df.bs, aes( x = quantifier))+
-  scale_fill_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
-  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
-  geom_jitter(data = df.query,
-             inherit.aes = F, aes(x = quantifier, y = response, color = quantifier), 
-             alpha = 0.5)+
-  geom_col(position = position_dodge(0.8),
-           aes(y = mean, fill = quantifier),
-           width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
-                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
-  ylab("Acceptability Rating")+
-  facet_wrap(~coordination)+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  xlab("Quantifier")+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "top")
+df_sample <- function(i) {
+  df.query %>% 
+    group_by(quantifier, coordination) %>%
+    sample_frac(replace = TRUE) %>%
+    group_by(quantifier, coordination, response) %>%
+    count() %>%
+    group_by(quantifier, coordination) %>%
+    mutate(prop = n/sum(n), sample = i) %>%
+    filter(response == TRUE)
+}
+df_resampled <- map_df(1:10, df_sample)
+df_ci <- df_resampled %>%
+  group_by(coordination, quantifier) %>%
+  summarise(mean = mean(prop), ci_lower = ci_lower(prop), ci_upper = ci_upper(prop))
+
+ggplot(df_ci) +
+  geom_col(aes(x = quantifier, y = mean, fill = quantifier)) +
+  geom_linerange(aes(x = quantifier, ymin = ci_lower, ymax = ci_upper)) +
+  facet_grid(~ coordination) +
+  scale_fill_manual(values = c("#4477AA", "#CC6677"), guide = FALSE) +
+  ylab("Proportion of Responses") +
+  xlab("Quantifier")
 ```
 
-## Generic VP Analysis
+### Model
 
 ```{r}
-df.generic.vp <- df.query %>%
-  filter(quantifier == "generic", coordination == "vp") %>%
-  mutate(response = response - 0.5)
-generic.vp.model <- lmer(response ~ 1 + (1 | workerid) + (1 | combined_predicate),
-                         data = df.generic.vp)
-summary(generic.vp.model)
+contrasts(df.query$coordination) <- contr.sum
+contrasts(df.query$quantifier) <- contr.sum
+recall_glm <- glmer(response ~ coordination * quantifier + (1 | workerid) + (1 | combined_predicate),
+                  data = df.query,
+                  family = "binomial")
+summary(recall_glm)
 ```
 
 ## By-item Analyses
@@ -300,66 +260,35 @@ df.tab.item.count <-  df.query %>%
 df.tab.item.count %>% kable()
 
 df.tab.item.count %>% 
-  gather(quantifier, n, all, generic, most) %>%
+  gather(quantifier, n, generic, most) %>%
   group_by(quantifier) %>%
   summarize(n = sum(n)) %>% kable()
-```
-
-## Pirate Plots (by item)
-
-```{r fig.width=13, fig.height = 30}
-df.bs.item <- df.query %>%
-  group_by(coordination, quantifier, combined_predicate) %>%
-  tidyboot_mean(column = response)
-
-ggplot(df.bs.item, aes( x = quantifier, fill = quantifier))+
-  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
-  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
-                position = position_dodge(0.8), width = 0.3, size = 1, alpha = 0.5)+  
-  geom_point(data = df.query, 
-             position = position_jitterdodge(),
-             inherit.aes = F, aes(x = quantifier, y = response, color = quantifier), 
-             alpha = 0.8)+
-  ylab("Acceptability Rating")+
-  facet_wrap(~combined_predicate + coordination, ncol = 4)+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  xlab("")+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "top")
 ```
 
 ### Confidence Intervals (by item)
 
 ```{r fig.height = 15}
-ggplot(df.bs.item, aes(x = combined_predicate, color = quantifier)) +
-  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
+df_sample_item <- function(i) {
+  df.query %>% 
+    group_by(combined_predicate, quantifier, coordination) %>%
+    sample_frac(replace = TRUE) %>%
+    group_by(combined_predicate, quantifier, coordination, response) %>%
+    count() %>%
+    group_by(combined_predicate, quantifier, coordination) %>%
+    mutate(prop = n/sum(n), sample = i) %>%
+    filter(response == TRUE)
+}
+df_resampled_item <- map_df(1:1000, df_sample_item)
+df_ci_item <- df_resampled_item %>%
+  group_by(combined_predicate, coordination, quantifier) %>%
+  summarise(mean = mean(prop), ci_lower = ci_lower(prop), ci_upper = ci_upper(prop))
+
+ggplot(df_ci_item, aes(x = combined_predicate, color = quantifier)) +
+  scale_color_manual(values=c("#f4424e", "#4049f7")) +
   geom_pointrange(aes(y = mean, ymin = ci_lower, ymax = ci_upper),
                  position = position_dodge(0.6)) +
   facet_wrap(~coordination) +
   xlab("Item") +
-  ylab("Acceptability Rating") +
+  ylab("Proportion of True Responses") +
   coord_flip()
-```
-
-### Histograms of Acceptability Ratings by Item
-
-### by Coordination
-
-```{r fig.height = 20}
-df.query %>%
-  ggplot(., aes( x = response ))+
-  geom_histogram()+
-  facet_grid( combined_predicate ~coordination, scales = 'free')+
-  theme(strip.text.y = element_text(angle = 0))
-```
-
-### by Quantifier
-
-```{r fig.height = 20}
-df.query %>%
-  ggplot(., aes( x = response ))+
-  geom_histogram()+
-  facet_grid( combined_predicate ~quantifier, scales = 'free')+
-  theme(strip.text.y = element_text(angle = 0))
 ```

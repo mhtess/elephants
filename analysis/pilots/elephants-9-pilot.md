@@ -3,8 +3,6 @@ elephants-9-pilot
 Karen Gu
 2/22/2019
 
-[Link to experiment (VP)](https://www.mit.edu/~karengu/elephants_vp/elephants/experiments/elephants-9.html)
-
 Experiment 9 Pilot
 ------------------
 

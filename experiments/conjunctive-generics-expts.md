@@ -84,6 +84,7 @@ stim types:
 - food: 7
 - artifacts: 5
 - people: 5
+truth version of task: n = 54 (N=108); $1.00 (05/08/2019)
 
 11. Elephants-10: mutual exclusivity norming experiment
 same story as in elephants-3, without last sentence, ask explicitly about the following probabilities:
