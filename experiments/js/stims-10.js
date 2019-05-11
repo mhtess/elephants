@@ -220,18 +220,36 @@ var stims_chapters = [
       filler: "and follow a strict code of laws",
       nme: "pray three times a day"
     },
-    kind: "Ludinos",
+    kind: {
+      plural: "Ludinos",
+      singular: "Ludino"
+    },
     properties: [
       {
-        property1: "ascribe to the Caboo religion",
-        property2: "ascribe to the Daith religion"
+        property1: {
+          singular: "ascribes to the Caboo religion",
+          plural: "ascribe to the Caboo religion"
+        },
+        property2: {
+          singular: "ascribes to the Daith religion",
+          plural: "ascribe to the Daith religion"
+        }
       },
       {
-        property1: "live in cities",
-        property2: "live in the countryside"
+        property1: {
+          singular: "lives in cities",
+          plural: "live in cities"
+        },
+        property2: {
+          singular: "lives in the countryside",
+          plural: "live in the countryside"
+        }
       }
     ],
-    nme_property: "pray three times a day",
+    nme_property: {
+      singular: "prays three times a day",
+      plural: "pray three times a day"
+    },
     type: "critical",
     continuationType: "fakeNames",
     coordination: "np",
@@ -248,14 +266,26 @@ var stims_chapters = [
       filler: "and enjoy the sunshine there",
       nme: "and graze on the tall grasses"
     },
-    kind: "glippets",
+    kind: {
+      plural: "glippets",
+      singular: "glippet"
+    },
     properties: [
       {
-        property1: "live on the continent of Caro",
-        property2: "live on the continent of Este"
+        property1: {
+          singular: "lives on the continent of Caro",
+          plural: "live on the continent of Caro"
+        },
+        property2: {
+          singular: "lives on the continent of Este",
+          plural: "live on the continent of Este"
+        }
       }
     ],
-    nme_property: "graze on the tall grasses",
+    nme_property: {
+      singular: "grazes on tall grasses",
+      plural: "graze on tall grasses"
+    },
     type: "critical",
     continuationType: "fakeNames",
     coordination: "pp",
@@ -273,14 +303,26 @@ var stims_chapters = [
       filler: "and one would be wise to keep their distance from them",
       nme: "and watch over the low-lying regions during the day"
     },
-    kind: "mooks",
+    kind: {
+      plural: "mooks",
+      singular: "mook"
+    },
     properties: [
       {
-        property1: "have territories at the tops of tall mountains",
-        property2: "have territories at the bottom of deep canyons"
+        property1: {
+          singular: "has territory at the tops of tall mountains",
+          plural: "have territories at the tops of tall mountains"
+        },
+        property2: {
+          singular: "has territory at the bottom of deep canyons",
+          plural: "have territories at the bottoms of deep canyons"
+        }
       }
     ],
-    nme_property: "watch over the low-lying regions during the day",
+    nme_property: {
+      singular: "watches over the low-lying regions during the day",
+      plural: "watch over the low-lying regions during the day"
+    },
     type: "critical",
     continuationType: "real",
     coordination: "pp",
@@ -298,14 +340,26 @@ var stims_chapters = [
       filler: "and in the summer watch their fields carefully",
       nme: "and spray them with a naturally-occurring fertilizer"
     },
-    kind: "farmers in the springtime",
+    kind: {
+      plural: "farmers in the springtime",
+      singular: "farmer in the springtime"
+    },
     properties: [
       {
-        property1: "flood their fields to plant fujusi",
-        property2: "burn their fields to plant soroneeks"
+        property1: {
+          singular: "floods their fields to plant fujusi",
+          plural: "flood their fields to plant fujusi"
+	},
+        property2: {
+          singular: "burns their fields to plant soroneeks",
+          plural: "burn their fields to plant soroneeks"
+        }
       }
     ],
-    nme_property: "spray their fields with a naturally-occurring fertilizer",
+    nme_property: {
+      singular: "sprays their fields with a naturally-occurring fertilizer",
+      plural: "spray their fields with a naturally-occurring fertilizer"
+    },
     type: "critical",
     continuationType: "fakeDefs",
     coordination: "vp",
@@ -324,14 +378,26 @@ var stims_chapters = [
       filler: "and watch over them carefully",
       nme: "and store tree-bark in them for safe keeping"
     },
-    kind: "fengnor mated pairs",
+    kind: {
+      plural: "fengnor mated pairs",
+      singular: "fengnor mated pair"
+      },
     properties: [
       {
-        property1: "build nests in gluers",
-        property2: "build nests in droops"
+        property1: {
+          singular: "builds nests in gluers",
+          plural: "build nests in gluers"
+        },
+        property2: {
+          singular: "builds nests in droops",
+          plural: "build nests in droops"
+        }
       }
     ],
-    nme_property: "store tree-bark in them for safe keeping",
+    nme_property: {
+      singular: "stores tree-bark in them for safe keeping",
+      plural: "store tree-bark in them for safe keeping"
+    },
     type: "critical",
     continuationType: "fakeDefs",
     coordination: "pp",
@@ -349,14 +415,26 @@ var stims_chapters = [
       filler: "and incorporate stups into their religion",
       nme: "and sing songs to the stups to help them relax",
     },
-    kind: "Krens",
+    kind: {
+      plural: "Krens",
+      singular: "Kren"
+    },
     properties: [
       {
-        property1: "are stup-herders",
-        property2: "are fishermen"
+        property1: {
+          singular: "is a stup-herder",
+          plural: "are stup-herders"
+        },
+        property2: {
+          singular: "is a fisherman",
+          plural: "are fishermen"
+        }
       }
     ],
-    nme_property: "sing songs to the stups to help them relax",
+    nme_property: {
+      singular: "sings songs to the stups to help them relax",
+      plural: "sing songs to the stups to help them relax"
+    },
     type: "critical",
     continuationType: "fakeDefs",
     coordination: "np",
@@ -373,14 +451,26 @@ var stims_chapters = [
       filler: "and fly only at night",
       nme: "and sharp claws",
     },
-    kind: "lorches",
+    kind: {
+      plural: "lorches",
+      singular: "lorch"
+    },
     properties: [
       {
-        property1: "have long wings",
-        property2: "have short wings"
+        property1: {
+          singular: "has long wings",
+          plural: "have long wings"
+        },
+        property2: {
+          singular: "has short wings",
+          plural: "have short wings"
+        }
       }
     ],
-    nme_property: "have sharp claws",
+    nme_property: {
+      singular: "has sharp claws",
+      plural: "have sharp claws"
+    },
     type: "critical",
     continuationType: "real",
     coordination: "np",
@@ -398,14 +488,26 @@ var stims_chapters = [
       filler: "and roam around by themselves at night",
       nme: "and carry sticks with them"
     },
-    kind: "reesles",
+    kind: {
+      plural: "reesles",
+      singular: "reesle"
+    },
     properties: [
       {
-        property1: "wear wutsats around their heads",
-        property2: "wear krevnors around their heads"
+        property1: {
+          singular: "wears wutsats around its head",
+          plural: "wear wutsats around their heads"
+        },
+        property2: {
+          singular: "wears krevnors around its head",
+          plural: "wear krevnors around their heads"
+        }
       }
     ],
-    nme_property: "carry sticks with them",
+    nme_property: {
+      singular: "carries a stick",
+      plural: "carry sticks"
+    },
     type: "critical",
     continuationType: "fakeDefs",
     coordination: "np",
@@ -423,14 +525,26 @@ var stims_chapters = [
       filler: "and howl towards the sky",
       nme: "and jump up and down in circles",
     },
-    kind: "kweps",
+    kind: {
+      plural: "kweps",
+      singular: "kwep"
+    },
     properties: [
       {
-        property1: "chew on xorfun",
-        property2: "chew on tunkel",
+        property1: {
+          singular: "chews on xorfun",
+          plural: "chew on xorfun"
+        },
+        property2: {
+          singular: "chews on tunkel",
+          plural: "chew on tunkel"
+        }
       }
     ],
-    nme_property: "jump up and down in circles",
+    nme_property: {
+      singular: "jumps up and down in circles",
+      plural: "jump up and down in circles"
+    },
     type: "critical",
     continuationType: "fakeDefs",
     coordination: "pp",
@@ -448,14 +562,26 @@ var stims_chapters = [
       filler: "and use sticks for balance",
       nme: "and are very protective"
     },
-    kind: "oller families",
+    kind: {
+      plural: "oller families",
+      singular: "oller family"
+    },
     properties: [
       {
-        property1: "carry their young in guklags",
-        property2: "carry their young in trullets"
+        property1: {
+          singular: "carries its young in guklags",
+          plural: "carry their young in guklags"
+        },
+        property2: {
+          singular: "carries its young in trullets",
+          plural: "carry their young in trullets"
+        }
       }
     ],
-    nme_property: "are very protective",
+    nme_property: {
+      singular: "is very protective",
+      plural: "are very protective"
+    },
     type: "critical",
     continuationType: "fakeDefs",
     coordination: "pp",
@@ -473,44 +599,68 @@ var stims_chapters = [
        filler: "and pledge allegiance to Tinnius the Elder",
        nme: "and sell their baskets in the Warfi marketplace"
     },
-    kind: "basket weavers",
+    kind: {
+      plural: "basket weavers",
+      singular: "basket weaver"
+    },
     properties: [
       {
-        property1: "belong to the Tinno guild",
-        property2: "belong to the Farza guild"
+        property1: {
+          singular: "belongs to the Tinno guild",
+          plural: "belong to the Tinno guild"
+        },
+        property2: {
+          singular: "belongs to the Farza guild",
+          plural: "belong to the Farza guild"
+        }
       }
     ],
-    nme_property: "sell their baskets in the Warfi marketplace",
+    nme_property: {
+      singular: "sells their baskets in the Warfi marketplace",
+      plural: "sell their baskets in the Warfi marketplace"
+    },
     type: "critical",
     continuationType: "fakeNames",
     coordination: "np",
     memory: "crafters are common in the city of Rondoo"
   },
-  {
-    title: "Batozes",
-    main_text: [
-      "Batozes are large birds that are found along all the coasts of Dax. They are skilled hunters and ",
-      "can fly for whole days without stopping. They use their sharp claws to hunt for fish. They also ",
-      "have special wings that are light but powerful."
-    ],
-    continuation: {
-      critical: "and seven wings",
-      nme: "and three eyes",
-      filler: "and can flap their wings very fast"
-    },
-    kind: "batozes",
-    properties: [
-      {
- 	property1: "have six wings",
-	property2: "have seven wings"
-      }
-    ],
-    nme_property: "have three eyes",
-    type: "critical",
-    continuationType: "real",
-    coordination: "np",
-    memory: "batozes are skilled hunters"
-  },
+  // {
+  //   title: "Batozes",
+  //   main_text: [
+  //     "Batozes are large birds that are found along all the coasts of Dax. They are skilled hunters and ",
+  //     "can fly for whole days without stopping. They use their sharp claws to hunt for fish. They also ",
+  //     "have special wings that are light but powerful."
+  //   ],
+  //   continuation: {
+  //     critical: "and seven wings",
+  //     nme: "and three eyes",
+  //     filler: "and can flap their wings very fast"
+  //   },
+  //   kind: {
+  //     plural: "batozes",
+  //     singular: "batoz"
+  //   },
+  //   properties: [
+  //     {
+  //       property1: {
+  //         singular: "has six wings",
+  //         plural: "have six wings"
+  //       },
+  //       property2: {
+  //         singular: "has seven wings",
+  //         plural: "have seven wings"
+  //       }
+  //     }
+  //   ],
+  //   nme_property: {
+  //     singular: "has three eyes",
+  //     plural: "have three eyes"
+  //   },
+  //   type: "critical",
+  //   continuationType: "real",
+  //   coordination: "np",
+  //   memory: "batozes are skilled hunters"
+  // },
   {
     title: "Kaples",
     main_text: [
@@ -523,44 +673,68 @@ var stims_chapters = [
       filler: "and beautiful eyes",
       nme: "and long tails"
     },
-    kind: "kaples",
+    kind: {
+      plural: "kaples",
+      singular: "kaple"
+    },
     properties: [
       {
-	property1: "have striped fur",
-	property2: "have spotted fur",
+        property1: {
+          singular: "has striped fur",
+          plural: "have striped fur"
+	},
+	property2: {
+          singular: "has spotted fur",
+          plural: "have spotted fur"
+        }
       }
     ],
-    nme_property: "have long tails",
+    nme_property: {
+      singular: "has a long tail",
+      plural: "have long tails"
+    },
     type: "critical",
     continuationType: "real",
     coordination: "np",
     memory: "kaples live in the jungles"
   },
-  {
-    title: "Landeks",
-    main_text: [
-      "Landeks are very fierce creatures. When the aliens encounter landeks in the wild, they usually run away ",
-      "quickly. Landeks often fight with each other over territory, food, or mates. They fight using the long horns on their heads and on their ",
-      "backs."
-    ],
-    continuation: {
-      critical: "and seven horns",
-      filler: "and charge without warning",
-      nme: "and two tails"
-    },
-    kind: "landeks",
-    properties: [
-      {
- 	property1: "have four horns",
-	property2: "have seven horns"
-      }
-    ],
-    nme_property: "have two tails",
-    type: "critical",
-    continuationType: "real",
-    coordination: "np",
-    memory: "landeks often fight with each other"
-  },
+  // {
+  //   title: "Landeks",
+  //   main_text: [
+  //     "Landeks are very fierce creatures. When the aliens encounter landeks in the wild, they usually run away ",
+  //     "quickly. Landeks often fight with each other over territory, food, or mates. They fight using the long horns on their heads and on their ",
+  //     "backs."
+  //   ],
+  //   continuation: {
+  //     critical: "and seven horns",
+  //     filler: "and charge without warning",
+  //     nme: "and two tails"
+  //   },
+  //   kind: {
+  //     plural: "landeks",
+  //     singular: "landek"
+  //   },
+  //   properties: [
+  //     {
+  //       property1: {
+  //         singular: "has four horns",
+  //         plural: "have four horns"
+  //       },
+  //       property2: {
+  //         singular: "has seven horns",
+  //         plural: "have seven horns"
+  //       }
+  //     }
+  //   ],
+  //   nme_property: {
+  //     singular: "has two tails",
+  //     plural: "have two tails"
+  //   },
+  //   type: "critical",
+  //   continuationType: "real",
+  //   coordination: "np",
+  //   memory: "landeks often fight with each other"
+  // },
   {
     title: "Vimbles",
     main_text: [
@@ -573,14 +747,26 @@ var stims_chapters = [
       filler: "and only emerge when the weather has become warmer",
       nme:"and give birth twice a year"
     },
-    kind: "vimble queens",
+    kind: {
+      plural: "vimble queens",
+      singular: "vimble queen"
+    },
     properties: [
       {
-  	property1: "hibernate in fallen logs",
-	property2: "hibernate in the abandoned burrows of other animals"
+        property1: {
+          singular: "hibernates in fallen logs",
+          plural: "hibernate in fallen logs"
+        },
+        property2: {
+          singular: "hibernates in the abandoned burrows of other animals",
+          plural: "hibernate in the abandoned burrows of other animals"
+        }
       }
     ],
-    nme_property: "give birth twice a year",
+    nme_property: {
+      singular: "gives birth twice a year",
+      plural: "give birth twice a year"
+    },
     type: "critical",
     continuationType: "real",
     coordination: "pp",
@@ -597,14 +783,26 @@ var stims_chapters = [
       filler: "and prefer to grow in the shade",
       nme: "and a sour taste",
     },
-    kind: "isooms",
+    kind: {
+      plural: "isooms",
+      singular: "isoom"
+    },
     properties: [
       {
-	property1: "produce fruit with bumpy skin",
-	property2: "produce fruit with smooth skin"
+        property1: {
+          singular: "produces fruit with bumpy skin",
+          plural: "produce fruit with bumpy skin"
+        },
+        property2: {
+          singular: "produces fruit with smooth skin",
+          plural: "produce fruit with smooth skin"
+        }
       }
     ],
-    nme_property: "produce fruit with a sour taste",
+    nme_property: {
+      singular: "produces fruit with a sour taste",
+      plural: "produce fruit with a sour taste"
+    },
     type: "critical",
     continuationType: "real",
     coordination: "np",
