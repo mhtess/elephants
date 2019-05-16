@@ -228,27 +228,36 @@ var stims_chapters = [
       {
         property1: {
           singular: "ascribes to the Caboo religion",
-          plural: "ascribe to the Caboo religion"
+            plural: "ascribe to the Caboo religion",
+	    supportFirst: "On Dax, there is a religion called the Caboo religion.",
+	    supportSecond: "There is another religion called the Caboo religion."
         },
         property2: {
           singular: "ascribes to the Daith religion",
-          plural: "ascribe to the Daith religion"
+            plural: "ascribe to the Daith religion",
+	    supportFirst: "On Dax, there is a religion called the Daith religion.",
+	    supportSecond: "There is another religion called the Daith religion."
         }
       },
       {
         property1: {
           singular: "lives in cities",
-          plural: "live in cities"
+            plural: "live in cities",
+	    supportFirst: "",
+	    supportSecond: ""
         },
         property2: {
           singular: "lives in the countryside",
-          plural: "live in the countryside"
+            plural: "live in the countryside",
+	    supportFirst: "",
+	    supportSecond: ""
         }
       }
     ],
     nme_property: {
       singular: "prays three times a day",
-      plural: "pray three times a day"
+	plural: "pray three times a day",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeNames",
@@ -274,17 +283,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "lives on the continent of Caro",
-          plural: "live on the continent of Caro"
+            plural: "live on the continent of Caro",
+	    supportFirst: "One of the continents on Dax is called Caro.",
+	    supportSecond: "There is another continent called Caro."
         },
         property2: {
           singular: "lives on the continent of Este",
-          plural: "live on the continent of Este"
+            plural: "live on the continent of Este",
+	    supportFirst: "One of the continents on Dax is called Este.",
+	    supportSecond: "There is another continent called Este."
         }
       }
     ],
     nme_property: {
       singular: "grazes on tall grasses",
-      plural: "graze on tall grasses"
+	plural: "graze on tall grasses",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeNames",
@@ -311,17 +325,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "has territory at the tops of tall mountains",
-          plural: "have territories at the tops of tall mountains"
+            plural: "have territories at the tops of tall mountains",
+	    supportFirst: "",
+	    supportSecond: ""
         },
         property2: {
           singular: "has territory at the bottom of deep canyons",
-          plural: "have territories at the bottoms of deep canyons"
+            plural: "have territories at the bottoms of deep canyons",
+	    supportFirst: "",
+	    supportSecond: ""
         }
       }
     ],
     nme_property: {
       singular: "watches over the low-lying regions during the day",
-      plural: "watch over the low-lying regions during the day"
+	plural: "watch over the low-lying regions during the day",
+	support: ""
     },
     type: "critical",
     continuationType: "real",
@@ -348,17 +367,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "floods their fields to plant fujusi",
-          plural: "flood their fields to plant fujusi"
+            plural: "flood their fields to plant fujusi",
+	    supportFirst: "Fujusi are plants, similar to rice, that require a lot of water to grow.",
+	    supportSecond: "Fujusi are a plants, similar to rice, that require a lot of water to grow."
 	},
         property2: {
           singular: "burns their fields to plant soroneeks",
-          plural: "burn their fields to plant soroneeks"
+            plural: "burn their fields to plant soroneeks",
+	    supportFirst: "Soroneeks are tall plants that thrive in fertile soil.",
+	    supportSecond: "Soroneeks are tall plants that thrive in fertile soil."
         }
       }
     ],
     nme_property: {
       singular: "sprays their fields with a naturally-occurring fertilizer",
-      plural: "spray their fields with a naturally-occurring fertilizer"
+	plural: "spray their fields with a naturally-occurring fertilizer",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeDefs",
@@ -386,17 +410,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "builds nests in gluers",
-          plural: "build nests in gluers"
+            plural: "build nests in gluers",
+	    supportFirst: "Gluers are tree-like plants with purple, needle-like leaves.",
+	    supportSecond: "Gluers are tree-like plants with purple, needle-like leaves."
         },
         property2: {
           singular: "builds nests in droops",
-          plural: "build nests in droops"
+            plural: "build nests in droops",
+	    supportFirst: "Droops are tree-like plants with broad, orange leaves.",
+	    supportSecond: "Droops are tree-like plants with broad, orange leaves."
         }
       }
     ],
     nme_property: {
-      singular: "stores tree-bark in them for safe keeping",
-      plural: "store tree-bark in them for safe keeping"
+      singular: "stores tree-bark in their nests for safe keeping",
+	plural: "store tree-bark in their nests for safe keeping",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeDefs",
@@ -423,17 +452,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "is a stup-herder",
-          plural: "are stup-herders"
+            plural: "are stup-herders",
+	    supportFirst: "Stup-herders care for the stups and make money from selling their meat.",
+	    supportSecond: "Stup-herders care for the stups and make money from selling their meat."
         },
         property2: {
           singular: "is a fisherman",
-          plural: "are fishermen"
+            plural: "are fishermen",
+	    supportFirst: "",
+	    supportSecond: ""
         }
       }
     ],
     nme_property: {
       singular: "sings songs to the stups to help them relax",
-      plural: "sing songs to the stups to help them relax"
+	plural: "sing songs to the stups to help them relax",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeDefs",
@@ -459,17 +493,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "has long wings",
-          plural: "have long wings"
+            plural: "have long wings",
+	    supportFirst: "",
+	    supportSecond: ""
         },
         property2: {
           singular: "has short wings",
-          plural: "have short wings"
+            plural: "have short wings",
+	    supportFirst: "",
+	    supportSecond: ""
         }
       }
     ],
     nme_property: {
       singular: "has sharp claws",
-      plural: "have sharp claws"
+	plural: "have sharp claws",
+	support: ""
     },
     type: "critical",
     continuationType: "real",
@@ -496,17 +535,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "wears wutsats around its head",
-          plural: "wear wutsats around their heads"
+            plural: "wear wutsats around their heads",
+	    supportFirst: "Wutsats are a kind of brightly-colored headband made from reeds.",
+	    supportSecond: "Wutsats are a kind of brightly-colored headband made from reeds."
         },
         property2: {
           singular: "wears krevnors around its head",
-          plural: "wear krevnors around their heads"
+            plural: "wear krevnors around their heads",
+	    supportFirst: "Krevnors are multicolored scarves made from rough cloth.",
+	    supportSecond: "Krevnors are multicolored scarves made from rough cloth."
         }
       }
     ],
     nme_property: {
       singular: "carries a stick",
-      plural: "carry sticks"
+	plural: "carry sticks",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeDefs",
@@ -533,17 +577,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "chews on xorfun",
-          plural: "chew on xorfun"
+            plural: "chew on xorfun",
+	    supportFirst: "Xorfun is rubbery substance made from the bark of a special tree.",
+	    supportSecond: "Xorfun is rubbery substance made from the bark of a special tree."
         },
         property2: {
           singular: "chews on tunkel",
-          plural: "chew on tunkel"
+            plural: "chew on tunkel",
+	    supportFirst: "Tunkel is a rubbery substance made from the roots of a particular bush.",
+	    supportSecond: "Tunkel is a rubbery substance made from the roots of a particular bush."
         }
       }
     ],
     nme_property: {
       singular: "jumps up and down in circles",
-      plural: "jump up and down in circles"
+	plural: "jump up and down in circles",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeDefs",
@@ -570,17 +619,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "carries its young in guklags",
-          plural: "carry their young in guklags"
+            plural: "carry their young in guklags",
+	    supportFirst: "Guklags are slings made out of strong seaweed, which are worn across the back.",
+	    supportSecond: "Guklags are also made out of seaweed, and are worn across the back as slings."
         },
         property2: {
           singular: "carries its young in trullets",
-          plural: "carry their young in trullets"
+            plural: "carry their young in trullets",
+	    supportFirst: "Trullets are baskets made from woven seaweed, which are worn across chest.",
+	    supportSecond: "Trullets are also made out of seaweed. They are baskets that can be worn across the chest."
         }
       }
     ],
     nme_property: {
       singular: "is very protective",
-      plural: "are very protective"
+	plural: "are very protective",
+	support: ""
     },
     type: "critical",
     continuationType: "fakeDefs",
@@ -607,17 +661,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "belongs to the Tinno guild",
-          plural: "belong to the Tinno guild"
+            plural: "belong to the Tinno guild",
+	    supportFirst: "One of the guilds in Rondoo is the Tinno guild.",
+	    supportSecond: "Another guild in Rondoo is called the Tinno guild."
         },
         property2: {
           singular: "belongs to the Farza guild",
-          plural: "belong to the Farza guild"
+            plural: "belong to the Farza guild",
+	    supportFirst: "One of the guilds in Rondoo is the Farza guild.",
+	    supportSecond: "Another guild in Rondoo is called the Farza guild."
         }
       }
     ],
     nme_property: {
       singular: "sells their baskets in the Warfi marketplace",
-      plural: "sell their baskets in the Warfi marketplace"
+	plural: "sell their baskets in the Warfi marketplace",
+	support: "There is a marketplace on the northern side of Rondoo called the Warfi marketplace."
     },
     type: "critical",
     continuationType: "fakeNames",
@@ -681,17 +740,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "has striped fur",
-          plural: "have striped fur"
+            plural: "have striped fur",
+	    supportFirst: "",
+	    supportSecond: ""
 	},
 	property2: {
           singular: "has spotted fur",
-          plural: "have spotted fur"
+            plural: "have spotted fur",
+	    supportFirst: "",
+	    supportSecond: ""
         }
       }
     ],
     nme_property: {
       singular: "has a long tail",
-      plural: "have long tails"
+	plural: "have long tails",
+	support: ""
     },
     type: "critical",
     continuationType: "real",
@@ -755,17 +819,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "hibernates in fallen logs",
-          plural: "hibernate in fallen logs"
+            plural: "hibernate in fallen logs",
+	    supportFirst: "",
+	    supportSecond: ""
         },
         property2: {
           singular: "hibernates in the abandoned burrows of other animals",
-          plural: "hibernate in the abandoned burrows of other animals"
+            plural: "hibernate in the abandoned burrows of other animals",
+	    supportFirst: "",
+	    supportSecond: ""
         }
       }
     ],
     nme_property: {
       singular: "gives birth twice a year",
-      plural: "give birth twice a year"
+	plural: "give birth twice a year",
+	support: ""
     },
     type: "critical",
     continuationType: "real",
@@ -791,17 +860,22 @@ var stims_chapters = [
       {
         property1: {
           singular: "produces fruit with bumpy skin",
-          plural: "produce fruit with bumpy skin"
+            plural: "produce fruit with bumpy skin",
+	    supportFirst: "",
+	    supportSecond: ""
         },
         property2: {
           singular: "produces fruit with smooth skin",
-          plural: "produce fruit with smooth skin"
+            plural: "produce fruit with smooth skin",
+	    supportFirst: "",
+	    supportSecond: ""
         }
       }
     ],
     nme_property: {
       singular: "produces fruit with a sour taste",
-      plural: "produce fruit with a sour taste"
+	plural: "produce fruit with a sour taste",
+	support: ""
     },
     type: "critical",
     continuationType: "real",

@@ -26,24 +26,50 @@ function make_slides(f) {
 
 
   slides.practice = slide({
-    name : "practice",
-    start: function() {
-      $(".err").hide();
+      name : "practice",
+      present: [
+	  {
+	      questions: [
+		  {
+		      index: 0,
+		      text: "What percentage of <strong>birds</strong> do you think <strong>are male</strong>?\n",
+		      correct: function(slider) {return slider > 0.3 && slider < 0.7}
+		  },
+		  {
+		      index: 1,
+		      text: "What percentage of <strong>lions</strong> do you think <strong>lay eggs</strong>?\n",
+		      correct: function(slider) {return slider < 0.1}
+		  }
+	      ],
+	      instructions: "The first question will ask you to estimate (using a slider bar) the % of a category with a property. The answer to some questions could be 0%, so pay attention to the chapter. Try answering the questions below."
+	  },
+	  {
+	      questions: [
+		  {
+		      index: 2,
+		      text: "Suppose there is <strong>a dog that is a pet</strong>. What are the chances that it <strong>has a collar</strong>?\n",
+		      correct: function(slider) {return slider > 0.8}
+		  },
+		  {
+		      index: 3,
+		      text: "Suppose there is <strong>an elephant that lives in Africa</strong>. What are the chances that it <strong>lives in Asia</strong>?\n",
+		      correct: function(slider) {return slider < 0.1}
+		  }
+	      ],
+	      instructions: "The next two questions will ask you to estimate (using a slider bar) the chances that a given individual has a certain property. The answer to some questions could be 0%, so pay attention to the chapter. Try answering the questions below."
+	  }
+      ],
+    present_handle: function(stim) {
+	$(".err").hide();
+	this.stim = stim;
+	$("#practice_instructions").html(this.stim.instructions);
 
       this.init_sliders(1);
       this.init_sliders(2);
-      this.init_sliders(3);
-      this.init_sliders(4);
-      practice_questions = [
-        "What percentage of <strong>dogs</strong> do you think <strong>bark</strong>?\n",
-        "What percentage of <strong>birds</strong> do you think <strong>are male</strong>?\n",
-        "What percentage of <strong>cats</strong> do you think <strong>get cancer</strong>?\n",
-        "What percentage of <strong>lions</strong> do you think <strong>lay eggs</strong>?\n"
-      ]
-      for (i=1;i<5; i++){
-        $("#query_p"+ i).html(practice_questions[i-1])
+      for (i=1;i<3; i++){
+        $("#query_p"+ i).html(this.stim.questions[i-1].text)
       }
-      exp.sliderPractice = [-1,-1,-1];
+      exp.sliderPractice = [-1,-1];
       $(".slider_number").html("---")
 
     },
@@ -63,41 +89,23 @@ function make_slides(f) {
 
         exp.catch_trials.push({
           condition: "practice",
-          check_index: 1,
-          property: "dogs bark",
-          tested_on: -1,
+          check_index: this.stim.questions[0].index,
+          property: this.stim.questions[0].text,
           response: exp.sliderPractice[0],
-          correct:  exp.sliderPractice[0] > 0.5
+            correct:  this.stim.questions[0].correct(exp.sliderPractice[0])
         })
 
         exp.catch_trials.push({
           condition: "practice",
-          check_index: 2,
-          property: "birds are male",
+          check_index: this.stim.questions[1].index,
+          property: this.stim.questions[1].text,
           tested_on: -1,
           response: exp.sliderPractice[1],
-          correct:  (exp.sliderPractice[1] > 0.30) &&  (exp.sliderPractice[1] < 0.70)
-        })
-
-        exp.catch_trials.push({
-          condition: "practice",
-          check_index: 2,
-          property: "cats get cancer",
-          tested_on: -1,
-          response: exp.sliderPractice[2],
-          correct:  (exp.sliderPractice[2] < 0.50)
-        })
-        exp.catch_trials.push({
-          condition: "practice",
-          check_index: 2,
-          property: "lions lay eggs",
-          tested_on: -1,
-          response: exp.sliderPractice[3],
-          correct:  (exp.sliderPractice[3] < 0.1)
+            correct:  this.stim.questions[1].correct(exp.sliderPractice[1])
         })
 
 
-        exp.go(); //use exp.go() if and only if there is no "present" data.
+          _stream.apply(this);
       }
     }
   });
@@ -167,7 +175,7 @@ function make_slides(f) {
       $("#question_conditional").hide();
       $("#text_material").hide()
 
-      $("#query0").html("What percentage of <b>"+this.stim.kind.plural+"</b> do you think <b>"+(this.stim.ask_first ? this.stim.property.property1.plural : this.stim.property.property2.plural)+"</b>?\n");
+	$("#query0").html((this.stim.ask_first ? this.stim.property.property1.supportFirst : this.stim.property.property2.supportFirst)+" What percentage of <b>"+this.stim.kind.plural+"</b> do you think <b>"+(this.stim.ask_first ? this.stim.property.property1.plural : this.stim.property.property2.plural)+"</b>?\n");
 
       $(".storyText").html('');
       $(".query").show()
@@ -183,16 +191,19 @@ function make_slides(f) {
 	  $(".slider_instruct").show();
 	  $("#question_marginal").hide();
 	    $("#question_conditional").show();
-	    $("#text_material").hide()
+	  $("#text_material").hide()
+	  const vowels = "aeiou";
 
-	  $('#conditional_intro').html("Suppose there is a <b>"+this.stim.kind.singular+"</b> that <b>"+ (this.stim.ask_first ? this.stim.property.property1.singular : this.stim.property.property2.singular)+"</b>.");
+	  $('#conditional_intro').html("Suppose there is "+(vowels.includes(this.stim.kind.singular.charAt(0)) ? "an" : "a")+" <b>"+this.stim.kind.singular+"</b> that <b>"+ (this.stim.ask_first ? this.stim.property.property1.singular : this.stim.property.property2.singular)+"</b>.");
+	  const me_property = (this.stim.ask_first ? this.stim.property.property2.supportSecond : this.stim.property.property1.supportSecond)+" What are the chances that this <b>"+this.stim.kind.singular+" "+(this.stim.ask_first ? this.stim.property.property2.singular : this.stim.property.property1.singular) + "</b>?\n";
+	  const nme_property = this.stim.nme_property.support+" What are the chances that this <b>"+this.stim.kind.singular+" "+this.stim.nme_property.singular+"</b>?\n";
 	    if (this.stim.question_order == "forward") {
-		$("#query1").html("What are the chances that the <b>"+this.stim.kind.singular+" "+(this.stim.ask_first ? this.stim.property.property2.singular : this.stim.property.property1.singular) + "</b>?\n");
-		$("#query2").html("What are the chances that the <b>"+this.stim.kind.singular+" "+this.stim.nme_property.singular+"</b>?\n");
+		$("#query1").html(me_property);
+		$("#query2").html(nme_property);
 	    }
 	    else if (this.stim.question_order == "reverse") {
-		$("#query1").html("What are the chances that the <b>"+this.stim.kind.singular+" "+this.stim.nme_property.singular+"</b>?\n");
-		$("#query2").html("What are the chances that the <b>"+this.stim.kind.singular+" "+(this.stim.ask_first ? this.stim.property.property2.singular : this.stim.property.property1.singular) + "</b>?\n");
+		$("#query1").html(nme_property);
+		$("#query2").html(me_property);
 	    }
 
 	    this.init_sliders(1);
@@ -259,7 +270,6 @@ function make_slides(f) {
         exp.data_trials.push({
           "trial_type" : this.stim.type,
           "page_type": $(".storyText").html() == "" ? "query" : "text",
-          "condition": this.stim.condition,
           "chapter_num": this.trial_num,
           "page_num": this.page == null ? -1 : this.page,
             "page_content": $(".storyText").html(),
@@ -397,7 +407,6 @@ function make_slides(f) {
           "data_trials" : exp.data_trials,
           "catch_trials" : exp.catch_trials,
           "system" : exp.system,
-          // "condition" : exp.condition,
           "subject_information" : exp.subj_data,
           "time_in_minutes" : (Date.now() - exp.startT)/60000
       };
@@ -423,14 +432,12 @@ function init() {
 
   shuffled_chapters = _.shuffle(stims_chapters)
 
-  const numME = 5;
-  const numNME = 5;
+  const numTrials = 10
 
   exp.stims = [firstChapter]
 
-  const makeStim = function(me) {
+  const makeStim = function() {
     return {
-      predicate_type: me ? "me" : "nme",
       query: true,
       question_order: _.sample(["forward", "reverse"]),
       property: _.sample(critical.properties),
@@ -438,13 +445,9 @@ function init() {
     }
   }
 
-  for (i=0;i<numME;i++) {
+  for (i=0;i<numTrials;i++) {
     var critical = shuffled_chapters.pop()
-    exp.stims.push(_.extend(critical, makeStim(true)));
-  }
-  for (i=0;i<numNME;i++) {
-    var critical = shuffled_chapters.pop()
-    exp.stims.push(_.extend(critical, makeStim(false)));
+    exp.stims.push(_.extend(critical, makeStim()));
   }
   exp.memory_properties = _.shuffle(exp.stims.slice(1,exp.stims.length)).slice(0,5);
 
@@ -457,8 +460,9 @@ function init() {
   exp.data_trials = [];
 
   exp.structure=[
-    "i0",
-    "practice",
+      "i0",
+      "instructions",
+      "practice",
     "title_page",
     "main_chapters",
     "the_end",
