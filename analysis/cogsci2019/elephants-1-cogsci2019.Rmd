@@ -24,22 +24,64 @@ library(viridis)
 library(tidyboot)
 library(ggpirate)
 library(jsonlite)
+library(gridExtra)
+library(lme4)
 theme_set(theme_few())
-data.path <-"../../data/elephants-3i/elephants-3i"
+data.path <-"../../data/elephants-3i/"
 ```
+
+##
+```{r}
+result.files <- list.files(data.path, pattern="json")
+  newdata.subject <- data.frame()
+  newdata.trials <- data.frame()
+  newdata.attention <- data.frame()
+  for (result_file in result.files) {
+    
+    result_json = fromJSON(paste(data.path, result_file, sep ="/"))
+    worker.id = result_json$WorkerId
+    condition = result_json$answers$condition
+  
+    newdata.attention = bind_rows(
+      newdata.attention, 
+      data.frame(result_json$answers$catch_trials) %>%
+        mutate(workerid = worker.id)
+    )
+    
+    newdata.subject = bind_rows(
+      newdata.subject, 
+      data.frame(result_json$answers$subject_information) %>% 
+        mutate(workerid = worker.id,
+               language = gsub("\"", "", language),
+           enjoyment = gsub("\"", "", enjoyment),
+           age = gsub("\"", "", age),
+           gender = gsub("\"", "", gender),
+           problems = gsub("\"", "", problems),
+           comments = gsub("\"", "", comments)) 
+    )
+    
+    newdata.trials = bind_rows(
+      newdata.trials, 
+      data.frame(result_json$answers$trials) %>%
+        mutate(workerid = worker.id, condition = condition)
+    )
+  }
+```
+
 
 ## Subject Information
 
 ```{r}
-df.subj <- read_csv(
-  paste(data.path, "-subject_information.csv", sep = "")
+df.subj <- bind_rows(newdata.subject, read_csv(
+  paste(data.path, "elephants-3i-subject_information.csv", sep = "")
   ) %>%
   mutate(language = gsub("\"", "", language),
          enjoyment = gsub("\"", "", enjoyment),
          age = gsub("\"", "", age),
          gender = gsub("\"", "", gender),
          problems = gsub("\"", "", problems),
-         comments = gsub("\"", "", comments))
+         comments = gsub("\"", "", comments),
+         workerid = as.character(workerid)))
 
 df.subj %>%
   select(workerid, language, enjoyment, age, gender, problems, comments) %>%
@@ -58,11 +100,16 @@ Before the experiment, participants practice using the sliders to rate 3 categor
 - lions lay eggs (coded as correct if x < 0.10)
 
 ```{r}
-df.attn <- read_csv(
-  paste(data.path, "-catch_trials.csv", sep = "")
+df.attn <- bind_rows(newdata.attention, read_csv(
+  paste(data.path, "elephants-3i-catch_trials.csv", sep = "")
   ) %>%
   mutate(property = gsub("\"", "", property),
-         condition = gsub("\"", "", condition))
+         condition = gsub("\"", "", condition),
+         workerid = as.character(workerid),
+         correct = case_when(correct == "true" ~ 1,
+                             correct == "false" ~ 1,
+                             correct == "1" ~ 1,
+                             correct == "0" ~ 0)))
 
 # slider bar check
 
@@ -90,14 +137,14 @@ workers.fail.sliders <- df.slider_check.workers %>%
 # number of participants grouped by number of correct sliders
 df.slider_check %>% 
   group_by(workerid) %>%
-  summarize(n_correct = sum(correct)) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   group_by(n_correct) %>% count() %>%
   kable()
 
 # number of correct responses grouped by slider question
 df.slider_check %>% 
   group_by(property) %>%
-  summarize(n_correct = sum(correct)) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   kable()
 ```
 
@@ -143,7 +190,7 @@ After the story, participants are also asked to explain generally what they did 
 
 ```{r}
 df.expln <- df.attn %>%
-  filter(correct == -1) %>%
+  filter(correct == -1 | is.na(correct)) %>%
   left_join(., df.mmry %>% select(workerid, n_correct) %>%
               rename(n_memory_correct = n_correct)) %>%
   left_join(., df.slider_check.workers %>% select(workerid, n_correct) %>%
@@ -168,10 +215,10 @@ workers.to.exclude <- workers.to.exclude[workers.to.exclude != 12]
 
 ```{r}
 df.trials <- left_join(
+  bind_rows(newdata.trials,
     read_csv(
-    paste(data.path, "-trials.csv", sep = "")
-    ) %>% 
-    mutate(
+    paste(data.path, "elephants-3i-trials.csv", sep = "")
+    ) %>% mutate(
       page_type = gsub("\"", "", page_type),
       trial_type = gsub("\"", "", trial_type),
       kind = gsub("\"", "", kind),
@@ -181,11 +228,13 @@ df.trials <- left_join(
       chapter = gsub("\"", "", chapter),
       condition = gsub("\"", "", condition),
       quantifier = gsub("\"", "", quantifier),
+      workerid = as.character(workerid)
+      )) %>% 
+    mutate(
       memory_fail = workerid %in% workers.fail.memory,
       slider_fail = workerid %in% workers.fail.sliders
-      ),
-    df.mmry %>% select(workerid, n_correct)
-)
+    ),
+  df.mmry %>% select(workerid, n_correct))
 
 df.query <- df.trials %>%
   filter(page_type == "query") %>%
@@ -256,7 +305,9 @@ df.query.critical <- df.query %>%
                                        '"...live in Africa __"\nQ(bugs)',
                                        '"...and eat bugs"\nQ(bugs)')),
          key = factor(key, levels = c("response_1", "response_2"),
-                      labels = c("% Africa", "% Asia / bugs")))
+                      labels = c("% Africa", "% Asia / bugs"))) %>%
+  mutate(me = if_else(str_detect(condition, "bugs"), "nme", "me"),
+         interrupted = if_else(str_detect(condition, "and"), "uninterrupted", "interrupted"))
 
 df.query.critical %>%
   ggplot(., aes( x = val ))+
@@ -282,21 +333,23 @@ df.query.critical %>%
 
 ```{r}
 df.bs.query.critical <- df.query.critical %>%
-  group_by(condition, key) %>%
-  tidyboot_mean(column = val)
+  group_by(me, interrupted, key, condition) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
 
 df.bs.query.critical %>%
-  ggplot(., aes( x = condition, fill = key, y = mean, ymin = ci_lower, ymax = ci_upper ))+
+  ggplot(., aes( x = interrupted, fill = key, y = mean, ymin = ci_lower, ymax = ci_upper ))+
   geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   ylab("% Africa")+
   geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  facet_wrap(~me)
 ```
 
 ### Pirate Plots (collapsed across item)
 ```{r}
-ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
+ggplot(df.bs.query.critical, aes( x = interrupted, fill = key))+
   #theme_black()+
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'white')+
 
@@ -306,12 +359,13 @@ ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
            alpha = 0.5, 
            color = 'white')+
   geom_point(data = df.query.critical, position = position_jitterdodge(),
-             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             inherit.aes = F, aes(x = interrupted, y = val, color = key), 
              alpha = 0.5)+
     geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
                 position = position_dodge(0.8), width = 0.3, size = 1.2,
                 color = 'white')+  
   ylab("Implied prevalence rating")+
+  facet_wrap(~ me) +
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   scale_fill_manual(values = c("#268bd2", "#859900"))+
   scale_color_manual(values = c("#268bd2", "#859900"))+
@@ -340,7 +394,7 @@ df.query.critical %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-### Pirate Plots: Mutually Exclusive (ME) vs. Non-Mutually Exclusive (NME) (collapsed across item)
+### ME vs. NME Questions
 
 ```{r}
 df.bs.query.critical.asia <- df.bs.query.critical %>%
@@ -461,20 +515,36 @@ df.query %>%
 
 ### Pirate Plots (by item)
 
-```{r fig.width=10, fig.height=7}
-df.query.critical %>%
-  filter(condition %in% c("\"...live in Africa __\"\nQ(Asia)",
-                          "\"...live in Africa and Asia\"\nQ(Asia)"))  %>%
+```{r fig.width=10, fig.height=15}
+me <- df.query.critical %>%
+  filter(me == "me")  %>%
   filter(!memory_fail, !slider_fail) %>%
   ggplot(., aes( x = key, y = val))+
-  geom_pirate(aes(color = condition, fill = condition),
+  geom_pirate(aes(color = interrupted, fill = interrupted),
               violins = F, show.legend = TRUE, bars =T)+
   facet_wrap(~predicate_1+predicate_2, nrow = 2)+
-  ylab("% Africa")+
+  ylab("%")+
   scale_fill_solarized()+
   scale_color_solarized()+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "top")
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "top") +
+  ggtitle("ME Questions")
+
+nme <- df.query.critical %>%
+  filter(me == "nme")  %>%
+  filter(!memory_fail, !slider_fail) %>%
+  ggplot(., aes( x = key, y = val))+
+  geom_pirate(aes(color = interrupted, fill = interrupted),
+              violins = F, show.legend = TRUE, bars =T)+
+  facet_wrap(~predicate_1+predicate_2, nrow = 2)+
+  ylab("%")+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "top") +
+  ggtitle("NME Questions")
+
+grid.arrange(me, nme, nrow = 2)
 ```
 
 ### Pirate Plots (by Coordination)
@@ -511,7 +581,31 @@ df.query.critical %>%
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-## First Trial
+## Order Effects
+
+## First vs. Second Half
+```{r fig.height=7}
+max.chapter <- max(df.query.critical$chapter_num)
+
+df.query.blocked <- df.query.critical %>%
+  mutate(half = case_when(
+    chapter_num <= max.chapter %/% 2 ~ "first",
+    TRUE ~ "second"))
+
+df.query.blocked %>%
+  filter(!memory_fail, !slider_fail) %>%
+  ggplot(., aes( x = key, y = val))+
+  geom_pirate(aes(color = interrupted, fill = interrupted),
+              violins = F, show.legend = TRUE, bars =T)+
+  ylab("%")+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "top") +
+  facet_grid(me~half)
+```
+
+### First Trial
 
 ```{r}
 df.query.critical %>%
