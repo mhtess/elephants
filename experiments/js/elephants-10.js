@@ -432,7 +432,7 @@ function init() {
 
   shuffled_chapters = _.shuffle(stims_chapters)
 
-  const numTrials = 10
+    const numTrials = 14;
 
   exp.stims = [firstChapter]
 
