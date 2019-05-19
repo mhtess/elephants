@@ -534,13 +534,13 @@ var stims_chapters = [
     properties: [
       {
         property1: {
-          singular: "wears wutsats around its head",
+          singular: "wears a wutsat around its head",
             plural: "wear wutsats around their heads",
 	    supportFirst: "Wutsats are a kind of brightly-colored headband made from reeds.",
 	    supportSecond: "Wutsats are a kind of brightly-colored headband made from reeds."
         },
         property2: {
-          singular: "wears krevnors around its head",
+          singular: "wear a krevnor around its head",
             plural: "wear krevnors around their heads",
 	    supportFirst: "Krevnors are multicolored scarves made from rough cloth.",
 	    supportSecond: "Krevnors are multicolored scarves made from rough cloth."
