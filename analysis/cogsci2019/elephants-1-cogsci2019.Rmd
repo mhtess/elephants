@@ -547,6 +547,22 @@ nme <- df.query.critical %>%
 grid.arrange(me, nme, nrow = 2)
 ```
 
+### Mutual Exclusivity (by item)
+```{r fig.height = 12}
+df.query.critical %>%
+  filter(me == "me", interrupted == "uninterrupted") %>%
+  spread(key, val) %>%
+  mutate(total = `% Africa` + `% Asia / bugs`) %>%
+  group_by(predicate_1) %>%
+  summarise(avg_total = mean(total)) %>%
+  ggplot(aes(x = predicate_1, y = avg_total)) +
+  geom_text(aes(label = predicate_1)) +
+  ylab("Mean Total Prevalence (%Africa + %Asia)") +
+  xlab("") +
+  theme(axis.ticks.x = element_blank(), axis.text.x = element_blank())
+```
+
+
 ### Pirate Plots (by Coordination)
 
 ```{r fig.width=14, fig.height=7}

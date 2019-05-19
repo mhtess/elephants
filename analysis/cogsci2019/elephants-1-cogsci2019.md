@@ -274,13 +274,17 @@ Items can be categorized by the continuation type and the coordination type.
 
 ![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-20-1.png)
 
-### Pirate Plots (by Coordination)
+### Mutual Exclusivity (by item)
 
 ![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-21-1.png)
 
-### Pirate Plots (by Realness)
+### Pirate Plots (by Coordination)
 
 ![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-22-1.png)
+
+### Pirate Plots (by Realness)
+
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-23-1.png)
 
 Order Effects
 -------------
@@ -288,15 +292,15 @@ Order Effects
 First vs. Second Half
 ---------------------
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-23-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-24-1.png)
 
 ### First Trial
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-24-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-25-1.png)
 
 Reaction Times
 --------------
 
 *how much time do participants spend on the question slide?*
 
-![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-25-1.png)
+![](elephants-1-cogsci2019_files/figure-markdown_github/unnamed-chunk-26-1.png)

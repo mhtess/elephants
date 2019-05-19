@@ -88,7 +88,7 @@ truth version of task: n = 54 (N=108); $1.00 (05/08/2019)
 
 11. Elephants-10: mutual exclusivity norming experiment
 same story as in elephants-3, without last sentence, ask explicitly about the following probabilities:
-- Pr(Africa and Asia)
-- Pr(~Africa and Asia)
-- Pr(Africa and ~Asia)
-- Pr(~Africa and ~Asia)
+- Pr(Africa)
+- Pr(Asia | Africa)
+- Pr(eat bugs | Africa)
+15 trials per subject, $1.00 each

@@ -26,43 +26,43 @@ function make_slides(f) {
 
 
   slides.practice = slide({
-      name : "practice",
-      present: [
-	  {
-	      questions: [
-		  {
-		      index: 0,
-		      text: "What percentage of <strong>birds</strong> do you think <strong>are male</strong>?\n",
-		      correct: function(slider) {return slider > 0.3 && slider < 0.7}
-		  },
-		  {
-		      index: 1,
-		      text: "What percentage of <strong>lions</strong> do you think <strong>lay eggs</strong>?\n",
-		      correct: function(slider) {return slider < 0.1}
-		  }
-	      ],
-	      instructions: "The first question will ask you to estimate (using a slider bar) the % of a category with a property. The answer to some questions could be 0%, so pay attention to the chapter. Try answering the questions below."
+    name : "practice",
+    present: [
+      {
+        questions: [
+ 	  {
+            index: 0,
+            text: "What percentage of <strong>birds</strong> do you think <strong>are male</strong>?\n",
+            correct: function(slider) {return slider > 0.3 && slider < 0.7}
 	  },
 	  {
-	      questions: [
-		  {
-		      index: 2,
-		      text: "Suppose there is <strong>a dog that is a pet</strong>. What are the chances that it <strong>has a collar</strong>?\n",
-		      correct: function(slider) {return slider > 0.8}
-		  },
-		  {
-		      index: 3,
-		      text: "Suppose there is <strong>an elephant that lives in Africa</strong>. What are the chances that it <strong>lives in Asia</strong>?\n",
-		      correct: function(slider) {return slider < 0.1}
-		  }
-	      ],
-	      instructions: "The next two questions will ask you to estimate (using a slider bar) the chances that a given individual has a certain property. The answer to some questions could be 0%, so pay attention to the chapter. Try answering the questions below."
+            index: 1,
+            text: "What percentage of <strong>lions</strong> do you think <strong>lay eggs</strong>?\n",
+            correct: function(slider) {return slider < 0.1}
 	  }
-      ],
+        ],
+        instructions: "The first question will ask you to estimate (using a slider bar) the % of a category with a property. The answer to some questions could be 0%, so pay attention to the chapter. Try answering the questions below."
+      },
+      {
+        questions: [
+	  {
+            index: 2,
+            text: "Suppose there is <strong>a dog that is a pet</strong>. What are the chances that it <strong>has a collar</strong>?\n",
+            correct: function(slider) {return slider > 0.8}
+	  },
+	  {
+            index: 3,
+            text: "Suppose there is <strong>an elephant that lives in Africa</strong>. What are the chances that it <strong>lives in Asia</strong>?\n",
+            correct: function(slider) {return slider < 0.1}
+          }
+        ],
+        instructions: "The next two questions will ask you to estimate (using a slider bar) the chances that a given individual has a certain property. The answer to some questions could be 0%, so pay attention to the chapter. Try answering the questions below."
+      }
+    ],
     present_handle: function(stim) {
-	$(".err").hide();
-	this.stim = stim;
-	$("#practice_instructions").html(this.stim.instructions);
+      $(".err").hide();
+      $("#practice_instructions").html(this.stim.instructions);
+      this.stim = stim;
 
       this.init_sliders(1);
       this.init_sliders(2);
@@ -74,7 +74,7 @@ function make_slides(f) {
 
     },
     init_sliders : function(i) {
-        utils.make_slider("#single_slider_p" + i, this.make_slider_callback(i));
+      utils.make_slider("#single_slider_p" + i, this.make_slider_callback(i));
     },
     make_slider_callback : function(i) {
       return function(event, ui) {
@@ -85,14 +85,14 @@ function make_slides(f) {
     button : function() {
       if (exp.sliderPractice.indexOf(-1) >= 0) {
         $(".err").show();
-      } else {
-
+      }
+      else {
         exp.catch_trials.push({
           condition: "practice",
           check_index: this.stim.questions[0].index,
           property: this.stim.questions[0].text,
           response: exp.sliderPractice[0],
-            correct:  this.stim.questions[0].correct(exp.sliderPractice[0])
+          correct:  this.stim.questions[0].correct(exp.sliderPractice[0])
         })
 
         exp.catch_trials.push({
@@ -104,8 +104,7 @@ function make_slides(f) {
             correct:  this.stim.questions[1].correct(exp.sliderPractice[1])
         })
 
-
-          _stream.apply(this);
+        _stream.apply(this);
       }
     }
   });
@@ -114,7 +113,7 @@ function make_slides(f) {
   slides.the_end = slide({
     name : "the_end",
     button : function() {
-      exp.go(); //use exp.go() if and only if there is no "present" data.
+      exp.go();
     }
   });
 
@@ -132,9 +131,8 @@ function make_slides(f) {
       this.startTime = Date.now();
       this.stim = stim
       this.chapter_length = stim.main_text.length;
-
-	this.page = 0;
-	exp.sliderPost = [-1];
+      this.page = 0;
+      exp.sliderPost = [-1];
 
       $(".chapterTitle").html("<u>Chapter "+ (this.trial_num+1) +": "+stim.title+"</u>")
       this.present_page()
@@ -169,13 +167,13 @@ function make_slides(f) {
       }
     },
 
-    present_question: function(){
+    present_question_marginal: function(){
       $(".slider_instruct").show()
       $("#question_marginal").show();
       $("#question_conditional").hide();
       $("#text_material").hide()
 
-	$("#query0").html((this.stim.ask_first ? this.stim.property.property1.supportFirst : this.stim.property.property2.supportFirst)+" What percentage of <b>"+this.stim.kind.plural+"</b> do you think <b>"+(this.stim.ask_first ? this.stim.property.property1.plural : this.stim.property.property2.plural)+"</b>?\n");
+      $("#query0").html((this.stim.ask_first ? this.stim.property.property1.supportFirst : this.stim.property.property2.supportFirst)+" What percentage of <b>"+this.stim.kind.plural+"</b> do you think <b>"+(this.stim.ask_first ? this.stim.property.property1.plural : this.stim.property.property2.plural)+"</b>?\n");
 
       $(".storyText").html('');
       $(".query").show()
@@ -187,111 +185,112 @@ function make_slides(f) {
       $("#slider_number0").html("---")
     },
 
-      present_question_conditional: function() {
-	  $(".slider_instruct").show();
-	  $("#question_marginal").hide();
-	    $("#question_conditional").show();
-	  $("#text_material").hide()
-	  const vowels = "aeiou";
+    present_question_conditional: function() {
+      $(".slider_instruct").show();
+      $("#question_marginal").hide();
+      $("#question_conditional").show();
+      $("#text_material").hide()
 
-	  $('#conditional_intro').html("Suppose there is "+(vowels.includes(this.stim.kind.singular.charAt(0)) ? "an" : "a")+" <b>"+this.stim.kind.singular+"</b> that <b>"+ (this.stim.ask_first ? this.stim.property.property1.singular : this.stim.property.property2.singular)+"</b>.");
-	  const me_property = (this.stim.ask_first ? this.stim.property.property2.supportSecond : this.stim.property.property1.supportSecond)+" What are the chances that this <b>"+this.stim.kind.singular+" "+(this.stim.ask_first ? this.stim.property.property2.singular : this.stim.property.property1.singular) + "</b>?\n";
-	  const nme_property = this.stim.nme_property.support+" What are the chances that this <b>"+this.stim.kind.singular+" "+this.stim.nme_property.singular+"</b>?\n";
-	    if (this.stim.question_order == "forward") {
-		$("#query1").html(me_property);
-		$("#query2").html(nme_property);
-	    }
-	    else if (this.stim.question_order == "reverse") {
-		$("#query1").html(nme_property);
-		$("#query2").html(me_property);
-	    }
+      const vowels = "aeiou"; // to pick a vs. an
 
-	    this.init_sliders(1);
-	    this.init_sliders(2);
-	  exp.sliderPost = [-1, -1, -1];
-	    $("#slider_number1").html("---");
-	    $("#slider_number2").html("---")
-      },
+      $('#conditional_intro').html("Suppose there is "+(vowels.includes(this.stim.kind.singular.charAt(0)) ? "an" : "a")+" <b>"+this.stim.kind.singular+"</b> that <b>"+ (this.stim.ask_first ? this.stim.property.property1.singular : this.stim.property.property2.singular)+"</b>.");
+      const me_property = (this.stim.ask_first ? this.stim.property.property2.supportSecond : this.stim.property.property1.supportSecond)+" What are the chances that this <b>"+this.stim.kind.singular+" "+(this.stim.ask_first ? this.stim.property.property2.singular : this.stim.property.property1.singular) + "</b>?\n";
+      const nme_property = this.stim.nme_property.support+" What are the chances that this <b>"+this.stim.kind.singular+" "+this.stim.nme_property.singular+"</b>?\n";
+      if (this.stim.question_order == "forward") {
+	$("#query1").html(me_property);
+	$("#query2").html(nme_property);
+      }
+      else if (this.stim.question_order == "reverse") {
+	$("#query1").html(nme_property);
+	$("#query2").html(me_property);
+      }
 
-      init_sliders : function(i) {
-          utils.make_slider("#single_slider" + i, this.make_slider_callback(i));
-      },
-      make_slider_callback : function(i) {
-        return function(event, ui) {
-          exp.sliderPost[i] = ui.value;
-          $("#slider_number" + i ).html(Math.round(exp.sliderPost[i]*100) + "%")
-        };
-      },
+      this.init_sliders(1);
+      this.init_sliders(2);
+      exp.sliderPost = [-1, -1, -1];
+      $("#slider_number1").html("---");
+      $("#slider_number2").html("---")
+    },
 
-      button : function() {
+    init_sliders : function(i) {
+      utils.make_slider("#single_slider" + i, this.make_slider_callback(i));
+    },
+    make_slider_callback : function(i) {
+      return function(event, ui) {
+        exp.sliderPost[i] = ui.value;
+        $("#slider_number" + i ).html(Math.round(exp.sliderPost[i]*100) + "%")
+      };
+    },
 
-	  if (this.stim.title == "An introduction to Dax") {
-	      if (this.page == this.last_page) {
-		  this.trial_num ++;
-		  _stream.apply(this);
-	      }
-	      else {
-		  this.page ++;
-		  this.present_page();
-	      }
-		}
-	  else {
+    button : function() {
+
+      if (this.stim.title == "An introduction to Dax") { // first chapter: no questions
+	if (this.page == this.last_page) {
+	  this.trial_num ++;
+	  _stream.apply(this);
+        }
+        else {
+	  this.page ++;
+	  this.present_page();
+        }
+      }
+      else {
         if (exp.sliderPost.indexOf(-1) >= 1 && this.page == this.last_page + 2) {
           $(".err").show();
-        } else if (exp.sliderPost.indexOf(-1) > -1 && this.page == this.last_page+1) {
-	    $(".err").show();
+        }
+	else if (exp.sliderPost.indexOf(-1) > -1 && this.page == this.last_page+1) {
+          $(".err").show();
 	}
-	  else {
-
-	    this.log_responses();
-	    this.startTime = Date.now();
-	    if (this.page < this.last_page) { // middle of chapter
-		 this.page ++;
-		this.present_page();
-	    }
-	    else if (this.page == this.last_page) { // last page, so present question
-		 this.page ++;
-		    this.present_question();
-	    }
-	      else if (this.page == this.last_page + 1) {
-		  this.page ++;
-		  this.present_question_conditional();
-	      }
-	    else { // done with this stim
-		this.trial_num ++;
-	      _stream.apply(this);
-	    }
-          }
+	else {
+	  this.log_responses();
+	  this.startTime = Date.now();
+	  if (this.page < this.last_page) { // middle of chapter
+	    this.page ++;
+	    this.present_page();
 	  }
-      },
-     log_responses : function() {
-	 this.rt = Date.now() - this.startTime;
+	  else if (this.page == this.last_page) { // last page, so present marginal question
+	    this.page ++;
+	    this.present_question_marginal();
+	  }
+	  else if (this.page == this.last_page + 1) { // after marginal question
+	    this.page ++;
+	    this.present_question_conditional();
+	  }
+	  else { // done with this stim
+	    this.trial_num ++;
+	    _stream.apply(this);
+	  }
+        }
+      }
+    },
+    log_responses : function() {
+      this.rt = Date.now() - this.startTime;
 
-        exp.data_trials.push({
-          "trial_type" : this.stim.type,
-          "page_type": $(".storyText").html() == "" ? "query" : "text",
-          "chapter_num": this.trial_num,
-          "page_num": this.page == null ? -1 : this.page,
-            "page_content": $(".storyText").html(),
-          "rt":this.rt,
-          "chapter": this.stim.title,
-          "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
-        });
-	 if (this.stim.title != "An introduction to Dax") {
-	     if (this.page == this.last_page + 1) {
-	 Object.assign(exp.trials[this.trial_num-1], {
-	     "marginal_probability": exp.sliderPost[0]
-	 });
-		      }
-	     else if (this.page == this.last_page + 2) {
-		 Object.assign(exp.trials[this.trial_num-1], {
-		     "conditional_probability_me": this.stim.question_order == "forward" ? exp.sliderPost[1] : exp.sliderPost[2],
-		     "conditional_probability_nme": this.stim.question_order == "forward" ? exp.sliderPost[2] : exp.sliderPost[1]
-		 })
-	     }
-	 }
+      exp.data_trials.push({
+        "trial_type" : this.stim.type,
+        "page_type": $(".storyText").html() == "" ? "query" : "text",
+        "chapter_num": this.trial_num,
+        "page_num": this.page == null ? -1 : this.page,
+        "page_content": $(".storyText").html(),
+        "rt":this.rt,
+        "chapter": this.stim.title,
+        "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
+      });
+      if (this.stim.title != "An introduction to Dax") {
+        if (this.page == this.last_page + 1) {
+          Object.assign(exp.trials[this.trial_num-1], {
+	    "marginal_probability": exp.sliderPost[0]
+	  });
+        }
+        else if (this.page == this.last_page + 2) {
+          Object.assign(exp.trials[this.trial_num-1], {
+	    "conditional_probability_me": this.stim.question_order == "forward" ? exp.sliderPost[1] : exp.sliderPost[2],
+	    "conditional_probability_nme": this.stim.question_order == "forward" ? exp.sliderPost[2] : exp.sliderPost[1]
+          })
+	}
+      }
 
-        exp.sliderPost >= 0 ? exp.sliderPost = -99 : null
+      exp.sliderPost >= 0 ? exp.sliderPost = -99 : null
       }
     });
 
@@ -460,9 +459,9 @@ function init() {
   exp.data_trials = [];
 
   exp.structure=[
-      "i0",
-      "instructions",
-      "practice",
+    "i0",
+    "instructions",
+    "practice",
     "title_page",
     "main_chapters",
     "the_end",
