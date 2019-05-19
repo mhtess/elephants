@@ -28,6 +28,7 @@
 - added trials where we ask about non-mutually exclusive properties
 - randomize order of trials with constraint that no 2 criticals back-to-back
 - [experiment on web](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
+- more data: n = 27 (05/18/2019) and n = 27 (05/19/2019)
 
 5. Elephants-4
 - add ability to interrupt chapter at other locations
@@ -49,6 +50,8 @@
 - ($1.25)
 - question about %Africa/%other continent instead of %Africa/%Asia
 - adjust spacing so that all pages have 3 lines or less
+
+## Follow-up experiments
 
 9. Elephants-8
 - n = 18 per condition, N = 54 ($1.25) (02/21/2019)
@@ -91,4 +94,4 @@ same story as in elephants-3, without last sentence, ask explicitly about the fo
 - Pr(Africa)
 - Pr(Asia | Africa)
 - Pr(eat bugs | Africa)
-15 trials per subject, $1.00 each
+15 trials per subject, n = 36, $1.00 each (05/19/2019)
