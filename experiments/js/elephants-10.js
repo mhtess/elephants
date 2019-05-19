@@ -60,9 +60,9 @@ function make_slides(f) {
       }
     ],
     present_handle: function(stim) {
-      $(".err").hide();
+	$(".err").hide();
+	this.stim = stim;
       $("#practice_instructions").html(this.stim.instructions);
-      this.stim = stim;
 
       this.init_sliders(1);
       this.init_sliders(2);
