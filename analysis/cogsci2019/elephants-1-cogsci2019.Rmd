@@ -292,7 +292,7 @@ df.query.critical <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
   select(workerid, condition, chapter_num, rt, 
          trial_type, predicate_1, predicate_2, 
-         key, val, page_type, memory_fail, slider_fail) %>%
+         key, val, page_type, memory_fail, slider_fail, chapter) %>%
   filter(trial_type == "critical") %>%
   rowwise() %>%
   mutate(condition = factor(condition, 
@@ -548,20 +548,155 @@ grid.arrange(me, nme, nrow = 2)
 ```
 
 ### Mutual Exclusivity (by item)
+
+```{r}
+# loading data from elephants-10
+data.path.me <- "../../data/elephants-10/"
+result.files.me <- list.files(data.path.me, pattern="json")
+
+df.subject.me <- data.frame()
+df.trials.me <- data.frame()
+df.attention.me <- data.frame()
+for (result_file in result.files.me) {
+    
+  result_json = fromJSON(paste(data.path.me, result_file, sep ="/"))
+  worker.id = result_json$WorkerId
+  condition = result_json$answers$condition
+  
+  df.attention.me = bind_rows(
+    df.attention.me, 
+    data.frame(result_json$answers$catch_trials) %>%
+      mutate(workerid = worker.id)
+  )
+    
+  df.subject.me = bind_rows(
+    df.subject.me, 
+    data.frame(result_json$answers$subject_information) %>% 
+      mutate(
+        workerid = worker.id,
+        language = gsub("\"", "", language),
+        enjoyment = gsub("\"", "", enjoyment),
+        age = gsub("\"", "", age),
+        gender = gsub("\"", "", gender),
+        problems = gsub("\"", "", problems),
+        comments = gsub("\"", "", comments)
+      ) 
+  )
+    
+  df.trials.me = bind_rows(
+    df.trials.me, 
+    data.frame(result_json$answers$trials) %>%
+      select(-main_text, -continuation, -kind, -properties, -nme_property, -property) %>%
+      mutate(workerid = worker.id,
+             property1 = result_json$answers$trials$property$property1$singular,
+             property2 = result_json$answers$trials$property$property2$singular
+             )
+  )
+}
+
+df.attention.me <- df.attention.me %>%
+  mutate(correct = as.logical(correct)) %>%
+  mutate(correct = if_else(
+         str_detect(property, "dog"),
+         response > 0.5,
+         correct))
+
+df.sliders.me <- df.attention.me %>%
+  filter(condition == "practice") %>% 
+  group_by(workerid) %>%
+  summarise(
+    n_correct = sum(correct)
+  )
+
+workers.fail.sliders.me <- df.sliders.me %>%
+  filter(n_correct < 4) %>%
+  pull(workerid)
+
+df.memory.me <- df.attention.me %>%
+  filter(condition == "memory_check") %>%
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`, 
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits) 
+
+workers.fail.memory.me <- df.memory.me %>%
+  filter(n_correct < 7) %>%
+  pull(workerid)
+
+workers.to.exclude.me <- unique(c(workers.fail.memory.me, workers.fail.sliders.me))
+df.query.me <- df.trials.me %>%
+  filter(!(workerid %in% workers.to.exclude)) %>%
+  select(-type, -memory, -query)
+```
+
+## Mutual Exclusivity Comparison (Expt1 and Elephants-10)
+
+### ME
+
 ```{r fig.height = 12}
-df.query.critical %>%
+df.query.critical.mesumm <- df.query.critical %>%
   filter(me == "me", interrupted == "uninterrupted") %>%
   spread(key, val) %>%
   mutate(total = `% Africa` + `% Asia / bugs`) %>%
-  group_by(predicate_1) %>%
-  summarise(avg_total = mean(total)) %>%
-  ggplot(aes(x = predicate_1, y = avg_total)) +
+  group_by(predicate_1, chapter) %>%
+  summarise(avg_total = mean(total))
+
+ggplot(df.query.critical.mesumm, aes(x = predicate_1, y = avg_total)) +
   geom_text(aes(label = predicate_1)) +
   ylab("Mean Total Prevalence (%Africa + %Asia)") +
   xlab("") +
   theme(axis.ticks.x = element_blank(), axis.text.x = element_blank())
 ```
 
+```{r}
+df.probs.me <- df.query.me %>%
+  group_by(property1, title) %>%
+  summarise(mean_conditional = mean(conditional_probability_me),
+         mean_marginal = mean(marginal_probability),
+         joint_estimate = mean_conditional*mean_marginal)
+
+df.query.critical.mesumm %>%
+  left_join(df.probs.me, by = c("chapter" = "title")) %>%
+  ggplot(aes(x = avg_total, y = joint_estimate)) +
+  geom_text(aes(label = property1)) +
+  xlab("Mean Total Prevalence (%Africa + %Asia)") +
+  ylab("Joint Probability (% Africa and Asia)")
+```
+
+### NME
+
+```{r fig.height=12}
+df.query.critical.nmesumm <- df.query.critical %>%
+  filter(me == "nme", interrupted == "uninterrupted") %>%
+  spread(key, val) %>%
+  mutate(total = `% Africa` + `% Asia / bugs`) %>%
+  group_by(predicate_1, chapter) %>%
+  summarise(avg_total = mean(total))
+
+ggplot(df.query.critical.nmesumm, aes(x = predicate_1, y = avg_total)) +
+  geom_text(aes(label = predicate_1)) +
+  ylab("Mean Total Prevalence (%Africa + %eat bugs)") +
+  xlab("") +
+  theme(axis.ticks.x = element_blank(), axis.text.x = element_blank())
+```
+
+```{r}
+df.probs.nme <- df.query.me %>%
+  group_by(property1, title) %>%
+  summarise(mean_conditional = mean(conditional_probability_nme),
+         mean_marginal = mean(marginal_probability),
+         joint_estimate = mean_conditional*mean_marginal)
+
+df.query.critical.mesumm %>%
+  left_join(df.probs.nme, by = c("chapter" = "title")) %>%
+  ggplot(aes(x = avg_total, y = joint_estimate)) +
+  geom_text(aes(label = property1)) +
+  xlab("Mean Total Prevalence (%Africa + %eat bugs)") +
+  ylab("Joint Probability (% Africa and eat bugs)")
+```
 
 ### Pirate Plots (by Coordination)
 

@@ -156,7 +156,8 @@ df.explanation %>%
 workers.to.exclude <- unique(c(workers.fail.memory, workers.fail.sliders))
 df.query <- df.trials %>%
   filter(!(workerid %in% workers.to.exclude)) %>%
-  select(-title, -type, -memory, -query)
+  select(-title, -type, -memory, -query) %>%
+  filter(conditional_probability_me >= 0, conditional_probability_nme >= 0, marginal_probability >= 0)
 ```
 
 We exclude `r length(workers.to.exclude)` workers, leaving `r nrow(df.query)` trials for analysis.
@@ -167,12 +168,13 @@ We exclude `r length(workers.to.exclude)` workers, leaving `r nrow(df.query)` tr
 df.probs <- df.query %>%
   group_by(property1) %>%
   summarise(mean_conditional = mean(conditional_probability_me),
-         mean_marginal = mean(marginal_probability))
+         mean_marginal = mean(marginal_probability),
+         joint_estimate = mean_conditional*mean_marginal)
 
 ggplot(df.probs, aes(x = mean_marginal, y = mean_conditional)) +
   geom_text(aes(label = property1)) +
   xlab("Marginal Probability (% Africa)") +
-  ylab("Conditional Probability (% Asia | % Africa)")
+  ylab("Conditional Probability (% Asia | Africa)")
 ```
 
 ### Marginal Probabilities
@@ -198,3 +200,29 @@ ggplot(df.query, aes(x = conditional_probability_nme)) +
   geom_histogram() +
   facet_wrap(~property1)
 ```
+
+### Joint Probabilities
+
+```{r}
+df.query %>%
+  mutate(joint = conditional_probability_me*marginal_probability) %>%
+  ggplot(aes(x = joint)) +
+  geom_histogram() +
+  facet_wrap(~property1)
+```
+
+#### Property Symmetry
+
+We alternate between asking about "Africa" and "Asia" for the marginal probability. Are these symmetric?
+
+```{r}
+df.query %>%
+  mutate(ask_first = if_else(ask_first, "first", "second")) %>%
+  group_by(property1, property2, ask_first) %>%
+  summarise(mean_marginal = mean(marginal_probability)) %>%
+  spread(ask_first, mean_marginal) %>%
+  ggplot(aes(x = first, y = second)) +
+    geom_text(aes(label = property1)) +
+    geom_abline(yintercept = 0, slope = 1)
+```
+
