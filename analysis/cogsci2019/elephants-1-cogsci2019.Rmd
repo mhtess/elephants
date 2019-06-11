@@ -26,6 +26,7 @@ library(ggpirate)
 library(jsonlite)
 theme_set(theme_few())
 data.path <-"../../data/elephants-3i/elephants-3i"
+fig.path <- "../../writing/cogsci2019/figs/"
 ```
 
 ## Subject Information
@@ -246,7 +247,21 @@ df.query.critical <- df.query %>%
          key, val, page_type, memory_fail, slider_fail) %>%
   filter(trial_type == "critical") %>%
   rowwise() %>%
-  mutate(condition = factor(condition, 
+  mutate( me_status = ifelse(condition %in% c("interrupted", "uninterrupted"),
+                             "Mutually Exclusive", "Non Mutually Exclusive"),
+          interrupted = ifelse(condition %in% c("interrupted", "nme_interrupted"),
+                             '\"...live in Africa\"', '\"...Africa and {Asia / eat bugs}\"'),
+          interrupted = factor(interrupted, levels = c( '\"...live in Africa\"', '\"...Africa and {Asia / eat bugs}\"')),
+          condition2 = factor(condition, 
+                  levels = c("interrupted", 
+                             "uninterrupted",
+                             "nme_interrupted",
+                             "nme_uninterrupted"),
+                  labels = c('"...Africa"',
+                             '"...Africa and Asia"',
+                             '"...Africa"',
+                             '"...Africa and eat bugs"')),
+          condition = factor(condition, 
                             levels = c("interrupted", 
                                        "uninterrupted",
                                        "nme_interrupted",
@@ -282,7 +297,7 @@ df.query.critical %>%
 
 ```{r}
 df.bs.query.critical <- df.query.critical %>%
-  group_by(condition, key) %>%
+  group_by(condition, condition2, interrupted, me_status, key) %>%
   tidyboot_mean(column = val)
 
 df.bs.query.critical %>%
@@ -296,35 +311,37 @@ df.bs.query.critical %>%
 
 ### Pirate Plots (collapsed across item)
 ```{r}
-ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
+
+ggplot(df.bs.query.critical, aes( x = condition2, fill = key))+
   #theme_black()+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'white')+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'black')+
 
   geom_col(position = position_dodge(0.8),
            aes(y = mean),
            width = 0.8, 
-           alpha = 0.5, 
-           color = 'white')+
+           alpha = 0.3, 
+           color = 'black')+
   geom_point(data = df.query.critical, position = position_jitterdodge(),
-             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             inherit.aes = F, aes(x = condition2, y = val, color = key), 
              alpha = 0.5)+
     geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
                 position = position_dodge(0.8), width = 0.3, size = 1.2,
-                color = 'white')+  
+                color = 'black')+  
   ylab("Implied prevalence rating")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   scale_fill_manual(values = c("#268bd2", "#859900"))+
   scale_color_manual(values = c("#268bd2", "#859900"))+
   xlab("")+
+  facet_wrap(~me_status, scales = 'free_x')+
   guides(fill = guide_legend(title = "Question"),
          color = guide_legend(title = "Question"))+
-  theme(#axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+  theme(axis.text.x = element_text(angle = 20, vjust = 0.55, hjust = 0.5),
         legend.position = "top")
 
 #ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt1.pdf", 
 #       width = 6, height = 4)
 
-#ggsave(paste(fig.path, "expt2_summary.pdf", sep = ""), height = 4.5, width = 5.5)
+ggsave(paste(fig.path, "expt2a_summary.pdf", sep = ""), height = 4.5, width = 5.5)
 ```
 
 ```{r}
