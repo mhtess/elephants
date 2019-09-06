@@ -234,8 +234,6 @@ function make_slides(f) {
         // $(".slider_number").hide()
         // $(".slider_table").hide()
 
-        this.question_order = _.sample(["same", "reverse"])
-
         var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
             "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";
 	  this.query_pred1 = this.stim.property1;
@@ -250,8 +248,7 @@ function make_slides(f) {
         this.query_pred2 = this.stim.property2;
 	  }
 
-        $("#query0").html(this.question_order == "same" ? query_prompt0 : query_prompt1);
-        $("#query1").html(this.question_order == "same" ? query_prompt1 : query_prompt0);
+        $("#query0").html(query_prompt0);
 
         $(".storyText").html('');
         $(".query").show()
@@ -259,10 +256,8 @@ function make_slides(f) {
         $(".slider_table").show()
 
         this.init_sliders(0);
-        this.init_sliders(1);
-        exp.sliderPost = [-1, -1];
+        exp.sliderPost = [-1];
         $("#slider_number0").html("---")
-        $("#slider_number1").html("---")
 
         this.stim.query = false;
       },
@@ -333,13 +328,10 @@ function make_slides(f) {
           "page_num": this.page == null ? -1 : this.page,
             "page_content": $(".storyText").html(),
 	    "query_predicate_1": this.query_pred1,
-	    "query_predicate_2": this.query_pred2,
-          "response_1" : this.question_order == "same" ? exp.sliderPost[0] : exp.sliderPost[1],
-          "response_2" : this.question_order == "same" ? exp.sliderPost[1] : exp.sliderPost[0],
+          "response_1" : exp.sliderPost[0],
           "rt":this.rt,
           "kind": this.stim.kind,
           "predicate_1": this.stim.property1,
-          "predicate_2": this.stim.property2,
           "question_order": this.question_order == null ? "NA" : this.question_order,
           "chapter": this.stim.title,
           "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic"
@@ -347,7 +339,7 @@ function make_slides(f) {
           // "explanation": $("#followUpResponse").val()
         });
 
-        exp.sliderPost >= 0 ? exp.sliderPost = -99 : null
+        exp.sliderPost[0] >= 0 ? exp.sliderPost[0] = -99 : null
 
         // CHECK THAT THIS IS LAST TRIAL
         // if (this.trial_num == exp.stims.length){
