@@ -33,14 +33,12 @@ function make_slides(f) {
       this.init_sliders(1);
       this.init_sliders(2);
       this.init_sliders(3);
-      this.init_sliders(4);
       practice_questions = [
         "What percentage of <strong>dogs</strong> do you think <strong>bark</strong>?\n",
-        "What percentage of <strong>birds</strong> do you think <strong>are male</strong>?\n",
         "What percentage of <strong>cats</strong> do you think <strong>get cancer</strong>?\n",
         "What percentage of <strong>lions</strong> do you think <strong>lay eggs</strong>?\n"
       ]
-      for (i=1;i<5; i++){
+      for (i=1;i<4; i++){
         $("#query_p"+ i).html(practice_questions[i-1])
       }
       exp.sliderPractice = [-1,-1,-1];
@@ -73,27 +71,18 @@ function make_slides(f) {
         exp.catch_trials.push({
           condition: "practice",
           check_index: 2,
-          property: "birds are male",
-          tested_on: -1,
-          response: exp.sliderPractice[1],
-          correct:  (exp.sliderPractice[1] > 0.30) &&  (exp.sliderPractice[1] < 0.70)
-        })
-
-        exp.catch_trials.push({
-          condition: "practice",
-          check_index: 2,
           property: "cats get cancer",
           tested_on: -1,
-          response: exp.sliderPractice[2],
-          correct:  (exp.sliderPractice[2] < 0.50)
+          response: exp.sliderPractice[1],
+          correct:  (exp.sliderPractice[1] < 0.50)
         })
         exp.catch_trials.push({
           condition: "practice",
           check_index: 2,
           property: "lions lay eggs",
           tested_on: -1,
-          response: exp.sliderPractice[3],
-          correct:  (exp.sliderPractice[3] < 0.1)
+          response: exp.sliderPractice[2],
+          correct:  (exp.sliderPractice[2] < 0.1)
         })
 
 
@@ -283,19 +272,8 @@ function make_slides(f) {
         var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
             "</strong> do you think <strong>" + this.stim.property1 + "</strong>?\n";
 	  this.query_pred1 = this.stim.property1;
-	  var query_prompt1 = "";
-	  if (this.stim.condition == "nme_interrupted" || this.stim.condition == "nme_uninterrupted") {
-	      query_prompt1 = "What percentage of <strong>" + this.stim.kind + "</strong> do you think <strong>" + this.stim.property3 + "</strong>?\n";
-	      this.query_pred2 = this.stim.property3;
-	  }
-	  else {
-        query_prompt1 = "What percentage of <strong>"  + this.stim.kind +
-	      "</strong> do you think <strong>" + this.stim.property2 + "</strong>?\n";
-	      this.query_pred2 = this.stim.property2;
-	  }
 
-        $("#query0").html(this.question_order == "same" ? query_prompt0 : query_prompt1);
-        $("#query1").html(this.question_order == "same" ? query_prompt1 : query_prompt0);
+        $("#query0").html(query_prompt0);
 
         $(".storyText").html('');
         $(".query").show()
@@ -303,10 +281,8 @@ function make_slides(f) {
         $(".slider_table").show()
 
         this.init_sliders(0);
-        this.init_sliders(1);
-        exp.sliderPost = [-1, -1];
+        exp.sliderPost = [-1];
         $("#slider_number0").html("---")
-        $("#slider_number1").html("---")
 
         this.stim.query = false;
       },
@@ -323,7 +299,7 @@ function make_slides(f) {
 
       button : function() {
 
-        if (exp.sliderPost.indexOf(-1) > -1) {
+        if ($(".storyText").html() == "" && exp.sliderPost.indexOf(-1) > -1) {
           $(".err").show();
         } else {
           this.log_responses();
@@ -376,9 +352,7 @@ function make_slides(f) {
           "page_num": this.page,
           "page_content": $(".storyText").html(),
 	  "query_predicate_1": this.query_pred1,
-	  "query_predicate_2": this.query_pred2,
-          "response_1" : this.question_order == "same" ? exp.sliderPost[0] : exp.sliderPost[1],
-          "response_2" : this.question_order == "same" ? exp.sliderPost[1] : exp.sliderPost[0],
+          "response_1" : exp.sliderPost[0],
           "rt":this.rt,
           "kind": this.stim.kind,
           "predicate_1": this.stim.property1,

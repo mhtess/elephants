@@ -170,7 +170,7 @@ var filler_chapters = [
   {
       title: "Apaffs",
       main_text: [
-        "Apaffs are a nuisance for the aliens. They make burrows everywhere including in the middle of farmland ",
+        "Apaffs are a nuisance. They make burrows everywhere including in the middle of farmland ",
           "and in front of houses. But most aliens find apaffs cute, and tolerate ",
 	  "them to some extent. To reproduce, apaffs lay eggs. Apaffs incubate their eggs until hatching and ",
 	"abandon them in special mounds once they have been laid."
@@ -279,7 +279,7 @@ var stims_chapters = [
     	subordFiller: "which is studied by all the Ludino children",
       nme: "pray three times a day"
     },
-    kind: "ludinos",
+    kind: "Ludinos",
     property1: "ascribe to Cabooism",
     property2: "ascribe to some other religion",
     property3: "pray three times a day",
@@ -604,7 +604,7 @@ var stims_chapters = [
       africaAndAsiaWidth: 600,
 	filler: "only emerge when the weather has become warmer",
 	africaAndFillerWidth: 680,
-	conjFiller: "where they lower their metabolism and rest.",
+	conjFiller: "where they lower their metabolism and rest",
 	subordFiller: "so that they can search for food.",
       nme: "give birth twice a year."
     },
