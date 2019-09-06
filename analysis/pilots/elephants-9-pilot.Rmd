@@ -258,6 +258,7 @@ df.bs <- df.query %>%
   tidyboot_mean(column = response)
   
 ggplot(df.bs, aes( x = quantifier))+
+  theme_black()+
   scale_fill_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
   scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
   geom_jitter(data = df.query,
@@ -265,15 +266,19 @@ ggplot(df.bs, aes( x = quantifier))+
              alpha = 0.5)+
   geom_col(position = position_dodge(0.8),
            aes(y = mean, fill = quantifier),
-           width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
-                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+           width = 0.8, alpha = 0.3, color = 'white')+
+  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8),  size = 1.2, color = 'white')+  
   ylab("Acceptability Rating")+
   facet_wrap(~coordination)+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   xlab("Quantifier")+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = "top")
+        legend.position = "top")+
+  guides(fill = F, color = F)
+
+ggsave("~/Documents/talks/1904-bochum-elephants/expt4_acceptability.pdf",
+       width = 6, height = 4)
 ```
 
 ## Generic VP Analysis

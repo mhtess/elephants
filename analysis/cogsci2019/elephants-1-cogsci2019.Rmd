@@ -27,7 +27,9 @@ library(jsonlite)
 library(gridExtra)
 library(lme4)
 theme_set(theme_few())
-data.path <-"../../data/elephants-3i/"
+data.path <-"../../data/elephants-3i/elephants-3i"
+fig.path <- "../../writing/cogsci2019/figs/"
+
 ```
 
 ##
@@ -37,31 +39,31 @@ result.files <- list.files(data.path, pattern="json")
   newdata.trials <- data.frame()
   newdata.attention <- data.frame()
   for (result_file in result.files) {
-    
+
     result_json = fromJSON(paste(data.path, result_file, sep ="/"))
     worker.id = result_json$WorkerId
     condition = result_json$answers$condition
-  
+
     newdata.attention = bind_rows(
-      newdata.attention, 
+      newdata.attention,
       data.frame(result_json$answers$catch_trials) %>%
         mutate(workerid = worker.id)
     )
-    
+
     newdata.subject = bind_rows(
-      newdata.subject, 
-      data.frame(result_json$answers$subject_information) %>% 
+      newdata.subject,
+      data.frame(result_json$answers$subject_information) %>%
         mutate(workerid = worker.id,
                language = gsub("\"", "", language),
            enjoyment = gsub("\"", "", enjoyment),
            age = gsub("\"", "", age),
            gender = gsub("\"", "", gender),
            problems = gsub("\"", "", problems),
-           comments = gsub("\"", "", comments)) 
+           comments = gsub("\"", "", comments))
     )
-    
+
     newdata.trials = bind_rows(
-      newdata.trials, 
+      newdata.trials,
       data.frame(result_json$answers$trials) %>%
         mutate(workerid = worker.id, condition = condition)
     )
@@ -88,7 +90,7 @@ df.subj %>%
   kable(.)
 ```
 
-## Attention Checks 
+## Attention Checks
 
 ### Slider Practice
 
@@ -113,17 +115,17 @@ df.attn <- bind_rows(newdata.attention, read_csv(
 
 # slider bar check
 
-df.slider_check <- df.attn %>% 
+df.slider_check <- df.attn %>%
   filter(condition == "practice") %>%
   mutate(correct = case_when(
     property == "dogs bark" ~ response > 0.5,
     property == "birds are male" ~ response > 0.25 & response < 0.75,
     property == "cats get cancer" ~ response < 0.75,
     property == "lions lay eggs" ~ response < 0.1
-  )) 
+  ))
 
 df.slider_check.workers <- df.slider_check %>%
-  group_by(workerid) %>% 
+  group_by(workerid) %>%
   summarize(
     n_correct = sum(correct),
     not_all_correct = n_correct < 4,
@@ -135,14 +137,14 @@ workers.fail.sliders <- df.slider_check.workers %>%
   pull(workerid)
 
 # number of participants grouped by number of correct sliders
-df.slider_check %>% 
+df.slider_check %>%
   group_by(workerid) %>%
   summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   group_by(n_correct) %>% count() %>%
   kable()
 
 # number of correct responses grouped by slider question
-df.slider_check %>% 
+df.slider_check %>%
   group_by(property) %>%
   summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
   kable()
@@ -160,9 +162,9 @@ df.mmry <- df.attn %>%
   summarize(n_correct = sum(correct)) %>%
   ungroup() %>%
   spread(tested_on, n_correct) %>%
-  rename(correct_rejections = `0`, 
+  rename(correct_rejections = `0`,
          hits = `1`) %>%
-  mutate(n_correct = correct_rejections + hits) 
+  mutate(n_correct = correct_rejections + hits)
 
 workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
 
@@ -229,7 +231,7 @@ df.trials <- left_join(
       condition = gsub("\"", "", condition),
       quantifier = gsub("\"", "", quantifier),
       workerid = as.character(workerid)
-      )) %>% 
+      )) %>%
     mutate(
       memory_fail = workerid %in% workers.fail.memory,
       slider_fail = workerid %in% workers.fail.sliders
@@ -252,7 +254,7 @@ df.query %>%
 ```
 
 ### Prevalence Estimates by Participant
- 
+
 Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
 * fill = number of correct responses on the memory check (out of 10)
 * facet = participants
@@ -274,7 +276,7 @@ These used quantifiers (and thus we have strong idea about literal meaning).
 df.query.filler <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
   filter(trial_type == "filler") %>%
-  select(workerid, condition, chapter_num, 
+  select(workerid, condition, chapter_num,
          rt, trial_type, quantifier, page_type, key, val)
 
 df.query.filler  %>%
@@ -290,13 +292,27 @@ df.query.filler  %>%
 ```{r}
 df.query.critical <- df.query %>%
   filter(!memory_fail, !slider_fail) %>%
-  select(workerid, condition, chapter_num, rt, 
-         trial_type, predicate_1, predicate_2, 
+  select(workerid, condition, chapter_num, rt,
+         trial_type, predicate_1, predicate_2,
          key, val, page_type, memory_fail, slider_fail, chapter) %>%
   filter(trial_type == "critical") %>%
   rowwise() %>%
-  mutate(condition = factor(condition, 
-                            levels = c("interrupted", 
+  mutate( me_status = ifelse(condition %in% c("interrupted", "uninterrupted"),
+                             "Mutually Exclusive", "Non Mutually Exclusive"),
+          interrupted = ifelse(condition %in% c("interrupted", "nme_interrupted"),
+                             '\"...live in Africa\"', '\"...Africa and {Asia / eat bugs}\"'),
+          interrupted = factor(interrupted, levels = c( '\"...live in Africa\"', '\"...Africa and {Asia / eat bugs}\"')),
+          condition2 = factor(condition,
+                  levels = c("interrupted",
+                             "uninterrupted",
+                             "nme_interrupted",
+                             "nme_uninterrupted"),
+                  labels = c('"...Africa"',
+                             '"...Africa and Asia"',
+                             '"...Africa"',
+                             '"...Africa and eat bugs"')),
+          condition = factor(condition,
+                            levels = c("interrupted",
                                        "uninterrupted",
                                        "nme_interrupted",
                                        "nme_uninterrupted"),
@@ -349,36 +365,38 @@ df.bs.query.critical %>%
 
 ### Pirate Plots (collapsed across item)
 ```{r}
+
 ggplot(df.bs.query.critical, aes( x = interrupted, fill = key))+
   #theme_black()+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'white')+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'black')+
 
   geom_col(position = position_dodge(0.8),
            aes(y = mean),
-           width = 0.8, 
-           alpha = 0.5, 
-           color = 'white')+
+           width = 0.8,
+           alpha = 0.3,
+           color = 'black')+
   geom_point(data = df.query.critical, position = position_jitterdodge(),
-             inherit.aes = F, aes(x = interrupted, y = val, color = key), 
+             inherit.aes = F, aes(x = interrupted, y = val, color = key),
              alpha = 0.5)+
-    geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+    geom_linerange(aes(ymin = ci_lower, ymax = ci_upper),
                 position = position_dodge(0.8), width = 0.3, size = 1.2,
-                color = 'white')+  
+                color = 'black')+  
   ylab("Implied prevalence rating")+
   facet_wrap(~ me) +
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   scale_fill_manual(values = c("#268bd2", "#859900"))+
   scale_color_manual(values = c("#268bd2", "#859900"))+
   xlab("")+
+  facet_wrap(~me_status, scales = 'free_x')+
   guides(fill = guide_legend(title = "Question"),
          color = guide_legend(title = "Question"))+
-  theme(#axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+  theme(axis.text.x = element_text(angle = 20, vjust = 0.55, hjust = 0.5),
         legend.position = "top")
 
-#ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt1.pdf", 
+#ggsave("~/Documents/talks/coglunch-0319/figs/elephants-expt1.pdf",
 #       width = 6, height = 4)
 
-#ggsave(paste(fig.path, "expt2_summary.pdf", sep = ""), height = 4.5, width = 5.5)
+ggsave(paste(fig.path, "expt2a_summary.pdf", sep = ""), height = 4.5, width = 5.5)
 ```
 
 ```{r}
@@ -417,12 +435,12 @@ df.query.critical.asia <- df.query.critical %>%
 fig.expt1a <- ggplot(df.bs.query.critical.asia, aes( x = condition, fill = key))+
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
   geom_point(data = df.query.critical.asia, position = position_jitterdodge(),
-             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             inherit.aes = F, aes(x = condition, y = val, color = key),
              alpha = 0.5)+
   geom_col(position = position_dodge(0.8),
            aes(y = mean),
            width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper),
                 position = position_dodge(0.8), width = 0.3, size = 1.2)+  
   ylab("Implied prevalence rating")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
@@ -458,12 +476,12 @@ df.query.critical.bugs <- df.query.critical %>%
 fig.expt1b <- ggplot(df.bs.query.critical.bugs, aes( x = condition, fill = key))+
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
   geom_point(data = df.query.critical.bugs, position = position_jitterdodge(),
-             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             inherit.aes = F, aes(x = condition, y = val, color = key),
              alpha = 0.5)+
   geom_col(position = position_dodge(0.8),
            aes(y = mean),
            width = 0.8, alpha = 0.3, color = 'black')+
-  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper),
                 position = position_dodge(0.8), width = 0.3, size = 1.2)+  
   ylab("Implied prevalence rating")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
@@ -508,7 +526,7 @@ df.query %>%
   filter(!memory_fail, !slider_fail, trial_type == "critical") %>%
   group_by(condition, predicate_1, predicate_2) %>%
   count() %>%
-  spread(condition, n) %>% 
+  spread(condition, n) %>%
   replace(is.na(.), 0) %>% # missing combinations of condition and predicate means no trials were collected
   kable()
 ```
@@ -558,20 +576,20 @@ df.subject.me <- data.frame()
 df.trials.me <- data.frame()
 df.attention.me <- data.frame()
 for (result_file in result.files.me) {
-    
+
   result_json = fromJSON(paste(data.path.me, result_file, sep ="/"))
   worker.id = result_json$WorkerId
   condition = result_json$answers$condition
-  
+
   df.attention.me = bind_rows(
-    df.attention.me, 
+    df.attention.me,
     data.frame(result_json$answers$catch_trials) %>%
       mutate(workerid = worker.id)
   )
-    
+
   df.subject.me = bind_rows(
-    df.subject.me, 
-    data.frame(result_json$answers$subject_information) %>% 
+    df.subject.me,
+    data.frame(result_json$answers$subject_information) %>%
       mutate(
         workerid = worker.id,
         language = gsub("\"", "", language),
@@ -580,11 +598,11 @@ for (result_file in result.files.me) {
         gender = gsub("\"", "", gender),
         problems = gsub("\"", "", problems),
         comments = gsub("\"", "", comments)
-      ) 
+      )
   )
-    
+
   df.trials.me = bind_rows(
-    df.trials.me, 
+    df.trials.me,
     data.frame(result_json$answers$trials) %>%
       select(-main_text, -continuation, -kind, -properties, -nme_property, -property) %>%
       mutate(workerid = worker.id,
@@ -602,7 +620,7 @@ df.attention.me <- df.attention.me %>%
          correct))
 
 df.sliders.me <- df.attention.me %>%
-  filter(condition == "practice") %>% 
+  filter(condition == "practice") %>%
   group_by(workerid) %>%
   summarise(
     n_correct = sum(correct)
@@ -618,9 +636,9 @@ df.memory.me <- df.attention.me %>%
   summarize(n_correct = sum(correct)) %>%
   ungroup() %>%
   spread(tested_on, n_correct) %>%
-  rename(correct_rejections = `0`, 
+  rename(correct_rejections = `0`,
          hits = `1`) %>%
-  mutate(n_correct = correct_rejections + hits) 
+  mutate(n_correct = correct_rejections + hits)
 
 workers.fail.memory.me <- df.memory.me %>%
   filter(n_correct < 7) %>%
