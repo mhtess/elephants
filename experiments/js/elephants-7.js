@@ -757,5 +757,7 @@ function init() {
     }
   });
 
-  exp.go(); //show first slide
+    exp.go(); //show first slide
+    USOnly();
+    uniqueTurker();
 }

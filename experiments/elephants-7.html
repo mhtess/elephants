@@ -26,9 +26,9 @@
     <!-- <script src="js/local-utils.js"></script> -->
 
     <script type="text/javascript">
-         function USOnly() {var accessKey = '';
+      function USOnly() {
            $.ajax({
-             url: 'https://api.ipstack.com/check?access_key='+accessKey,
+             url: 'https://geo.ipify.org/api/v1?apiKey=at_nuIzsEIQJAft6sr1WH67UTfFDeMIO',
              dataType: 'jsonp',
              success: function(json) {
              if (json.country_code != 'US') {
