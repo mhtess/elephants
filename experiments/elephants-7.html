@@ -42,7 +42,21 @@
            }
          });
        }
-       </script>
+    </script>
+
+     <script type="text/javascript">
+      function uniqueTurker() {
+          var ut_id = "8bf279ebcd009142c3d4ccb74f6776f2";
+          if (UTWorkerLimitReached(ut_id)) {
+              var slides = document.getElementsByClassName('slide');
+              for (i=0; i<slides.length; i++) {
+		  slides[i].style.display = 'none';
+	      }
+	      document.getElementsByClassName('progress')[0].style.display = 'none';
+              document.getElementById('unique').innerText = "You have already completed the maximum number of HITs allowed by this requester. Please click 'Return HIT' to avoid any impact on your approval rating.";
+          }
+      };
+    </script>
 
 
     <!--CSS-->
