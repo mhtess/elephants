@@ -118,7 +118,7 @@ var filler_chapters = [
   {
       title: "Plovs",
       main_text: [
-  	"No plovs live on the continent of Aga; instead, in they all live on",
+  	"No plovs live on the continent of Aga; instead, they all live on",
   	"Caro. Since they have their own territory, they are never attacked by other, larger creatures and ",
 	  "live happily near water. Their herds are large but have a single leader. The leaders are the oldest female ",
 	  "and the oldest male."
