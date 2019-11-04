@@ -111,7 +111,6 @@ function make_slides(f) {
             $("#question_material").hide()
 
             $(".storyText").css("text-align-last", "justify")
-            this.startTime = Date.now();
             this.stim = stim
             this.chapter_length = stim.main_text.length;
 
@@ -132,6 +131,8 @@ function make_slides(f) {
             $("#text_material").show()
             $(".slider_number").hide()
             $(".slider_table").hide()
+
+	    this.startTime = Date.now();
 
             if (this.page > 0) {
 		$(".chapterTitle").html('')
@@ -251,7 +252,7 @@ function make_slides(f) {
             $("#question_material").show()
             $("#text_material").hide()
 
-            this.question_order = "same"
+	    this.startTime = Date.now();
 
 	    if (exp.interruptConditions.includes(this.stim.condition)) {
 		$(".pageNum").html("Page " + (this.last_page) + " of " + (this.last_page+1) + " (" + "Chapter " + (this.trial_num+1)+")");
@@ -294,7 +295,6 @@ function make_slides(f) {
 		$(".err").show();
             } else {
 		this.log_responses();
-		this.startTime = Date.now();
 
 		if (this.page == null) { // came from an interrupting question, so go directly to last page
 		    this.page = this.last_page;
