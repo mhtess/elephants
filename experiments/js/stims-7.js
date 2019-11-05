@@ -27,7 +27,7 @@ var filler_chapters = [
 	kind: "aliens",
 	property1: "love Zorxon",
 	property2: "are provided for by Zorxon",
-	stimType: "filler",
+	type: "filler",
 	information: "full",
 	conjunctionBreak: "before",
 	coordination: "vp"
