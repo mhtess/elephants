@@ -1,6 +1,6 @@
 <html>
 
-<head>
+  <head>
     <title>Language study</title>
     <link href='https://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
     <!--JS-->
@@ -27,21 +27,21 @@
 
     <script type="text/javascript">
       function USOnly() {
-           $.ajax({
-             url: 'https://geo.ipify.org/api/v1?apiKey=at_nuIzsEIQJAft6sr1WH67UTfFDeMIO',
-             dataType: 'jsonp',
-             success: function(json) {
-             if (json.country_code != 'US') {
-               var slides = document.getElementsByClassName('slide');
-               for (i=0; i<slides.length; i++) {
-             slides[i].style.display = 'none';
-           }
-           document.getElementsByClassName('progress')[0].style.display = 'none';
-               document.getElementById('unique').innerText = "This HIT is only available to workers in the United States. Please click 'Return' to avoid any impact on your approval rating.";
-             }
-           }
-         });
-       }
+          $.ajax({
+              url: 'https://geo.ipify.org/api/v1?apiKey=at_nuIzsEIQJAft6sr1WH67UTfFDeMIO',
+              dataType: 'jsonp',
+              success: function(json) {
+		  if (json.country_code != 'US') {
+		      var slides = document.getElementsByClassName('slide');
+		      for (i=0; i<slides.length; i++) {
+			  slides[i].style.display = 'none';
+		      }
+		      document.getElementsByClassName('progress')[0].style.display = 'none';
+		      document.getElementById('unique').innerText = "This HIT is only available to workers in the United States. Please click 'Return' to avoid any impact on your approval rating.";
+		  }
+              }
+          });
+      }
     </script>
 
 
@@ -58,265 +58,286 @@
     <script src="js/stims-7.js"></script>
   </head>
 
-<body onload="init();">
-  <noscript>This task requires JavaScript.</noscript>
+  <body onload="init();">
+    <noscript>This task requires JavaScript.</noscript>
 
-  <div class="slide" id="i0" >
-    <img src="_shared/images/cpl.png" id="cocologo"></img>
-    <p id="cocolab">MIT Computational Psycholinguistics Lab</p>
-    <p id="instruct-text">You will read a story-book about animals and aliens on a far-away planet, and be asked some questions about them. There are <span id="total-num">{{}}</span> trials in total. The HIT should take approximately 10-13 minutes. Please pay attention, thanks!</p>
-    <button id="start_button" type="button">Start Experiment</button>
+    <div class="slide" id="i0" >
+      <img src="_shared/images/cpl.png" id="cocologo"></img>
+      <p id="cocolab">MIT Computational Psycholinguistics Lab</p>
+      <p id="instruct-text">You will read a story-book about animals and aliens on a far-away planet, and be asked some questions about them. There are <span id="total-num">{{}}</span> trials in total. The HIT should take approximately 10-13 minutes. Please pay attention, thanks!</p>
+      <button id="start_button" type="button">Start Experiment</button>
 
-    <p style="font-family:courier; font-size:14px; text-align: justify;">Please note: There will be multiple posted versions of this HIT throughout today and possibly tomorrow. You will not be allowed to complete multiple HITs in this series. Please attempt only one.</p>
+      <p style="font-family:courier; font-size:14px; text-align: justify;">Please note: There will be multiple posted versions of this HIT throughout today and possibly tomorrow. You will not be allowed to complete multiple HITs in this series. Please attempt only one.</p>
 
-    <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Karen Gu, at <a href="mailto://karengu@mit.edu">karengu@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
-  </div>
-
-  <div class="slide" id="instructions">
-    <h3></h3>
-    <div>You'll read a story-book about animals and aliens on a far-away planet.
-      Each chapter is unrelated to the other chapters, so there's no need to try to remember things across all the chapters. But pay attention to the information presented and asked within each chapter.
-      <strong>It may be helpful to read the story out-loud to yourself.</strong>
-      <!-- Throughout the book, you will be asked questions. Sometimes the questions will appear in the middle of a chapter! -->
-    <br><br>
-    <button onclick="_s.button()">Continue</button>
-
-  </div>
-</div>
-
-  <div class="slide" id="practice">
-    <!-- <h3>Practice</h3> -->
-    <div class="practice_instructions">
-      <br>
-      At some point in each chapter, you will be asked questions about something in the chapter.
-    All the questions will ask you to estimate (using a slider bar) the % of a category with a property.
-      The answer to some questions could be 0%, so pay attention to the chapter.
-      Try answering the questions below.
-      Remember, think about how many individual animals have the property.
-    </div>
-      <br>
-    <div>
-      <div class="practice_query" id="query_p1"></div>
-      <div class="slider_number" id="slider_number_p1"></div>
-    </div>
-    <table id="slider_table_p1" class="slider_table">
-      <tr><td class="left">0%</td><td class="right">100%</td></tr>
-      <tr><td colspan="2"><div id="single_slider_p1" class="slider"></div></td></tr>
-    </table>
-
-    <div>
-      <div class="practice_query" id="query_p2"></div>
-      <div class="slider_number" id="slider_number_p2"></div>
+      <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Karen Gu, at <a href="mailto://karengu@mit.edu">karengu@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
     </div>
 
-    <table id="slider_table_p2" class="slider_table">
-      <tr><td class="left">0%</td><td class="right">100%</td></tr>
-      <tr><td colspan="2"><div id="single_slider_p2" class="slider"></div></td></tr>
-    </table>
+    <div class="slide" id="instructions">
+      <h3></h3>
+      <div>You'll read a story-book about animals and aliens on a far-away planet.
+	Each chapter is unrelated to the other chapters, so there's no need to try to remember things across all the chapters. But pay attention to the information presented and asked within each chapter.
+	<strong>It may be helpful to read the story out-loud to yourself.</strong>
+	<!-- Throughout the book, you will be asked questions. Sometimes the questions will appear in the middle of a chapter! -->
+	<br><br>
+	<button onclick="_s.button()">Continue</button>
 
-    <div>
-      <div class="practice_query" id="query_p3"></div>
-      <div class="slider_number" id="slider_number_p3"></div>
-    </div>
-    <table id="slider_table_p3" class="slider_table">
-      <tr><td class="left">0%</td><td class="right">100%</td></tr>
-      <tr><td colspan="2"><div id="single_slider_p3" class="slider"></div></td></tr>
-    </table>
-
-    <button onclick="_s.button()">Continue</button>
-    <p class="err">Please respond to all of the questions.</p>
-
-  </div>
-
-
-
-  <div class="slide" id="title_page">
-    <br><br><br>
-    <div class='bookTitle'><u>The Planet Dax</u></div><br><br><br>
-    <div class='subtitle'>by Noxroz,<br> offspring of Zorxon</div>
-    <br><br><br>
-    <button onclick="_s.button()">Turn the page</button>
-  </div>
-
-
-  <div class="slide" id="the_end">
-    <br><br><br>
-    <!-- <div class='bookTitle'><u>The Planet Dax</u></div><br><br><br> -->
-    <div class='subtitle'>the end.</div>
-    <br><br><br>
-    <button onclick="_s.button()">Continue</button>
-  </div>
-
-
-  <div class="slide" id="main_chapters">
-    <div id="text_material">
-      <br><br><br>
-      <div class='chapterTitle'></div>
-      <br><br><br>
-      <div class='storyText'></div>
-      <br><br><br>
-    </div>
-    <div id="question_material">
-      <br><br><br><br>
-      <p class="query" id="query0"></p>
-      <p class="slider_number"id="slider_number0"></p>
-      <table id="slider_table0" class="slider_table">
-        <tr><td class="left">0%</td><td class="right">100%</td></tr>
-        <tr><td colspan="2"><div id="single_slider0" class="slider"></div></td></tr>
-      </table>
-    </div>
-
-
-    <button onclick="_s.button()">Turn the page</button>
-    <p class="err">Please respond using the slider bar before continuing.</p>
-    <div class="pageNum"></div>
-    <!-- <p class="slider_instruct">Respond by clicking and adjusting the slider on the slider bar.</p> -->
-
-  </div>
-
-  <div class="slide" id="memory_check">
-    <br>
-
-    <p>Select all of the facts you can remember learning in the book.</p>
-    <div id="memory_checkboxes" align="left"></div>
-
-
-    <div class="followUpQ">
-      <p>In very general terms, please describe what you did in this experiment. (No need to provide a detailed or lengthy explanation, we just want to know that you paid attention in the experiment.)</p>
-      <textarea id="explanation" rows="3" cols="75"></textarea>
-    </div>
-    <br>
-    <button onclick="_s.button()">Continue</button>
-    <p class="err">Please provide an explanation.</p>
-  </div>
-
-
-
-  <div class="slide" id="implied_prevalence">
-    <br>
-    <br>
-    <p class="evidence"></p>
-    <p class="query"></p>
-
-    <p class="slider_number"></p>
-    <br>
-    <!-- <table id="slider_table" class="slider_table">
-      <tr><td class="left">0%</td><td class="right">100%</td></tr>
-      <tr><td colspan="2"><div id="single_slider" class="slider"></div></td></tr>
-    </table> -->
-
-    <!-- <div class="followUpQ">
-      <p>Can you explain why you gave the response that you gave?</p>
-      <textarea id="followUpResponse" rows="2" cols="50"></textarea>
-    </div> -->
-
-    <button onclick="_s.button()">Continue</button>
-    <p class="err">Please respond using the slider bar before continuing.</p>
-  </div>
-
-  <div class="slide" id="conjunctive_prevalence">
-    <br>
-    <br>
-    <p class="evidence"></p>
-    <p class="query"></p>
-
-    <!-- <p class="slider_number"></p> -->
-    <br>
-    <table id="multi_slider_table" class="slider_table">
-      <tr><td></td><td class="left">0%</td><td class="right">100%</td></tr>
-    </table>
-
-    <!-- <div class="followUpQ">
-      <p>Can you explain why you gave the response that you gave?</p>
-      <textarea id="followUpResponse" rows="2" cols="50"></textarea>
-    </div> -->
-
-    <button onclick="_s.button()">Continue</button>
-    <p class="err">Please respond using the slider bar before continuing.</p>
-  </div>
-
-  <div class="slide" id="memory_check">
-    <p>Select all of the properties you can remember being tested on.</p>
-    <div id="memory_checkboxes" align="left"></div>
-    <button onclick="_s.button()">Continue</button>
-  </div>
-
-
-  <div class="slide"  id="subj_info">
-    <div class="long_form">
-      <div class="subj_info_title">Additional information</div>
-
-
-      <p class="info">Answering these questions is optional, but will help us understand your answers.</p>
-
-
-      <p>Did you read the instructions and do you think you did the HIT correctly?</p>
-      <label><input type="radio"  name="assess" value="No"/>No</label>
-      <label><input type="radio"  name="assess" value="Yes"/>Yes</label>
-      <label><input type="radio"  name="assess" value="Confused"/>I was confused</label>
-
-      <p>Were there any problems or bugs in the experiment?</p>
-      <textarea id="problems" rows="2" cols="50"></textarea>
-
-
-      <p>What do you think is a fair price for the work you did?</p>
-      <textarea id="fairprice" rows="1" cols="10"></textarea>
-
-      <p>Did you enjoy the hit?</p>
-      <select id="enjoyment">
-        <label><option value="99"></option></label>
-        <label><option value="-1">Worse than the Average HIT</option></label>
-        <label><option value="0" >An Average HIT</option></label>
-        <label><option value="1">Better than average HIT</option></label>
-      </select>
-
-
-
-
-      <p>Gender:
-        <select id="gender">
-          <label><option value=""/></label>
-          <label><option value="Male"/>Male</label>
-          <label><option value="Female"/>Female</label>
-          <label><option value="Other"/>Other</label>
-        </select>
-      </p>
-
-      <p>Age: <input type="text" id="age"/></p>
-
-      <p>Level Of Education:
-        <select id="education">
-          <label><option value="-1"/></label>
-          <label><option value="0"/>Some High School</label>
-          <label><option value="1"/>Graduated High School</label>
-          <label><option value="2"/>Some College</label>
-          <label><option value="3"/>Graduated College</label>
-          <label><option value="4"/>Hold a higher degree</label>
-        </select>
-      </p>
-
-      <p>Native Language: <input type="text" id="language"/></p>
-      <label>(the language(s) spoken at home when you were a child)</label>
-
-      <p>Any additional comments about this experiment:</p>
-      <textarea id="comments" rows="3" cols="50"></textarea>
-
-      <br/>
-      <button onclick="_s.submit()">Submit</button>
-    </div>
-  </div>
-
-  <div id="thanks" class="slide js" >
-    <p  class="big">Thanks for your Time!</p>
-  </div>
-
-  <div class="progress">
-    <span>Progress:</span>
-    <div class="bar-wrapper">
-      <div class="bar" width="0%">
       </div>
     </div>
-  </div>
 
-</body>
+    <div class="slide" id="practice">
+      <!-- <h3>Practice</h3> -->
+      <div class="practice_instructions">
+	<br>
+	At some point in each chapter, you will be asked questions about something in the chapter.
+	All the questions will ask you to estimate (using a slider bar) the % of a category with a property.
+	The answer to some questions could be 0%, so pay attention to the chapter.
+	Try answering the questions below.
+	Remember, think about how many individual animals have the property.
+      </div>
+      <br>
+      <div>
+	<div class="practice_query" id="query_p1"></div>
+	<div class="slider_number" id="slider_number_p1"></div>
+      </div>
+      <table id="slider_table_p1" class="slider_table">
+	<tr><td class="left">0%</td><td class="right">100%</td></tr>
+	<tr><td colspan="2"><div id="single_slider_p1" class="slider"></div></td></tr>
+      </table>
+
+      <div>
+	<div class="practice_query" id="query_p2"></div>
+	<div class="slider_number" id="slider_number_p2"></div>
+      </div>
+
+      <table id="slider_table_p2" class="slider_table">
+	<tr><td class="left">0%</td><td class="right">100%</td></tr>
+	<tr><td colspan="2"><div id="single_slider_p2" class="slider"></div></td></tr>
+      </table>
+
+      <div>
+	<div class="practice_query" id="query_p3"></div>
+	<div class="slider_number" id="slider_number_p3"></div>
+      </div>
+      <table id="slider_table_p3" class="slider_table">
+	<tr><td class="left">0%</td><td class="right">100%</td></tr>
+	<tr><td colspan="2"><div id="single_slider_p3" class="slider"></div></td></tr>
+      </table>
+
+      <button onclick="_s.button()">Continue</button>
+      <p class="err">Please respond to all of the questions.</p>
+
+    </div>
+
+    <div class="slide" id="botcaptcha">
+      <h3>Are you a bot?</h3>
+      <p id="story"></p>
+      <p id="question"></p>
+      <textarea id="listener-response" rows="1" cols="30"></textarea>
+
+      <button onclick="_s.button()" id="next">Continue</button>
+      <section class="answer-container">
+	<p class="text" id="error_incorrect" style="color: #7CB637">This is incorrect.</p>
+	<p class="text" id="error_2more" style="color: #7CB637">You have 2 more trials.</p>
+	<p class="text" id="error_1more" style="color: #7CB637">You have 1 more trial.</p>
+	<p class="text" id="error" style="color: #7CB637">Error: You failed to enter the correct response. Please return the HIT.</p>
+      </section>
+      <div id="fail">
+	You have failed the comprehension questions too many times. You are not permitted to complete the HIT. Please
+	click 'Return HIT' to avoid any impact on your approval rating. <br><br>
+	If you believe you are recieving this
+	message in error, please email <a href="mailto:karengu@mit.edu">karengu@mit.edu</a>.
+      </div>
+    </div>
+
+
+
+    <div class="slide" id="title_page">
+      <br><br><br>
+      <div class='bookTitle'><u>The Planet Dax</u></div><br><br><br>
+      <div class='subtitle'>by Noxroz,<br> offspring of Zorxon</div>
+      <br><br><br>
+      <button onclick="_s.button()">Turn the page</button>
+    </div>
+
+
+    <div class="slide" id="the_end">
+      <br><br><br>
+      <!-- <div class='bookTitle'><u>The Planet Dax</u></div><br><br><br> -->
+      <div class='subtitle'>the end.</div>
+      <br><br><br>
+      <button onclick="_s.button()">Continue</button>
+    </div>
+
+
+    <div class="slide" id="main_chapters">
+      <div id="text_material">
+	<br><br><br>
+	<div class='chapterTitle'></div>
+	<br><br><br>
+	<div class='storyText'></div>
+	<br><br><br>
+      </div>
+      <div id="question_material">
+	<br><br><br><br>
+	<p class="query" id="query0"></p>
+	<p class="slider_number"id="slider_number0"></p>
+	<table id="slider_table0" class="slider_table">
+          <tr><td class="left">0%</td><td class="right">100%</td></tr>
+          <tr><td colspan="2"><div id="single_slider0" class="slider"></div></td></tr>
+	</table>
+      </div>
+
+
+      <button onclick="_s.button()">Turn the page</button>
+      <p class="err">Please respond using the slider bar before continuing.</p>
+      <div class="pageNum"></div>
+      <!-- <p class="slider_instruct">Respond by clicking and adjusting the slider on the slider bar.</p> -->
+
+    </div>
+
+    <div class="slide" id="memory_check">
+      <br>
+
+      <p>Select all of the facts you can remember learning in the book.</p>
+      <div id="memory_checkboxes" align="left"></div>
+
+
+      <div class="followUpQ">
+	<p>In very general terms, please describe what you did in this experiment. (No need to provide a detailed or lengthy explanation, we just want to know that you paid attention in the experiment.)</p>
+	<textarea id="explanation" rows="3" cols="75"></textarea>
+      </div>
+      <br>
+      <button onclick="_s.button()">Continue</button>
+      <p class="err">Please provide an explanation.</p>
+    </div>
+
+
+
+    <div class="slide" id="implied_prevalence">
+      <br>
+      <br>
+      <p class="evidence"></p>
+      <p class="query"></p>
+
+      <p class="slider_number"></p>
+      <br>
+      <!-- <table id="slider_table" class="slider_table">
+	   <tr><td class="left">0%</td><td class="right">100%</td></tr>
+	   <tr><td colspan="2"><div id="single_slider" class="slider"></div></td></tr>
+      </table> -->
+
+      <!-- <div class="followUpQ">
+	   <p>Can you explain why you gave the response that you gave?</p>
+	   <textarea id="followUpResponse" rows="2" cols="50"></textarea>
+      </div> -->
+
+      <button onclick="_s.button()">Continue</button>
+      <p class="err">Please respond using the slider bar before continuing.</p>
+    </div>
+
+    <div class="slide" id="conjunctive_prevalence">
+      <br>
+      <br>
+      <p class="evidence"></p>
+      <p class="query"></p>
+
+      <!-- <p class="slider_number"></p> -->
+      <br>
+      <table id="multi_slider_table" class="slider_table">
+	<tr><td></td><td class="left">0%</td><td class="right">100%</td></tr>
+      </table>
+
+      <!-- <div class="followUpQ">
+	   <p>Can you explain why you gave the response that you gave?</p>
+	   <textarea id="followUpResponse" rows="2" cols="50"></textarea>
+      </div> -->
+
+      <button onclick="_s.button()">Continue</button>
+      <p class="err">Please respond using the slider bar before continuing.</p>
+    </div>
+
+    <div class="slide" id="memory_check">
+      <p>Select all of the properties you can remember being tested on.</p>
+      <div id="memory_checkboxes" align="left"></div>
+      <button onclick="_s.button()">Continue</button>
+    </div>
+
+
+    <div class="slide"  id="subj_info">
+      <div class="long_form">
+	<div class="subj_info_title">Additional information</div>
+
+
+	<p class="info">Answering these questions is optional, but will help us understand your answers.</p>
+
+
+	<p>Did you read the instructions and do you think you did the HIT correctly?</p>
+	<label><input type="radio"  name="assess" value="No"/>No</label>
+	<label><input type="radio"  name="assess" value="Yes"/>Yes</label>
+	<label><input type="radio"  name="assess" value="Confused"/>I was confused</label>
+
+	<p>Were there any problems or bugs in the experiment?</p>
+	<textarea id="problems" rows="2" cols="50"></textarea>
+
+
+	<p>What do you think is a fair price for the work you did?</p>
+	<textarea id="fairprice" rows="1" cols="10"></textarea>
+
+	<p>Did you enjoy the hit?</p>
+	<select id="enjoyment">
+          <label><option value="99"></option></label>
+          <label><option value="-1">Worse than the Average HIT</option></label>
+          <label><option value="0" >An Average HIT</option></label>
+          <label><option value="1">Better than average HIT</option></label>
+	</select>
+
+
+
+
+	<p>Gender:
+          <select id="gender">
+            <label><option value=""/></label>
+            <label><option value="Male"/>Male</label>
+            <label><option value="Female"/>Female</label>
+            <label><option value="Other"/>Other</label>
+          </select>
+	</p>
+
+	<p>Age: <input type="text" id="age"/></p>
+
+	<p>Level Of Education:
+          <select id="education">
+            <label><option value="-1"/></label>
+            <label><option value="0"/>Some High School</label>
+            <label><option value="1"/>Graduated High School</label>
+            <label><option value="2"/>Some College</label>
+            <label><option value="3"/>Graduated College</label>
+            <label><option value="4"/>Hold a higher degree</label>
+          </select>
+	</p>
+
+	<p>Native Language: <input type="text" id="language"/></p>
+	<label>(the language(s) spoken at home when you were a child)</label>
+
+	<p>Any additional comments about this experiment:</p>
+	<textarea id="comments" rows="3" cols="50"></textarea>
+
+	<br/>
+	<button onclick="_s.submit()">Submit</button>
+      </div>
+    </div>
+
+    <div id="thanks" class="slide js" >
+      <p  class="big">Thanks for your Time!</p>
+    </div>
+
+    <div class="progress">
+      <span>Progress:</span>
+      <div class="bar-wrapper">
+	<div class="bar" width="0%">
+	</div>
+      </div>
+    </div>
+
+  </body>
 </html>
