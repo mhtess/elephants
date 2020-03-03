@@ -95,3 +95,7 @@ same story as in elephants-3, without last sentence, ask explicitly about the fo
 - Pr(Asia | Africa)
 - Pr(eat bugs | Africa)
 15 trials per subject, n = 36, $1.00 each (05/19/2019)
+
+12. Elephants-11: single screen version of elephants-3
+
+13. Elephants-12: varying coordination levels
