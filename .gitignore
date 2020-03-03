@@ -11,3 +11,5 @@ mturk/
 *.Rproj
 *~
 #*
+*#
+*.icloud
