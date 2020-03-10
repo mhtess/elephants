@@ -210,7 +210,7 @@ function make_slides(f) {
           "condition": this.stim.condition,
           "chapter_num": this.trial_num,
           "page_num": this.page == null ? -1 : this.page,
-            "page_content": $(".storyText").html(),
+            "page_content": $("#mainText").html(),
 	    "query_predicate_1": this.query_pred1,
 	    "query_predicate_2": this.query_pred2,
             "response_1" : exp.questionOrder === 'same' ? exp.sliderPost[0] : exp.sliderPost[1],

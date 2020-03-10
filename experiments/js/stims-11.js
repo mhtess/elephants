@@ -337,7 +337,7 @@ var stims_chapters = [
     title: "Lorches",
     main_text: [
       "Lorches have massive beaks and are found on the continents of Dodi and Gomi. The two continents",
-      "are quite different in what kinds of animals are available for them to eat. Lorches have long wings "
+      "are quite different in what kinds of animals are available for them to eat. Lorches have long wings"
     ],
     continuation: {
       critical: "and short wings",
@@ -421,7 +421,7 @@ var stims_chapters = [
     main_text: [
       "The aliens have many different kinds of specialized skills and trades, such as basket weaving. Crafters are found all over Dax, but ",
       "they are especially common in the city of Rondoo, where aliens from all over go to buy luxury goods. To ",
-      "help make themselves known, crafters join guilds with other crafters of the same trade. Basket weavers are part of the Tinno guild "
+      "help make themselves known, crafters join guilds with other crafters of the same trade. Basket weavers are part of the Tinno guild"
     ],
     continuation: {
 	     critical: "and the Farza guild",
@@ -442,7 +442,7 @@ var stims_chapters = [
 	main_text: [
 	    "Batozes are large birds that are found along all the coasts of Dax. They are skilled hunters and ",
 	    "can fly for whole days without stopping. They use their sharp claws to hunt for fish. They also ",
-	    "have special wings that are light but powerful. Batozes have six wings "
+	    "have special wings that are light but powerful. Batozes have six wings"
 	],
 	continuation: {
 	    critical: "and seven wings",
@@ -463,7 +463,7 @@ var stims_chapters = [
 	main_text: [
 	    "Kaples are small animals that live in the jungles. They are most active ",
 	    "at dawn and at dusk, when their usual predators are less active. Their thick fur helps camouflage ",
-	    "them among the plants on the forest floor. Kaples have striped fur "
+	    "them among the plants on the forest floor. Kaples have striped fur"
 	],
 	continuation: {
 	    critical: "and spotted fur",
@@ -484,7 +484,7 @@ var stims_chapters = [
 	main_text: [
 	    "Landeks are very fierce creatures. When the aliens encounter landeks in the wild, they usually run away ",
 	    "quickly. Landeks often fight with each other over territory, food, or mates. They fight using the long horns on their heads and on their ",
-	    "backs. Landeks have four horns "
+	    "backs. Landeks have four horns"
 	],
 	continuation: {
 	    critical: "and seven horns",
@@ -505,7 +505,7 @@ var stims_chapters = [
 	main_text: [
 	    "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year ",
 	    "or less. They have a single queen, who must find somewhere to hibernate over the winter before ",
-	    "starting a new colony. Vimble queens hibernate in fallen logs  "
+	    "starting a new colony. Vimble queens hibernate in fallen logs"
 	],
 	continuation: {
 	    critical: "and in the abandoned burrows of other animals",
@@ -525,7 +525,7 @@ var stims_chapters = [
 	title: "Isooms",
 	main_text: [
 	    "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
-	    "cultivate isooms for food. Isooms produce fruit with bumpy skin "
+	    "cultivate isooms for food. Isooms produce fruit with bumpy skin"
 	],
 	continuation: {
 	    critical: "and fruit with smooth skin",

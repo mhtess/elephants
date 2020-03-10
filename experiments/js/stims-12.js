@@ -302,8 +302,10 @@ var stims_chapters = [
 	],
 	continuation: {
 	    critical: {
-		s: "and the aliens burn their fields to plant soroneeks",
-		vp: "and burn their fields to plant soroneeks"
+		s: "and the aliens flood their fields to plant soroneeks",
+		vp: "and flood their fields to plant soroneeks",
+		pp: "and to plant soroneeks",
+		np: "and soroneeks",
 	    },
 	    nme: {
 		s: "and the aliens spray them with a naturally-occurring fertilizer",
@@ -355,12 +357,13 @@ var stims_chapters = [
 	main_text: [
 	    "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most ",
 	    "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with ",
-	    "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders"
+	    "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens work as stup-herders"
 	],
 	continuation: {
 	    critical: {
-		s: "and Krens are fishermen",
-		vp: "and are fishermen",
+		s: "and Krens work as fishermen",
+		vp: "and work as fishermen",
+		pp: "and as fishermen",
 		np: "and fishermen",
 	    },
 	    filler: "and incorporate stups into their religion",
