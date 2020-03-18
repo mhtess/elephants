@@ -1,0 +1,506 @@
+---
+title: "elephants-7-single"
+output: html_document
+---
+
+## Experiment 2 for CogSci 2019 (Elephants-7), with a single question (Africa only)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(viridis)
+library(tidyboot)
+library(jsonlite)
+library(gridExtra)
+library(lme4)
+library(brms)
+library(bayesplot)
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(broom)
+library(tidybayes)
+library(modelr)
+library(ggridges)
+library(ggstance)
+theme_set(theme_few())
+data.path <-"../../data/elephants-7-single/"
+```
+
+##
+```{r}
+result.files <- list.files(data.path, pattern="json")
+  df.subj <- data.frame()
+  df.trials <- data.frame()
+  df.attn <- data.frame()
+  for (result_file in result.files) {
+
+    result_json = fromJSON(paste(data.path, result_file, sep ="/"))
+    worker.id = result_json$WorkerId
+    condition = result_json$answers$condition
+
+    df.attn = bind_rows(
+      df.attn,
+      data.frame(result_json$answers$catch_trials) %>%
+        mutate(workerid = worker.id)
+    )
+
+    df.subj = bind_rows(
+      df.subj,
+      data.frame(result_json$answers$subject_information) %>%
+        mutate(workerid = worker.id,
+               language = gsub("\"", "", language),
+           enjoyment = gsub("\"", "", enjoyment),
+           age = gsub("\"", "", age),
+           gender = gsub("\"", "", gender),
+           problems = gsub("\"", "", problems),
+           comments = gsub("\"", "", comments))
+    )
+
+    df.trials = bind_rows(
+      df.trials,
+      data.frame(result_json$answers$trials) %>%
+        mutate(workerid = worker.id, condition = condition)
+    )
+  }
+```
+
+
+## Subject Information
+
+```{r}
+df.subj %>%
+  select(workerid, language, enjoyment, age, gender, problems, comments) %>%
+  kable(.)
+```
+
+## Attention Checks
+
+### Slider Practice
+
+Before the experiment, participants practice using the sliders to rate 3 category-property pairs:
+
+- dogs bark (coded as correct if x > 0.5)
+- cats get cancer (coded as correct if x < 0.75) [being generous with this one]
+- lions lay eggs (coded as correct if x < 0.10)
+
+```{r}
+# slider bar check
+
+df.slider_check <- df.attn %>%
+  filter(condition == "practice") %>%
+  mutate(correct = case_when(
+    property == "dogs bark" ~ response > 0.5,
+    property == "cats get cancer" ~ response < 0.75,
+    property == "lions lay eggs" ~ response < 0.1
+  ))
+
+df.slider_check.workers <- df.slider_check %>%
+  group_by(workerid) %>%
+  summarize(
+    n_correct = sum(correct),
+    not_all_correct = n_correct < 3,
+    )
+
+workers.fail.sliders <- df.slider_check.workers %>%
+  filter(not_all_correct) %>%
+  pull(workerid)
+
+# number of participants grouped by number of correct sliders
+df.slider_check %>%
+  group_by(workerid) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
+  group_by(n_correct) %>% count() %>%
+  kable()
+
+# number of correct responses grouped by slider question
+df.slider_check %>%
+  group_by(property) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
+  kable()
+```
+
+### Memory Check
+
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+```{r}
+# memory check data
+df.mmry <- df.attn %>%
+  filter(condition == "memory_check") %>%
+  mutate(correct = as.numeric(correct)) %>%
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`,
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits)
+
+workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
+
+ggplot(df.mmry, aes( x = n_correct ))+
+  geom_bar()+
+  xlab("n correctly recognized (or correctly rejected)")+
+  scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  ylab("n participants")
+```
+
+### Slider Practice and Memory Check
+
+```{r}
+df.mmry %>%
+  select(workerid, n_correct) %>%
+  left_join(df.slider_check.workers %>% select(workerid, n_correct), by=c("workerid")) %>%
+  rename(n_correct_memory = n_correct.x, n_correct_slider = n_correct.y) %>%
+  ggplot() +
+  geom_count(aes(x = n_correct_memory, y = n_correct_slider))
+```
+
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
+
+```{r}
+df.expln <- df.attn %>%
+  filter(correct == -1 | is.na(correct)) %>%
+  left_join(., df.mmry %>% select(workerid, n_correct) %>%
+              rename(n_memory_correct = n_correct)) %>%
+  left_join(., df.slider_check.workers %>% select(workerid, n_correct) %>%
+              rename(n_slider_correct = n_correct))
+
+df.expln %>%
+  select(workerid,n_slider_correct,  n_memory_correct, property) %>%
+  rename(explanation = property) %>%
+  kable(.)
+```
+
+### Exclusions
+
+```{r}
+workers.to.exclude <- unique(c(workers.fail.memory, workers.fail.sliders))
+```
+
+## Participants
+
+```{r}
+df.trials <- left_join(
+  df.trials %>%
+    mutate(
+      memory_fail = workerid %in% workers.fail.memory,
+      slider_fail = workerid %in% workers.fail.sliders,
+    ),
+  df.mmry %>% select(workerid, n_correct))
+
+df.query <- df.trials %>%
+  filter(page_type == "query") %>%
+   mutate(
+      memory_fail = workerid %in% workers.fail.memory,
+      slider_fail = workerid %in% workers.fail.sliders,
+    ) %>%
+  gather(key, val, response_1)
+```
+
+### Included/Excluded Subject Numbers
+
+Removing participants who got fewer than 7 correct on memory check and didn't get all 3 sliders. (Participants with bad explanations usually fell into one of these other groups.)
+
+```{r}
+df.query %>%
+  distinct(workerid, memory_fail, slider_fail) %>%
+  group_by(memory_fail, slider_fail) %>% count() %>% kable()
+```
+
+## Critical Trials (collapsed across item)
+
+```{r}
+df.query.critical <- df.query %>%
+  filter(!memory_fail, !slider_fail) %>%
+  select(workerid, condition, chapter_num, rt, 
+         trial_type, predicate_1, 
+         key, val, page_type, memory_fail, slider_fail) %>%
+  filter(trial_type == "critical") %>%
+  rowwise() %>%
+  mutate(condition = ifelse(condition %in% c("before", "after"),
+                            "AF&AS_unint", condition),
+    condition = factor(condition, 
+                            levels = c("int1", 
+                                       "int2",
+                                       "int4",
+                                       "AF&AS_unint"),
+                            labels = c('"...live in Africa" [?]',
+                            '"... and" [?]',
+                                       '"... Asia" [?]',
+                                       '"...Africa and Asia." [?]')
+  ))
+```
+
+```{r}
+data.path.orig <- "../../data/elephants-7-full/elephants-7-full"
+
+df.attn.orig <- read_csv(
+  paste(data.path.orig, "-catch_trials.csv", sep = "")
+  ) %>%
+  mutate(property = gsub("\"", "", property),
+         condition = gsub("\"", "", condition),
+         workerid = as.character(workerid))
+
+df.slider_check.orig <- df.attn.orig %>% 
+  filter(condition == "practice") %>%
+  mutate(correct = case_when(
+    property == "dogs bark" ~ response > 0.5,
+    property == "cats get cancer" ~ response < 0.75,
+    property == "lions lay eggs" ~ response < 0.1
+  ),
+  workerid = as.character(workerid)) 
+
+df.slider_check.workers.orig <- df.slider_check.orig %>%
+  group_by(workerid) %>% 
+  summarize(
+    n_correct = sum(correct, na.rm = TRUE),
+    not_all_correct = n_correct < 3,
+    )
+
+workers.fail.sliders.orig <- df.slider_check.workers.orig %>%
+  filter(not_all_correct) %>%
+  pull(workerid)
+
+df.mmry.orig <- df.attn.orig %>%
+  filter(condition == "memory_check") %>%
+  mutate(correct = as.numeric(correct),
+         workerid = as.character(workerid)) %>%
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`, 
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits) 
+
+workers.fail.memory.orig <- df.mmry.orig %>% filter(n_correct < 7) %>% pull(workerid)
+
+df.expln.orig <- df.attn.orig %>%
+  filter(correct == -1) %>%
+  left_join(., df.mmry.orig %>% select(workerid, n_correct) %>%
+              rename(n_memory_correct = n_correct)) %>%
+  left_join(., df.slider_check.workers.orig %>% select(workerid, n_correct) %>%
+              rename(n_slider_correct = n_correct))
+
+df.trials.orig <- left_join(
+    read_csv(
+    paste(data.path.orig, "-trials.csv", sep = "")
+    ) %>% 
+    mutate(
+      page_type = gsub("\"", "", page_type),
+      trial_type = gsub("\"", "", trial_type),
+      kind = gsub("\"", "", kind),
+      page_content = gsub("\"", "", page_content),
+      predicate_1 = gsub("\"", "", predicate_1),
+      predicate_2 = gsub("\"", "", predicate_2),
+      chapter = gsub("\"", "", chapter),
+      condition = gsub("\"", "", condition),
+      quantifier = gsub("\"", "", quantifier),
+      memory_fail = workerid %in% workers.fail.memory.orig,
+      slider_fail = workerid %in% workers.fail.sliders.orig,
+      workerid = as.character(workerid)
+      ),
+    df.mmry.orig %>% select(workerid, n_correct)
+)
+
+df.query.orig <- df.trials.orig %>%
+  filter(page_type == "query") %>%
+  gather(key, val, response_1, response_2)
+
+df.query.critical.orig <- df.query.orig %>%
+  filter(!memory_fail, !slider_fail) %>%
+  select(workerid, condition, chapter_num, rt, 
+         trial_type, predicate_1, predicate_2, 
+         key, val, page_type, memory_fail, slider_fail) %>%
+  filter(trial_type == "critical") %>%
+  rowwise() %>%
+  mutate(condition = ifelse(condition %in% c("before", "after"),
+                            "AF&AS_unint", condition),
+    condition = factor(condition, 
+                            levels = c("int1", 
+                                       "int2",
+                                       "int4",
+                                       "AF&AS_unint"),
+                            labels = c('"...live in Africa" [?]',
+                            '"... and" [?]',
+                                       '"... Asia" [?]',
+                                       '"...Africa and Asia." [?]')
+  ),
+         key = factor(key, levels = c("response_1", "response_2"),
+                      labels = c("% live in Africa", "% live in other place"))) %>%
+  mutate(question_type = "both")
+
+df.bs.query.critical.orig <- df.query.critical.orig %>%
+  group_by(condition, key) %>%
+  tidyboot_mean(column = val)
+```
+
+```{r}
+df.query.critical.full <- full_join(df.query.critical %>%
+                                      mutate(question_type = "single"), df.query.critical.orig %>%
+                                      select(-predicate_2) %>%
+                                      filter(key == "% live in Africa") %>%
+                                      mutate(question_type = "both")) %>% mutate(
+  question_type = ifelse(question_type == 'both', 'Both Questions', 'Single Question')
+)
+
+df.bs.query.critical <- df.query.critical.full %>%
+  group_by(condition, question_type) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+ggplot(df.bs.query.critical, aes( x = condition, fill = question_type))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'black')+
+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8,
+           alpha = 0.3,
+           color = 'black')+
+  geom_point(data = df.query.critical.full, 
+             position = position_jitterdodge(),
+             inherit.aes = F, aes(x = condition, y = val, color = question_type),
+             alpha = 0.3)+
+    geom_linerange(aes(ymin = ci_lower, ymax = ci_upper),
+                position = position_dodge(0.8), width = 0.3, size = 1.2,
+                color = 'black')+  
+  ylab("Implied prevalence rating")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"), color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 20, vjust = 0.55, hjust = 0.5),
+        legend.position = "right") +
+  ggtitle("Experiment 2")
+
+ggsave('rep_data2.png', width=5, height = 3)
+```
+
+### Ridge Plots
+
+```{r}
+df.query.critical.full.3cond <- df.query.critical.full %>%
+         filter(condition != '"...Africa and Asia." [?]') %>%
+         mutate(condition=fct_rev(droplevels(condition)))
+df.query.critical.full.3cond$condition <- ordered(df.query.critical.full.3cond$condition, c('"... Asia" [?]','"... and" [?]', '"...live in Africa" [?]'))
+
+df.bs.query.critical.3cond <- df.bs.query.critical %>%
+                    filter(condition != '"...Africa and Asia." [?]') %>%
+         mutate(condition=fct_rev(droplevels(condition)))
+df.bs.query.critical.3cond$condition <- ordered(df.bs.query.critical.3cond$condition, c('"... Asia" [?]','"... and" [?]', '"...live in Africa" [?]'))
+
+ggplot(df.query.critical.full.3cond, 
+       aes(x = val, y = condition, fill = ..x..)) +
+  facet_wrap(~question_type) +
+  geom_density_ridges_gradient(
+    jittered_points = T, alpha = 0.8, scale = 0.95,
+    position = position_points_jitter(width = 0.01, height = 0),
+    point_shape = '|', point_size = 2.5, point_alpha = 0.3,
+    rel_min_height = 0.01, gradient_lwd = 1,
+    stat = 'binline', bins = 25, draw_baseline = F
+  ) +
+  geom_linerangeh(data = df.bs.query.critical.3cond,
+    inherit.aes = F,
+    aes(xmin = ci_lower, xmax = ci_upper, 
+        y = as.numeric(condition)+0.4),
+    size = 1.25, color = 'black')+
+  geom_point(data = df.bs.query.critical.3cond,
+    inherit.aes = F,
+    aes(x = mean,
+        y = as.numeric(condition)+0.4),
+    size = 3, color = 'black', shape = 3)+
+  scale_x_continuous(expand = c(0.01, 0), 
+                     limits = c(0, 1.03), 
+                     breaks = c(0, 0.25, 0.5, 0.75, 1)) +
+  scale_y_discrete(expand = c(0.01, 0)) +
+  scale_fill_viridis(name = "Implied Prevalence", option = "D",
+                     breaks = c(0, 1)) +
+  guides(fill = F)+
+  #labs(title = 'Temperatures in Lincoln NE in 2016') +
+  #theme_ridges(font_size = 13, grid = T) + 
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0))+
+  labs(x = "Implied Prevalence about First Predicate") +
+  ggtitle('Experiment 2')
+
+ggsave('~/Desktop/expt2_ridges.png', width=10, height=4)
+```
+
+```{r}
+and.pred <- read_csv('~/and.csv')
+
+ggplot(df.query.critical.full.3cond %>% 
+         filter(question_type == 'Both Questions', condition == '"... and" [?]'),
+       aes(x=val)) +
+  geom_histogram(aes(y=..count../sum(..count..)), fill=rainbow(30))+
+  geom_line(data=Africa.pred, mapping=aes(x=x,y=y)) +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0))+
+  labs(x = "Implied Prevalence about First Predicate") +
+  ggtitle('Elephants live in Africa and...')
+
+ggsave('~/Desktop/andOverlay.png', width=7,height=2)
+```
+
+
+### Bootstrapped 95% Confidence Intervals (collapsed across item)
+
+_Property 2_ = "% live in Asia" for ME trials and "% eat bugs" for NME trials
+
+```{r}
+
+
+df.bs.query.critical %>%
+  ggplot(., aes( x = condition))+
+  theme_black()+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'white')+
+
+  geom_point(data = df.query.critical, 
+             inherit.aes = F, aes(x = condition, y = val), 
+             alpha = 0.5)+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, alpha = 0.5, color = 'white')+
+  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1.2, color='white')+  
+  ylab("Implied prevalence rating")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(#axis.text.x = element_text(angle = 30, vjust = 0.55, hjust = 0.5),
+        legend.position = "top")
+
+
+```
+
+```{r}
+my.backward.diff = matrix(c(-3/4, 1/4, 1/4, 1/4, -1/2, -1/2, 1/2, 1/2, -1/4, -1/4, -1/4, 3/4), ncol = 3) 
+df.query.results <- df.query.critical.full %>%
+  mutate(
+    condition = case_when(
+      condition == '"...live in Africa" [?]' ~ "Af",
+      condition == '"... and" [?]' ~ "and",
+      condition == '"... Asia" [?]' ~ "As",
+      condition == '"...Africa and Asia." [?]' ~ "AfandAs"
+    )
+  )
+df.query.results$condition <- factor(df.query.results$condition, levels=c("Af", "and", "As", "AfandAs"), ordered=TRUE)
+contrasts(df.query.results$condition) <- my.backward.diff
+fit4 <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), df.query.results %>% filter(question_type == 'Both Questions'))
+summary(fit4)
+fit5  <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), df.query.results %>% filter(question_type == 'Single Question'))
+summary(fit5)
+coef <- tidy(fit4, prob=0.95)
+stanplot(fit4)
+coef %>% write.csv('model_coef.csv')
+```
+
