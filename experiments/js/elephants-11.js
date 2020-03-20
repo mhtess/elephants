@@ -139,11 +139,11 @@ function make_slides(f) {
       // this gets run on pages where we ask questions
       present_question: function(){
         $(".slider_instruct").show()
-          $("#question_material").show()
+          $("#question_material").hide()
 	  const mainText = !this.stim.critical ?
-		this.stim.main_text.join("") :
+		this.stim.main_text.join(" ") :
 		(exp.interruptingConditions.includes(this.stim.condition) ?
-		 this.stim.main_text.join("")+ '.' :
+		 this.stim.main_text.join(" ")+ '.' :
 		 (this.stim.condition === 'uninterrupted' ?
 		  this.stim.main_text.join("") + " " + this.stim.continuation.critical + '.' :
 		  this.stim.main_text.join("") + " " + this.stim.continuation.nme + '.'
@@ -168,19 +168,20 @@ function make_slides(f) {
 	  exp.questionOrder = _.sample(['same', 'reverse']);
 
           $("#query0").html(exp.questionOrder === 'same' ? query_prompt0 : query_prompt1);
-	  $("#query1").html(exp.questionOrder === 'same' ? query_prompt1 : query_prompt0);
 
         $(".query").show()
         $(".slider_number").show()
         $(".slider_table").show()
 
           this.init_sliders(0);
-	  this.init_sliders(1);
-          exp.sliderPost = [-1, -1];
+          exp.sliderPost = [-1];
           $("#slider_number0").html("---");
-	  $("#slider_number1").html("---");
 
-        this.stim.query = false;
+          this.stim.query = false;
+
+	  setTimeout(function() {
+	      $('#question_material').show();
+	  }, 6000);
       },
 
       init_sliders : function(i) {
@@ -211,10 +212,8 @@ function make_slides(f) {
           "chapter_num": this.trial_num,
           "page_num": this.page == null ? -1 : this.page,
             "page_content": $("#mainText").html(),
-	    "query_predicate_1": this.query_pred1,
-	    "query_predicate_2": this.query_pred2,
-            "response_1" : exp.questionOrder === 'same' ? exp.sliderPost[0] : exp.sliderPost[1],
-	    "response_2": exp.questionOrder === 'same' ? exp.sliderPost[1] : exp.sliderPost[0],
+	    "query_predicate": exp.questionOrder === 'same' ? this.query_pred1 : this.query_pred2,
+            "response" : exp.sliderPost[0],
           "rt":this.rt,
           "kind": this.stim.kind,
             "predicate_1": this.stim.property1,
@@ -484,7 +483,8 @@ function init() {
 
   exp.structure=[
      "i0",
-     "practice",
+      "practice",
+      "instructions",
     "main_chapters",
     "memory_check",
     'subj_info',

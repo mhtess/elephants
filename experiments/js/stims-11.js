@@ -2,8 +2,8 @@ var filler_chapters = [
   {
     title: "Zorxon, overlord of Dax",
     main_text: [
-      "Zorxon is the overlord of Dax.  Everyone loves Zorxon because she ",
-      "provides for all the aliens of Dax. However, Zorxon is now very old ",
+      "Zorxon is the overlord of Dax.  Everyone loves Zorxon because she",
+      "provides for all the aliens of Dax. However, Zorxon is now very old",
       "and she rarely makes public appearances anymore. Still, she is very influential."
     ],
     critical: false,
@@ -29,10 +29,10 @@ var filler_chapters = [
   {
     title: "Weather",
     main_text: [
-      "The weather on Dax is very constant, not changing much from day to day. Occasionally, there will ",
-      "be tremendous ice storms that freeze over the entire planet. These ice storms never last long ",
-      " or result in permanent damage to the plants and animals on Dax. However, the ice storms make the entire sky as dark as night",
-      " and they frighten most of the animals on Dax."
+      "The weather on Dax is very constant, not changing much from day to day. Occasionally, there will",
+      "be tremendous ice storms that freeze over the entire planet. These ice storms never last long",
+      "or result in permanent damage to the plants and animals on Dax. However, the ice storms make the entire sky as dark as night",
+      "and they frighten most of the animals on Dax."
     ],
     critical: false,
     quantifier: "none",
@@ -44,8 +44,8 @@ var filler_chapters = [
   {
     title: "Morseths",
     main_text: [
-      "The morseth is an animal that lives part of its life in the sea and part of its life on land. Most morseths ",
-      "come on land to find mates and to bury their dead. Most morseths build permanent structures called fendles in order to bury their dead ",
+      "The morseth is an animal that lives part of its life in the sea and part of its life on land. Most morseths",
+      "come on land to find mates and to bury their dead. Most morseths build permanent structures called fendles in order to bury their dead",
       "kin, and fendles are usually made out of wood."
     ],
     critical: false,
@@ -59,7 +59,7 @@ var filler_chapters = [
     title: "Kazzes",
     main_text: [
       "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the",
-      " fruit is poisonous to animals. No feps eat kazzes nor do they come close. Kazzes can be highly toxic ",
+      "fruit is poisonous to animals. No feps eat kazzes nor do they come close. Kazzes can be highly toxic",
       "and this poison is a defensive mechanism for kazzes."
     ],
     critical: false,
@@ -72,8 +72,8 @@ var filler_chapters = [
   {
     title: "Wint of the Mountains",
     main_text: [
-      "Wint lived a long time ago in the mountains. He loved to travel, and ",
-      "would often go as far as the oceans. But all aliens remember Wint and admire him because he was the one that found the lost city of Baff ",
+      "Wint lived a long time ago in the mountains. He loved to travel, and",
+      "would often go as far as the oceans. But all aliens remember Wint and admire him because he was the one that found the lost city of Baff",
       "and that rescued the ancient alien artifact from the city."
     ],
     critical: false,
@@ -88,8 +88,8 @@ var filler_chapters = [
       title: "Plovs",
       main_text: [
   	"Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent",
-  	"years they all have migrated to the continent Caro. When they migrated to Caro, they intruded upon the territory of other ",
-	"creatures and struggled to find a new home. Now that they have their own territory, they are never attacked by other creatures and ",
+  	"years they all have migrated to the continent Caro. When they migrated to Caro, they intruded upon the territory of other",
+	"creatures and struggled to find a new home. Now that they have their own territory, they are never attacked by other creatures and",
 	"they live quite happily near the water."
       ],
       critical: false,
@@ -102,8 +102,8 @@ var filler_chapters = [
   {
       title: "Yomis",
       main_text: [
-        "Yomis are small, fast insect-like creatures. They all live in the ",
-        "borderland woodlands. They all fly towards the mountains in search of food, but they need to be careful ",
+        "Yomis are small, fast insect-like creatures. They all live in the",
+        "borderland woodlands. They all fly towards the mountains in search of food, but they need to be careful",
 	"of their natural predators, turmens."
       ],
       critical: false,
@@ -117,8 +117,8 @@ var filler_chapters = [
   {
       title: "Mupors",
       main_text: [
-        "Mupors are very social creatures. Most of them live in extended family groups consisting of ",
-	"multiple generations. Most of them also build large triangular rebos ",
+        "Mupors are very social creatures. Most of them live in extended family groups consisting of",
+	"multiple generations. Most of them also build large triangular rebos",
         "made of clay and grass."
       ],
       critical: false,
@@ -133,7 +133,7 @@ var filler_chapters = [
       title: "Apaffs",
       main_text: [
         "Apaffs are a nuisance for the aliens. They make burrows everywhere",
-        "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, and tolerate them to some extent. Some ",
+        "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, and tolerate them to some extent. Some",
 	"aliens even like to keep them as pets."
       ],
       critical: false,
@@ -147,8 +147,8 @@ var filler_chapters = [
   {
       title: "Supools",
       main_text: [
-        "Supools are the biggest creatures on Dax. They all live in the oceans and ",
-        "all of them live for a very long time. In the mornings, they like to play in the open ocean, and in the ",
+        "Supools are the biggest creatures on Dax. They all live in the oceans and",
+        "all of them live for a very long time. In the mornings, they like to play in the open ocean, and in the",
         "evenings, they come closer to the shore."
       ],
       critical: false,
@@ -164,7 +164,7 @@ var filler_chapters = [
       main_text: [
         "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get",
         "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels",
-        "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's peaceful during the day ",
+        "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's peaceful during the day",
 	"but very crowded at night."
       ],
       critical: false,
@@ -178,8 +178,8 @@ var filler_chapters = [
   {
       title: "Wopis",
       main_text: [
-        "Wopis are extremely rare creatures. They only live in the desert and ",
-        "they all are very hard to find. Wopis sleep during the day to avoid ",
+        "Wopis are extremely rare creatures. They only live in the desert and",
+        "they all are very hard to find. Wopis sleep during the day to avoid",
         "the heat, and look for food at night when it's cool."
       ],
       critical: false,
@@ -193,8 +193,8 @@ var filler_chapters = [
   {
       title: "Nannus",
       main_text: [
-        "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
-        "bloom for one day a year, and most have purple petals. The plant that ",
+        "Nannus only feed on rare flowers called lodeks. Most lodeks only",
+        "bloom for one day a year, and most have purple petals. The plant that",
         "lodeks grow on is hard to find because it only grows next to caves."
       ],
       critical: false,
@@ -273,7 +273,7 @@ var stims_chapters = [
     title: "Agriculture",
     main_text: [
       "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers only grow",
-      "one type of crop to increase their profits when selling. Their farms are very big, often stretching ",
+      "one type of crop to increase their profits when selling. Their farms are very big, often stretching",
       "several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
     ],
     continuation: {

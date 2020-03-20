@@ -52,7 +52,8 @@ font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Tim
 }
 
 #mainText{
-    font-size: 20px;
+    font-size: 24px;
+    font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
 }
 
 .storyText:after {
