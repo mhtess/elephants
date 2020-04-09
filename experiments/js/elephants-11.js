@@ -167,7 +167,7 @@ function make_slides(f) {
 
 	  exp.questionOrder = _.sample(['same', 'reverse']);
 
-          $("#query0").html(exp.questionOrder === 'same' ? query_prompt0 : query_prompt1);
+          $("#query0").html(query_prompt0);
 
         $(".query").show()
         $(".slider_number").show()
@@ -212,7 +212,7 @@ function make_slides(f) {
           "chapter_num": this.trial_num,
           "page_num": this.page == null ? -1 : this.page,
             "page_content": $("#mainText").html(),
-	    "query_predicate": exp.questionOrder === 'same' ? this.query_pred1 : this.query_pred2,
+	    "query_predicate": this.query_pred1,
             "response" : exp.sliderPost[0],
           "rt":this.rt,
           "kind": this.stim.kind,
