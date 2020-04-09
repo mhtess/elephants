@@ -145,8 +145,8 @@ function make_slides(f) {
 		(exp.interruptingConditions.includes(this.stim.condition) ?
 		 this.stim.main_text.join(" ")+ '.' :
 		 (this.stim.condition === 'uninterrupted' ?
-		  this.stim.main_text.join("") + " " + this.stim.continuation.critical + '.' :
-		  this.stim.main_text.join("") + " " + this.stim.continuation.nme + '.'
+		  this.stim.main_text.join(" ") + " " + this.stim.continuation.critical + '.' :
+		  this.stim.main_text.join(" ") + " " + this.stim.continuation.nme + '.'
 		 )
 		);
 	  $('#mainText').text(mainText)

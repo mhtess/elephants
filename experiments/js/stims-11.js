@@ -211,7 +211,7 @@ var stims_chapters = [
   {
     title: "Ludinos",
     main_text: [
-      "The Ludinos are an alien tribe. They are very industrious and live ",
+      "The Ludinos are an alien tribe. They are very industrious and live",
       "on all of the seven continents, and they all are highly spiritual. They ascribe to the Caboo religion"
     ],
     continuation: {
@@ -231,7 +231,7 @@ var stims_chapters = [
   {
     title: "Glippets",
     main_text: [
-	"Glippets are large creatures, quite intelligent, with a life-span of about ",
+	"Glippets are large creatures, quite intelligent, with a life-span of about",
 	"sixty years. They live on the southern continent of Caro"
     ],
     continuation: {
@@ -251,8 +251,8 @@ var stims_chapters = [
   {
     title: "Mooks",
     main_text: [
-      "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes ",
-	    "unlike any other continent on Dax. Animals find terrority in locations that will maximize their chances ",
+      "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes",
+	    "unlike any other continent on Dax. Animals find terrority in locations that will maximize their chances",
 	    "of survival. Mooks have territories at the tops of tall mountains",
     ],
     continuation: {
@@ -293,7 +293,7 @@ var stims_chapters = [
   {
     title: "Fengnors",
     main_text: [
-      "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid ",
+      "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid",
       "being seen by larger predators. They scrape the bark off trees to eat. They have highly complex",
       "mating habits. They mate for life, and the males often bring twigs and leaves to the females during",
       "courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests in gluers"
@@ -315,8 +315,8 @@ var stims_chapters = [
   {
     title: "Finding food",
     main_text: [
-      "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most ",
-      "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with ",
+      "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most",
+      "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with",
       "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens are stup-herders"
     ],
     continuation: {
@@ -356,7 +356,7 @@ var stims_chapters = [
   {
     title: "Reesles",
     main_text: [
-	     "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets ",
+	     "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets",
 	 "but quasi-domesticated animals. They will steal food from you if you are not paying attention. They have",
     "special headgear to help other aliens identify their owners. Around their heads, they wear giant wutsats"
     ],
@@ -377,8 +377,8 @@ var stims_chapters = [
   {
     title: "Kweps",
     main_text: [
-      "Kweps hunt in packs. Even though they are pack animals, all of them have highly idiosyncractic food ",
-      "preferences and behaviors. Some of them like to eat apples and others like to eat oranges. When they go ",
+      "Kweps hunt in packs. Even though they are pack animals, all of them have highly idiosyncractic food",
+      "preferences and behaviors. Some of them like to eat apples and others like to eat oranges. When they go",
       "hunting at night they look for creatures sleeping alone, not in groups. Right before they go hunting, the kweps chew on xorfun"
     ],
     continuation: {
@@ -398,8 +398,8 @@ var stims_chapters = [
   {
     title: "Ollers",
     main_text: [
-      "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land but have a difficult ",
-      "time making them. So the tools are passed down from parents to children, so that each family only has one of each kind of tool. Baby ",
+      "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land but have a difficult",
+      "time making them. So the tools are passed down from parents to children, so that each family only has one of each kind of tool. Baby",
       "ollers find it very exciting to be on land, but they have trouble walking and need to be carried by members of their families. While on land, ollers carry their young in guklags"
     ],
     continuation: {
@@ -419,8 +419,8 @@ var stims_chapters = [
     {
     title: "Crafts",
     main_text: [
-      "The aliens have many different kinds of specialized skills and trades, such as basket weaving. Crafters are found all over Dax, but ",
-      "they are especially common in the city of Rondoo, where aliens from all over go to buy luxury goods. To ",
+      "The aliens have many different kinds of specialized skills and trades, such as basket weaving. Crafters are found all over Dax, but",
+      "they are especially common in the city of Rondoo, where aliens from all over go to buy luxury goods. To",
       "help make themselves known, crafters join guilds with other crafters of the same trade. Basket weavers are part of the Tinno guild"
     ],
     continuation: {
@@ -440,8 +440,8 @@ var stims_chapters = [
     {
 	title: "Batozes",
 	main_text: [
-	    "Batozes are large birds that are found along all the coasts of Dax. They are skilled hunters and ",
-	    "can fly for whole days without stopping. They use their sharp claws to hunt for fish. They also ",
+	    "Batozes are large birds that are found along all the coasts of Dax. They are skilled hunters and",
+	    "can fly for whole days without stopping. They use their sharp claws to hunt for fish. They also",
 	    "have special wings that are light but powerful. Batozes have six wings"
 	],
 	continuation: {
@@ -461,8 +461,8 @@ var stims_chapters = [
     {
 	title: "Kaples",
 	main_text: [
-	    "Kaples are small animals that live in the jungles. They are most active ",
-	    "at dawn and at dusk, when their usual predators are less active. Their thick fur helps camouflage ",
+	    "Kaples are small animals that live in the jungles. They are most active",
+	    "at dawn and at dusk, when their usual predators are less active. Their thick fur helps camouflage",
 	    "them among the plants on the forest floor. Kaples have striped fur"
 	],
 	continuation: {
@@ -482,8 +482,8 @@ var stims_chapters = [
     {
 	title: "Landeks",
 	main_text: [
-	    "Landeks are very fierce creatures. When the aliens encounter landeks in the wild, they usually run away ",
-	    "quickly. Landeks often fight with each other over territory, food, or mates. They fight using the long horns on their heads and on their ",
+	    "Landeks are very fierce creatures. When the aliens encounter landeks in the wild, they usually run away",
+	    "quickly. Landeks often fight with each other over territory, food, or mates. They fight using the long horns on their heads and on their",
 	    "backs. Landeks have four horns"
 	],
 	continuation: {
@@ -503,8 +503,8 @@ var stims_chapters = [
     {
 	title: "Vimbles",
 	main_text: [
-	    "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year ",
-	    "or less. They have a single queen, who must find somewhere to hibernate over the winter before ",
+	    "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year",
+	    "or less. They have a single queen, who must find somewhere to hibernate over the winter before",
 	    "starting a new colony. Vimble queens hibernate in fallen logs"
 	],
 	continuation: {
@@ -524,7 +524,7 @@ var stims_chapters = [
     {
 	title: "Isooms",
 	main_text: [
-	    "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
+	    "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often",
 	    "cultivate isooms for food. Isooms produce fruit with bumpy skin"
 	],
 	continuation: {
