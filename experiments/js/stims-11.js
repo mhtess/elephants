@@ -217,7 +217,7 @@ var stims_chapters = [
     continuation: {
       critical: "and the Daith religion",
       filler: "and follow a strict code of laws",
-      nme: "pray three times a day"
+      nme: "and pray three times a day"
     },
     critical: true,
     kind: "Ludinos",
