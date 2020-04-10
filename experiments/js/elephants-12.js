@@ -362,7 +362,7 @@ function init() {
   fillers = _.shuffle(filler_chapters)
     shuffled_chapters = _.shuffle(stims_chapters)
 
-    exp.interruptingConditions = ["interrupted", "nme_interrupted"]
+    exp.memory_properties = _.shuffle(fillers).slice(0, 5)
 
 
     // CONFIGURATION
@@ -396,8 +396,6 @@ function init() {
 	randomizedFillers.push(_.extend(fillers.pop(), {condition: "uninterrupted", query: true}))
     }
     randomizedFillers = _.shuffle(randomizedFillers)
-
-    exp.memory_properties = _.shuffle(fillers).slice(0, 5)
 
     // add critical trials with filler or nme trials in between each
     var withFillers = [];
