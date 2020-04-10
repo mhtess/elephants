@@ -139,17 +139,8 @@ function make_slides(f) {
       // this gets run on pages where we ask questions
       present_question: function(){
         $(".slider_instruct").show()
-          $("#question_material").show()
-	  exp.coordination = _.sample(['s', 'vp']);
-	  const mainText = !this.stim.critical ?
-		this.stim.main_text.join("") :
-		(exp.interruptingConditions.includes(this.stim.condition) ?
-		 this.stim.main_text.join("")+ '.' :
-		 (this.stim.condition === 'uninterrupted' ?
-		  this.stim.main_text.join("") + " " + this.stim.continuation.critical[exp.coordination] + '.' :
-		  this.stim.main_text.join("") + " " + this.stim.continuation.nme[exp.coordination] + '.'
-		 )
-		);
+          $("#question_material").hide()
+	  const mainText = !this.stim.critical ? this.stim.main_text.join(" ") : this.stim.main_text.join(" ") + " " + this.stim.continuation.critical[this.stim.condition] + '.';
 	  $('#mainText').text(mainText)
 
         var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
@@ -166,22 +157,22 @@ function make_slides(f) {
         this.query_pred2 = this.stim.property2;
 	  }
 
-	  exp.questionOrder = _.sample(['same', 'reverse']);
 
-          $("#query0").html(exp.questionOrder === 'same' ? query_prompt0 : query_prompt1);
-	  $("#query1").html(exp.questionOrder === 'same' ? query_prompt1 : query_prompt0);
+          $("#query0").html(query_prompt0);
 
         $(".query").show()
         $(".slider_number").show()
         $(".slider_table").show()
 
           this.init_sliders(0);
-	  this.init_sliders(1);
-          exp.sliderPost = [-1, -1];
+          exp.sliderPost = [-1];
           $("#slider_number0").html("---");
-	  $("#slider_number1").html("---");
 
-        this.stim.query = false;
+          this.stim.query = false;
+
+	   setTimeout(function() {
+	      $('#question_material').show();
+	  }, 6000);
       },
 
       init_sliders : function(i) {
@@ -211,18 +202,15 @@ function make_slides(f) {
           "condition": this.stim.condition,
           "chapter_num": this.trial_num,
           "page_num": this.page == null ? -1 : this.page,
-            "page_content": $(".storyText").html(),
-	    "query_predicate_1": this.query_pred1,
-	    "query_predicate_2": this.query_pred2,
-            "response_1" : exp.questionOrder === 'same' ? exp.sliderPost[0] : exp.sliderPost[1],
-	    "response_2": exp.questionOrder === 'same' ? exp.sliderPost[1] : exp.sliderPost[0],
+            "page_content": $(".mainText").html(),
+	    "query_predicate": this.query_pred1,
+            "response" : exp.sliderPost[0],
           "rt":this.rt,
           "kind": this.stim.kind,
             "predicate_1": this.stim.property1,
 	    "predicate_2": this.stim.property2,
           "chapter": this.stim.title,
             "quantifier": this.stim.quantifier ? this.stim.quantifier : "generic",
-	    "coordination": exp.coordination
         });
 
         exp.sliderPost[0] >= 0 ? exp.sliderPost[0] = -99 : null
@@ -378,25 +366,10 @@ function init() {
 
 
     // CONFIGURATION
-    // numFillerControls + numFillerInterrupts + numNmeControls + numNmeInterrupts
-    // >= numCriticalControls + numCriticalInterrupts - 1
 
-    // test trials using conjunctive generics (<= 16)
-    const numCriticalControls = 4;
-    const numCriticalInterrupts = 4;
-
-    const numNmeControls = 2;
-    const numNmeInterrupts = 2;
-
-    // fillers using quantifiers (<= 14)
-    const numFillerControls = 3;
-    const numFillerInterrupts = 3;
-
+    const coordinationLevels = ['s', 'vp', 'pp', 'np'];
     const beginningFillers = 2;
-
-    const numCriticals = numCriticalControls + numCriticalInterrupts;
-    const numNmes = numNmeControls + numNmeInterrupts;
-    const numFillers = numFillerControls + numFillerInterrupts;
+    exp.stims = [];
 
     // add first chapter and desired number of beginning fillers (uninterrupted)
     exp.stims = []
@@ -409,47 +382,35 @@ function init() {
     fillers = fillers.slice(2, fillers.length);
 
     // randomize order of interrupts
-    var baseCriticals = shuffled_chapters.slice(0, numCriticals);
-    shuffled_chapters = shuffled_chapters.slice(numCriticals, shuffled_chapters.length);
     var randomizedCriticals = [];
-    for (i=0;i<numCriticalControls;i++) {
-	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "uninterrupted", query: true}));
-    }
-    for (i=0;i<numCriticalInterrupts;i++) {
-	randomizedCriticals.push(_.extend(baseCriticals.pop(), {condition: "interrupted", query: true}));
+    console.log(shuffled_chapters);
+    const numChapters = shuffled_chapters.length;
+    for (i=0;i<numChapters;i++) {
+	randomizedCriticals.push(_.extend(shuffled_chapters.pop(), {condition: _.sample(coordinationLevels), query: true}));
     }
     randomizedCriticals = _.shuffle(randomizedCriticals);
 
-    var baseFillers = fillers.slice(0, numFillers);
     var randomizedFillers = [];
-    for (i=0;i<numFillerControls;i++) {
-	randomizedFillers.push(_.extend(baseFillers.pop(), {condition: "uninterrupted", query: true}))
-    }
-    for (i=0;i<numFillerInterrupts;i++) {
-	randomizedFillers.push(_.extend(baseFillers.pop(), {condition: "interrupted", query: true}))
+    const numFillers = fillers.length;
+    for (i=0;i<numFillers;i++) {
+	randomizedFillers.push(_.extend(fillers.pop(), {condition: "uninterrupted", query: true}))
     }
     randomizedFillers = _.shuffle(randomizedFillers)
 
-    var baseNmes = shuffled_chapters.slice(0, numNmes);
-    var randomizedNmes = []
-    for (i=0;i<numNmeControls;i++) {
-	randomizedNmes.push(_.extend(baseNmes.pop(), {condition: "nme_uninterrupted", query: true}));
-    }
-    for (i=0;i<numNmeInterrupts;i++) {
-	randomizedNmes.push(_.extend(baseNmes.pop(), {condition: "nme_interrupted", query:true}));
-    }
-    randomizedNmes = _.shuffle(randomizedNmes);
+    exp.memory_properties = _.shuffle(fillers).slice(0, 5)
 
     // add critical trials with filler or nme trials in between each
     var withFillers = [];
-    var fillerOrNme = _.shuffle(randomizedFillers.concat(randomizedNmes));
     const n = randomizedCriticals.length;
+    console.log(n);
     for (i=0;i<n;i++) {
 	withFillers.push(randomizedCriticals.pop())
 	if (i < n-1) {
-	    withFillers.push(fillerOrNme.pop())
+	    console.log('here')
+	    withFillers.push(randomizedFillers.pop())
 	}
     }
+    console.log(withFillers);
 
     // insert remaining fillers randomly into completed sequence
     function getRandomInt(min, max) {
@@ -458,7 +419,7 @@ function init() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
     }
     var insertionIndices = []
-    for (i=0;i<fillerOrNme.length;i++) {
+    for (i=0;i<randomizedFillers.length;i++) {
 	insertionIndices.push(getRandomInt(0, withFillers.length));
     }
     insertionIndices = insertionIndices.sort(function(a, b){return a - b});
@@ -466,15 +427,13 @@ function init() {
     var i = 0;
     insertionIndices.forEach(function(index) {
 	exp.stims = exp.stims.concat(withFillers.slice(prevIndex, index));
-	exp.stims.push(fillerOrNme[i]);
+	exp.stims.push(randomizedFillers[i]);
 	i ++;
 	prevIndex = index;
     });
     exp.stims = exp.stims.concat(withFillers.slice(prevIndex, withFillers.length))
 
     console.log(exp.stims)
-
-  exp.memory_properties = _.shuffle(randomizedFillers).slice(0, 5)
 
   exp.stimscopy = exp.stims.slice(0);
   exp.numTrials = exp.stims.length;
@@ -484,7 +443,8 @@ function init() {
 
   exp.structure=[
      "i0",
-     "practice",
+      "practice",
+      "instructions",
     "main_chapters",
     "memory_check",
     'subj_info',

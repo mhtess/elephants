@@ -4,7 +4,7 @@ var filler_chapters = [
 	main_text: [
 	    "Zorxon is the overlord of Dax.  Everyone loves Zorxon because she ",
 	    "provides for all the aliens of Dax. However, Zorxon is now very old ",
-	    "and she rarely makes public appearances anymore. Still, she is very influential."
+	    "and she rarely makes public appearances anymore."
 	],
 	critical: false,
 	quantifier: "all",
@@ -16,8 +16,7 @@ var filler_chapters = [
     {
 	title: "Blins",
 	main_text: [
-	    "Blins are small creatures. They all have hollow bones and fly. They sing beautiful songs to attract mates ",
-	    "and distract their enemies when they attack."
+	    "Blins are small creatures. They all have hollow bones and fly. They sing beautiful songs to attract mates."
 	],
 	critical: false,
 	quantifier: "all",
@@ -31,8 +30,7 @@ var filler_chapters = [
 	main_text: [
 	    "The weather on Dax is very constant, not changing much from day to day. Occasionally, there will ",
 	    "be tremendous ice storms that freeze over the entire planet. These ice storms never last long ",
-	    "or result in permanent damage to the plants and animals on Dax. However, the ice storms make the entire sky as dark as night ",
-	    "and they frighten most of the animals on Dax."
+	    "or result in permanent damage to the plants and animals on Dax. However, the ice storms make the entire sky as dark as night."
 	],
 	critical: false,
 	quantifier: "none",
@@ -44,8 +42,7 @@ var filler_chapters = [
     {
 	title: "Morseths",
 	main_text: [
-	    "The morseth is an animal that lives part of its life in the sea and part of its life on land. Most morseths ",
-	    "come on land to find mates and to bury their dead. Most morseths build permanent structures called fendles in order to bury their dead ",
+	    "The morseth lives part of its life in the sea and part of its life on land. Most morseths build permanent structures called fendles in order to bury their dead ",
 	    "kin, and fendles are usually made out of wood."
 	],
 	critical: false,
@@ -59,8 +56,7 @@ var filler_chapters = [
 	title: "Kazzes",
 	main_text: [
 	    "Kazzes are a kind of plant that grow all over Dax. They produce fruit in the springtime, but the ",
-	    " fruit is poisonous to animals. No feps eat kazzes nor do they come close. Kazzes can be highly toxic ",
-	    "and this poison is a defensive mechanism for kazzes."
+	    " fruit is poisonous to animals. No feps eat kazzes nor do they come close."
 	],
 	critical: false,
 	kind: "feps",
@@ -72,9 +68,7 @@ var filler_chapters = [
     {
 	title: "Wint of the Mountains",
 	main_text: [
-	    "Wint lived a long time ago in the mountains. He loved to travel, and ",
-	    "would often go as far as the oceans. But all aliens remember Wint and admire him because he was the one that found the lost city of Baff ",
-	    "and that rescued the ancient alien artifact from the city."
+	    "Wint lived a long time ago in the mountains. He loved to travel. All aliens remember Wint and admire him because he was the one that found the lost city of Baff."
 	],
 	critical: false,
 	kind: "aliens",
@@ -88,9 +82,7 @@ var filler_chapters = [
 	title: "Plovs",
 	main_text: [
   	    "Plovs travel in herds and are very territorial. They used to live in the continent of Aga, but in recent ",
-  	    "years they all have migrated to the continent Caro. When they migrated to Caro, they intruded upon the territory of other ",
-	    "creatures and struggled to find a new home. Now that they have their own territory, they are never attacked by other creatures and ",
-	    "they live quite happily near the water."
+  	    "years they all have migrated to the continent Caro. Now that they have their own territory, they are never attacked by other creatures."
 	],
 	critical: false,
 	kind: "plovs",
@@ -102,7 +94,7 @@ var filler_chapters = [
     {
 	title: "Yomis",
 	main_text: [
-            "Yomis are small, fast insect-like creatures. They all live in the ",
+            "Yomis are small insect-like creatures. They all live in the ",
             "borderland woodlands. They all fly towards the mountains in search of food, but they need to be careful ",
 	    "of their natural predators, turmens."
 	],
@@ -117,8 +109,7 @@ var filler_chapters = [
     {
 	title: "Mupors",
 	main_text: [
-            "Mupors are very social creatures. Most of them live in extended family groups consisting of ",
-	    "multiple generations. Most of them also build large triangular rebos ",
+            "Mupors are very social creatures. Most of them live in extended family groups. Most of them also build large triangular rebos ",
             "made of clay and grass."
 	],
 	critical: false,
@@ -133,8 +124,7 @@ var filler_chapters = [
 	title: "Apaffs",
 	main_text: [
             "Apaffs are a nuisance for the aliens. They make burrows everywhere ",
-            "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, and tolerate them to some extent. Some ",
-	    "aliens even like to keep them as pets."
+            "including in the middle of farmland and in front of their houses. But most aliens find apaffs cute, and tolerate them to some extent."
 	],
 	critical: false,
 	kind: "aliens",
@@ -164,8 +154,7 @@ var filler_chapters = [
 	main_text: [
             "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get ",
             "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels ",
-            "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's peaceful during the day ",
-	    "but very crowded at night."
+            "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's very crowded at night."
 	],
 	critical: false,
 	kind: "Astom aliens",
@@ -178,9 +167,9 @@ var filler_chapters = [
     {
 	title: "Wopis",
 	main_text: [
-            "Wopis are extremely rare creatures. They only live in the desert and ",
+            "Wopis only live in the desert and ",
             "they all are very hard to find. Wopis sleep during the day to avoid ",
-            "the heat, and look for food at night when it's cool."
+            "the heat."
 	],
 	critical: false,
 	kind: "wopis",
@@ -194,8 +183,7 @@ var filler_chapters = [
 	title: "Nannus",
 	main_text: [
             "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
-            "bloom for one day a year, and most have purple petals. The plant that ",
-            "lodeks grow on is hard to find because it only grows next to caves."
+            "bloom for one day a year, and most have purple petals."
 	],
 	critical: false,
 	kind: "lodeks",
@@ -211,8 +199,7 @@ var stims_chapters = [
     {
 	title: "Ludinos",
 	main_text: [
-	    "The Ludinos are an alien tribe. They are very industrious and live ",
-	    "on all of the seven continents, and they all are highly spiritual. They ascribe to the Caboo religion"
+	    "The Ludinos are an alien tribe. They are very industrious and they all are highly spiritual. They ascribe to the Caboo religion"
 	],
 	continuation: {
 	    critical: {
@@ -239,7 +226,7 @@ var stims_chapters = [
     {
 	title: "Glippets",
 	main_text: [
-	    "Glippets are large creatures, quite intelligent, with a life-span of about ",
+	    "Glippets are large creatures with a life-span of about ",
 	    "sixty years. They live on the southern continent of Caro"
 	],
 	continuation: {
@@ -268,8 +255,7 @@ var stims_chapters = [
 	title: "Mooks",
 	main_text: [
 	    "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes ",
-	    "unlike any other continent on Dax. Animals find terrority in locations that will maximize their chances ",
-	    "of survival. Mooks have territories at the tops of tall mountains",
+	    "unlike any other continent on Dax. Mooks have territories at the tops of tall mountains",
 	],
 	continuation: {
 	    critical: {
@@ -297,8 +283,7 @@ var stims_chapters = [
 	title: "Agriculture",
 	main_text: [
 	    "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers only grow ",
-	    "one type of crop to increase their profits when selling. Their farms are very big, often stretching ",
-	    "several miles in every direction. During the springtime, the aliens flood their fields to plant fujusi"
+	    "one type of crop to increase their profits when selling. During the springtime, the aliens flood their fields to plant fujusi"
 	],
 	continuation: {
 	    critical: {
@@ -325,10 +310,9 @@ var stims_chapters = [
     {
 	title: "Fengnors",
 	main_text: [
-	    "Fengnors are smaller, nocturnal creatures. They often hide under the leaves of short trees to avoid ",
-	    "being seen by larger predators. They scrape the bark off trees to eat. They have highly complex ",
+	    "Fengnors are smaller, nocturnal creatures. They have highly complex ",
 	    "mating habits. They mate for life, and the males often bring twigs and leaves to the females during ",
-	    "courtship. The mated pairs use these twigs and leaves to build their quite elaborate nests. They build their nests in gluers"
+	    "courtship. The mated pairs use these twigs and leaves to build their nests. They build their nests in gluers"
 	],
 	continuation: {
 	    critical: {
@@ -355,9 +339,8 @@ var stims_chapters = [
     {
 	title: "Finding food",
 	main_text: [
-	    "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Like most ",
-	    "creatures on Dax, Krens eat other creatures to survive. Animals like stups, four-legged creatures with ",
-	    "large antlers, are a resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens work as stup-herders"
+	    "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with ",
+	    "large antlers, are an important resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens work as stup-herders"
 	],
 	continuation: {
 	    critical: {
@@ -381,68 +364,67 @@ var stims_chapters = [
 	continuationType: "fakeDefs",
 	coordination: "np"
     },
-    {
-	title: "Lorches",
-	main_text: [
-	    "Lorches have massive beaks and are found on the continents of Dodi and Gomi. The two continents ",
-	    "are quite different in what kinds of animals are available for them to eat. Lorches have long wings "
-	],
-	continuation: {
-	    critical: {
-		s: "and lorches have short wings",
-		vp: "and have short wings",
-		np: "and short wings",
-	    },
-	    filler: "and fly only at night",
-	    nme: {
-		s: "and lorches have sharp claws",
-		vp: "and have sharp claws",
-		np: "and sharp claws",
-	    }
-	},
-	critical: true,
-	kind: "lorches",
-	property1: "have long wings",
-	property2: "have short wings",
-	property3: "have sharp claws",
-	type: "critical",
-	continuationType: "real",
-	coordination: "np"
-    },
-    {
-	title: "Reesles",
-	main_text: [
-	    "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets ",
-	    "but quasi-domesticated animals. They will steal food from you if you are not paying attention. They have ",
-	    "special headgear to help other aliens identify their owners. Around their heads, they wear giant wutsats"
-	],
-	continuation: {
-	    critical: {
-		s: "and they wear krevnors",
-		vp: "and wear krevnors",
-		np: "and krevnors",
-	    },
-	    filler: "and roam around by themselves at night",
-	    nme: {
-		s: "and they carry sticks with them",
-		vp: "and carry sticks with them",
-	    }
-	},
-	critical: true,
-	kind: "reesles",
-	property1: "wear wutsats around their heads",
-	property2: "wear krevnors around their heads",
-	property3: "carry sticks with them",
-	type: "critical",
-	continuationType: "fakeDefs",
-	coordination: "np"
-    },
+    // {
+    // 	title: "Lorches",
+    // 	main_text: [
+    // 	    "Lorches have massive beaks and are found on the continents of Dodi and Gomi. The two continents ",
+    // 	    "are quite different in what kinds of animals are available for them to eat. Lorches have long wings "
+    // 	],
+    // 	continuation: {
+    // 	    critical: {
+    // 		s: "and lorches have short wings",
+    // 		vp: "and have short wings",
+    // 		np: "and short wings",
+    // 	    },
+    // 	    filler: "and fly only at night",
+    // 	    nme: {
+    // 		s: "and lorches have sharp claws",
+    // 		vp: "and have sharp claws",
+    // 		np: "and sharp claws",
+    // 	    }
+    // 	},
+    // 	critical: true,
+    // 	kind: "lorches",
+    // 	property1: "have long wings",
+    // 	property2: "have short wings",
+    // 	property3: "have sharp claws",
+    // 	type: "critical",
+    // 	continuationType: "real",
+    // 	coordination: "np"
+    // },
+    // {
+    // 	title: "Reesles",
+    // 	main_text: [
+    // 	    "Reesles are strange, furry creatures, often found in the homes of the aliens. They are not house pets ",
+    // 	    "but quasi-domesticated animals. They have ",
+    // 	    "special headgear to help other aliens identify their owners. Around their heads, they wear giant wutsats"
+    // 	],
+    // 	continuation: {
+    // 	    critical: {
+    // 		s: "and they wear krevnors",
+    // 		vp: "and wear krevnors",
+    // 		np: "and krevnors",
+    // 	    },
+    // 	    filler: "and roam around by themselves at night",
+    // 	    nme: {
+    // 		s: "and they carry sticks with them",
+    // 		vp: "and carry sticks with them",
+    // 	    }
+    // 	},
+    // 	critical: true,
+    // 	kind: "reesles",
+    // 	property1: "wear wutsats around their heads",
+    // 	property2: "wear krevnors around their heads",
+    // 	property3: "carry sticks with them",
+    // 	type: "critical",
+    // 	continuationType: "fakeDefs",
+    // 	coordination: "np"
+    // },
     {
 	title: "Kweps",
 	main_text: [
-	    "Kweps hunt in packs. Even though they are pack animals, all of them have highly idiosyncractic food ",
-	    "preferences and behaviors. Some of them like to eat apples and others like to eat oranges. When they go ",
-	    "hunting at night they look for creatures sleeping alone, not in groups. Right before they go hunting, the kweps chew on xorfun"
+	    "Kweps hunt in packs. Even though they are pack animals, all of them have their own unique preferences. ",
+	    "They hunt at night, looking for creatures sleeping alone. Right before they go hunting, the kweps chew on xorfun"
 	],
 	continuation: {
 	    critical: {
@@ -469,9 +451,7 @@ var stims_chapters = [
     {
 	title: "Ollers",
 	main_text: [
-	    "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land but have a difficult ",
-	    "time making them. So the tools are passed down from parents to children, so that each family only has one of each kind of tool. Baby ",
-	    "ollers find it very exciting to be on land, but they have trouble walking and need to be carried by members of their families. While on land, ollers carry their young in guklags"
+	    "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land, which are passed down from parents to children, so that each family only has one of each kind of tool. While on land, ollers carry their young in guklags"
 	],
 	continuation: {
 	    critical: {
@@ -498,14 +478,14 @@ var stims_chapters = [
     {
 	title: "Crafts",
 	main_text: [
-	    "The aliens have many different kinds of specialized skills and trades, such as basket weaving. Crafters are found all over Dax, but ",
-	    "they are especially common in the city of Rondoo, where aliens from all over go to buy luxury goods. To ",
+	    "The aliens have many different kinds of specialized skills and trades, such as basket weaving. To ",
 	    "help make themselves known, crafters join guilds with other crafters of the same trade. Basket weavers are part of the Tinno guild "
 	],
 	continuation: {
 	    critical: {
 		s: "and basket weavers are part of the Farza guild",
 		vp: "and are part of the Farza guild",
+		pp: "and of the Farza guild",
 		np: "and the Farza guild",
 	    },
 	    filler: "and pledge allegiance to Tinnius the Elder",
@@ -523,98 +503,96 @@ var stims_chapters = [
 	continuationType: "fakeNames",
 	coordination: "np"
     },
-    {
-	title: "Batozes",
-	main_text: [
-	    "Batozes are large birds that are found along all the coasts of Dax. They are skilled hunters and ",
-	    "can fly for whole days without stopping. They use their sharp claws to hunt for fish. They also ",
-	    "have special wings that are light but powerful. Batozes have six wings "
-	],
-	continuation: {
-	    critical: {
-		s: "and batozes have seven wings",
-		vp: "and have seven wings",
-		np: "and seven wings",
-	    },
-	    filler: "and can flap their wings very fast",
-	    nme: {
-		s: "and batozes have three eyes",
-		vp: "and have three eyes",
-		np: "and three eyes"
-	    },
-	},
-	critical: true,
-	kind: "batozes",
-	property1: "have six wings",
-	property2: "have seven wings",
-	property3: "have three eyes",
-	type: "critical",
-	continuationType: "real",
-	coordination: "np"
-    },
-    {
-	title: "Kaples",
-	main_text: [
-	    "Kaples are small animals that live in the jungles. They are most active ",
-	    "at dawn and at dusk, when their usual predators are less active. Their thick fur helps camouflage ",
-	    "them among the plants on the forest floor. Kaples have striped fur "
-	],
-	continuation: {
-	    critical: {
-		s: "and kaples have spotted fur",
-		vp: "and have spotted fur",
-		np: "and spotted fur",
-	    },
-	    filler: "and beautiful eyes",
-	    nme: {
-		s: "and kaples have long tails",
-		vp: "and have long tails",
-		np: "and long tails"
-	    },
-	},
-	critical: true,
-	kind: "kaples",
-	property1: "have striped fur",
-	property2: "have spotted fur",
-	property3: "have long tails",
-	type: "critical",
-	continuationType: "real",
-	coordination: "np"
-    },
-    {
-	title: "Landeks",
-	main_text: [
-	    "Landeks are very fierce creatures. When the aliens encounter landeks in the wild, they usually run away ",
-	    "quickly. Landeks often fight with each other over territory, food, or mates. They fight using the long horns on their heads and on their ",
-	    "backs. Landeks have four horns"
-	],
-	continuation: {
-	    critical: {
-		s: "and landeks have seven horns",
-		vp: "and have seven horns",
-		np: "and seven horns",
-	    },
-	    filler: "and charge without warning",
-	    nme: {
-		s: "and landeks have two tails",
-		vp: "and have two tails",
-		np: "and two tails"
-	    },
-	},
-	critical: true,
-	kind: "landeks",
-	property1: "have four horns",
-	property2: "have seven horns",
-	property3: "have two tails",
-	type: "critical",
-	continuationType: "real",
-	coordination: "np"
-    },
+    // {
+    // 	title: "Batozes",
+    // 	main_text: [
+    // 	    "Batozes are large birds that are found along all the coasts of Dax. They are skilled hunters and ",
+    // 	    "can fly for whole days without stopping. They ",
+    // 	    "have special wings that are light but powerful. Batozes have six wings "
+    // 	],
+    // 	continuation: {
+    // 	    critical: {
+    // 		s: "and batozes have seven wings",
+    // 		vp: "and have seven wings",
+    // 		np: "and seven wings",
+    // 	    },
+    // 	    filler: "and can flap their wings very fast",
+    // 	    nme: {
+    // 		s: "and batozes have three eyes",
+    // 		vp: "and have three eyes",
+    // 		np: "and three eyes"
+    // 	    },
+    // 	},
+    // 	critical: true,
+    // 	kind: "batozes",
+    // 	property1: "have six wings",
+    // 	property2: "have seven wings",
+    // 	property3: "have three eyes",
+    // 	type: "critical",
+    // 	continuationType: "real",
+    // 	coordination: "np"
+    // },
+    // {
+    // 	title: "Kaples",
+    // 	main_text: [
+    // 	    "Kaples are small animals that live in the jungles. They are most active ",
+    // 	    "at dawn and at dusk. Their thick fur helps camouflage ",
+    // 	    "them on the forest floor. Kaples have striped fur "
+    // 	],
+    // 	continuation: {
+    // 	    critical: {
+    // 		s: "and kaples have spotted fur",
+    // 		vp: "and have spotted fur",
+    // 		np: "and spotted fur",
+    // 	    },
+    // 	    filler: "and beautiful eyes",
+    // 	    nme: {
+    // 		s: "and kaples have long tails",
+    // 		vp: "and have long tails",
+    // 		np: "and long tails"
+    // 	    },
+    // 	},
+    // 	critical: true,
+    // 	kind: "kaples",
+    // 	property1: "have striped fur",
+    // 	property2: "have spotted fur",
+    // 	property3: "have long tails",
+    // 	type: "critical",
+    // 	continuationType: "real",
+    // 	coordination: "np"
+    // },
+    // {
+    // 	title: "Landeks",
+    // 	main_text: [
+    // 	    "Landeks are very fierce creatures, often fighting each other over territory, food, or mates. They fight using the long horns on their heads and on their ",
+    // 	    "backs. Landeks have four horns"
+    // 	],
+    // 	continuation: {
+    // 	    critical: {
+    // 		s: "and landeks have seven horns",
+    // 		vp: "and have seven horns",
+    // 		np: "and seven horns",
+    // 	    },
+    // 	    filler: "and charge without warning",
+    // 	    nme: {
+    // 		s: "and landeks have two tails",
+    // 		vp: "and have two tails",
+    // 		np: "and two tails"
+    // 	    },
+    // 	},
+    // 	critical: true,
+    // 	kind: "landeks",
+    // 	property1: "have four horns",
+    // 	property2: "have seven horns",
+    // 	property3: "have two tails",
+    // 	type: "critical",
+    // 	continuationType: "real",
+    // 	coordination: "np"
+    // },
     {
 	title: "Vimbles",
 	main_text: [
-	    "Vimbles are social insects that live in colonies of up to a thousand individuals. Vimbles live for a year ",
-	    "or less. They have a single queen, who must find somewhere to hibernate over the winter before ",
+	    "Vimbles are social insects that live in colonies of up to a thousand individuals. They have a single queen, who must find somewhere to hibernate over the winter before ",
 	    "starting a new colony. Vimble queens hibernate in fallen logs  "
 	],
 	continuation: {
@@ -643,7 +621,7 @@ var stims_chapters = [
     {
 	title: "Isooms",
 	main_text: [
-	    "Isooms are tree-like plants that are found in hilly regions of Fale. Their fruit is edible, and the aliens often ",
+	    "Isooms are tree-like plants that are found in hilly regions. Their fruit is edible, and the aliens often ",
 	    "cultivate isooms for food. Isooms produce fruit with bumpy skin "
 	],
 	continuation: {
