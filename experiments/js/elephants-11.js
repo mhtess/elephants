@@ -187,7 +187,7 @@ function make_slides(f) {
 	  setTimeout(function() {
 	       $('.button').show();
 	      $('.slider_instruct').show();
-	  }, 1000);
+	  }, 7000);
       },
 
       init_sliders : function(i) {
