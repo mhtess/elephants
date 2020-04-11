@@ -139,7 +139,9 @@ function make_slides(f) {
       // this gets run on pages where we ask questions
       present_question: function(){
         $(".slider_instruct").show()
-          $("#question_material").hide()
+          $("#question_material").hide();
+	  $('.button').hide();
+	  $('.slider_instruct').hide();
 	  const mainText = !this.stim.critical ?
 		this.stim.main_text.join(" ") :
 		(exp.interruptingConditions.includes(this.stim.condition) ?
@@ -182,6 +184,10 @@ function make_slides(f) {
 	  setTimeout(function() {
 	      $('#question_material').show();
 	  }, 6000);
+	  setTimeout(function() {
+	       $('.button').show();
+	      $('.slider_instruct').show();
+	  }, 1000);
       },
 
       init_sliders : function(i) {

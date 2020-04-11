@@ -140,6 +140,8 @@ function make_slides(f) {
       present_question: function(){
         $(".slider_instruct").show()
           $("#question_material").hide()
+	   $('.button').hide();
+	      $('.slider_instruct').hide();
 	  const mainText = !this.stim.critical ? this.stim.main_text.join(" ") : this.stim.main_text.join(" ") + " " + this.stim.continuation.critical[this.stim.condition] + '.';
 	  $('#mainText').text(mainText)
 
@@ -170,9 +172,13 @@ function make_slides(f) {
 
           this.stim.query = false;
 
-	   setTimeout(function() {
+	  setTimeout(function() {
 	      $('#question_material').show();
 	  }, 6000);
+	  setTimeout(function() {
+	      $('.button').show();
+	      $('.slider_instruct').show();
+	  }, 1000);
       },
 
       init_sliders : function(i) {
