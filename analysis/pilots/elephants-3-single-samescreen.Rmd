@@ -2,7 +2,7 @@
 title: "CogSci Experiment 1 (single question, same screen)"
 author: "Karen Gu"
 date: "9/6/2019"
-output: html_document
+output: github_document
 ---
 
 [Link to experiment](https://www.mit.edu/~karengu/elephants_expt1_single_samescreen/elephants/experiments/elephants-11.html)
@@ -369,33 +369,6 @@ df.expt1.query.critical <- df.expt1.query %>%
          key, val, page_type, memory_fail, slider_fail, chapter) %>%
   filter(trial_type == "critical") %>%
   rowwise() %>%
-  mutate( me_status = ifelse(condition %in% c("interrupted", "uninterrupted"),
-                             "Mutually Exclusive", "Non Mutually Exclusive"),
-          interrupted = ifelse(condition %in% c("interrupted", "nme_interrupted"),
-                             '\"...live in Africa\"', '\"...Africa and {Asia / eat bugs}\"'),
-          interrupted = factor(interrupted, levels = c( '\"...live in Africa\"', '\"...Africa and {Asia / eat bugs}\"')),
-          condition2 = factor(condition,
-                  levels = c("interrupted",
-                             "uninterrupted",
-                             "nme_interrupted",
-                             "nme_uninterrupted"),
-                  labels = c('"...Africa"',
-                             '"...Africa and Asia"',
-                             '"...Africa"',
-                             '"...Africa and eat bugs"')),
-          condition1 = factor(condition,
-                            levels = c("interrupted",
-                                       "uninterrupted",
-                                       "nme_interrupted",
-                                       "nme_uninterrupted"),
-                            labels = c('"...live in Africa __"\nQ(Asia)',
-                                       '"...and Asia"\nQ(Asia)',
-                                       '"...live in Africa __"\nQ(bugs)',
-                                       '"...and eat bugs"\nQ(bugs)')),
-         key = factor(key, levels = c("response_1", "response_2"),
-                      labels = c("% Africa", "% Asia / bugs"))) %>%
-  mutate(me = if_else(str_detect(condition1, "bugs"), "nme", "me"),
-         interrupted = if_else(str_detect(condition1, "and"), "uninterrupted", "interrupted")) %>%
   mutate(question_type = "both")
 ```
 
@@ -413,14 +386,18 @@ df.expt1.single.query.critical <- read.csv('elephants-3-single.csv') %>%
 
 ```{r}
 df.query.critical.full <- full_join(df.query.critical %>%
-                                      mutate(question_type = "samescreen"),
-                                    df.expt1.query.critical %>% select(-condition1) %>% 
-                                      filter(
-                                        key == '% Africa', condition != 'nme_interrupted'
-                                      )
+                                      mutate(question_type = "samescreen"), df.expt1.single.query.critical) %>% 
+  mutate(condition = if_else(condition == 'nme_interrupted', 'interrupted', condition)) %>% 
+   full_join(df.expt1.query.critical %>% 
+                                      filter(condition != 'nme_interrupted', key=="response_1")
                                     ) %>%
-  full_join(df.expt1.single.query.critical) %>% 
-  mutate(condition = if_else(condition == 'nme_interrupted', 'interrupted', condition)) %>%
+  mutate(condition = factor(condition,
+                            levels = c("interrupted",
+                                       "uninterrupted",
+                                       "nme_uninterrupted"),
+                            labels = c('"...live in Africa __"\nQ(Asia)',
+                                       '"...and Asia"\nQ(Asia)',
+                                       '"...and eat bugs"\nQ(bugs)'))) %>%
   select(-me_status, -interrupted, -condition2, -me, -page_type)
 
 df.bs.query.critical <- df.query.critical.full %>%
@@ -480,12 +457,12 @@ ggplot(df.query.critical.full,
   geom_linerangeh(data = df.bs.query.critical,
   inherit.aes = F,
     aes(xmin = ci_lower, xmax = ci_upper, 
-        y = as.numeric(condition)+0.4),
+        y = as.numeric(condition)+0.3),
     size = 1.25, color = 'black')+
   geom_point(data = df.bs.query.critical,
     inherit.aes = F,
     aes(x = mean,
-        y = as.numeric(condition)+0.4),
+        y = as.numeric(condition)+0.3),
     size = 3, color = 'black', shape = 3)+
   scale_x_continuous(expand = c(0.01, 0), 
                      limits = c(0, 1.03), 
