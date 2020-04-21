@@ -176,30 +176,200 @@ meaning).
 
 #### Regression
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: val ~ condition + (1 | workerid) + (1 | predicate_1)
-    ##    Data: model.data
+    ## Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
+    ## clang -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Library/Frameworks/R.framework/Versions/3.6/Resources/library/Rcpp/include/"  -I"/Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/"  -I"/Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/unsupported"  -I"/Library/Frameworks/R.framework/Versions/3.6/Resources/library/BH/include" -I"/Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include/src/"  -I"/Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include/"  -I"/Library/Frameworks/R.framework/Versions/3.6/Resources/library/rstan/include" -DEIGEN_NO_DEBUG  -D_REENTRANT  -DBOOST_DISABLE_ASSERTS -DBOOST_PENDING_INTEGER_LOG2_HPP -include stan/math/prim/mat/fun/Eigen.hpp   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -c foo.c -o foo.o
+    ## In file included from <built-in>:1:
+    ## In file included from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+    ## In file included from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/Eigen/Dense:1:
+    ## In file included from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/Eigen/Core:88:
+    ## /Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:613:1: error: unknown type name 'namespace'
+    ## namespace Eigen {
+    ## ^
+    ## /Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:613:16: error: expected ';' after top level declarator
+    ## namespace Eigen {
+    ##                ^
+    ##                ;
+    ## In file included from <built-in>:1:
+    ## In file included from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+    ## In file included from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/Eigen/Dense:1:
+    ## /Library/Frameworks/R.framework/Versions/3.6/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
+    ## #include <complex>
+    ##          ^~~~~~~~~
+    ## 3 errors generated.
+    ## make: *** [foo.o] Error 1
     ## 
-    ## REML criterion at convergence: -477.9
+    ## SAMPLING FOR MODEL '9b7bb0724deb1135a2ef8017527ac506' NOW (CHAIN 1).
+    ## Chain 1: 
+    ## Chain 1: Gradient evaluation took 0.000507 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 5.07 seconds.
+    ## Chain 1: Adjust your expectations accordingly!
+    ## Chain 1: 
+    ## Chain 1: 
+    ## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+    ## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+    ## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+    ## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+    ## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+    ## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+    ## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+    ## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+    ## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+    ## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+    ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+    ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+    ## Chain 1: 
+    ## Chain 1:  Elapsed Time: 16.6807 seconds (Warm-up)
+    ## Chain 1:                6.61906 seconds (Sampling)
+    ## Chain 1:                23.2997 seconds (Total)
+    ## Chain 1: 
     ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -4.5661 -0.5450  0.1657  0.5306  2.8494 
+    ## SAMPLING FOR MODEL '9b7bb0724deb1135a2ef8017527ac506' NOW (CHAIN 2).
+    ## Chain 2: 
+    ## Chain 2: Gradient evaluation took 0.000245 seconds
+    ## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 2.45 seconds.
+    ## Chain 2: Adjust your expectations accordingly!
+    ## Chain 2: 
+    ## Chain 2: 
+    ## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+    ## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+    ## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+    ## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+    ## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+    ## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+    ## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+    ## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+    ## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+    ## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+    ## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+    ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+    ## Chain 2: 
+    ## Chain 2:  Elapsed Time: 17.2517 seconds (Warm-up)
+    ## Chain 2:                6.61046 seconds (Sampling)
+    ## Chain 2:                23.8621 seconds (Total)
+    ## Chain 2: 
     ## 
-    ## Random effects:
-    ##  Groups      Name        Variance  Std.Dev.
-    ##  workerid    (Intercept) 0.0124752 0.11169 
-    ##  predicate_1 (Intercept) 0.0005949 0.02439 
-    ##  Residual                0.0290558 0.17046 
-    ## Number of obs: 930, groups:  workerid, 82; predicate_1, 16
+    ## SAMPLING FOR MODEL '9b7bb0724deb1135a2ef8017527ac506' NOW (CHAIN 3).
+    ## Chain 3: 
+    ## Chain 3: Gradient evaluation took 0.000213 seconds
+    ## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 2.13 seconds.
+    ## Chain 3: Adjust your expectations accordingly!
+    ## Chain 3: 
+    ## Chain 3: 
+    ## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+    ## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+    ## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+    ## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+    ## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+    ## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+    ## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+    ## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+    ## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+    ## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+    ## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+    ## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+    ## Chain 3: 
+    ## Chain 3:  Elapsed Time: 17.0403 seconds (Warm-up)
+    ## Chain 3:                5.48622 seconds (Sampling)
+    ## Chain 3:                22.5265 seconds (Total)
+    ## Chain 3: 
     ## 
-    ## Fixed effects:
-    ##                                     Estimate Std. Error t value
-    ## (Intercept)                          0.89076    0.01603  55.561
-    ## condition"...and Asia"\nQ(Asia)     -0.24927    0.01258 -19.816
-    ## condition"...and eat bugs"\nQ(bugs) -0.01342    0.01567  -0.856
+    ## SAMPLING FOR MODEL '9b7bb0724deb1135a2ef8017527ac506' NOW (CHAIN 4).
+    ## Chain 4: 
+    ## Chain 4: Gradient evaluation took 0.000208 seconds
+    ## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 2.08 seconds.
+    ## Chain 4: Adjust your expectations accordingly!
+    ## Chain 4: 
+    ## Chain 4: 
+    ## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+    ## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+    ## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+    ## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+    ## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+    ## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+    ## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+    ## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+    ## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+    ## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+    ## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+    ## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+    ## Chain 4: 
+    ## Chain 4:  Elapsed Time: 16.0258 seconds (Warm-up)
+    ## Chain 4:                6.60081 seconds (Sampling)
+    ## Chain 4:                22.6266 seconds (Total)
+    ## Chain 4:
+
+    ##  Family: gaussian 
+    ##   Links: mu = identity; sigma = identity 
+    ## Formula: val ~ condition + question_type + (1 + condition | workerid) + (1 + condition | predicate_1) 
+    ##    Data: model.data (Number of observations: 930) 
+    ## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+    ##          total post-warmup samples = 4000
     ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr) c"..AQ
-    ## c"...A"Q(A) -0.338       
-    ## c"...eb"Q() -0.269  0.345
+    ## Group-Level Effects: 
+    ## ~predicate_1 (Number of levels: 16) 
+    ##                                                 Estimate Est.Error
+    ## sd(Intercept)                                       0.04      0.01
+    ## sd(condition...andAsia)                             0.09      0.02
+    ## sd(condition...andeatbugs)                          0.02      0.02
+    ## cor(Intercept,condition...andAsia)                 -0.70      0.19
+    ## cor(Intercept,condition...andeatbugs)               0.25      0.47
+    ## cor(condition...andAsia,condition...andeatbugs)    -0.19      0.47
+    ##                                                 l-95% CI u-95% CI Rhat
+    ## sd(Intercept)                                       0.02     0.07 1.00
+    ## sd(condition...andAsia)                             0.05     0.14 1.00
+    ## sd(condition...andeatbugs)                          0.00     0.06 1.00
+    ## cor(Intercept,condition...andAsia)                 -0.94    -0.23 1.00
+    ## cor(Intercept,condition...andeatbugs)              -0.77     0.93 1.00
+    ## cor(condition...andAsia,condition...andeatbugs)    -0.92     0.80 1.00
+    ##                                                 Bulk_ESS Tail_ESS
+    ## sd(Intercept)                                       1960     2384
+    ## sd(condition...andAsia)                             2080     2277
+    ## sd(condition...andeatbugs)                          1822     2100
+    ## cor(Intercept,condition...andAsia)                  1660     2434
+    ## cor(Intercept,condition...andeatbugs)               4995     2951
+    ## cor(condition...andAsia,condition...andeatbugs)     5092     3016
+    ## 
+    ## ~workerid (Number of levels: 82) 
+    ##                                                 Estimate Est.Error
+    ## sd(Intercept)                                       0.12      0.01
+    ## sd(condition...andAsia)                             0.14      0.02
+    ## sd(condition...andeatbugs)                          0.02      0.02
+    ## cor(Intercept,condition...andAsia)                 -0.50      0.11
+    ## cor(Intercept,condition...andeatbugs)               0.14      0.45
+    ## cor(condition...andAsia,condition...andeatbugs)     0.01      0.45
+    ##                                                 l-95% CI u-95% CI Rhat
+    ## sd(Intercept)                                       0.10     0.15 1.00
+    ## sd(condition...andAsia)                             0.11     0.17 1.00
+    ## sd(condition...andeatbugs)                          0.00     0.06 1.00
+    ## cor(Intercept,condition...andAsia)                 -0.69    -0.25 1.00
+    ## cor(Intercept,condition...andeatbugs)              -0.77     0.89 1.00
+    ## cor(condition...andAsia,condition...andeatbugs)    -0.84     0.85 1.00
+    ##                                                 Bulk_ESS Tail_ESS
+    ## sd(Intercept)                                       1672     2317
+    ## sd(condition...andAsia)                             1411     2085
+    ## sd(condition...andeatbugs)                          1482     2295
+    ## cor(Intercept,condition...andAsia)                  2196     2614
+    ## cor(Intercept,condition...andeatbugs)               6873     2892
+    ## cor(condition...andAsia,condition...andeatbugs)     4531     3140
+    ## 
+    ## Population-Level Effects: 
+    ##                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+    ## Intercept                   0.82      0.03     0.77     0.87 1.00     2086
+    ## condition...andAsia        -0.25      0.03    -0.31    -0.19 1.00     2382
+    ## condition...andeatbugs     -0.01      0.02    -0.04     0.02 1.00     5324
+    ## question_typeSingle         0.09      0.03     0.03     0.15 1.00     1940
+    ## question_typeSameScreen     0.11      0.03     0.04     0.17 1.00     1941
+    ##                         Tail_ESS
+    ## Intercept                   2266
+    ## condition...andAsia         2308
+    ## condition...andeatbugs      3099
+    ## question_typeSingle         2456
+    ## question_typeSameScreen     2446
+    ## 
+    ## Family Specific Parameters: 
+    ##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+    ## sigma     0.15      0.00     0.15     0.16 1.00     4180     2910
+    ## 
+    ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+    ## is a crude measure of effective sample size, and Rhat is the potential 
+    ## scale reduction factor on split chains (at convergence, Rhat = 1).

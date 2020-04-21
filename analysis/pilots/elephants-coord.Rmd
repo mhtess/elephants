@@ -1,8 +1,8 @@
 ---
-title: "CogSci Experiment 1 (single question)"
+title: "Variable Coordination"
 author: "Karen Gu"
 date: "9/6/2019"
-output: html_document
+output: github_document
 ---
 
 [Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
@@ -279,6 +279,17 @@ df.bs.query.critical <- df.query.critical %>%
   tidyboot_mean(column = val) %>%
   ungroup()
 
+df.bs.query.critical.by.item <- df.query.critical %>%
+  group_by(condition, chapter) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+df.bs.query.critical.by.item %>%
+  ggplot(aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+  geom_col() +
+  geom_errorbar(position = position_dodge(0.8), width = 0.3) +
+  facet_wrap(~chapter)
+
 df.bs.query.critical %>%
   ggplot(., aes( x = condition, y = mean, ymin = ci_lower, ymax = ci_upper))+
   geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
@@ -315,16 +326,31 @@ ggplot(df.bs.query.critical, aes( x = condition))+
 ```
 
 
+### Proportion of Participants that Responsed ~50%
+```{r}
+df.query.critical.pretty <- df.query.critical %>%
+  mutate(condition = factor(condition,
+                            levels=c("np", "pp", "vp", "s"),
+                            labels=c("NP", "PP", "VP", "S")))
+
+df.query.critical.pretty %>% 
+  mutate(response_half = val < .55 && val > .45) %>%
+  group_by(condition) %>%
+  summarise(percent_half = sum(response_half)/n()) %>%
+  kable()
+```
+
+
 ### Ridge Plots
 ```{r}
-ggplot(df.query.critical, 
+ggplot(df.query.critical.pretty, 
     aes(x = val, y = condition, fill = ..x..)) +
   geom_density_ridges_gradient(
     jittered_points = T, alpha = 0.8, scale = 0.95,
     position = position_points_jitter(width = 0.01, height = 0),
     point_shape = '|', point_size = 2.5, point_alpha = 0.3,
     rel_min_height = 0.01, gradient_lwd = 1,
-    stat = 'binline', bins = 25, draw_baseline = F
+    stat = 'binline', bins = 20, draw_baseline = F
   ) +
   geom_linerangeh(data = df.bs.query.critical,
   inherit.aes = F,
@@ -347,15 +373,13 @@ ggplot(df.query.critical,
         axis.title.x = element_text(hjust = 0.5, vjust = 0))+
   labs(x = "Implied Prevalence about First Predicate")
 
-ggsave('~/Desktop/expt1_ridges.png', width=10, height=4)
 ```
 
 ### Stats
-
-#### Regression
 ```{r}
 model.data <- df.query.critical %>% select(workerid, predicate_1, val, condition)
-fit.coord <- lmer(val ~ condition + (1 | workerid) + (1 | predicate_1), model.data)
-summary(fit.coord)
+# dummy coded with NP as comparison level
+fit.coord.brm <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data)
+summary(fit.coord.brm)
 ```
 

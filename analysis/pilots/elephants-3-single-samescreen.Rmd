@@ -395,9 +395,12 @@ df.query.critical.full <- full_join(df.query.critical %>%
                             levels = c("interrupted",
                                        "uninterrupted",
                                        "nme_uninterrupted"),
-                            labels = c('"...live in Africa __"\nQ(Asia)',
-                                       '"...and Asia"\nQ(Asia)',
-                                       '"...and eat bugs"\nQ(bugs)'))) %>%
+                            labels = c('"...live in Africa __"',
+                                       '"...and Asia"',
+                                       '"...and eat bugs"')),
+         question_type = factor(question_type,
+                                levels = c("both", "single", "samescreen"),
+                                labels = c("Both", "Single", "Same Screen"))) %>%
   select(-me_status, -interrupted, -condition2, -me, -page_type)
 
 df.bs.query.critical <- df.query.critical.full %>%
@@ -409,9 +412,13 @@ df.bs.query.critical %>%
   ggplot(., aes( x = condition, y = mean, ymin = ci_lower, ymax = ci_upper, fill = question_type ))+
   geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
   ylab("% Africa")+
+  xlab("Condition")+
   geom_errorbar(position = position_dodge(0.8), width = 0.3)+
   scale_fill_solarized()+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  theme(legend.title = element_blank())
+
+ggsave('~/Desktop/expt1_summary.png', width = 10, height = 6)
 ```
 
 ### Pirate Plots (collapsed across item)
@@ -484,7 +491,8 @@ ggplot(df.query.critical.full,
 #### Regression
 ```{r}
 model.data <- df.query.critical.full %>% select(workerid, predicate_1, val, condition, question_type)
-fit.expt1 <- lmer(val ~ condition + (1 | workerid) + (1 | predicate_1), model.data)
+# dummy coded with "...live in Africa" as base level
+fit.expt1 <- brm(val ~ condition + question_type + (1 + condition | workerid) + (1 + condition | predicate_1), model.data)
 summary(fit.expt1)
 ```
 
