@@ -42,8 +42,7 @@ var filler_chapters = [
     {
 	title: "Morseths",
 	main_text: [
-	    "The morseth lives part of its life in the sea and part of its life on land. Most morseths build permanent structures called fendles in order to bury their dead ",
-	    "kin, and fendles are usually made out of wood."
+	    "The morseth lives part of its life in the sea and part of its life on land. All morseths come on land to find mates. Most morseths build permanent structures called fendles in order to bury their dead."
 	],
 	critical: false,
 	quantifier: "most",
@@ -152,7 +151,7 @@ var filler_chapters = [
     {
 	title: "Zorf the mapmaker",
 	main_text: [
-            "Zorf the mapmaker lives in the large forest city of Astom. In Astom, there are many ways to get ",
+            "Zorf the mapmaker lives in Astom. In Astom, there are many ways to get ",
             "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels ",
             "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's very crowded at night."
 	],

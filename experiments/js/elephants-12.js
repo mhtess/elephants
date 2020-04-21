@@ -176,8 +176,6 @@ function make_slides(f) {
 
     slides.main_chapters = slide({
 	name: "main_chapters",
-	trial_num : 0,
-	// present : exp.stims,
 	present: exp.stims,
 	//this gets run only at the beginning of the chapter
 	present_handle : function(stim) {
@@ -195,6 +193,7 @@ function make_slides(f) {
 
             this.page = 0
             exp.sliderPost = [-99, -99];
+	    exp.trial_num += 1;
 
             console.log("chapter length = " + this.chapter_length)
             this.present_question()
@@ -223,16 +222,19 @@ function make_slides(f) {
 		this.query_pred2 = this.stim.property2;
 	    }
 
-
-            $("#query0").html(query_prompt0);
+	    this.question_order = _.sample(['same', 'reverse']);
+            $("#query0").html(this.question_order === 'same' ? query_prompt0 : query_prompt1);
+	    $('#query1').html(this.question_order === 'same' ? query_prompt1 : query_prompt0);
 
             $(".query").show()
             $(".slider_number").show()
             $(".slider_table").show()
 
             this.init_sliders(0);
-            exp.sliderPost = [-1];
+	    this.init_sliders(1);
+            exp.sliderPost = [-1, -1];
             $("#slider_number0").html("---");
+	    $("#slider_number1").html("---");
 
             this.stim.query = false;
 
@@ -270,11 +272,12 @@ function make_slides(f) {
             exp.data_trials.push({
 		"trial_type" : this.stim.type,
 		"condition": this.stim.condition,
-		"chapter_num": this.trial_num,
-		"page_num": this.page == null ? -1 : this.page,
+		"chapter_num": exp.trial_num,
 		"page_content": $("#mainText").html(),
-		"query_predicate": this.query_pred1,
-		"response" : exp.sliderPost[0],
+		"query_predicate1": this.query_pred1,
+		"query_predicate2": this.query_pred2,
+		"response1" : this.question_order === 'same' ? exp.sliderPost[0] : exp.sliderPost[1],
+		"response2": this.question_order === 'same' ? exp.sliderPost[1] : exp.sliderPost[0],
 		"rt":this.rt,
 		"kind": this.stim.kind,
 		"predicate_1": this.stim.property1,
@@ -437,6 +440,8 @@ function init() {
 
     // CONFIGURATION
 
+    exp.trial_num = 0;
+    
     const coordinationLevels = ['s', 'vp', 'pp', 'np'];
     const beginningFillers = 2;
     exp.stims = [];
