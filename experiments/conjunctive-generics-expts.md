@@ -87,7 +87,7 @@ stim types:
 - food: 7
 - artifacts: 5
 - people: 5
-truth version of task: n = 54 (N=108); $1.00 (05/08/2019)
+truth version of task (elephants-9-truth: n = 54 (N=108); $1.00 (05/08/2019)
 
 11. Elephants-10: mutual exclusivity norming experiment
 same story as in elephants-3, without last sentence, ask explicitly about the following probabilities:
@@ -97,9 +97,13 @@ same story as in elephants-3, without last sentence, ask explicitly about the fo
 15 trials per subject, n = 36, $1.00 each (05/19/2019)
 
 12. Elephants-11: single screen version of elephants-3
+- $1.50
 - single question
 - single screen (all information and question presented on same page)
-n = 27 (04/09/2020)
+n = 27 (04/11/2020)
 
 13. Elephants-12: varying coordination levels
-4 conditions (by coordination level), within subjects, with fillers
+- $1.50
+- elephants-coord in data folder
+- 4 conditions (by coordination level), within subjects, with fillers
+n = 63 (04/14/2020)
