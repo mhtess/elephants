@@ -198,14 +198,30 @@ var stims_chapters = [
     {
 	title: "Ludinos",
 	main_text: [
-	    "The Ludinos are an alien tribe. They are very industrious and they all are highly spiritual. They ascribe to the Caboo religion"
+	    "The Ludinos are an alien tribe. They are very industrious and they all are highly spiritual."
 	],
 	continuation: {
+	    firstConjunct: {
+		same: 'They ascribe to the Caboo religion',
+		reverse: 'They ascribe to the Daith religion'
+	    },
 	    critical: {
-		s: "and they ascribe to the Daith religion",
-		vp: "and ascribe to the Daith religion",
-		pp: "and to the Daith religion",
-		np: "and the Daith religion",
+		s: {
+		    same: "and they ascribe to the Daith religion",
+		    reverse: "and they ascribe to the Caboo religion",
+		},
+		vp: {
+		    same: "and ascribe to the Daith religion",
+		    reverse: "and ascribe to the Caboo religion",
+		},
+		pp: {
+		    same: "and to the Daith religion",
+		    reverse: "and to the Caboo religion",
+		},
+		np: {
+		    same: "and the Daith religion",
+		    reverse: "and the Caboo religion",
+		},
 	    },
 	    nme: {
 		s: "and they follow a strict code of laws",
@@ -225,15 +241,30 @@ var stims_chapters = [
     {
 	title: "Glippets",
 	main_text: [
-	    "Glippets are large creatures with a life-span of about ",
-	    "sixty years. They live on the southern continent of Caro"
+	    "Glippets are large creatures with a life-span of about sixty years."
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "They live on the southern continent of Caro",
+		reverse: "They live on the northern continent of Este"
+	    },
 	    critical: {
-		s: "and they live on the northern continent of Este",
-		vp: "and live on the northern continent of Este",
-		pp: "and on the northern continent of Este",
-		np: "and the northern continent of Este",
+		s: {
+		    same: "and they live on the northern continent of Este",
+		    reverse: "and they live on the southern continent of Caro",
+		},
+		vp: {
+		    same: "and live on the northern continent of Este",
+		    reverse: "and live on the southern continent of Caro",
+		},
+		pp: {
+		    same: "and on the northern continent of Este",
+		    reverse: "and on the southern continent of Caro",
+		},
+		np: {
+		    same: "and the northern continent of Este",
+		    reverse: "and the southern continent of Caro",
+		},
 	    },
 	    nme: {
 		s: "and they graze on the tall grasses",
@@ -253,15 +284,30 @@ var stims_chapters = [
     {
 	title: "Mooks",
 	main_text: [
-	    "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes ",
-	    "unlike any other continent on Dax. Mooks have territories at the tops of tall mountains",
+	    "Mooks are ferocious creatures that live on the continent of Benli. Benli has dramatic elevation changes unlike any other continent on Dax.",
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "Mooks have territories at the tops of tall mountains",
+		reverse: "Mooks have territories at the bottom of deep canyons",
+	    },
 	    critical: {
-		s: "and mooks have territories at the bottom of deep canyons",
-		vp: "and have territories at the bottom of deep canyons",
-		pp: "and at the bottom of deep canyons",
-		np: "and the bottom of deep canyons",
+		s: {
+		    same: "and mooks have territories at the bottom of deep canyons",
+		    reverse: "and mooks have territories at the tops of tall mountains",
+		},
+		vp: {
+		    same: "and have territories at the bottom of deep canyons",
+		    reverse: "and have territories at the tops of tall mountains",
+		},
+		pp: {
+		    same: "and at the bottom of deep canyons",
+		    reverse: "and at the tops of tall mountains",
+		},
+		np: {
+		    same: "and the bottom of deep canyons",
+		    reverse: "and the tops of tall mountains"
+		},
 	    },
 	    nme: {
 		s: "and mooks watch over the low-lying regions during the day",
@@ -282,14 +328,30 @@ var stims_chapters = [
 	title: "Agriculture",
 	main_text: [
 	    "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers only grow ",
-	    "one type of crop to increase their profits when selling. During the springtime, the aliens flood their fields to plant fujusi"
+	    "one type of crop to increase their profits when selling. During the springtime,"
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "the aliens flood their fields to plant fujusi",
+		reverse: "the aliens flood their fields to plant soroneeks",
+	    },
 	    critical: {
-		s: "and the aliens flood their fields to plant soroneeks",
-		vp: "and flood their fields to plant soroneeks",
-		pp: "and to plant soroneeks",
-		np: "and soroneeks",
+		s: {
+		    same: "and the aliens flood their fields to plant soroneeks",
+		    reverse: "and the aliens flood their fields to plant fujusi",
+		},
+		vp: {
+		    same: "and flood their fields to plant soroneeks",
+		    reverse: "and flood their fields to plant fujusi",
+		},
+		pp: {
+		    same: "and to plant soroneeks",
+		    reverse: "and to plant fujusi",
+		},
+		np: {
+		    same: "and soroneeks",
+		    reverse: "and fujusi",
+		},
 	    },
 	    nme: {
 		s: "and the aliens spray them with a naturally-occurring fertilizer",
@@ -300,7 +362,7 @@ var stims_chapters = [
 	critical: true,
 	kind: "farmers in the springtime",
 	property1: "flood their fields to plant fujusi",
-	property2: "burn their fields to plant soroneeks",
+	property2: "flood their fields to plant soroneeks",
 	property3: "spray their fields with a naturally-occurring fertilizer",
 	type: "critical",
 	continuationType: "fakeDefs",
@@ -311,14 +373,30 @@ var stims_chapters = [
 	main_text: [
 	    "Fengnors are smaller, nocturnal creatures. They have highly complex ",
 	    "mating habits. They mate for life, and the males often bring twigs and leaves to the females during ",
-	    "courtship. The mated pairs use these twigs and leaves to build their nests. They build their nests in gluers"
+	    "courtship. The mated pairs use these twigs and leaves to build their nests."
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "They build their nests in gluers",
+		reverse: "They build their nests in droops",
+	    },
 	    critical: {
-		s: "and they build their nests in droops",
-		vp: "and build their nests in droops",
-		pp: "and in droops",
-		np: "and droops",
+		s: {
+		    same: "and they build their nests in droops",
+		    reverse: "and they build their nests in gluers",
+		},
+		vp: {
+		    same: "and build their nests in droops",
+		    reverse: "and build their nests in gluers",
+		},
+		pp: {
+		    same: "and in droops",
+		    reverse: "and in gluers",
+		},
+		np: {
+		    same: "and droops",
+		    reverse: "and gluers",
+		},
 	    },
 	    filler: "and watch over them carefully",
 	    nme: {
@@ -339,14 +417,30 @@ var stims_chapters = [
 	title: "Finding food",
 	main_text: [
 	    "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with ",
-	    "large antlers, are an important resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans. Krens work as stup-herders"
+	    "large antlers, are an important resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans."
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "Krens work as stup-herders",
+		reverse: "Krens work as fishermen",
+	    },
 	    critical: {
-		s: "and Krens work as fishermen",
-		vp: "and work as fishermen",
-		pp: "and as fishermen",
-		np: "and fishermen",
+		s: {
+		    same: "and Krens work as fishermen",
+		    reverse: "and Krens work as stup-herders",
+		},
+		vp: {
+		    same: "and work as fishermen",
+		    reverse: "and work as stup-herders",
+		},
+		pp: {
+		    same: "and as fishermen",
+		    reverse: "and as stup-herders"
+		},
+		np: {
+		    same: "and fishermen",
+		    reverse: "and stup-herders",
+		},
 	    },
 	    filler: "and incorporate stups into their religion",
 	    nme: {
@@ -423,14 +517,30 @@ var stims_chapters = [
 	title: "Kweps",
 	main_text: [
 	    "Kweps hunt in packs. Even though they are pack animals, all of them have their own unique preferences. ",
-	    "They hunt at night, looking for creatures sleeping alone. Right before they go hunting, the kweps chew on xorfun"
+	    "They hunt at night, looking for creatures sleeping alone. Right before they go hunting,"
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "the kweps chew on xorfun",
+		reverse: "the kweps chew on tunkel",
+	    },
 	    critical: {
-		s: "and the kweps chew on tunkel",
-		vp: "and chew on tunkel",
-		pp: "and on tunkel",
-		np: "and tunkel"
+		s: {
+		    same: "and the kweps chew on tunkel",
+		    reverse: "and the kweps chew on xorfun",
+		},
+		vp: {
+		    same: "and chew on tunkel",
+		    reverse: "and chew on xorfun",
+		},
+		pp: {
+		    same: "and on tunkel",
+		    reverse: "and on xorfun",
+		},
+		np: {
+		    same: "and tunkel",
+		    reverse: "and xorfun",
+		},
 	    },
 	    filler: "and howl towards the sky",
 	    nme: {
@@ -450,14 +560,30 @@ var stims_chapters = [
     {
 	title: "Ollers",
 	main_text: [
-	    "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land, which are passed down from parents to children, so that each family only has one of each kind of tool. While on land, ollers carry their young in guklags"
+	    "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land, which are passed down from parents to children, so that each family only has one of each kind of tool. While on land,"
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "ollers carry their young in guklags",
+		reverse: "ollers carry their young in trullets",
+	    },
 	    critical: {
-		s: "and ollers carry their young in trullets",
-		vp: "and carry their young in trullets",
-		pp: "and in trullets",
-		np: "and trullets",
+		s: {
+		    same: "and ollers carry their young in trullets",
+		    reverse: "and ollers carry their young in guklags",
+		},
+		vp: {
+		    same: "and carry their young in trullets",
+		    reverse: "and carry their young in guklags",
+		},
+		pp: {
+		    same: "and in trullets",
+		    reverse: "and in guklags",
+		},
+		np: {
+		    same: "and trullets",
+		    reverse: "and guklags",
+		},
 	    },
 	    filler: "and use sticks for balance",
 	    nme: {
@@ -478,14 +604,30 @@ var stims_chapters = [
 	title: "Crafts",
 	main_text: [
 	    "The aliens have many different kinds of specialized skills and trades, such as basket weaving. To ",
-	    "help make themselves known, crafters join guilds with other crafters of the same trade. Basket weavers are part of the Tinno guild "
+	    "help make themselves known, crafters join guilds with other crafters of the same trade."
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "Basket weavers are part of the Tinno guild",
+		reverse: "Basket weavers are part of the Farza guild",
+	    },
 	    critical: {
-		s: "and basket weavers are part of the Farza guild",
-		vp: "and are part of the Farza guild",
-		pp: "and of the Farza guild",
-		np: "and the Farza guild",
+		s: {
+		    same: "and basket weavers are part of the Farza guild",
+		    reverse: "and basket weavers are part of the Tinno guild",
+		},
+		vp: {
+		    same: "and are part of the Farza guild",
+		    reverse: "and are part of the Tinno guild",
+		},
+		pp: {
+		    same: "and of the Farza guild",
+		    reverse: "and of the Tinno guild",
+		},
+		np: {
+		    same: "and the Farza guild",
+		    reverse: "and the Tinno guild",
+		},
 	    },
 	    filler: "and pledge allegiance to Tinnius the Elder",
 	    nme: {
@@ -592,14 +734,30 @@ var stims_chapters = [
 	title: "Vimbles",
 	main_text: [
 	    "Vimbles are social insects that live in colonies of up to a thousand individuals. They have a single queen, who must find somewhere to hibernate over the winter before ",
-	    "starting a new colony. Vimble queens hibernate in fallen logs  "
+	    "starting a new colony."
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "Vimble queens hibernate in fallen logs",
+		reverse: "Vimble queens hibernate in the abandoned burrows of other animals",
+	    },
 	    critical: {
-		s: "and vimble queens hibernate in the abandoned burrows of other animals",
-		vp: "and hibernate in the abandoned burrows of other animals",
-		pp: "and in the abandoned burrows of other animals",
-		np: "and the abandoned burrows of other animals",
+		s: {
+		    same: "and vimble queens hibernate in the abandoned burrows of other animals",
+		    reverse: "and vimble queens hibernate in fallen logs",
+		},
+		vp: {
+		    same: "and hibernate in the abandoned burrows of other animals",
+		    reverse: "and hibernate in fallen logs",
+		},
+		pp: {
+		    same: "and in the abandoned burrows of other animals",
+		    reverse: "and in fallen logs",
+		},
+		np: {
+		    same: "and the abandoned burrows of other animals",
+		    reverse: "and fallen logs",
+		},
 	    },
 	    filler: "and only emerge when the weather has become warmer",
 	    nme:
@@ -621,14 +779,30 @@ var stims_chapters = [
 	title: "Isooms",
 	main_text: [
 	    "Isooms are tree-like plants that are found in hilly regions. Their fruit is edible, and the aliens often ",
-	    "cultivate isooms for food. Isooms produce fruit with bumpy skin "
+	    "cultivate isooms for food."
 	],
 	continuation: {
+	    firstConjunct: {
+		same: "Isooms produce fruit with bumpy skin",
+		reverse: "Isooms produce fruit with smooth skin",
+	    },
 	    critical: {
-		s: "and isooms produce fruit with smooth skin",
-		vp: "and produce fruit with smooth skin",
-		pp: "and with smooth skin",
-		np: "and smooth skin",
+		s: {
+		    same: "and isooms produce fruit with smooth skin",
+		    reverse: "and isooms produce fruit with bumpy skin",
+		},
+		vp: {
+		    same: "and produce fruit with smooth skin",
+		    reverse: "and produce fruit with bumpy skin",
+		},
+		pp: {
+		    same: "and with smooth skin",
+		    reverse: "and with bumpy skin",
+		},
+		np: {
+		    same: "and smooth skin",
+		    reverse: "and bumpy skin",
+		},
 	    },
 	    filler: "and prefer to grow in the shade",
 	    nme: {

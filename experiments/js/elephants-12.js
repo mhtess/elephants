@@ -205,7 +205,10 @@ function make_slides(f) {
             $("#question_material").hide()
 	    $('.button').hide();
 	    $('.slider_instruct').hide();
-	    const mainText = !this.stim.critical ? this.stim.main_text.join(" ") : this.stim.main_text.join(" ") + " " + this.stim.continuation.critical[this.stim.condition] + '.';
+
+	    this.conjunct_order = _.sample(['same', 'reverse']);
+	    
+	    const mainText = !this.stim.critical ? this.stim.main_text.join(" ") : this.stim.main_text.join(" ") + " " + this.stim.continuation.firstConjunct[this.conjunct_order] + ' ' + this.stim.continuation.critical[this.stim.condition][this.conjunct_order] + '.';
 	    $('#mainText').text(mainText)
 
             var query_prompt0 = "What percentage of <strong>"  + this.stim.kind +
@@ -222,6 +225,7 @@ function make_slides(f) {
 		this.query_pred2 = this.stim.property2;
 	    }
 
+	    
 	    this.question_order = _.sample(['same', 'reverse']);
             $("#query0").html(this.question_order === 'same' ? query_prompt0 : query_prompt1);
 	    $('#query1').html(this.question_order === 'same' ? query_prompt1 : query_prompt0);
@@ -276,6 +280,8 @@ function make_slides(f) {
 		"page_content": $("#mainText").html(),
 		"query_predicate1": this.query_pred1,
 		"query_predicate2": this.query_pred2,
+		"question_order": this.question_order,
+		"conjunct_order": this.conjunct_order,
 		"response1" : this.question_order === 'same' ? exp.sliderPost[0] : exp.sliderPost[1],
 		"response2": this.question_order === 'same' ? exp.sliderPost[1] : exp.sliderPost[0],
 		"rt":this.rt,
@@ -479,7 +485,6 @@ function init() {
     for (i=0;i<n;i++) {
 	withFillers.push(randomizedCriticals.pop())
 	if (i < n-1) {
-	    console.log('here')
 	    withFillers.push(randomizedFillers.pop())
 	}
     }
