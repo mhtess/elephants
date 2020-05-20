@@ -5,9 +5,14 @@ date: "9/6/2019"
 output: github_document
 ---
 
-[Link to experiment](http://www.mit.edu/~tessler/projects/elephants/experiments/elephants-3.html)
+[Link to Pilot 2](https://www.mit.edu/~karengu/elephants_expt1_single_samescreen/elephants/experiments/elephants-12.html)
 
-## Variable Coordination Level Experiment, with a single question (Africa only)
+## Variable Coordination Level Experiment
+
+Pilots:
+- Pilot 1: single screen, single question (% Africa?) (n = 29)
+- Pilot 2: single screen, both questions (% Africa?, % Asia?), randomized order of conjuncts (n = 25)
+- Pilot 3 (proposed): same as Pilot 2, with more stringent reading comprehension to ensure data quality
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
@@ -31,6 +36,7 @@ library(ggridges)
 library(ggstance)
 theme_set(theme_few())
 data.path <-"../../data/elephants-coord/"
+rep.path <- "../../data/elephants-coord-rep/"
 ```
 
 ##
@@ -48,7 +54,7 @@ result.files <- list.files(data.path, pattern="json")
     df.attn = bind_rows(
       df.attn,
       data.frame(result_json$answers$catch_trials) %>%
-        mutate(workerid = worker.id)
+        mutate(workerid = worker.id, rep = "20200417")
     )
 
     df.subj = bind_rows(
@@ -60,13 +66,52 @@ result.files <- list.files(data.path, pattern="json")
            age = gsub("\"", "", age),
            gender = gsub("\"", "", gender),
            problems = gsub("\"", "", problems),
-           comments = gsub("\"", "", comments))
+           comments = gsub("\"", "", comments),
+           rep = "20200417")
     )
 
     df.trials = bind_rows(
       df.trials,
       data.frame(result_json$answers$trials) %>%
-        mutate(workerid = worker.id, condition = condition)
+        mutate(
+          workerid = worker.id, 
+          condition = condition, 
+          rep = "20200417",
+          response1 = response
+        )
+    )
+  }
+  
+rep.files <- list.files(rep.path, pattern="json")
+for (result_file in rep.files) {
+
+    result_json = fromJSON(paste(rep.path, result_file, sep ="/"))
+    worker.id = result_json$WorkerId
+    condition = result_json$answers$condition
+
+    df.attn = bind_rows(
+      df.attn,
+      data.frame(result_json$answers$catch_trials) %>%
+        mutate(workerid = worker.id, rep = "20200427")
+    )
+
+    df.subj = bind_rows(
+      df.subj,
+      data.frame(result_json$answers$subject_information) %>%
+        mutate(workerid = worker.id,
+               language = gsub("\"", "", language),
+           enjoyment = gsub("\"", "", enjoyment),
+           age = gsub("\"", "", age),
+           gender = gsub("\"", "", gender),
+           problems = gsub("\"", "", problems),
+           comments = gsub("\"", "", comments),
+           rep = "20200427")
+    )
+
+    df.trials = bind_rows(
+      df.trials,
+      data.frame(result_json$answers$trials) %>%
+        mutate(workerid = worker.id, condition = condition, rep = "20200427")
     )
   }
 ```
@@ -98,7 +143,7 @@ df.slider_check <- df.attn %>%
   filter(condition == "practice") %>%
   mutate(correct = case_when(
     property == "dogs bark" ~ response > 0.5,
-    property == "birds are male" ~ response > 0.25 & response < 0.75,
+    property == "birds are male" ~ TRUE,
     property == "cats get cancer" ~ response < 0.75,
     property == "lions lay eggs" ~ response < 0.1
   ))
@@ -154,17 +199,6 @@ ggplot(df.mmry, aes( x = n_correct ))+
   ylab("n participants")
 ```
 
-### Slider Practice and Memory Check
-
-```{r}
-df.mmry %>%
-  select(workerid, n_correct) %>%
-  left_join(df.slider_check.workers %>% select(workerid, n_correct), by=c("workerid")) %>%
-  rename(n_correct_memory = n_correct.x, n_correct_slider = n_correct.y) %>%
-  ggplot() +
-  geom_count(aes(x = n_correct_memory, y = n_correct_slider))
-```
-
 ### Explanations of Task
 
 After the story, participants are also asked to explain generally what they did in the experiment.
@@ -186,7 +220,9 @@ df.expln %>%
 ### Exclusions
 
 ```{r}
-workers.to.exclude <- unique(c(workers.fail.memory, workers.fail.sliders))
+workers.bad.expln <- c('bec83fc61d00a7d4ffa3b946951a2e70', '3a7dd723f40fed7a0a383a069939343d', '4bc289a226eaf2ebed9a6f266ed21cb1', '119b8973de0826f10b078c559732ccb5', 'e2ae41e9b9346ca4ea2e59c1a0501329', 'd8413cc35a0124e58fb9594da7aaf179', '3a9e470cb2caf2c71de688ffe8ffe959', '765cdd58c0e4dc60cb61beaedf2cf9c8', '956fd002ea95bbd4d212530f6e982185', '0cf23b5795a4be0cd3092a670f413cb2', '65b7c457a1fca600cb3ab0d0129ccb21', '89b1607270f1c539f8e372967b779c24', 'fd5048577f56504208c368c3bd702034', 'b28ee0d4be8559414380bdd754c773ec', '2f09bb178d82d57ee9e98784da1bb16f', '1eb3ec9876cc6a17bbae44d4761137d3', '504aa8560363dc18f9b1095cf6407c35', '02c9b466a8218e0431007a14d7054500', '75b0624edb002bc35f9a8b8be60d6dd4', 'da5013b7c30b3d20264f36989fbe4ac3', 'b7ca4e22ce73506ccb019c3113166247', 'e6532b573753e96d9385d652aba8da12', 'a3623ffaecf1e89cbe218cd459dbc6e5', '9d7e9117678074c390bfb883475724ad', '645a6517e313390917505e79b3797f3b', '9c069c5790858cfb00c23bacc10f1e95', '2b5794d92119d7e92d115695bf207170', '84cf0e42557990a784ef998dd8af955e', '01da851ac67defcef8b30d7b34765075', '9b53fbf4be0e9dc0ecb5db3222388b55', 'f64e240c246dda2026c269b105a7fa18', '920e94362bfd486741373e3f22a37fae', 'd40cc09b913fc992a03f89ff58ce036b', 'c7cd887f367d429fc95be745baea3039', '1ff677d9263a4dc0b9bd82481bf45c47', '130868e2258ca5112789154b314994c3', '44a97c6d2adae4bd4003da78c286ff5c', 'b12752e3dcbff696bf4ab9efb28bf5c4', '7fb721a8748660a36b0bf33d07b465f2', '8caf8d405cf4552c1fec1397341699ca', '60efd6cd3f3b1ef22e249845f3bbdcfe', '8a35442a3777f2c456f729e8b9559022', '45456924d6df6c4535e39857e87f7190', '730cc415993d5d65ab0e3b16c71eeb14', 'eea3a419fad867bc8c5ca38bffa3dd3d')
+workers.bad.ratings <- c('351b702d37553c2576276b02684bdff0', '51db9191ad3c7a7a8ef897891360f578', 'ed5dd04a85b58e5266067c40ee228267') # coded manually by looking at the prevalence estimates given
+workers.to.exclude <- unique(c(workers.fail.memory, workers.fail.sliders, workers.bad.expln, workers.bad.ratings))
 ```
 
 ## Participants
@@ -196,16 +232,20 @@ df.trials <- left_join(
   df.trials %>%
     mutate(
       memory_fail = workerid %in% workers.fail.memory,
-      slider_fail = workerid %in% workers.fail.sliders
+      slider_fail = workerid %in% workers.fail.sliders,
+      bad_expln = workerid %in% workers.bad.expln,
     ),
   df.mmry %>% select(workerid, n_correct))
 
 df.query <- df.trials %>%
+  select(response1, response2, everything()) %>%
    mutate(
       memory_fail = workerid %in% workers.fail.memory,
-      slider_fail = workerid %in% workers.fail.sliders
+      slider_fail = workerid %in% workers.fail.sliders,
+      bad_expln = workerid %in% workers.bad.expln,
+      bad_ratings = workerid %in% workers.bad.ratings,
     ) %>%
-  gather(key, val, response)
+  gather(key, val, response1:response2)
 ```
 
 ### Included/Excluded Subject Numbers
@@ -214,8 +254,8 @@ Removing participants who got fewer than 7 correct on memory check and didn't ge
 
 ```{r}
 df.query %>%
-  distinct(workerid, memory_fail, slider_fail, bad_expln) %>%
-  group_by(memory_fail, slider_fail) %>% count() %>% kable()
+  distinct(workerid, memory_fail, slider_fail, bad_expln, bad_ratings, rep) %>%
+  group_by(memory_fail, slider_fail, bad_expln, rep) %>% count() %>% arrange(desc(n)) %>% kable()
 ```
 
 ### Prevalence Estimates by Participant
@@ -226,9 +266,10 @@ Histogram of all of a single participant's prevalence estimates, collapsed acros
 
 ```{r}
 df.query  %>%
+  filter(!memory_fail, !slider_fail, !bad_expln) %>%
   ggplot(., aes( x = val, fill = n_correct ))+
   geom_histogram()+
-  facet_wrap(~workerid)+
+  facet_wrap(~workerid, ncol=3)+
   scale_fill_viridis()+
   scale_x_continuous(breaks = c(0, 0.5, 1))
 ```
@@ -239,7 +280,7 @@ These used quantifiers (and thus we have strong idea about literal meaning).
 
 ```{r}
 df.query.filler <- df.query %>%
-  filter(!memory_fail, !slider_fail) %>%
+  filter(!memory_fail, !slider_fail, !bad_expln) %>%
   filter(trial_type == "filler") %>%
   select(workerid, condition, chapter_num,
          rt, trial_type, quantifier, key, val)
@@ -251,100 +292,125 @@ df.query.filler  %>%
   facet_grid(condition~quantifier)
 ```
 
-## Critical Trials (collapsed across item)
+## Critical Trials
 
-## Histograms of Prevalence Estimates by Condition (collapsed across item)
+## Histograms of Prevalence Estimates by Condition (collapsed across item, conjunct A)
 ```{r}
 df.query.critical <- df.query %>%
-  filter(!memory_fail, !slider_fail) %>%
+  filter(!memory_fail, !slider_fail, !bad_expln, !bad_ratings) %>%
   select(workerid, condition, chapter_num, rt,
          trial_type, predicate_1,
-         key, val, memory_fail, slider_fail, chapter) %>%
+         key, val, memory_fail, slider_fail, chapter, rep) %>%
   mutate(condition = factor(condition, levels = c("np", "pp", "vp", "s"))) %>%
   filter(trial_type == "critical") %>%
   rowwise()
 
 df.query.critical %>%
+  filter(key == "response1") %>%
   ggplot(., aes( x = val ))+
+  geom_histogram(aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]))+
+  facet_grid(condition~rep)+
+  ylab('Proportion of Participants')+
+  xlab('Implied Prevalence')
+```
+
+### By-item, conjunct A
+
+```{r}
+df.bs.query.critical <- df.query.critical %>%
+  filter(!is.na(val)) %>%
+  group_by(condition, rep, key) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+df.bs.query.critical.by.item <- df.query.critical %>%
+  filter(!is.na(val)) %>%
+  group_by(condition, chapter, rep, key) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+df.bs.query.critical.by.item %>%
+  filter(key == "response1", rep == "20200417") %>%
+  ggplot(aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+  geom_col() +
+  geom_errorbar(position = position_dodge(0.8), width = 0) +
+  facet_wrap(~chapter)+
+  ggtitle('20200417')
+
+df.bs.query.critical.by.item %>%
+  filter(key == "response1", rep == "20200427") %>%
+  ggplot(aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+  geom_col() +
+  geom_errorbar(position = position_dodge(0.8), width = 0) +
+  facet_wrap(~chapter)+
+  ggtitle('20200427')
+```
+
+### Mutually Exclusive Interpretations (20200427 only)
+
+```{r}
+df.me <- df.query.critical %>%
+  filter(rep == "20200427") %>%
+  spread(key, val) %>%
+  mutate(total_prevalence = response1+response2) %>%
+  mutate(me = total_prevalence < 1.2)
+
+ggplot(df.me, aes(x=total_prevalence))+
   geom_histogram()+
-  facet_grid(key~condition)
+  facet_wrap(~condition)
+
+df.me %>%
+  group_by(me) %>%
+  summarise(n = n())
+
+df.me.bs <- df.me %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = total_prevalence) 
+
+df.me.bs %>%
+  ggplot(aes(x=condition,y=mean,ymin=ci_lower,ymax=ci_upper))+
+  geom_col()+
+  geom_errorbar(width=0)+
+  ylab('Total Prevalence')
+```
+
+#### By Item
+
+```{r}
+df.me.bs.by.item <- df.me %>%
+  group_by(predicate_1, condition) %>%
+  tidyboot_mean(column = total_prevalence) 
+
+df.me.bs.by.item %>%
+  ggplot(aes(x = predicate_1, y = mean, ymin=ci_lower, ymax=ci_upper)) +
+  geom_col()+
+  xlab('Item')+
+  ylab('Total Prevalence Estimate (across 2 Conjuncts)')+
+  geom_errorbar(width=0)+
+  facet_wrap(~condition)+
+  coord_flip()
 ```
 
 
 ### Bootstrapped 95% Confidence Intervals (collapsed across item)
 
+#### Prevalence for Conjunct A, 20200417 (used in AMLaP abstract)
+
 ```{r}
-df.bs.query.critical <- df.query.critical %>%
-  group_by(condition) %>%
-  tidyboot_mean(column = val) %>%
-  ungroup()
+df.bs.3cond <- df.bs.query.critical %>%
+  filter(key == "response1") %>%
+  filter(rep == "20200417") %>%
+  filter(condition != "pp") %>%
+  mutate(condition = factor(condition, levels = c("np", "vp", "s"), labels=c("NP", "VP", "S")))
 
-df.bs.query.critical.by.item <- df.query.critical %>%
-  group_by(condition, chapter) %>%
-  tidyboot_mean(column = val) %>%
-  ungroup()
+df.3cond <- df.query.critical %>%
+  filter(key == "response1") %>%
+  filter(rep == "20200417") %>%
+  filter(condition != "pp") %>%
+  mutate(condition = factor(condition, levels = c("np", "vp", "s"), labels=c("NP", "VP", "S")))
 
-df.bs.query.critical.by.item %>%
-  ggplot(aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper)) +
-  geom_col() +
-  geom_errorbar(position = position_dodge(0.8), width = 0.3) +
-  facet_wrap(~chapter)
-
-df.bs.query.critical %>%
-  ggplot(., aes( x = condition, y = mean, ymin = ci_lower, ymax = ci_upper))+
-  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
-  ylab("% Africa")+
-  geom_errorbar(position = position_dodge(0.8), width = 0.3)+
-  scale_fill_solarized()+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
-```
-
-### Pirate Plots (collapsed across item)
-```{r}
-ggplot(df.bs.query.critical, aes( x = condition))+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'black')+
-
-  geom_col(position = position_dodge(0.8),
-           aes(y = mean),
-           width = 0.8,
-           alpha = 0.3,
-           color = 'black',
-           fill = "#268bd2")+
-  geom_point(data = df.query.critical, 
-             position = position_jitter(),
-             inherit.aes = F, aes(x = condition, y = val),
-             alpha = 0.5)+
-    geom_linerange(aes(ymin = ci_lower, ymax = ci_upper),
-                position = position_dodge(0.8), width = 0.3, size = 1.2,
-                color = 'black')+  
-  ylab("Implied prevalence rating")+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  xlab("")+
-  guides(fill = guide_legend(title = "Question"), color = guide_legend(title = "Question"))+
-  theme(axis.text.x = element_text(angle = 20, vjust = 0.55, hjust = 0.5),
-        legend.position = "right")
-```
-
-
-### Proportion of Participants that Responsed ~50%
-```{r}
-df.query.critical.pretty <- df.query.critical %>%
-  mutate(condition = factor(condition,
-                            levels=c("np", "pp", "vp", "s"),
-                            labels=c("NP", "PP", "VP", "S")))
-
-df.query.critical.pretty %>% 
-  mutate(response_half = val < .55 && val > .45) %>%
-  group_by(condition) %>%
-  summarise(percent_half = sum(response_half)/n()) %>%
-  kable()
-```
-
-
-### Ridge Plots
-```{r}
-ggplot(df.query.critical.pretty, 
-    aes(x = val, y = condition, fill = ..x..)) +
+ggplot(df.3cond,
+       aes(x = val, y = condition, fill = ..x..)) +
   geom_density_ridges_gradient(
     jittered_points = T, alpha = 0.8, scale = 0.95,
     position = position_points_jitter(width = 0.01, height = 0),
@@ -352,12 +418,12 @@ ggplot(df.query.critical.pretty,
     rel_min_height = 0.01, gradient_lwd = 1,
     stat = 'binline', bins = 20, draw_baseline = F
   ) +
-  geom_linerangeh(data = df.bs.query.critical,
-  inherit.aes = F,
+  geom_linerangeh(data = df.bs.3cond,
+    inherit.aes = F,
     aes(xmin = ci_lower, xmax = ci_upper, 
         y = as.numeric(condition)+0.4),
     size = 1.25, color = 'black')+
-  geom_point(data = df.bs.query.critical,
+  geom_point(data = df.bs.3cond,
     inherit.aes = F,
     aes(x = mean,
         y = as.numeric(condition)+0.4),
@@ -366,20 +432,155 @@ ggplot(df.query.critical.pretty,
                      limits = c(0, 1.03), 
                      breaks = c(0, 0.25, 0.5, 0.75, 1)) +
   scale_y_discrete(expand = c(0.01, 0)) +
-  scale_fill_viridis(name = "Implied Prevalence about First Predicate", option = "D",
+  scale_fill_viridis(name = "Implied Prevalence", option = "D",
                      breaks = c(0, 1)) +
   guides(fill = F)+
   theme(axis.title.y = element_blank(),
         axis.title.x = element_text(hjust = 0.5, vjust = 0))+
   labs(x = "Implied Prevalence about First Predicate")
-
 ```
 
-### Stats
+
+#### Prevalence for Conjunct A, 20200427
+
 ```{r}
-model.data <- df.query.critical %>% select(workerid, predicate_1, val, condition)
-# dummy coded with NP as comparison level
-fit.coord.brm <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data)
-summary(fit.coord.brm)
+
+df.bs.query.critical %>%
+  filter(rep == "20200427") %>%
+  mutate(condition = factor(condition, levels = c("np", "pp", "vp", "s"), labels=c("NP", "PP", "VP", "S")))%>%
+  filter(condition != "PP") %>%
+  ggplot(aes( x = condition, y = mean, ymin = ci_lower, ymax = ci_upper, fill = rep))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("Implied Prevalence about First Predicate")+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_viridis(discrete=TRUE)+
+  xlab("Coordination Level")+
+  theme(legend.position = "none")+
+  ggtitle('20200427')
+```
+
+#### Prevalence for Conjunct A and B, 20200427
+```{r}
+df.bs.query.critical.both.responses <- df.query.critical %>%
+  filter(rep == "20200427") %>%
+  group_by(condition, key) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+df.bs.query.critical.both.responses %>%
+  mutate(condition = factor(condition, levels = c("np", "pp", "vp", "s"), labels=c("NP", "PP", "VP", "S")))%>%
+  ggplot(aes( x = condition, y = mean, ymin = ci_lower, ymax = ci_upper, fill = key))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("Prevalence")+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)+
+  xlab("Coordination Level")
+
+#ggsave('~/Desktop/expt4.png', width = 10, height =6)
+```
+
+### Proportion of Participants that Responded ~50%
+```{r}
+df.query.critical.pretty <- df.query.critical %>%
+  mutate(condition = factor(condition,
+                            levels=c("np", "pp", "vp", "s"),
+                            labels=c("NP", "PP", "VP", "S")))
+
+df.query.critical.pretty %>% 
+  filter(!is.na(val)) %>%
+  mutate(response_half = val < .55 && val > .45) %>%
+  group_by(condition, rep, key) %>%
+  summarise(percent_half = sum(response_half)/n()) %>%
+  arrange(desc(percent_half)) %>%
+  kable()
+```
+
+
+### Stats
+
+Coded with S as base level.
+
+#### 20201417, conjunct A only
+```{r message=FALSE, warning=FALSE}
+model.data.original <- df.query.critical %>% 
+  filter(rep == "20200427", key == "response1") %>%
+  select(workerid, predicate_1, val, condition) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+fit.coord.original <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.original)
+summary(fit.coord.original)
+```
+
+#### 20200427, conjunct A only
+
+```{r message=FALSE, warning=FALSE}
+model.data.rep <- df.query.critical %>% 
+  filter(rep == "20200427", key == "response1") %>%
+  select(workerid, predicate_1, val, condition) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+fit.coord.rep <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.rep)
+summary(fit.coord.rep)
+```
+
+Predicting total prevalence (extent of mutual exclusivity).
+
+```{r message=FALSE, warning=FALSE}
+model.data.me <- df.me %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+fit.coord.total.prev <- brm(total_prevalence ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.me)
+summary(fit.coord.total.prev)
+```
+
+Predicting mutual exclusivity as a binary variable (20200427 only, defining mutual exclusivity as a total prevalence < 1.2).
+
+```{r message=FALSE, warning=FALSE}
+fit.coord.me <- brm(me ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.me, family = "bernoulli")
+summary(fit.coord.me)
+```
+
+Predicting mutual exclusivity as a binary variable (20200427 only, defining mutual exclusivity as a total prevalence < 1). More stringent than above.
+
+```{r message=FALSE, warning=FALSE}
+fit.coord.me <- brm(me ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.me %>% mutate(me = total_prevalence <= 1), family = "bernoulli")
+summary(fit.coord.me)
+```
+
+Predicting prevalence across both conjuncts (20200427).
+
+```{r message=FALSE, warning=FALSE}
+model.data.rep <- df.query.critical %>% 
+  filter(rep == "20200427") %>%
+  select(workerid, predicate_1, val, condition, key) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+fit.coord.rep <- brm(val ~ condition*key + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.rep)
+summary(fit.coord.rep)
+```
+
+Collapsing across both experiments, both conjuncts for the second one.
+```{r}
+model.data.collapsed <- df.query.critical %>%
+  select(workerid, predicate_1, val, condition) %>%
+  filter(!is.na(val)) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+
+model.data.collapsed.bs <- model.data.collapsed %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = val)
+
+model.data.collapsed.bs.by.item <- model.data.collapsed %>%
+  group_by(condition, predicate_1) %>%
+  tidyboot_mean(column = val)
+
+model.data.collapsed.bs %>%
+  ggplot(aes(x=condition, y=mean, ymin=ci_lower, ymax=ci_upper))+
+  geom_col()+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)
+
+model.data.collapsed.bs.by.item %>%
+  ggplot(aes(x=condition, y=mean, ymin=ci_lower, ymax=ci_upper))+
+  geom_col()+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)+
+  facet_wrap(predicate_1)
+
+fit.coord.collapsed <- brm(val~condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.collapsed)
+summary(fit.coord.collapsed)
 ```
 
