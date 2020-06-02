@@ -126,7 +126,7 @@ var filler_chapters = [{
   {
     title: "Morseths",
     main_text: [
-      "The morseth lives part of its life in the sea and part of its life on land. All morseths come on land to find mates. Most morseths build permanent structures called fendles in order to bury their dead."
+      "The morseth lives part of its life in the sea and part of its life on land. Most morseths come on land to find mates. Most build permanent structures called fendles in order to bury their dead."
     ],
     critical: false,
     quantifier: "most",
@@ -354,8 +354,8 @@ var stims_chapters = [{
       },
       critical: {
         s: {
-          same: "and landeks flood their fields to plant fujusi",
-          reverse: "and landeks flood their fields to plant soroneeks",
+          same: "and landeks flood their fields to plant soroneeks",
+          reverse: "and landeks flood their fields to plant fujusi",
         },
         vp: {
           same: "and flood their fields to plant soroneeks",
@@ -394,8 +394,8 @@ var stims_chapters = [{
     ],
     continuation: {
       firstConjunct: {
-        same: "They build their nests in tall trees",
-        reverse: "They build their nests in wiry bushes",
+        same: "They build their nests in wiry bushes",
+        reverse: "They build their nests in tall trees",
       },
       critical: {
         s: {
@@ -442,8 +442,8 @@ var stims_chapters = [{
       },
       critical: {
         s: {
-          same: "and Krens are fishermen",
-          reverse: "and Krens are stup-herders",
+          same: "and krens are fishermen",
+          reverse: "and krens are stup-herders",
         },
         vp: {
           same: "and are fishermen",
@@ -537,8 +537,8 @@ var stims_chapters = [{
     ],
     continuation: {
       firstConjunct: {
-        same: "kweps chew on thick leaves",
-        reverse: "kweps chew on old bones",
+        same: "kweps chew on old bones",
+        reverse: "kweps chew on thick leaves",
       },
       critical: {
         s: {
@@ -580,8 +580,8 @@ var stims_chapters = [{
     ],
     continuation: {
       firstConjunct: {
-        same: "ollers carry their young in knapsacks",
-        reverse: "ollers carry their young in slings",
+        same: "ollers carry their young in slings",
+        reverse: "ollers carry their young in knapsacks",
       },
       critical: {
         s: {
@@ -753,8 +753,8 @@ var stims_chapters = [{
     ],
     continuation: {
       firstConjunct: {
-        same: "Vimble queens hibernate in fallen logs",
-        reverse: "Vimble queens hibernate in abandoned burrows",
+        same: "Vimble queens hibernate in abandoned burrows",
+        reverse: "Vimble queens hibernate in fallen logs",
       },
       critical: {
         s: {
