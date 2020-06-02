@@ -1,4 +1,5 @@
 // currently 4 mosts, 3 nones, 7 alls
+// target: 3 mosts, 3 nones, 3 alls, 3 less than a third, 2 more than two-thirds
 
 var filler_chapters = [{
     title: "Zorxon, overlord of Dax",
@@ -27,34 +28,6 @@ var filler_chapters = [{
     property2: "fly"
   },
   {
-    title: "Wint of the Mountains",
-    main_text: [
-      "Wint lived a long time ago in the mountains. He loved to travel. All aliens remember Wint and admire him because he was the one that found the lost city of Baff."
-    ],
-    critical: false,
-    kind: "aliens",
-    property1: "remember Wint",
-    property2: "admire Wint",
-    quantifier: "all",
-    type: "filler",
-    condition: "uninterrupted"
-  },
-  {
-    title: "Yomis",
-    main_text: [
-      "Yomis are small insect-like creatures. They all live in the ",
-      "borderland woodlands. They all fly towards the mountains in search of food, but they need to be careful ",
-      "of their natural predators, turmens."
-    ],
-    critical: false,
-    kind: "yomis",
-    property1: "live in the borderland woodlands",
-    property2: "fly towards the mountains in search of food",
-    type: "filler",
-    condition: "single",
-    quantifier: "all"
-  },
-  {
     title: "Supools",
     main_text: [
       "Supools are the biggest creatures on Dax. They all live in the oceans and ",
@@ -69,12 +42,58 @@ var filler_chapters = [{
     condition: "single",
     quantifier: "all"
   },
+
+  {
+    title: "Yomis",
+    main_text: [
+      "Yomis are small insect-like creatures. Less than a third of them live in the ",
+      "borderland woodlands. The ones that live in the borderland woodlands fly towards the mountains in search of food."
+    ],
+    critical: false,
+    kind: "yomis",
+    property1: "live in the borderland woodlands",
+    property2: "fly towards the mountains in search of food",
+    type: "filler",
+    condition: "single",
+    quantifier: "lt3rd"
+  },
+  {
+    title: "Wint of the Mountains",
+    main_text: [
+      "Wint lived a long time ago in the mountains. He loved to travel. Sadly, less than a third of aliens remember Wint. Those that remember him admire him because he was the one that found the lost city of Baff."
+    ],
+    critical: false,
+    kind: "aliens",
+    property1: "remember Wint",
+    property2: "admire Wint",
+    quantifier: "lt3rd",
+    type: "filler",
+    condition: "uninterrupted"
+  },
+  {
+    title: "Nannus",
+    main_text: [
+      "Nannus only feed on rare flowers called lodeks. Less than a third of lodeks ",
+      "bloom each year. The ones that bloom have purple petals."
+    ],
+    critical: false,
+    kind: "lodeks",
+    property1: "only bloom each year",
+    property2: "have purple petals",
+    type: "filler",
+    condition: "single",
+    quantifier: "lt3rd"
+  },
+
+
+
+
   {
     title: "Zorf the mapmaker",
     main_text: [
-      "Zorf the mapmaker lives in Astom. In Astom, there are many ways to get ",
-      "from place to place, but the most popular way is through tunnels. All of the Astom aliens use the tunnels ",
-      "to get around town from their homes in the residential quarter. Since all of the Astom aliens live there, it's very crowded at night."
+      "Zorf the mapmaker lives in Astom. In Astom, more than three-quarters of the aliens live in the residential quarter.",
+      "Since so many of the Astom aliens live there, it's very crowded at night.",
+      "All of the aliens that live in the residential quarter get around town using the tunnels."
     ],
     critical: false,
     kind: "Astom aliens",
@@ -82,13 +101,14 @@ var filler_chapters = [{
     property2: "live in the residential quarter",
     type: "filler",
     condition: "single",
-    quantifier: "all"
+    quantifier: "gt34th"
   },
+
   {
     title: "Wopis",
     main_text: [
-      "Wopis only live in the desert and ",
-      "they all are very hard to find. Wopis sleep during the day to avoid ",
+      "More than three-quarters of wopis live in the desert and ",
+      "they are very hard to find. Wopis sleep during the day to avoid ",
       "the heat."
     ],
     critical: false,
@@ -97,7 +117,7 @@ var filler_chapters = [{
     property2: "are very hard to find",
     type: "filler",
     condition: "single",
-    quantifier: "all"
+    quantifier: "gt34th"
   },
 
 
@@ -145,20 +165,6 @@ var filler_chapters = [{
     quantifier: "most"
   },
 
-    {
-      title: "Nannus",
-      main_text: [
-        "Nannus only feed on rare flowers called lodeks. Most lodeks only ",
-        "bloom for one day a year, and most have purple petals."
-      ],
-      critical: false,
-      kind: "lodeks",
-      property1: "only bloom for one day a year",
-      property2: "have purple petals",
-      type: "filler",
-      condition: "single",
-      quantifier: "most"
-    },
 
 
 
