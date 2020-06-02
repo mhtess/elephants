@@ -345,18 +345,17 @@ var stims_chapters = [{
   {
     title: "Agriculture",
     main_text: [
-      "The soil on the continent of Aga is very fertile, and the aliens have learned to grow many crops. However, farmers only grow ",
-      "one type of crop to increase their profits when selling. During the springtime,"
+      "The soil on the continent of Aga is very fertile, but different regions support different crops. The Landek aliens live all over Aga. During the springtime,"
     ],
     continuation: {
       firstConjunct: {
-        same: "the aliens flood their fields to plant fujusi",
-        reverse: "the aliens flood their fields to plant soroneeks",
+        same: "landeks flood their fields to plant fujusi",
+        reverse: "landeks flood their fields to plant soroneeks",
       },
       critical: {
         s: {
-          same: "and the aliens flood their fields to plant soroneeks",
-          reverse: "and the aliens flood their fields to plant fujusi",
+          same: "and landeks flood their fields to plant fujusi",
+          reverse: "and landeks flood their fields to plant soroneeks",
         },
         vp: {
           same: "and flood their fields to plant soroneeks",
@@ -378,9 +377,9 @@ var stims_chapters = [{
       filler: "and in the summer watch their fields carefully",
     },
     critical: true,
-    kind: "farmers in the springtime",
-    property1: "flood their fields to plant fujusi",
-    property2: "flood their fields to plant soroneeks",
+    kind: "landeks",
+    property1: "plant fujusi",
+    property2: "plant soroneeks",
     property3: "spray their fields with a naturally-occurring fertilizer",
     type: "critical",
     continuationType: "fakeDefs",
@@ -389,31 +388,31 @@ var stims_chapters = [{
   {
     title: "Fengnors",
     main_text: [
-      "Fengnors are smaller, nocturnal creatures. They have highly complex ",
+      "Fengnors are small, nocturnal creatures. They have highly complex ",
       "mating habits. They mate for life, and the males often bring twigs and leaves to the females during ",
       "courtship. The mated pairs use these twigs and leaves to build their nests."
     ],
     continuation: {
       firstConjunct: {
-        same: "They build their nests in gluers",
-        reverse: "They build their nests in droops",
+        same: "They build their nests in tall trees",
+        reverse: "They build their nests in wiry bushes",
       },
       critical: {
         s: {
-          same: "and they build their nests in droops",
-          reverse: "and they build their nests in gluers",
+          same: "and they build their nests in tall trees",
+          reverse: "and they build their nests in wiry bushes",
         },
         vp: {
-          same: "and build their nests in droops",
-          reverse: "and build their nests in gluers",
+          same: "and build their nests in tall trees",
+          reverse: "and build their nests in wiry bushes",
         },
         pp: {
-          same: "and in droops",
-          reverse: "and in gluers",
+          same: "and in tall trees",
+          reverse: "and in wiry bushes",
         },
         np: {
-          same: "and droops",
-          reverse: "and gluers",
+          same: "and tall trees",
+          reverse: "and wiry bushes",
         },
       },
       filler: "and watch over them carefully",
@@ -424,8 +423,8 @@ var stims_chapters = [{
     },
     critical: true,
     kind: "fengnor mated pairs",
-    property1: "build nests in gluers",
-    property2: "build nests in droops",
+    property1: "build nests in tall trees",
+    property2: "build nests in wiry bushes",
     property3: "store tree-bark in them for safe keeping",
     type: "critical",
     continuationType: "fakeDefs",
@@ -434,26 +433,25 @@ var stims_chapters = [{
   {
     title: "Finding food",
     main_text: [
-      "Krens are a tribe of the aliens that live on the continent of Benli, which has no agriculture. Animals like stups, four-legged creatures with ",
-      "large antlers, are an important resource for the Krens. Stups roam all over the windy highlands of Benli, far from the oceans."
+      "Stups are four-legged creatures with large antlers that roam all over the windy highlands of Benli, far from the oceans. Krens are a tribe of the aliens that live in diverse parts of Benli. "
     ],
     continuation: {
       firstConjunct: {
-        same: "Krens work as stup-herders",
-        reverse: "Krens work as fishermen",
+        same: "Krens are stup-herders",
+        reverse: "Krens are fishermen",
       },
       critical: {
         s: {
-          same: "and Krens work as fishermen",
-          reverse: "and Krens work as stup-herders",
+          same: "and Krens are fishermen",
+          reverse: "and Krens are stup-herders",
         },
         vp: {
-          same: "and work as fishermen",
-          reverse: "and work as stup-herders",
+          same: "and are fishermen",
+          reverse: "and are stup-herders",
         },
         pp: {
-          same: "and as fishermen",
-          reverse: "and as stup-herders"
+          same: "and are fishermen",
+          reverse: "and are stup-herders"
         },
         np: {
           same: "and fishermen",
@@ -534,30 +532,30 @@ var stims_chapters = [{
   {
     title: "Kweps",
     main_text: [
-      "Kweps hunt in packs. Even though they are pack animals, all of them have their own unique preferences. ",
-      "They hunt at night, looking for creatures sleeping alone. Right before they go hunting,"
+      "Kweps hunt in packs. Even though they are pack animals, they tend to have different preferences. ",
+      "Right before they go hunting,"
     ],
     continuation: {
       firstConjunct: {
-        same: "the kweps chew on xorfun",
-        reverse: "the kweps chew on tunkel",
+        same: "kweps chew on thick leaves",
+        reverse: "kweps chew on old bones",
       },
       critical: {
         s: {
-          same: "and the kweps chew on tunkel",
-          reverse: "and the kweps chew on xorfun",
+          same: "and kweps chew on thick leaves",
+          reverse: "and kweps chew on old bones",
         },
         vp: {
-          same: "and chew on tunkel",
-          reverse: "and chew on xorfun",
+          same: "and chew on thick leaves",
+          reverse: "and chew on old bones",
         },
         pp: {
           same: "and on tunkel",
-          reverse: "and on xorfun",
+          reverse: "and on old bones",
         },
         np: {
           same: "and tunkel",
-          reverse: "and xorfun",
+          reverse: "and old bones",
         },
       },
       filler: "and howl towards the sky",
@@ -568,8 +566,8 @@ var stims_chapters = [{
     },
     critical: true,
     kind: "kweps",
-    property1: "chew on xorfun",
-    property2: "chew on tunkel",
+    property1: "chew on thick leaves",
+    property2: "chew on old bones",
     property3: "jump up and down in circles",
     type: "critical",
     continuationType: "fakeDefs",
@@ -578,29 +576,29 @@ var stims_chapters = [{
   {
     title: "Ollers",
     main_text: [
-      "Ollers spend most of their lives in water, but occasionally come on land to gather berries. Ollers use tools on land, which are passed down from parents to children, so that each family only has one of each kind of tool. While on land,"
+      "Ollers use tools, which are passed down from parents to children. Oller children are very heavy. While on land,"
     ],
     continuation: {
       firstConjunct: {
-        same: "ollers carry their young in guklags",
-        reverse: "ollers carry their young in trullets",
+        same: "ollers carry their young in knapsacks",
+        reverse: "ollers carry their young in slings",
       },
       critical: {
         s: {
-          same: "and ollers carry their young in trullets",
-          reverse: "and ollers carry their young in guklags",
+          same: "and ollers carry their young in knapsacks",
+          reverse: "and ollers carry their young in slings",
         },
         vp: {
-          same: "and carry their young in trullets",
-          reverse: "and carry their young in guklags",
+          same: "and carry their young in knapsacks",
+          reverse: "and carry their young in slings",
         },
         pp: {
-          same: "and in trullets",
-          reverse: "and in guklags",
+          same: "and in knapsacks",
+          reverse: "and in slings",
         },
         np: {
-          same: "and trullets",
-          reverse: "and guklags",
+          same: "and knapsacks",
+          reverse: "and slings",
         },
       },
       filler: "and use sticks for balance",
@@ -611,8 +609,8 @@ var stims_chapters = [{
     },
     critical: true,
     kind: "oller families",
-    property1: "carry their young in guklags",
-    property2: "carry their young in trullets",
+    property1: "carry their young in knapsacks",
+    property2: "carry their young in slings",
     property3: "are very protective",
     type: "critical",
     continuationType: "fakeDefs",
@@ -621,8 +619,7 @@ var stims_chapters = [{
   {
     title: "Crafts",
     main_text: [
-      "The aliens have many different kinds of specialized skills and trades, such as basket weaving. To ",
-      "help make themselves known, crafters join guilds with other crafters of the same trade."
+      "The aliens have many different kinds of specialized skills and trades, such as basket weaving. Primarily for social reasons, crafters like to join guilds."
     ],
     continuation: {
       firstConjunct: {
@@ -757,23 +754,23 @@ var stims_chapters = [{
     continuation: {
       firstConjunct: {
         same: "Vimble queens hibernate in fallen logs",
-        reverse: "Vimble queens hibernate in the abandoned burrows of other animals",
+        reverse: "Vimble queens hibernate in abandoned burrows",
       },
       critical: {
         s: {
-          same: "and vimble queens hibernate in the abandoned burrows of other animals",
+          same: "and vimble queens hibernate in abandoned burrows",
           reverse: "and vimble queens hibernate in fallen logs",
         },
         vp: {
-          same: "and hibernate in the abandoned burrows of other animals",
+          same: "and hibernate in abandoned burrows",
           reverse: "and hibernate in fallen logs",
         },
         pp: {
-          same: "and in the abandoned burrows of other animals",
+          same: "and in abandoned burrows",
           reverse: "and in fallen logs",
         },
         np: {
-          same: "and the abandoned burrows of other animals",
+          same: "and abandoned burrows",
           reverse: "and fallen logs",
         },
       },
@@ -786,7 +783,7 @@ var stims_chapters = [{
     critical: true,
     kind: "vimble queens",
     property1: "hibernate in fallen logs",
-    property2: "hibernate in the abandoned burrows of other animals",
+    property2: "hibernate in abandoned burrows",
     property3: "give birth twice a year",
     type: "critical",
     continuationType: "real",
@@ -796,7 +793,7 @@ var stims_chapters = [{
     title: "Isooms",
     main_text: [
       "Isooms are tree-like plants that are found in hilly regions. Their fruit is edible, and the aliens often ",
-      "cultivate isooms for food."
+      "cultivate isooms as food."
     ],
     continuation: {
       firstConjunct: {
