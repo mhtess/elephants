@@ -39,6 +39,9 @@ var ThetaPrior = Infer({model: function(){
   return { asia, africa }
 }});
 
+var priorParameters = priorInfo["params"]
+var correlatedPriors = priorInfo["correlatedPrior"][0]
+
 var JointPrevalencePrior = Infer({model: function(){
 //  var mainPlace = categorical({
 //    ps:[1, 1, 1, 1e-10],
@@ -60,7 +63,7 @@ var JointPrevalencePrior = Infer({model: function(){
   }
   var totalPrev = p.asia + p.africa 
   
-  factor(totalPrev > 1 ? -10*Math.log(totalPrev) : 0)
+   factor(correlatedPriors ? totalPrev > 1 ? -50*Math.log(totalPrev) : 0 : 0)
   return p
 }})
 
