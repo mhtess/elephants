@@ -78,7 +78,7 @@ var filler_chapters = [{
     ],
     critical: false,
     kind: "lodeks",
-    property1: "only bloom each year",
+    property1: "bloom each year",
     property2: "have purple petals",
     type: "filler",
     condition: "single",
