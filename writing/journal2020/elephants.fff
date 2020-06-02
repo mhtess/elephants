@@ -1,0 +1,88 @@
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=1\textwidth]{figs/model.pdf}
+  \caption{Model's sequential interpretation of ``Elephants live in Africa\ldots and Asia.'' A: Correlated priors reflected in the joint probability distribution over two features result in a mutual exclusivity inference. When the model hears only ``\ldots live in Africa'', it believes that probably all live in Africa (middle facet); when it hears they live in Asia as well, the model non-monotonically updates its beliefs about how many live in Africa. B: The mutual exclusivity inference holds for priors of different shapes and never holds if the prior knowledge about the two features is uncorrelated. Points show means of distributions. U-shaped priors were Beta(0.1, 1); multimodal priors were an equal mixture of a Beta(1, 100) and a Beta(25, 1). Correlated priors were created by adding an additional factor that decreased the probability of a prevalence-level if the sum of the prevalence of the two features exceeded 100\%. }
+  \label{fig:model}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+  \definecolor{darkgreen}{RGB}{0,100,0}
+    \definecolor{lightgreen}{RGB}{144,238,144}
+\tikzset{sibling distance=-3pt, level distance=16pt}
+  \centering
+\scriptsize
+\begin{tabular}{cc}
+  \hspace{-0.25cm}
+ \begin{tikzpicture}
+        \Tree [.S [.NP \edge[roof]; elephants ]
+                  [.VP [.V live ] [.PP [.P in ] [.NP [.N Africa ] \edge[color=gray, style=dashed]; [.{\textcolor{gray}{RC}} \edge[color=gray, style=dashed, roof]; {\textcolor{gray}{where there are bugs}} ] ] ] ] ]
+\end{tikzpicture}
+&\hspace{-1.25cm}
+ \begin{tikzpicture}[sibling distance=0pt]
+        \Tree [.{\textcolor{gray}{S}} \edge[color=gray]; [.S [.NP \edge[roof]; elephants ]
+                [.VP [.V live ] [.PP [.P in ] [.NP \edge[roof]; Africa ] ] ] ]
+                \edge[color=gray];
+                [.{\textcolor{gray}{SBAR}} \edge[color=gray];  \textcolor{gray}{because} \edge[color=gray]; [.{\textcolor{gray}{S}} \edge[color=gray,style=dashed, roof]; {\textcolor{gray}{it is hot}} ] ] ]
+\end{tikzpicture}
+  \\
+    \hspace{-0.5cm}
+      \begin{tikzpicture}[sibling distance=0pt]
+        \Tree [.S [.NP \edge[roof]; elephants ]
+                  [.VP [.V live ] [.PP [.P in ]
+                        [.NP [.NP Africa ]
+                                 \edge[color=darkgreen]; [.\textcolor{darkgreen}{Conj} \textcolor{darkgreen}{and} ]
+                        \edge[color=lightgreen, style=dashed]; [.\textcolor{lightgreen}{NP}  \edge[color=lightgreen, style=dashed, roof]; \textcolor{lightgreen}{Asia} ]] ] ]]
+\end{tikzpicture}
+    & \hspace{-1cm}
+\begin{tikzpicture}[sibling distance=0pt]
+        \Tree [.S [.NP \edge[roof]; elephants ]
+                  [.VP [.VP \edge[roof]; {live in Africa} ]
+                               \edge[color=darkgreen]; [.\textcolor{darkgreen}{Conj} \edge[color=darkgreen]; \textcolor{darkgreen}{and} ]
+\edge[color=lightgreen, style=dashed]; [.\textcolor{lightgreen}{VP}  \edge[color=lightgreen, style=dashed, roof]; \textcolor{lightgreen}{eat bugs}
+] ] ]
+\end{tikzpicture}
+\end{tabular}
+\caption{Incremental parse trees and syntactic expectations for upcoming conjunct properties in generic predication.  The string prefix ``Elephants live in Africa\ldots'' is compatible with a variety of continuations, including the four listed above.  The next word, ``\textcolor{darkgreen}{and}'', rules out the continuations in the top row (depicted in gray) and sharpens expectations around a conjunct at potentially different structural levels (light green).  Probabilistic renormalization implies that an upcoming conjunct mutually exclusive with the first conjunct becomes more likely when ``and'' is encountered, driving the strong incremental predictions depicted in Fig.~\ref{fig:incremental}.}
+\label{fig:trees}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[t]
+  \centering
+    \includegraphics[width=0.5\textwidth]{figs/incremental.pdf}
+    \vspace{-0.5cm}
+  \caption{A model that incorporates syntactic expectations at the level of individual words (\emph{strong incremental}) predicts intermediate mutual-exclusivity inferences part-way through the conjunction (at ``and''), whereas a model that waits for content-words (\emph{weak incremental}) does not show a difference in expected prevalence at the word ``and.''
+  }
+          \vspace{-0.3cm}
+  \label{fig:incremental}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[h]
+  \centering
+    \includegraphics[width=1\textwidth]{figs/design.pdf}
+    \vspace{-0.5cm}
+  \caption{Overview of experiments. A: Example book chapter from Expt.~2, depicting the \emph{Interrupted A\&} condition. ``Africa and Asia'' property is shown for illustration; actual stimuli used novel names for properties (``Caro and Este''). B: Overview of conditions for Expts.~1 and 2. [-?-] denotes point in the sentence at which the question appeared. Highlighting shows which properties were mentioned before the question, and what was asked about. See main text for full description of conditions.}
+  \label{fig:design}
+          \vspace{-0.5cm}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{figs/expt2a_summary.pdf}
+    \vspace{-1.25cm}
+  \caption{Experiment 1 results.  Participants rate prevalence for mentioned property (\% live in Africa) and either the mutually exclusive property (left facet) or non-mutually exclusive property (right facet), mid sentence (``Africa'') or after the sentence finishes (``Africa and X''). Error-bars denote bootstrapped 95\% confidence intervals.}
+  \label{fig:expt2}
+          \vspace{-0.5cm}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{figs/expt3_summary.pdf}
+    \vspace{-1cm}
+  \caption{Experiment 2 results. Participants are interrupted at various stages of the sentence (after \emph{Africa}, \emph{and}, or \emph{Asia}) to be asked about the prevalence of \emph{living in Africa} and \emph{living in some other place}, or asked at the end of the sentence (right-most bars). When participants are interrupted before the second conjunct (\emph{Asia}), the sentence continues with a non-mutually exclusive property. Error-bars denote bootstrapped 95\% confidence intervals.}
+    \label{fig:expt3}
+\end{figure*}
