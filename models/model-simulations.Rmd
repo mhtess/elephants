@@ -128,25 +128,28 @@ rs.l0.samp %>%
          src = factor(src, levels = c("prior", "AF", "AFAS"),
                       labels = c("Prior", "...live in Africa",
                                  "...and Asia"))) %>%
-ggplot(., aes(x = asia, y = africa))+
+ggplot(., aes(x = africa, y = asia))+
   #geom_bin2d(bins = 10)+
   stat_density_2d(aes(fill = ..density..), 
                   geom = "raster", contour = FALSE) +
-  theme_black()+
+  #theme_black()+
   scale_fill_viridis(option = "plasma")+
   facet_grid(correlatedPriors~src)+
-  xlab("% lives in Asia")+
-  ylab("% lives in Africa")+
-  guides(fill = guide_legend(title = "Probability density", reverse = T),
+  xlab("% lives in Africa")+
+  ylab("% lives in...")+
+  guides(fill = guide_legend(title = "Probability density", reverse = F),
          color = guide_legend(title = "Question"))+
-  theme(strip.text.y = element_text(angle = 0))+
+  theme(strip.text.y = element_text(angle = 0),
+        legend.position = 'bottom')+
   scale_x_continuous(limits = c(0, 1), breaks = c(0, 1))+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 1))+
   coord_fixed()
 
 #ggsave("~/projects/elephants/writing/cogsci2019/figs/model_joint.pdf", width = 8, height = 4)
 
-ggsave("~/Documents/talks/coglunch-0319/figs/elephants-models.pdf", width = 6, height = 3.5)
+#ggsave("~/Documents/talks/1906-xprag-elephants/elephants-models.pdf", width = 6, height = 3.5)
+
+ggsave("~/projects/elephants/writing/cogsci2019/figs/poster_models_joint.pdf", width = 5, height = 3.5)
 
 ```
 
@@ -159,7 +162,8 @@ rs.l0.samp.rf <- rs.l0.samp %>%
   mutate(correlatedPriors = factor(correlatedPriors, levels = c(T, F),
                                    labels = c("correlated priors", "uncorrelated priors")),
          key = factor(key, levels = c("africa", "asia"),
-                      labels = c("% live in Africa", "% live in Asia")),
+                      labels = c("% live in Africa", 
+                                 "% live in Asia / eat bugs")),
          # priorName = factor(priorName, levels = c("uniform", "multimodal", "multimodal2", "multimodal3", "bimodal"),
          #              labels = c("Uniform", "Multimodal v1", "Multimodal v2", "multimodal3", "bimodal")),
          priorName = factor(priorName, levels = c("uniform",  #"u_shaped", 
@@ -245,20 +249,20 @@ rs.l0.samp.rf.inc2 %>%
   mutate(src = factor(src, levels = c("...live in Africa", "...live in Africa and __", "...live in Africa and Asia"),
                              labels = c("...live in Africa     ", "and", "Asia"))) %>%
   ggplot(., aes( x = src, y = expval, fill = key))+
-  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'white')+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5, color = 'black')+
   geom_col(position = position_dodge(0.8),
-           width = 0.8, #alpha = 0.3, 
-           size = 0.75, color = 'white')+
+           width = 0.8, alpha = 0.3, 
+           size = 0.75, color = 'black')+
   #geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
                 #position = position_dodge(0.8), width = 0.3, size = 1.2)+  
   ylab("Implied prevalence rating")+
-  theme_black()+
+  #theme_black()+
   facet_wrap(~m)+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  # scale_fill_solarized()+
-  # scale_color_solarized()+
-    scale_fill_manual(values = c("#268bd2", "#859900"))+
-  scale_color_manual(values = c("#268bd2", "#859900"))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  # scale_fill_manual(values = c("#268bd2", "#859900"))+
+  # scale_color_manual(values = c("#268bd2", "#859900"))+
   xlab("")+
   guides(fill = guide_legend(title = "Question"),
          color = guide_legend(title = "Question"))+
@@ -266,10 +270,10 @@ rs.l0.samp.rf.inc2 %>%
         axis.ticks.x = element_blank(),
         legend.position = "bottom")
 
-#ggsave("~/projects/elephants/writing/cogsci2019/figs/incremental.pdf", width = 5, height = 3.5)
+ggsave("~/projects/elephants/writing/cogsci2019/figs/incremental.pdf", width = 5, height = 3.3)
 
-ggsave("~/Documents/talks/coglunch-0319/figs/elephants-models-incremental-expval.pdf", 
-       width = 5, height = 3.5)
+  # ggsave("~/Documents/talks/coglunch-0319/figs/elephants-models-incremental-expval.pdf", 
+#        width = 5, height = 3.5)
 
 ```
 
@@ -281,23 +285,43 @@ rs.l0.samp.rf.mean %>%
   # group_by(priorName, src, correlatedPriors, key, m) %>%
   # summarize(expval = mean(val)) %>%
   ungroup() %>%
-  mutate(src = factor(src, levels = c("...live in Africa",  "...live in Africa and Asia"),
-                             labels = c("...live in Africa     ",  "and Asia"))) %>%
+  mutate(
+    # src = factor(src, levels = c("...live in Africa",  "...live in Africa and Asia"),
+    #                          labels = c("...live in Africa     ",  "and Asia")),
+         src = ifelse(src ==  "...live in Africa and Asia",
+                      ifelse(correlatedPriors == "correlated priors",
+                             "and Asia",
+                             "and eat bugs"),
+                             "...live in Africa     "),
+         # correlatedPriors = factor(correlatedPriors, 
+         #                           levels = c("correlated priors",
+         #                                      "uncorrelated priors"),
+         #                           labels = c("live in Africa and Asia",
+         #                                      "live in Africa and eat bugs")),
+                  key = ifelse(as.character(key) == "% live in Africa",
+                      as.character(key),
+                      ifelse(correlatedPriors == "correlated priors",
+                             "% live in Asia",
+                             "% eat bugs")),
+         key = factor(key, levels = c("% live in Africa", 
+                                      "% live in Asia",
+                                      "% eat bugs"))
+         ) %>%
   ggplot(., aes( x = src, y = expval, fill = key))+
   geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
   geom_col(position = position_dodge(0.8),
            width = 0.8, #alpha = 0.3, 
-           size = 0.75, color = 'white')+
+           size = 0.75, color = 'black')+
   #geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
                 #position = position_dodge(0.8), width = 0.3, size = 1.2)+  
   ylab("Implied prevalence rating")+
-  theme_black()+
-  facet_wrap(~correlatedPriors)+
+  #theme_black()+
+  facet_wrap(~correlatedPriors, scales = 'free')+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   # scale_fill_solarized()+
   # scale_color_solarized()+
-    scale_fill_manual(values = c("#268bd2", "#859900"))+
-  scale_color_manual(values = c("#268bd2", "#859900"))+
+  #scale_fill_manual(values = c("#268bd2", "#859900"))+
+  #scale_color_manual(values = c("#268bd2", "#859900"))+
   xlab("")+
   guides(fill = guide_legend(title = "Question"),
          color = guide_legend(title = "Question"))+
@@ -305,10 +329,70 @@ rs.l0.samp.rf.mean %>%
         axis.ticks.x = element_blank(),
         legend.position = "bottom")
 
-ggsave("~/Documents/talks/coglunch-0319/figs/elephants-models-expval.pdf", 
-       width = 5, height = 3.5)
+ggsave("~/Documents/talks/1906-xprag-elephants/elephants-models-expval.pdf",
+width = 5, height = 3.5)
+
+ggsave("~/projects/elephants/writing/cogsci2019/figs/poster_models_expval.pdf", width = 5, height = 3.5)
 
 ```
+
+Just full sentence
+
+```{r}
+rs.l0.samp.rf.mean %>%
+  filter(src %in% c("...live in Africa and Asia"),
+         priorName == "Multimodal") %>%
+  # group_by(priorName, src, correlatedPriors, key, m) %>%
+  # summarize(expval = mean(val)) %>%
+  ungroup() %>%
+  mutate(
+    # src = factor(src, levels = c("...live in Africa",  "...live in Africa and Asia"),
+    #                          labels = c("...live in Africa     ",  "and Asia")),
+         src = ifelse(src ==  "...live in Africa and Asia",
+                      ifelse(correlatedPriors == "correlated priors",
+                             "live in Africa and Asia",
+                             "live in Africa and eat bugs"),
+                             "...live in Africa     "),
+         # correlatedPriors = factor(correlatedPriors, 
+         #                           levels = c("correlated priors",
+         #                                      "uncorrelated priors"),
+         #                           labels = c("live in Africa and Asia",
+         #                                      "live in Africa and eat bugs")),
+         key = ifelse(as.character(key) == "% live in Africa",
+                      as.character(key),
+                      ifelse(correlatedPriors == "correlated priors",
+                             "% live in Asia",
+                             "% eat bugs")),
+         key = factor(key, levels = c("% live in Africa", 
+                                      "% live in Asia",
+                                      "% eat bugs"))
+         ) %>%
+  ggplot(., aes( x = src, y = expval, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_col(position = position_dodge(0.5),
+           width = 0.5, #alpha = 0.3, 
+           size = 0.75, color = 'white')+
+  #geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                #position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  ylab("Implied prevalence rating")+
+  theme_black()+
+  facet_wrap(~correlatedPriors, scales = 'free')+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  # scale_fill_solarized()+
+  # scale_color_solarized()+
+  #scale_fill_manual(values = c("#268bd2", "#859900"))+
+  #scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 0.5),
+        axis.ticks.x = element_blank(),
+        legend.position = "bottom")
+
+ggsave("~/Documents/talks/1906-xprag-elephants/elephants-models-expval-fullSentence.pdf", width = 6, height = 3.5)
+
+```
+
 
 
 ```{r}
@@ -603,9 +687,6 @@ rs.asiaafrica.priors <- bind_rows(
 )
 ```
 
-
-
-
 #### Prior
 
 ```{r}
@@ -618,3 +699,22 @@ get_samples(rs.asiaafrica.priors, 50000) %>%
   xlab("")+
   ylab("Probability density")
 ```
+
+
+## Basic generics model behavior
+
+
+```{r}
+ggplot()+
+  geom_abline(intercept = 1, slope = 0, lty = 2, color = 'white')+
+  geom_abline(intercept = 0, slope = 2, color = 'white')+
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 1))+
+  scale_y_continuous(limits = c(0, 2), breaks = c(0, 2))+
+  theme_black()+
+  xlab("Prevalence: P(f | k)")+
+  ylab("Probability density")
+
+ggsave("~/Documents/talks/1906-xprag-elephants/generics-model-uniform.pdf",
+       width = 3, height =2)
+```
+
