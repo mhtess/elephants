@@ -12,6 +12,8 @@ library(ggthemes)
 library(viridis)
 library(cowplot)
 library(tidyboot)
+library(hBayesDM)
+library(bayestestR)
 theme_set(theme_few())
 ```
 
@@ -22,40 +24,30 @@ Here we explore the behavior of variants of an RSA model that can interpret conj
 We assume the marginal distributions on Africa and Asia are symmetric, and either:
 
 1. Uniform(0, 1)
-2. Multimodal with peaks at 0%, 25%, 50%, 75%, 100%
+2. Multimodal with peaks at 0%, 50%, 100%
 3. U-shaped
 
 ```{r}
 priorParameters <- list(
   multimodal = list(
     c1 = data.frame(a = 1 , b = 100),
-    #c2 = data.frame(a = 15, b = 15),
-    #c3 = data.frame(a = 15, b = 45),
+    c2 = data.frame(a = 15, b = 15),
     c4 = data.frame(a = 25, b = 1)
     ),
-  # multimodal2 = list(
-  #   c1 = data.frame(a = 1 , b = 100), 
-  #   #c4 = data.frame(a = 1 , b = 100), 
-  #   c2 = data.frame(a = 30, b = 30), 
-  #   #c3 = data.frame(a = 15, b = 45), 
-  #   c3 = data.frame(a = 50, b = 1),
-  #   c5 = data.frame(a = 50, b = 1)
-  #   ),
-  # multimodal3 = list(
-  #   c1 = data.frame(a = 1 , b = 100), 
-  #   #c4 = data.frame(a = 1 , b = 100),
-  #   c2 = data.frame(a = 30, b = 30), 
-  #   #c3 = data.frame(a = 15, b = 45), 
-  #   c3 = data.frame(a = 50, b = 1),
-  #   #c5 = data.frame(a = 50, b = 1)
-  #   ),
   u_shaped = list(data.frame(a = 0.1, b = 1)),
   uniform = list(data.frame(a = 1 , b = 1))
 )
 ```
 
+We also explore the effect of the belief in mutual exclusivity:
 
-## Literal Listener 
+```{r}
+meParams <- (1:10)/10
+```
+
+## Literal Listener - Effect of Prior Shape
+
+We first explore the effect of the prior shape (uniform, multimodal, or u-shaped) on the literal listener. For all the analyses in this section, the prior probability of mutual exclusivity is .99.
 
 ```{r}
 rs.l0.eleph <- data.frame()
@@ -63,7 +55,7 @@ rs.l0.eleph <- data.frame()
 for (priorName in names(priorParameters)){
   
   rs.eleph <- webppl(program_file = "elephants.wppl",
-                   data = list(params = priorParameters[[priorName]], multimodal = priorName == 'multimodal'), 
+                   data = list(params = priorParameters[[priorName]], meProb = .99), 
                    data_var = "priorInfo")
   
   rs.l0.eleph <- bind_rows(
@@ -96,19 +88,19 @@ rs.l0.samp <- get_samples(rs.l0.eleph, 50000) %>%
   mutate(
     priorName = factor(
       priorName, 
-      levels = c("uniform", "multimodal", "u_shaped", "multimodal2", "multimodal3", "bimodal"),
-      labels = c("Uniform", "Multimodal v1", "U-shaped", "Multimodal v2", "multimodal3", "bimodal")
+      levels = c("uniform", "multimodal", "u_shaped", "bimodal"),
+      labels = c("Uniform", "Multimodal", "U-shaped", "bimodal")
     ),
     src = factor(
       src, 
       levels = c(
-        "ambiguous_complete", "cont1_complete", "cont2_complete", "prior", "prefix", "partial", "full"
+        "prior", "ambiguous_complete", "cont1_complete", "cont2_complete", "prefix", "partial", "full"
       ),
       labels = c(
+        "Prior",
         "Ambiguous Complete", 
         "And > Gen", 
         "Gen > And", 
-        "Prior", 
         "Elephants live in Africa.", 
         "Elephants live in Africa and...", 
         "Elephants live in Africa and Asia."
@@ -119,7 +111,7 @@ rs.l0.samp <- get_samples(rs.l0.eleph, 50000) %>%
 
 ### Elephants live in Africa and Asia.
 
-We report model predictions for the full conjunctive generic sentence, which is either: 
+We report model predictions for the full conjunctive generic sentence. According to our grammar, this can be either: 
 
 1. scoped such that gen > and
 2. scoped such that gen < and
@@ -127,8 +119,13 @@ We report model predictions for the full conjunctive generic sentence, which is 
 
 #### Joint distributions
 
+Here we show joint distributions over two variables:
+1. living in Africa (or both)
+2. living in Asia (or both)
+for the three different choices of prior shape described above.
+
 ```{r}
-complete.dists <-  c("Ambiguous Complete", "And > Gen", "Gen > And")
+complete.dists <-  c("Prior", "Ambiguous Complete", "And > Gen", "Gen > And")
 
 plot_joint <- function(dist, name, cutoffs) {
   dist %>% 
@@ -161,10 +158,21 @@ plot_joint(rs.l0.samp %>% filter(src %in% complete.dists), "Uniform", c(0,1))
 plot_joint(rs.l0.samp %>% filter(src %in% complete.dists), "U-shaped", c(0,1))
 ```
 
-#### Marginal distributions
+##### Multimodal prior
 
 ```{r}
-rs.l0.samp.mean <- rs.l0.samp %>%
+plot_joint(rs.l0.samp %>% filter(src %in% complete.dists), "Multimodal", c(.9,1))
+```
+
+#### Marginal distributions
+
+We show marginal distributions for two different variables:
+1. living in Africa (or both)
+2. living in Asia (or both)
+for each of the different prior shapes (vertical facet).
+
+```{r}
+rs.l0.samp.mean.complete <- rs.l0.samp %>%
   filter(src %in% complete.dists) %>%
   gather("key", "val", asia:africa) %>%
   group_by(key, priorName) %>%
@@ -175,7 +183,7 @@ rs.l0.samp %>%
   gather("key", "val", asia:africa) %>%
 ggplot(aes( x = key, y = val , fill = key))+
   geom_violin(adjust = 3.5, alpha = 0.3, color = 'black')+
-  geom_point(data = rs.l0.samp.mean,
+  geom_point(data = rs.l0.samp.mean.complete,
          inherit.aes = T,
                  aes( x = key, y = mean, fill = key),
              position = position_dodge(width = 0.9),
@@ -195,6 +203,28 @@ ggplot(aes( x = key, y = val , fill = key))+
 
 ### Elephants live in Africa and...
 
+We report model predictions for incomplete sentences, with full sentences to provide context. In particular, we report predictions for the following sentences:
+1. Elephants live in Africa. (complete)
+2. Elephants live in Africa and... (incomplete)
+3. Elephants live in Africa and Asia (complete, same as Ambiguous Complete condition above)
+
+```{r}
+rs.l0.samp.inc <- rs.l0.samp %>%
+         filter(! src %in% complete.dists | src == "Prior") %>%
+  gather("key", "val", asia:africa)
+rs.l0.samp.mean.inc <- rs.l0.samp %>%
+  filter(! src %in% complete.dists | src == "Prior") %>%
+  gather("key", "val", asia:africa) %>%
+  group_by(key, priorName, src) %>%
+  summarise(mean = mean(val))
+rs.l0.samp.map.inc <- rs.l0.samp %>%
+  filter(! src %in% complete.dists | src == "Prior") %>%
+  gather("key", "val", asia:africa) %>%
+  group_by(key, priorName, src) %>%
+  summarise(map = estimate_mode(val))
+```
+
+
 #### Joint distributions
 
 ##### Uniform prior
@@ -210,15 +240,52 @@ plot_joint(rs.l0.samp %>% filter(! src %in% complete.dists), "Uniform", c(0, 1))
 rs.l0.inc.samp.mean <- rs.l0.samp %>%
   filter(! src %in% complete.dists) %>%
   gather("key", "val", asia:africa) %>%
-  group_by(key, priorName) %>%
+  group_by(key, priorName, src) %>%
   summarise(mean = mean(val))
+```
 
-ggplot(rs.l0.samp %>%
-         filter(! src %in% complete.dists) %>%
-  gather("key", "val", asia:africa),
+##### Histograms
+
+The vertical red line shows the mean of the distribution.
+
+###### Uniform prior
+
+```{r}
+compute_map <- function(dist, prior.name, input.src, conjunct) {
+  intermediate <- dist %>%
+  filter(! src %in% complete.dists | src == "Prior") %>%
+  gather("key", "val", asia:africa) %>%
+  filter(key == conjunct, priorName == prior.name, src == input.src)
+  map_estimate(intermediate$val)
+}
+
+# rs.l0.samp.map.inc <- tibble(
+#   src = rep(c("Prior", "Elephants live in Africa.", 
+#         "Elephants live in Africa and...", 
+#         "Elephants live in Africa and Asia."), 6),
+#   priorName = rep(rep(c("Uniform", "Multimodal", "U-shaped"), each=4), 2),
+#   conjunct = rep(c("africa", "asia"), each=12)
+# ) %>%
+#   group_by(priorName, src, conjunct) %>%
+#   summarise(map = compute_map(rs.l0.samp, priorName, src, conjunct))
+
+rs.l0.samp.inc %>%
+  filter(priorName == "Uniform") %>%
+ggplot(aes(x = val))+
+  geom_histogram(bins=21)+
+  geom_vline(data=rs.l0.samp.mean.inc %>% filter(priorName == "Uniform"), aes(xintercept = mean), color = "red")+
+  # geom_vline(data=rs.l0.samp.map.inc %>% filter(priorName == "Uniform"), aes(xintercept = map),col='blue')+
+  facet_grid(key~src)
+```
+
+
+##### Violin plots
+
+```{r}
+ggplot(rs.l0.samp.inc,
        aes( x = key, y = val , fill = key))+
   geom_violin(adjust = 3.5, alpha = 0.3, color = 'black')+
-  geom_point(data = rs.l0.samp.mean,
+  geom_point(data = rs.l0.samp.mean.inc,
          inherit.aes = T,
                  aes( x = key, y = mean, fill = key),
              position = position_dodge(width = 0.9),
@@ -228,6 +295,226 @@ ggplot(rs.l0.samp %>%
   scale_fill_solarized()+
   scale_color_solarized()+
   facet_grid(priorName~src)+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        strip.text.y = element_text(angle = 0),
+        legend.position = "bottom")
+```
+
+#### Change in Prevalence Estimates
+
+Here we show the change in prevalence estimates in the course of observing a full conjunctive generic "Elephants live in Africa and Asia", probing the model at four different points:
+1. before the sentence (prior)
+2. after the first predicate ("Elephants live in Africa")
+3. after the "and" ("Elephants live in Africa and")
+4. after the sentence ("Elephants live in Africa and Asia")
+
+```{r}
+rs.l0.change <- rs.l0.eleph %>%
+         filter((src %in% c("prefix", "partial", "full")) | src == "prior") %>%
+         select(both, me, everything()) %>%
+  gather("conjunct", "prevalence", asia:africa) %>%
+    mutate(
+      weighted_prevalence = prob*prevalence, 
+      src = factor(src, levels = c("prior", "prefix", "partial", "full"), labels = c("Prior", "Elephants live in Africa", "Elephants live in Africa and", "Elephants live in Africa and Asia"))) %>%
+  group_by(src, priorName, conjunct) %>%
+  summarize(expected_value = sum(weighted_prevalence))
+
+ggplot(rs.l0.change,
+       aes( x = src, y = expected_value, color = priorName))+
+  geom_point()+
+  geom_line(aes(group = priorName)) +
+  facet_wrap(~conjunct)+
+  ylab('Mean')+
+  xlab('')
+```
+
+
+## Literal Listener - Effect of Strength of Mutual Exclusivity
+
+The prior has a variable that specifies the strength of mutual exclusivity (the probability that the prior is correlated vs. uncorrelated). Here we investigate the effect of this variable.
+
+```{r}
+rs.l0.me <- data.frame()
+
+for (meParam in meParams) {
+
+  rs.eleph <- webppl(program_file = "elephants.wppl",
+                   data = list(params = priorParameters[["uniform"]], multimodal = FALSE, meProb = meParam),
+                   data_var = "priorInfo")
+
+  rs.l0.me <- bind_rows(
+    rs.l0.me,
+    bind_rows(
+      as.data.frame(rs.eleph$ambiguous_complete) %>%
+        mutate(src = "ambiguous_complete"),
+      as.data.frame(rs.eleph$cont1_complete) %>%
+        mutate(src = "cont1_complete"),
+      as.data.frame(rs.eleph$cont2_complete) %>%
+        mutate(src = "cont2_complete"),
+      as.data.frame(rs.eleph$prior) %>%
+        mutate(src = "prior"),
+      as.data.frame(rs.eleph$prefix) %>%
+        mutate(src = "prefix"),
+      as.data.frame(rs.eleph$full) %>%
+        mutate(src = "full"),
+      as.data.frame(rs.eleph$partial) %>%
+        mutate(src = "partial")
+    ) %>% rename(prob = probs,
+               africa = support.africa,
+               asia = support.asia,
+               both = support.both,
+               me = support.me) %>%
+      mutate(priorName = priorName, meProb = meParam)
+  )
+}
+
+rs.l0.samp.me <- get_samples(rs.l0.me, 50000) %>%
+  mutate(
+    priorName = factor(
+      priorName,
+      levels = c("uniform", "multimodal", "u_shaped", "multimodal2", "multimodal3", "bimodal"),
+      labels = c("Uniform", "Multimodal", "U-shaped", "Multimodal v2", "multimodal3", "bimodal")
+    ),
+    src = factor(
+      src,
+      levels = c(
+        "ambiguous_complete", "cont1_complete", "cont2_complete", "prior", "prefix", "partial", "full"
+      ),
+      labels = c(
+        "Prior",
+        "Ambiguous Complete",
+        "And > Gen",
+        "Gen > And",
+        "Elephants live in Africa.",
+        "Elephants live in Africa and...",
+        "Elephants live in Africa and Asia."
+      )
+    )
+  )
+```
+
+### Elephants live in Africa and Asia.
+
+Again, we first consider the case of a complete utterance.
+
+#### Joint distributions
+
+```{r}
+plot_joint_me <- function(dist, src.to.plot, cutoffs) {
+  dist %>% 
+    filter(src == src.to.plot) %>%
+ggplot(., aes(x = africa, y = asia))+
+  stat_density_2d(aes(fill = ..density..), 
+                  geom = "raster", contour = FALSE) +
+  scale_fill_viridis(option = "plasma")+
+  xlab("% Africa")+
+  ylab("% Asia")+
+  facet_wrap(~meProb, labeller = labeller(facet_category = label_wrap_gen(width = 16)), nrow=2)+
+  theme(strip.text.y = element_text(angle = 0),
+        legend.position = 'bottom',
+        panel.spacing.x=unit(3, "lines"),panel.spacing.y=unit(1, "lines"))+
+  scale_x_continuous(limits = cutoffs, breaks = cutoffs)+
+  scale_y_continuous(limits = cutoffs, breaks = cutoffs)+
+  coord_fixed()
+}
+```
+
+##### Prior
+
+```{r}
+plot_joint_me(rs.l0.samp.me, "Prior", c(0, 1))
+```
+
+##### Ambiguous
+
+```{r}
+plot_joint_me(rs.l0.samp.me, "Ambiguous Complete", c(0, 1))
+```
+
+##### And > Gen
+
+```{r}
+plot_joint_me(rs.l0.samp.me, "And > Gen", c(0, 1))
+```
+
+##### Gen > And
+
+```{r}
+plot_joint_me(rs.l0.samp.me, "Gen > And", c(0, 1))
+```
+
+#### Marginal Distributions
+
+Red vertical lines show means of the distributions.
+
+##### Histograms
+
+###### Uniform prior
+
+```{r}
+estimate_mode <- function(x) {
+  d = density(x)
+  Estimate = d$x[which.max(d$x)]
+  return(Estimate)
+}
+compute_map_me <- function(dist, input.src, conjunct, me) {
+  intermediate <- dist %>%
+  filter(src %in% complete.dists | src == "Prior") %>%
+  gather("key", "val", asia:africa) %>%
+  filter(key == conjunct, src == input.src, meProb == me)
+  #intermediate
+  estimate_mode(intermediate$val)
+}
+
+rs.l0.samp.mean.me <- rs.l0.samp.me %>%
+  filter(src %in% complete.dists) %>%
+  gather("key", "val", asia:africa) %>%
+  group_by(key, priorName, src, meProb) %>%
+  summarise(mean = mean(val))
+
+# rs.l0.samp.map.me <- tibble(
+#   src = rep(c("Prior", "Ambiguous Complete",
+#         "Gen > And",
+#         "And > Gen"), 10),
+#   key = rep(c("africa", "asia"), each=20),
+#   meProb = rep(1:10/10, 4)
+# ) %>%
+#   expand(src, key, meProb) %>%
+#   group_by(src, key, meProb) %>%
+#   summarise(map = compute_map_me(rs.l0.samp.me, src, key, meProb))
+
+rs.l0.samp.me %>%
+  filter(src %in% complete.dists) %>%
+ggplot(aes(x = africa))+
+  geom_histogram(bins=21)+
+  geom_vline(data=rs.l0.samp.mean.me %>% filter(key == "africa"), aes(xintercept = mean), color = "red")+
+  #geom_vline(data=rs.l0.samp.map.me %>% filter(key == "africa"), aes(xintercept = map), color='blue')+
+  facet_grid(meProb~src)
+```
+
+##### Violin plots
+
+###### Uniform prior
+
+```{r}
+ggplot(rs.l0.samp.me %>%
+         filter(src %in% complete.dists) %>%
+         gather(key, val, africa:asia),
+       aes( x = key, y = val , fill = key))+
+  geom_violin(adjust = 3.5, alpha = 0.3, color = 'black')+
+  geom_point(data = rs.l0.samp.mean.me,
+         inherit.aes = T,
+                 aes( x = key, y = mean, fill = key),
+             position = position_dodge(width = 0.9),
+             shape = 23, size = 3, stroke = 2)+
+  ylab("Implied prevalence rating")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_solarized()+
+  scale_color_solarized()+
+  facet_grid(meProb~src)+
   xlab("")+
   guides(fill = guide_legend(title = "Question"),
          color = guide_legend(title = "Question"))+
