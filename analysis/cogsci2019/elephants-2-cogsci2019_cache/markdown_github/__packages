@@ -17,3 +17,6 @@ ggpirate
 Rcpp
 brms
 jsonlite
+broom
+rsq
+lmSupport

@@ -73,7 +73,9 @@ truth version of task (elephants-9-truth: n = 54 (N=108); $1.00 (05/08/2019)
 - $1.50
 
 ## elephants-coord
-- n = 63 (04/14/2020)
+- n = 63 (04/14/2020): `legacy/elephants-coord-20200414.html`
+- n = 54 (04/27/2020) `elephants-coord.html`
 - $1.50
 - Modifies `elephants-samescreen-single` to vary the coordination level of the critical sentences into four conditions: S, VP, NP, PP.
 - Coordination level is manipulated within subjects.
+- Analysis can be found in `analysis/elephants-coord.Rmd`.
