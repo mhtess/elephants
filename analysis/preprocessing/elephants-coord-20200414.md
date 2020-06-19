@@ -7,8 +7,9 @@ Karen Gu
 
   - This file contains pre-processing for the first pilot of the
     variable coordination level experiment.
-  - Raw data is contained in `../data/elephants-coord`, the first pilot.
-    Analysis for this file is contained in `./elephants-coord.Rmd`.
+  - Raw data is contained in `../../data/elephants-coord`, the first
+    pilot. Analysis for this file is contained in
+    `../elephants-coord.Rmd`.
   - n = 63 (04/14/2020)
 
 ## Loading Data

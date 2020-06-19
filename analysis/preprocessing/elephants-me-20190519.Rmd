@@ -1,9 +1,14 @@
 ---
-title: "elephants-10-pilot"
+title: "Mutual Exclusivity Pilot 1"
 author: "Karen Gu"
 date: "5/19/2019"
 output: github_document
 ---
+
+# Mutual Exclusivity Norming Experiment
+
+This file contains pre-processing for the mutual exclusivity norming pilot. Raw data for this file is contained in `../../data/elephants-10`. Analysis for this file is contained in `../elephants-me.Rmd`.
+- n = 36 (05/19/2019), n = 20 (05/20/2019)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.width=10)
@@ -11,12 +16,6 @@ library(tidyverse)
 library(jsonlite)
 library(knitr)
 ```
-
-## elephants-10 (mutual exclusivity norming)
-same story as in elephants-3, without last sentence, ask explicitly about the following probabilities:  
-- Pr(Africa)  
-- Pr(Asia | Africa)  
-- Pr(eat bugs | Africa)  
 
 ```{r load.data}
 data.path <- "../../data/elephants-10/"
@@ -54,14 +53,16 @@ for (result_file in result.files) {
   df.trials = bind_rows(
     df.trials, 
     data.frame(result_json$answers$trials) %>%
-      select(-main_text, -continuation, -kind, -properties, -nme_property, -property) %>%
+      select(-main_text, -kind, -continuation, -properties, -nme_property, -property) %>%
       mutate(workerid = worker.id,
              property1 = result_json$answers$trials$property$property1$singular,
-             property2 = result_json$answers$trials$property$property2$singular
+             property2 = result_json$answers$trials$property$property2$singular,
+             kind = result_json$answers$trials$kind$plural,
              )
   )
 }
 ```
+
 
 ### Subject Information
 
@@ -81,7 +82,7 @@ Exclude subjects that do not answer all 4 sliders correctly.
 - What percentage of birds do you think are male? coded as correct if 0.3 < prevalence < 0.7  
 - What percentage of lions do you think lay eggs? coded as correct if prevalence < 0.1
 
-```{r}
+```{r slider.practice}
 df.attention <- df.attention %>%
   mutate(correct = as.logical(correct)) %>%
   mutate(correct = if_else(
@@ -112,7 +113,7 @@ df.attention %>%
 
 Exclude subjects that do not correctly identify 7 out of 10 memory check items.
 
-```{r}
+```{r memory.check}
 df.memory <- df.attention %>%
   filter(condition == "memory_check") %>%
   group_by(workerid, tested_on) %>%
@@ -136,7 +137,7 @@ ggplot(df.memory, aes( x = n_correct ))+
 
 #### Task Explanations
 
-Participants that give bad explanations are generally eliminated by one of the other exclusion criteria.
+Participants that give bad explanations are generally eliminated by one of the other exclusion criteria, so no participants are excluded solely on the basis of their explanations.
 
 ```{r}
 df.explanation <- df.attention %>%
@@ -158,71 +159,8 @@ df.query <- df.trials %>%
   filter(!(workerid %in% workers.to.exclude)) %>%
   select(-title, -type, -memory, -query) %>%
   filter(conditional_probability_me >= 0, conditional_probability_nme >= 0, marginal_probability >= 0)
+
+write.csv(df.query, 'elephants-me-20190519.csv')
 ```
 
 We exclude `r length(workers.to.exclude)` workers, leaving `r nrow(df.query)` trials for analysis.
-
-### Mutual Exclusivity
-
-```{r fig.height=7}
-df.probs <- df.query %>%
-  group_by(property1) %>%
-  summarise(mean_conditional = mean(conditional_probability_me),
-         mean_marginal = mean(marginal_probability),
-         joint_estimate = mean_conditional*mean_marginal)
-
-ggplot(df.probs, aes(x = mean_marginal, y = mean_conditional)) +
-  geom_text(aes(label = property1)) +
-  xlab("Marginal Probability (% Africa)") +
-  ylab("Conditional Probability (% Asia | Africa)")
-```
-
-### Marginal Probabilities
-
-```{r}
-ggplot(df.query, aes(x = marginal_probability)) +
-  geom_histogram() +
-  facet_wrap(~property1)
-```
-
-### Conditional Probabilities (ME)
-
-```{r}
-ggplot(df.query, aes(x = conditional_probability_me)) +
-  geom_histogram() +
-  facet_wrap(~property1)
-```
-
-### Conditional Probabilities (NME)
-
-```{r}
-ggplot(df.query, aes(x = conditional_probability_nme)) +
-  geom_histogram() +
-  facet_wrap(~property1)
-```
-
-### Joint Probabilities
-
-```{r}
-df.query %>%
-  mutate(joint = conditional_probability_me*marginal_probability) %>%
-  ggplot(aes(x = joint)) +
-  geom_histogram() +
-  facet_wrap(~property1)
-```
-
-#### Property Symmetry
-
-We alternate between asking about "Africa" and "Asia" for the marginal probability. Are these symmetric?
-
-```{r}
-df.query %>%
-  mutate(ask_first = if_else(ask_first, "first", "second")) %>%
-  group_by(property1, property2, ask_first) %>%
-  summarise(mean_marginal = mean(marginal_probability)) %>%
-  spread(ask_first, mean_marginal) %>%
-  ggplot(aes(x = first, y = second)) +
-    geom_text(aes(label = property1)) +
-    geom_abline(yintercept = 0, slope = 1)
-```
-

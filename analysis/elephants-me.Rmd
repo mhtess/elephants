@@ -1,0 +1,96 @@
+---
+title: "Mutual Exclusivity Norming Experiment"
+author: "Karen Gu"
+date: "5/19/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.width=10)
+library(tidyverse)
+library(jsonlite)
+library(knitr)
+```
+
+This file contains analysis for the mutual exclusivity norming pilot. Raw data for this file is contained in `../../data/elephants-10`. Preprocessing for this file is contained in `./preprocessing/elephants-me-20190519.Rmd`.
+
+The experiment uses the same story as in elephants-3, without last sentence, asking explicitly about the following probabilities:  
+- Pr(Africa) - marginal distribution
+- Pr(Asia | Africa) - conditional distribution (ME)
+- Pr(eat bugs | Africa) - conditional distribution (ME)
+
+```{r load.data}
+df.query <- read.csv('preprocessing/elephants-me-20190519.csv')
+```
+
+## Mutual Exclusivity
+
+We see that the mutual exclusivity varies across items, where no items are perfectly correlated (Pr(Asia|Africa) = 1), but no items are perfectly anticorrelated either (Pr(Asia|Africa) = 0).
+
+```{r fig.height=7}
+df.probs <- df.query %>%
+  group_by(property1) %>%
+  summarise(mean_conditional = mean(conditional_probability_me),
+         mean_marginal = mean(marginal_probability),
+         joint_estimate = mean_conditional*mean_marginal)
+
+ggplot(df.probs, aes(x = mean_marginal, y = mean_conditional)) +
+  geom_text(aes(label = property1)) +
+  xlab("Marginal Probability Pr(Africa)") +
+  ylab("Conditional Probability Pr(Asia | Africa)")
+```
+
+## Marginal Probabilities
+
+```{r}
+ggplot(df.query, aes(x = marginal_probability)) +
+  geom_histogram() +
+  facet_wrap(~property1) +
+  xlab('Pr(Africa)')
+```
+
+## Conditional Probabilities (ME)
+
+```{r}
+ggplot(df.query, aes(x = conditional_probability_me)) +
+  geom_histogram() +
+  facet_wrap(~property1) + 
+  xlab('Pr(Asia|Africa)')
+```
+
+## Conditional Probabilities (NME)
+
+```{r}
+ggplot(df.query, aes(x = conditional_probability_nme)) +
+  geom_histogram() +
+  facet_wrap(~property1) +
+  xlab('Pr(eat bugs|Africa)')
+```
+
+## Joint Probabilities
+
+```{r}
+df.query %>%
+  mutate(joint = conditional_probability_me*marginal_probability) %>%
+  ggplot(aes(x = joint)) +
+  geom_histogram() +
+  facet_wrap(~property1) +
+  xlab('Pr(Africa and Asia)')
+```
+
+## Property Symmetry
+
+We alternate between asking about "Africa" and "Asia" for the marginal probability. Are these symmetric?
+
+```{r}
+df.query %>%
+  mutate(ask_first = if_else(ask_first, "first", "second")) %>%
+  group_by(property1, property2, ask_first) %>%
+  summarise(mean_marginal = mean(marginal_probability)) %>%
+  spread(ask_first, mean_marginal) %>%
+  ggplot(aes(x = first, y = second)) +
+    geom_text(aes(label = property1)) +
+    geom_abline(yintercept = 0, slope = 1)
+```
+
+It's possible that there is some effect of order, which may vary by item.
