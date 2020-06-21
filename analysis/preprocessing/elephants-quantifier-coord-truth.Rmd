@@ -1,37 +1,23 @@
 ---
-title: "elephants-9-pilot"
+title: "Variable Coordination by Quantifier Pilot 2"
 author: "Karen Gu"
-date: "5/08/2019"
-output: github_document
+date: "6/19/2020"
+output: html_document
 ---
 
-[Link to experiment (VP)](https://www.mit.edu/~karengu/elephants_vp/elephants/experiments/elephants-9.html)
-
-## Experiment 9 Pilot (Truth Version)
-
-TVJT using a 2-alternative forced choice, where participants rate items of the form Elephants live in Africa and Asia.
-* between-subjects: VP vs. NP coordination  
-* within-subjects: generic vs. most 
-* 30 trials per subject (15 generic, 15 most)  
+This file contains preprocessing for the second pilot of the variable coordination by quantifier experiment. Raw data for this file is contained in `../../data/elephants-9/truth`. The experiment of this file is contained in `../../experiments/elephants-tvjt.html`. The analysis for this file is contained in `../elephants-quantifier-coord.Rmd`.
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(jsonlite)
 library(tidyverse)
 library(knitr)
-library(ggthemes)
-library(jsonlite)
-library(viridis)
-library(tidyboot)
-library(ggpirate)
-library(lme4)
-library(lmerTest)
-theme_set(theme_few())
-data.path <- "../../data/elephants-9/truth/"
 ```
 
 ## Subject Information
 
 ```{r, echo=F, warning=F}
+data.path <- "../../data/elephants-9/truth/"
 results.path <- data.path
 anon_results = list.files(data.path)
 
@@ -76,13 +62,11 @@ for (anon_result in anon_results) {
 }
 ```
 
-
 ```{r}
 df.subject %>%
   select(workerid, language, enjoyment, age, gender, problems, comments) %>%
   kable(.)
 ```
-
 ## Attention Checks 
 
 ### Slider Practice
@@ -189,106 +173,8 @@ df.query <- df.trials %>%
   filter(!memory_fail, !slider_fail) %>%
   rename(quantifier = trial_type, coordination = condition) %>%
   mutate(quantifier = factor(quantifier, levels = c("generic", "most"), ordered = TRUE)) %>%
-  mutate(coordination = factor(coordination, levels = c("vp", "np"), ordered = TRUE)) %>%
+  mutate(coordination = factor(coordination, levels = c("np", "vp"), ordered = TRUE)) %>%
   mutate(response = response == "true")
-```
 
-### Number of Participants by Item and Condition
-
-```{r}
-df.full.tab.item.count <- df.query %>%
-  group_by(coordination, quantifier, combined_predicate) %>%
-  count() %>%
-  spread(quantifier, n)
-
-df.full.tab.item.count %>% kable()
-
-df.full.tab.item.count %>% 
-  gather(quantifier, n, generic, most) %>%
-  group_by(coordination) %>%
-  summarize(n = sum(n)) %>% kable()
-```
-
-### Confidence Intervals by Coordination and Quantifier (collapsed across item)
-
-```{r}
-df_sample <- function(i) {
-  df.query %>% 
-    group_by(quantifier, coordination) %>%
-    sample_frac(replace = TRUE) %>%
-    group_by(quantifier, coordination, response) %>%
-    count() %>%
-    group_by(quantifier, coordination) %>%
-    mutate(prop = n/sum(n), sample = i) %>%
-    filter(response == TRUE)
-}
-df_resampled <- map_df(1:10, df_sample)
-df_ci <- df_resampled %>%
-  group_by(coordination, quantifier) %>%
-  summarise(mean = mean(prop), ci_lower = ci_lower(prop), ci_upper = ci_upper(prop))
-
-ggplot(df_ci) +
-  geom_col(aes(x = quantifier, y = mean, fill = quantifier)) +
-  geom_linerange(aes(x = quantifier, ymin = ci_lower, ymax = ci_upper)) +
-  facet_grid(~ coordination) +
-  scale_fill_manual(values = c("#4477AA", "#CC6677"), guide = FALSE) +
-  ylab("Proportion of Responses") +
-  xlab("Quantifier")
-```
-
-### Model
-
-```{r}
-contrasts(df.query$coordination) <- contr.sum
-contrasts(df.query$quantifier) <- contr.sum
-recall_glm <- glmer(response ~ coordination * quantifier + (1 | workerid) + (1 | combined_predicate),
-                  data = df.query,
-                  family = "binomial")
-summary(recall_glm)
-```
-
-## By-item Analyses
-
-### Number of Trials by Item and Quantifier
-
-```{r}
-df.tab.item.count <-  df.query %>%
-  group_by(coordination, quantifier) %>%
-  count() %>%
-  spread(quantifier, n) 
-
-df.tab.item.count %>% kable()
-
-df.tab.item.count %>% 
-  gather(quantifier, n, generic, most) %>%
-  group_by(quantifier) %>%
-  summarize(n = sum(n)) %>% kable()
-```
-
-### Confidence Intervals (by item)
-
-```{r fig.height = 15}
-df_sample_item <- function(i) {
-  df.query %>% 
-    group_by(combined_predicate, quantifier, coordination) %>%
-    sample_frac(replace = TRUE) %>%
-    group_by(combined_predicate, quantifier, coordination, response) %>%
-    count() %>%
-    group_by(combined_predicate, quantifier, coordination) %>%
-    mutate(prop = n/sum(n), sample = i) %>%
-    filter(response == TRUE)
-}
-df_resampled_item <- map_df(1:1000, df_sample_item)
-df_ci_item <- df_resampled_item %>%
-  group_by(combined_predicate, coordination, quantifier) %>%
-  summarise(mean = mean(prop), ci_lower = ci_lower(prop), ci_upper = ci_upper(prop))
-
-ggplot(df_ci_item, aes(x = combined_predicate, color = quantifier)) +
-  scale_color_manual(values=c("#f4424e", "#4049f7")) +
-  geom_pointrange(aes(y = mean, ymin = ci_lower, ymax = ci_upper),
-                 position = position_dodge(0.6)) +
-  facet_wrap(~coordination) +
-  xlab("Item") +
-  ylab("Proportion of True Responses") +
-  coord_flip()
+write.csv(df.query, 'elephants-quantifier-coord-truth.csv')
 ```

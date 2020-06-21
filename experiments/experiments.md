@@ -40,28 +40,29 @@
 - Participants are evenly distributed between conditions.
 - $1.25
 
-## elephants-acceptability: acceptability judgements on natural mutually exclusive items
-Results from Elephants-3 may be confounded due to the availability of a group predicate interpretation under NP-coordination. We want to show that VP-coordination doesn't allow a group predicate interpretation using acceptability judgements with quantified statements. (All elephants live in Africa and live in Asia should be unacceptable, while Elephants live in Africa and live in Asia should be acceptable, e.g.)
-- between-subjects: NP vs. VP coordination
-- within-subjects: most vs. all vs. generic
-- practice trials: grammatical but unacceptable sentences
-- sliding scale
-- memory check with NP vs. VP coordinated distractors-
-- each subject does each item (30 trials total)
-- n = 54; $1.00
-stim types:
-- weather: 2
-- animals: 10
-- plants: 1
-- food: 7
-- artifacts: 5
-- people: 5
+## elephants-quantifier-coord
+- Attempts to show that VP-coordination doesn't allow a group predicate interpretation. (All elephants live in Africa and live in Asia should be unacceptable/false, while Elephants live in Africa and live in Asia should be acceptable/true, e.g.)
+- Uses different stimuli with familiar items:
+-- weather: 2
+-- animals: 10
+-- plants: 1
+-- food: 7
+-- artifacts: 5
+-- people: 5
 
-## elephants-tvjt: truth value judgement task version of elephants-acceptability
-truth version of task (elephants-9-truth: n = 54 (N=108); $1.00 (05/08/2019)
+### elephants-acceptability
+- n = 54 (03/13/2019)
+- Participants give acceptability judgements using a sliding scale. Practice trials with grammatical but unacceptable sentences. (NP vs. VP coordination) between-subjects, and (most vs. all vs. generic) within-subjects.
+- $1
+
+### elephants-tvjt: truth value judgement task version of elephants-acceptability
+- n = 54 (05/08/2019)
+- Participants give truth value judgements (yes/no). Practice trials with false sentences that may have arisen due to speaker error (swapping words).
+- $1 
 
 ## elephants-me
 - n = 36 (05/19/2019)
+- n = 20 (05/20/2019)
 - Attempts to obtain a measure of the strength of mutual exclusivity for each item.
 - same story as in elephants-3, without last sentence, ask explicitly about the following probabilities: Pr(Africa), Pr(Asia | Africa), Pr(eat bugs | Africa)
 - 15 trials per subject
