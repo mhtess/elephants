@@ -40,6 +40,11 @@
 - Participants are evenly distributed between conditions.
 - $1.25
 
+## elephants-quantifier-vp
+- Investigates whether different quantifiers (most vs. all vs. some) lead to different interpretations under VP-coordination.
+- Uses the same experimental paradigm as `elephants-storybook`, with all critical stimuli modified to use VP-coordination, and varying the quantifier used within-subjects.
+- Conditions: interrupted, ME (1), uninterrupted, ME (2), interrupted, NME (3), uninterrupted, NME (4)
+
 ## elephants-quantifier-coord
 - Attempts to show that VP-coordination doesn't allow a group predicate interpretation. (All elephants live in Africa and live in Asia should be unacceptable/false, while Elephants live in Africa and live in Asia should be acceptable/true, e.g.)
 - Uses different stimuli with familiar items:
