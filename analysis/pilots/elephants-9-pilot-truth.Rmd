@@ -232,8 +232,10 @@ ggplot(df_ci) +
   geom_linerange(aes(x = quantifier, ymin = ci_lower, ymax = ci_upper)) +
   facet_grid(~ coordination) +
   scale_fill_manual(values = c("#4477AA", "#CC6677"), guide = FALSE) +
-  ylab("Proportion of Responses") +
+  ylab("Proportion `True` Responses") +
   xlab("Quantifier")
+
+ggsave("~/Documents/talks/1906-xprag-elephants/truthJudgment_NP_VP.pdf", width = 5, height = 3.5)
 ```
 
 ### Model

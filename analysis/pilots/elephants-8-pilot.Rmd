@@ -319,10 +319,22 @@ ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
 df.query.critical %>%
   filter(#quantifier %in% c("most", "generic",),
          condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)") %>%
+  mutate(quantifier = factor(quantifier, levels = c("generic", "most", "all")),
+          key = factor(key, levels = c("% live in Africa", "% property 2"),
+                       labels = c("% live in Africa", "% live in Asia"))) %>%
   ggplot(., aes( x = val ))+
-  geom_histogram()+
-  facet_grid( condition+ quantifier~ key, scales = 'free')+
-  theme(strip.text.y = element_text(angle = 0))
+  theme_black()+
+  geom_histogram(color = 'white')+
+  facet_grid( quantifier~ key, scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))+
+  scale_x_continuous(limits = c(-0.05, 1.05), breaks = c(0, 0.5, 1))+
+  labs(
+    x = "Implied prevalence rating",
+    y = "Number of responses"
+  )
+
+#ggsave("~/Documents/talks/1904-bochum-elephants/expt3_withQuantifiers.pdf",
+       #width = 8, height = 5)
 ```
 
 ## By-item Analyses
