@@ -1,0 +1,278 @@
+---
+title: "Variable Coordination by Quantifier"
+author: "Karen Gu"
+date: "5/08/2019"
+output: github_document
+---
+
+This file contains analysis of the variable coordination by quantifier experiment, which consists of two pilots featuring different tasks.
+
+Pilot 1 is an acceptability task using a sliding scale (0-100%), where participants rate items of the form Elephants live in Africa and Asia.
+* between-subjects: VP vs. NP coordination  
+* within-subjects: generic vs. most vs. all  
+* 30 trials per subject (10 generic, 10 most, 10 all)
+Raw data is contained in `../data/elephants-9/`. The preprocessing file is contained in `./preprocessing/elephants-quantifier-coord-acceptability.Rmd`. The experiment is contained in `../experiments/elephants-acceptability.html`.
+
+Pilot 2 is a TVJT using a 2-alternative forced choice, where participants rate items of the form Elephants live in Africa and Asia.
+* between-subjects: VP vs. NP coordination  
+* within-subjects: generic vs. most 
+* 30 trials per subject (15 generic, 15 most)
+Raw data is contained in `../data/elephants-9-truth/`. The preprocessing file is contained in `./preprocessing/elephants-quantifier-coord-truth.Rmd`. The experiment is contained in `../experiments/elephants-truth.html`.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(jsonlite)
+library(viridis)
+library(tidyboot)
+library(lme4)
+library(brms)
+library(lmerTest)
+theme_set(theme_few())
+```
+
+```{r load.data}
+df.query.truth <- read.csv('./preprocessing/elephants-quantifier-coord-truth.csv') %>%
+  mutate(quantifier = factor(quantifier, levels = c("generic", "most"), labels = c("generic", "most")),
+         coordination = factor(coordination, levels = c("np", "vp"), labels = c("np", "vp")))
+df.query.acceptability <- read.csv('./preprocessing/elephants-quantifier-coord-acceptability.csv')
+```
+
+
+## Number of Participants by Item and Condition
+
+### Pilot 1 (Acceptability)
+
+```{r}
+df.full.tab.item.count <- df.query.acceptability %>%
+  group_by(coordination, quantifier, combined_predicate) %>%
+  count() %>%
+  spread(quantifier, n)
+
+df.full.tab.item.count %>% kable()
+
+df.full.tab.item.count %>% 
+  gather(quantifier, n, all, generic, most) %>%
+  group_by(coordination) %>%
+  summarize(n = sum(n)) %>% kable()
+```
+
+### Pilot 2 (Truth)
+
+```{r}
+df.full.tab.item.count <- df.query.truth %>%
+  group_by(coordination, quantifier, combined_predicate) %>%
+  count() %>%
+  spread(quantifier, n)
+
+df.full.tab.item.count %>% kable()
+
+df.full.tab.item.count %>% 
+  gather(quantifier, n, generic, most) %>%
+  group_by(coordination) %>%
+  summarize(n = sum(n)) %>% kable()
+```
+
+## Pilot 1 (Acceptability)
+
+### Acceptability Judgements by Participant
+ 
+Histogram of all of a single participant's acceptability judgements, collapsed across trials and color coded for the number of correct responses on the memory check.  
+* fill = number of correct responses on the memory check (out of 10)  
+* facet = participants  
+
+```{r fig.height = 10}
+df.query.acceptability %>%
+  ggplot(., aes( x = response, fill = n_correct ))+
+  geom_histogram()+
+  facet_wrap(~workerid)+
+  scale_fill_viridis()+
+  scale_x_continuous(breaks = c(0, 0.5, 1)) +
+  ylab("Number of Judgements") +
+  xlab("Acceptability Rating")
+```
+
+### Histograms of Acceptability Judgements by Coordination and Quantifier (collapsed across item)
+
+```{r fig.height = 8}
+df.query.acceptability %>%
+  ggplot(aes( x = response ))+
+  geom_histogram()+
+  facet_grid(coordination ~ quantifier) +
+  xlab("Acceptability Rating") +
+  ylab("Number of Trials")
+```
+
+### Pirate Plots by Coordination and Quantifier (collapsed across item)
+
+```{r}
+df.bs <- df.query.acceptability %>%
+  group_by(quantifier, coordination) %>%
+  tidyboot_mean(column = response)
+  
+ggplot(df.bs, aes( x = quantifier))+
+  scale_fill_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
+  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
+  geom_jitter(data = df.query.acceptability,
+             inherit.aes = F, aes(x = quantifier, y = response, color = quantifier), 
+             alpha = 0.5)+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean, fill = quantifier),
+           width = 0.8, alpha = 0.3, color = 'white')+
+  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8),  size = 1.2, color = 'white')+  
+  ylab("Acceptability Rating")+
+  facet_wrap(~coordination)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("Quantifier")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")+
+  guides(fill = F, color = F)
+```
+
+### Generic VP Analysis
+
+```{r}
+df.generic.vp <- df.query.acceptability %>%
+  filter(quantifier == "generic", coordination == "vp") %>%
+  mutate(response = response - 0.5)
+generic.vp.model <- lmer(response ~ 1 + (1 | workerid) + (1 | combined_predicate),
+                         data = df.generic.vp)
+summary(generic.vp.model)
+```
+
+## Pilot 2 (Truth)
+
+### Confidence Intervals by Coordination and Quantifier (collapsed across item)
+
+```{r}
+df_sample <- function(i) {
+  df.query.truth %>% 
+    group_by(quantifier, coordination) %>%
+    sample_frac(replace = TRUE) %>%
+    group_by(quantifier, coordination, response) %>%
+    count() %>%
+    group_by(quantifier, coordination) %>%
+    mutate(prop = n/sum(n), sample = i) %>%
+    filter(response == TRUE)
+}
+df_resampled <- map_df(1:10, df_sample)
+df_ci <- df_resampled %>%
+  group_by(coordination, quantifier) %>%
+  summarise(mean = mean(prop), ci_lower = ci_lower(prop), ci_upper = ci_upper(prop))
+
+ggplot(df_ci) +
+  geom_col(aes(x = quantifier, y = mean, fill = quantifier), color='black') +
+  geom_linerange(aes(x = quantifier, ymin = ci_lower, ymax = ci_upper)) +
+  facet_grid(~ coordination) +
+  scale_fill_viridis(discrete = TRUE, guide = FALSE) +
+  ylab("Proportion of 'True' Responses") +
+  xlab("Quantifier")
+```
+
+The model shows an interaction of quantifier and coordination level.
+
+```{r}
+contrasts(df.query.truth$coordination) <- contr.treatment
+contrasts(df.query.truth$quantifier) <- contr.treatment
+fit.truth <- brm(response ~ coordination * quantifier + (1 + coordination * quantifier | workerid) + (1 + coordination * quantifier | combined_predicate),
+                  data = df.query.truth,
+                  family = "bernoulli")
+summary(fit.truth)
+stanplot(fit.truth)
+```
+
+## By-item Analyses
+
+### Pilot 1 (Acceptability)
+
+#### Pirate Plots (by item)
+
+```{r fig.width=13, fig.height = 30}
+df.bs.item <- df.query.acceptability %>%
+  group_by(coordination, quantifier, combined_predicate) %>%
+  tidyboot_mean(column = response)
+
+ggplot(df.bs.item, aes( x = quantifier, fill = quantifier))+
+  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_linerange(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1, alpha = 0.5)+  
+  geom_point(data = df.query.acceptability, 
+             position = position_jitterdodge(),
+             inherit.aes = F, aes(x = quantifier, y = response, color = quantifier), 
+             alpha = 0.8)+
+  ylab("Acceptability Rating")+
+  facet_wrap(~combined_predicate + coordination, ncol = 4)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  xlab("")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")
+```
+
+#### Confidence Intervals (by item)
+
+```{r fig.height = 15}
+ggplot(df.bs.item, aes(x = combined_predicate, color = quantifier)) +
+  scale_color_manual(values=c("#f4424e", "#4049f7", "#40f3f9")) +
+  geom_pointrange(aes(y = mean, ymin = ci_lower, ymax = ci_upper),
+                 position = position_dodge(0.6)) +
+  facet_wrap(~coordination) +
+  xlab("Item") +
+  ylab("Acceptability Rating") +
+  coord_flip()
+```
+
+#### Histograms of Acceptability Ratings by Item
+
+##### by Coordination
+
+```{r fig.height = 20}
+df.query.acceptability %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_grid( combined_predicate ~coordination, scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))
+```
+
+##### by Quantifier
+
+```{r fig.height = 20}
+df.query.acceptability %>%
+  ggplot(., aes( x = response ))+
+  geom_histogram()+
+  facet_grid( combined_predicate ~quantifier, scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))
+```
+
+### Pilot 2 (Truth)
+
+#### Confidence Intervals (by item)
+
+```{r fig.height = 15}
+df_sample_item <- function(i) {
+  df.query.truth %>% 
+    group_by(combined_predicate, quantifier, coordination) %>%
+    sample_frac(replace = TRUE) %>%
+    group_by(combined_predicate, quantifier, coordination, response) %>%
+    count() %>%
+    group_by(combined_predicate, quantifier, coordination) %>%
+    mutate(prop = n/sum(n), sample = i) %>%
+    filter(response == TRUE)
+}
+df_resampled_item <- map_df(1:1000, df_sample_item)
+df_ci_item <- df_resampled_item %>%
+  group_by(combined_predicate, coordination, quantifier) %>%
+  summarise(mean = mean(prop), ci_lower = ci_lower(prop), ci_upper = ci_upper(prop))
+
+ggplot(df_ci_item, aes(x = combined_predicate, color = quantifier)) +
+  scale_color_manual(values=c("#f4424e", "#4049f7")) +
+  geom_pointrange(aes(y = mean, ymin = ci_lower, ymax = ci_upper),
+                 position = position_dodge(0.6)) +
+  facet_wrap(~coordination) +
+  xlab("Item") +
+  ylab("Proportion of True Responses") +
+  coord_flip()
+```

@@ -1,0 +1,194 @@
+---
+title: "Variable Coordination by Quantifier Pilot 1"
+author: "Karen Gu"
+date: "6/19/2020"
+output: github_document
+---
+
+This file contains preprocessing for the first pilot of the variable coordination by quantifier experiment. Raw data for this file is contained in `../../data/elephants-9/acceptability`. The experiment of this file is contained in `../../experiments/elephants-acceptability.html`. The analysis for this file is contained in `../elephants-quantifier-coord.Rmd`.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(jsonlite)
+library(tidyverse)
+library(knitr)
+```
+
+## Subject Information
+
+```{r load.data,  echo=F, warning=F}
+data.path <- "../../data/elephants-9/acceptability/"
+results.path <- data.path
+anon_results = list.files(data.path)
+
+i = 0
+df.subject <- data.frame()
+df.trials <- data.frame()
+df.attention <- data.frame()
+for (anon_result in anon_results) {
+  
+  result_json = fromJSON(paste(data.path, anon_result, sep ="/"))
+
+  df.attention = bind_rows(
+    df.attention, 
+    data.frame(result_json$answers$catch_trials) %>%
+    mutate(
+      workerid = i,
+      property = gsub("\n", " ", property)
+      )
+  )
+  
+  df.subject = bind_rows(
+    df.subject, 
+    data.frame(result_json$answers$subject_information) %>% 
+      mutate(workerid = i,
+             language = gsub("\"", "", language),
+         enjoyment = gsub("\"", "", enjoyment),
+         age = gsub("\"", "", age),
+         gender = gsub("\"", "", gender),
+         problems = gsub("\"", "", problems),
+         comments = gsub("\"", "", comments))
+  )
+  
+  df.trials = bind_rows(
+    df.trials, 
+    data.frame(result_json$answers$trials) %>% 
+      mutate(workerid = i,
+             combined_predicate = ifelse(!is.na(combined_predicate), combined_predicate, combined_precidate)) %>%
+      select(workerid, kind, predicate1, predicate2, combined_predicate, trial_type, condition, response)
+  )
+
+  i = i + 1
+}
+```
+
+```{r}
+df.subject %>%
+  select(workerid, language, enjoyment, age, gender, problems, comments) %>%
+  kable(.)
+```
+
+## Attention Checks 
+
+### Slider Practice
+
+Before the experiment, participants practice using the sliders to rate 3 sentences:
+
+- Anna laughed on Jon. (coded as correct if x < 0.5)
+- The train from Edmonton to Orlando was late. (coded as correct if x > 0.5)
+- The burning candle spelled wrong. (coded as correct if x < 0.5)
+
+Most participants judged the third sentence to be acceptable, so we don't exclude any participants who did so.
+```{r}
+df.attention %>%
+  filter(condition == "practice", sentence == "The burning candle spelled wrong.") %>%
+  ggplot(aes(x = response)) +
+    geom_histogram() +
+    labs(title = "Acceptability Ratings for 'The burning candle spelled wrong.'",
+         x = "Acceptability Rating",
+         y = "Number of Participants")
+```
+
+```{r}
+df.slider_check <- df.attention %>% 
+  filter(condition == "practice") %>%
+  mutate(correct = case_when(
+    sentence == "Anna laughed on Jon." ~ response < 0.5,
+    sentence == "The train was late this morning." ~ response > 0.5,
+    sentence == "The burning candle spelled wrong." ~ TRUE
+  )) 
+
+df.slider_check.workers <- df.slider_check %>%
+  group_by(workerid) %>% 
+  summarize(
+    n_correct = sum(correct),
+    not_all_correct = n_correct < 3
+  )
+
+workers.fail.sliders <- df.slider_check.workers %>%
+  filter(not_all_correct) %>%
+  pull(workerid)
+
+df.slider_check %>% 
+  group_by(workerid) %>%
+  summarize(n_correct = sum(correct)) %>%
+  group_by(n_correct) %>% count() %>%
+  kable()
+
+df.slider_check %>% 
+  group_by(sentence) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
+  kable()
+```
+
+### Memory Check
+
+After the story, participants select statements they recall seeing from a list of 10 (5 true, 5 distractor).
+
+```{r}
+df.mmry <- df.attention %>%
+  filter(condition == "memory_check") %>%
+  mutate(correct = as.numeric(correct)) %>%
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`, 
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits) 
+
+workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
+
+ggplot(df.mmry, aes(x = n_correct))+
+  geom_bar()+
+  xlab("Number of Statements Correctly Recognized (or Correctly Rejected)")+
+  scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  ylab("Number of Participants")
+```
+
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
+
+```{r}
+df.expln <- df.attention %>%
+  filter(correct == -1) %>%
+  left_join(., df.mmry %>% select(workerid, n_correct) %>%
+              rename(n_memory_correct = n_correct)) %>%
+  left_join(., df.slider_check.workers %>% select(workerid, n_correct) %>%
+              rename(n_slider_correct = n_correct))
+
+bad.expln <- c()
+
+df.expln %>%
+  select(workerid,n_slider_correct,  n_memory_correct, property) %>%
+  rename(explanation = property) %>%
+  kable(.)
+```
+
+## Participants
+
+### Included/Excluded Subject Numbers
+Removing participants who didn't get the first two sliders and who answered less than 7 of the memory check questions correctly.
+
+```{r}
+df.trials <- df.trials %>%
+  mutate(memory_fail = workerid %in% workers.fail.memory,
+      slider_fail = workerid %in% workers.fail.sliders,
+      bad_expln  = workerid %in% bad.expln) %>%
+  left_join(., 
+      df.mmry %>% select(workerid, n_correct)
+)
+
+df.trials %>%
+  distinct(workerid, memory_fail, slider_fail, bad_expln) %>%
+  mutate(include = !memory_fail & !slider_fail) %>%
+  group_by(memory_fail, slider_fail, include) %>% count() %>% kable()
+
+df.query <- df.trials %>%
+  filter(!memory_fail, !slider_fail) %>%
+  rename(quantifier = trial_type, coordination = condition) %>%
+  mutate(quantifier = factor(quantifier, levels = c("generic", "most", "all"), ordered = TRUE))
+
+write.csv(df.query, 'elephants-quantifier-coord-acceptability.csv')
+```

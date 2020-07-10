@@ -13,7 +13,8 @@ var filler_chapters = [{
     kind: "aliens",
     property1: "love Zorxon",
     property2: "are provided for by Zorxon",
-    type: "filler"
+    type: "filler",
+    inference: false
   },
   {
     title: "Blins",
@@ -25,7 +26,8 @@ var filler_chapters = [{
     type: "filler",
     kind: "blins",
     property1: "have hollow bones",
-    property2: "fly"
+    property2: "fly",
+    inference: false
   },
   {
     title: "Supools",
@@ -40,14 +42,15 @@ var filler_chapters = [{
     property2: "live for a very long time",
     type: "filler",
     condition: "single",
-    quantifier: "all"
+    quantifier: "all",
+    inference: false
   },
 
   {
     title: "Yomis",
     main_text: [
       "Yomis are small insect-like creatures. Less than a third of them live in the ",
-      "borderland woodlands. The ones that live in the borderland woodlands fly towards the mountains in search of food."
+      "borderland woodlands. All of the ones that live in the borderland woodlands fly towards the mountains in search of food."
     ],
     critical: false,
     kind: "yomis",
@@ -55,12 +58,13 @@ var filler_chapters = [{
     property2: "fly towards the mountains in search of food",
     type: "filler",
     condition: "single",
-    quantifier: "lt3rd"
+      quantifier: "lt3rd",
+      inference: true
   },
   {
     title: "Wint of the Mountains",
     main_text: [
-      "Wint lived a long time ago in the mountains. He loved to travel. Sadly, less than a third of aliens remember Wint. Those that remember him admire him because he was the one that found the lost city of Baff."
+      "Wint lived a long time ago in the mountains. He loved to travel. Sadly, less than a third of aliens remember Wint. All of those that remember him admire him because he was the one that found the lost city of Baff."
     ],
     critical: false,
     kind: "aliens",
@@ -68,13 +72,14 @@ var filler_chapters = [{
     property2: "admire Wint",
     quantifier: "lt3rd",
     type: "filler",
-    condition: "uninterrupted"
+    condition: "uninterrupted",
+    inference: true
   },
   {
     title: "Nannus",
     main_text: [
       "Nannus only feed on rare flowers called lodeks. Less than a third of lodeks ",
-      "bloom each year. The ones that bloom have purple petals."
+      "bloom each year. All of the ones that bloom have purple petals."
     ],
     critical: false,
     kind: "lodeks",
@@ -82,7 +87,8 @@ var filler_chapters = [{
     property2: "have purple petals",
     type: "filler",
     condition: "single",
-    quantifier: "lt3rd"
+    quantifier: "lt3rd",
+    inference: true
   },
 
 
@@ -101,14 +107,15 @@ var filler_chapters = [{
     property2: "live in the residential quarter",
     type: "filler",
     condition: "single",
-    quantifier: "gt34th"
+    quantifier: "gt34th",
+    inference: true
   },
 
   {
     title: "Wopis",
     main_text: [
       "More than three-quarters of wopis live in the desert and ",
-      "they are very hard to find. Wopis sleep during the day to avoid ",
+      "all of those wopis are very hard to find. Wopis sleep during the day to avoid ",
       "the heat."
     ],
     critical: false,
@@ -117,7 +124,8 @@ var filler_chapters = [{
     property2: "are very hard to find",
     type: "filler",
     condition: "single",
-    quantifier: "gt34th"
+    quantifier: "gt34th",
+    inference: true
   },
 
 
@@ -133,7 +141,8 @@ var filler_chapters = [{
     type: "filler",
     kind: "morseths",
     property1: "build permanent structures called fendles",
-    property2: "come on land to find mates",
+    property2: "come on land to find mates",,
+    inference: false
   },
 
   {
@@ -148,7 +157,8 @@ var filler_chapters = [{
     property2: "build large triangular rebos",
     type: "filler",
     condition: "single",
-    quantifier: "most"
+    quantifier: "most",
+    inference: false
   },
   {
     title: "Apaffs",
@@ -162,7 +172,8 @@ var filler_chapters = [{
     property2: "tolerate apaffs to some extent",
     type: "filler",
     condition: "single",
-    quantifier: "most"
+    quantifier: "most",
+    inference: false
   },
 
 
@@ -180,7 +191,8 @@ var filler_chapters = [{
     kind: "ice storms on Dax",
     property1: "result in permanent damage to the plants and animals on Dax",
     property2: "last a long time",
-    type: "filler"
+    type: "filler",
+    inference: false
   },
   {
     title: "Kazzes",
@@ -193,7 +205,8 @@ var filler_chapters = [{
     property1: "eat kazzes",
     property2: "come close to kazzes",
     type: "filler",
-    quantifier: "none"
+    quantifier: "none",
+    inference: false
   },
   {
     title: "Plovs",
@@ -206,7 +219,8 @@ var filler_chapters = [{
     property1: "live in the continent of Aga",
     property2: "are attacked by other creatures",
     type: "filler",
-    quantifier: "none"
+    quantifier: "none",
+    inference: true
   }
 
 
@@ -758,20 +772,20 @@ var stims_chapters = [{
       },
       critical: {
         s: {
-          same: "and vimble queens hibernate in abandoned burrows",
-          reverse: "and vimble queens hibernate in fallen logs",
+          same: "and vimble queens hibernate in fallen logs",
+          reverse: "and vimble queens hibernate in abandoned burrows",
         },
         vp: {
-          same: "and hibernate in abandoned burrows",
-          reverse: "and hibernate in fallen logs",
+          same: "and hibernate in fallen logs",
+          reverse: "and hibernate in abandoned burrows",
         },
         pp: {
-          same: "and in abandoned burrows",
-          reverse: "and in fallen logs",
+          same: "and in fallen logs",
+          reverse: "and in abandoned burrows",
         },
         np: {
-          same: "and abandoned burrows",
-          reverse: "and fallen logs",
+          same: "and fallen logs",
+          reverse: "and abandoned burrows",
         },
       },
       filler: "and only emerge when the weather has become warmer",

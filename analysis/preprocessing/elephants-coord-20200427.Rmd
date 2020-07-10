@@ -1,0 +1,232 @@
+---
+title: "Variable Coordination Pilot 2"
+author: "Karen Gu"
+date: "4/27/2020"
+output: github_document
+---
+
+# Variable Coordination Level Experiment
+
+- This file contains pre-processing for the second pilot of the variable coordination level experiment.
+- The experiment files are named `elephants-coord`. Raw data is contained in `../data/elephants-coord-rep`, Analysis for this file is contained in `./elephants-coord.Rmd`.
+- n = 54 (04/27/2020)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(viridis)
+library(tidyboot)
+library(jsonlite)
+library(gridExtra)
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(broom)
+library(tidybayes)
+library(modelr)
+theme_set(theme_few())
+data.path <- "../../data/elephants-coord-rep/"
+```
+
+## Loading Data
+
+```{r}
+result.files <- list.files(data.path, pattern="json")
+
+df.subj <- data.frame()
+df.trials <- data.frame()
+df.attn <- data.frame()
+
+for (result_file in result.files) {
+  
+  result_json = fromJSON(paste(data.path, result_file, sep ="/"))
+  worker.id = result_json$WorkerId
+  condition = result_json$answers$condition
+
+  df.attn = bind_rows(
+    df.attn,
+    data.frame(result_json$answers$catch_trials) %>%
+      mutate(workerid = worker.id)
+  )
+
+  df.subj = bind_rows(
+    df.subj,
+    data.frame(result_json$answers$subject_information) %>%
+      mutate(
+        workerid = worker.id,
+        language = gsub("\"", "", language),
+        enjoyment = gsub("\"", "", enjoyment),
+        age = gsub("\"", "", age),
+        gender = gsub("\"", "", gender),
+        problems = gsub("\"", "", problems),
+        comments = gsub("\"", "", comments),
+      )
+  )
+
+  df.trials = bind_rows(
+    df.trials,
+    data.frame(result_json$answers$trials) %>%
+      mutate(
+        workerid = worker.id, 
+        condition = condition, 
+      )
+  )
+}
+```
+
+
+## Subject Information
+
+```{r}
+df.subj %>%
+  select(workerid, language, enjoyment, age, gender, problems, comments) %>%
+  kable(.)
+```
+
+## Attention Checks
+
+### Slider Practice
+
+Before the experiment, participants practice using the sliders to rate 3 category-property pairs:
+
+- dogs bark (coded as correct if x > 0.5)
+- cats get cancer (coded as correct if x < 0.75) [being generous with this one]
+- lions lay eggs (coded as correct if x < 0.10)
+
+```{r}
+df.slider_check <- df.attn %>%
+  filter(condition == "practice") %>%
+  mutate(correct = case_when(
+    property == "dogs bark" ~ response > 0.5,
+    property == "birds are male" ~ TRUE,
+    property == "cats get cancer" ~ response < 0.75,
+    property == "lions lay eggs" ~ response < 0.1
+  ))
+
+df.slider_check.workers <- df.slider_check %>%
+  group_by(workerid) %>%
+  summarize(
+    n_correct = sum(correct),
+    not_all_correct = n_correct < 4,
+    not_three_correct = n_correct < 3
+  )
+
+workers.fail.sliders <- df.slider_check.workers %>%
+  filter(not_all_correct) %>%
+  pull(workerid)
+
+df.slider_check %>%
+  group_by(workerid) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
+  group_by(n_correct) %>% count() %>%
+  kable()
+
+df.slider_check %>%
+  group_by(property) %>%
+  summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
+  kable()
+```
+
+### Memory Check
+
+After the story, participants select statements they recall learning from a list of 10 generic statements about novel animals (5 true, 5 distractor). They are also asked to explain what they did in the experiment.
+
+```{r}
+df.mmry <- df.attn %>%
+  filter(condition == "memory_check") %>%
+  mutate(correct = as.numeric(correct)) %>%
+  group_by(workerid, tested_on) %>%
+  summarize(n_correct = sum(correct)) %>%
+  ungroup() %>%
+  spread(tested_on, n_correct) %>%
+  rename(correct_rejections = `0`,
+         hits = `1`) %>%
+  mutate(n_correct = correct_rejections + hits)
+
+workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
+
+ggplot(df.mmry, aes( x = n_correct ))+
+  geom_bar()+
+  xlab("n correctly recognized (or correctly rejected)")+
+  scale_x_continuous(limits = c(0, 10.5), breaks = c(0, 4, 5, 6, 7, 8, 9, 10))+
+  ylab("n participants")
+```
+
+### Explanations of Task
+
+After the story, participants are also asked to explain generally what they did in the experiment.
+
+```{r}
+df.expln <- df.attn %>%
+  filter(correct == -1 | is.na(correct)) %>%
+  left_join(., df.mmry %>% select(workerid, n_correct) %>%
+              rename(n_memory_correct = n_correct)) %>%
+  left_join(., df.slider_check.workers %>% select(workerid, n_correct) %>%
+              rename(n_slider_correct = n_correct))
+
+df.expln %>%
+  select(workerid,n_slider_correct,  n_memory_correct, property) %>%
+  rename(explanation = property) %>%
+  kable(.)
+```
+
+### Exclusions
+
+These exclusions are manually coded by looking through participants explanations and prevalence ratings. Participants who gave the same prevalence rating across trials, without using the full range provided, are noted.
+
+```{r}
+workers.bad.expln <- c('bec83fc61d00a7d4ffa3b946951a2e70', '3a7dd723f40fed7a0a383a069939343d', '4bc289a226eaf2ebed9a6f266ed21cb1', '119b8973de0826f10b078c559732ccb5', 'e2ae41e9b9346ca4ea2e59c1a0501329', 'd8413cc35a0124e58fb9594da7aaf179', '3a9e470cb2caf2c71de688ffe8ffe959', '765cdd58c0e4dc60cb61beaedf2cf9c8', '956fd002ea95bbd4d212530f6e982185', '0cf23b5795a4be0cd3092a670f413cb2', '65b7c457a1fca600cb3ab0d0129ccb21', '89b1607270f1c539f8e372967b779c24', 'fd5048577f56504208c368c3bd702034', 'b28ee0d4be8559414380bdd754c773ec', '2f09bb178d82d57ee9e98784da1bb16f', '1eb3ec9876cc6a17bbae44d4761137d3', '504aa8560363dc18f9b1095cf6407c35', '02c9b466a8218e0431007a14d7054500', '75b0624edb002bc35f9a8b8be60d6dd4', 'da5013b7c30b3d20264f36989fbe4ac3', 'b7ca4e22ce73506ccb019c3113166247', 'e6532b573753e96d9385d652aba8da12', 'a3623ffaecf1e89cbe218cd459dbc6e5', '9d7e9117678074c390bfb883475724ad', '645a6517e313390917505e79b3797f3b', '9c069c5790858cfb00c23bacc10f1e95', '2b5794d92119d7e92d115695bf207170', '84cf0e42557990a784ef998dd8af955e', '01da851ac67defcef8b30d7b34765075', '9b53fbf4be0e9dc0ecb5db3222388b55', 'f64e240c246dda2026c269b105a7fa18', '920e94362bfd486741373e3f22a37fae', 'd40cc09b913fc992a03f89ff58ce036b', 'c7cd887f367d429fc95be745baea3039', '1ff677d9263a4dc0b9bd82481bf45c47', '130868e2258ca5112789154b314994c3', '44a97c6d2adae4bd4003da78c286ff5c', 'b12752e3dcbff696bf4ab9efb28bf5c4', '7fb721a8748660a36b0bf33d07b465f2', '8caf8d405cf4552c1fec1397341699ca', '60efd6cd3f3b1ef22e249845f3bbdcfe', '8a35442a3777f2c456f729e8b9559022', '45456924d6df6c4535e39857e87f7190', '730cc415993d5d65ab0e3b16c71eeb14', 'eea3a419fad867bc8c5ca38bffa3dd3d')
+workers.bad.ratings <- c('351b702d37553c2576276b02684bdff0', '51db9191ad3c7a7a8ef897891360f578', 'ed5dd04a85b58e5266067c40ee228267') # coded manually by looking at the prevalence estimates given
+```
+
+## Participants
+
+```{r}
+df.trials <- left_join(
+  df.trials %>%
+    mutate(
+      memory_fail = workerid %in% workers.fail.memory,
+      slider_fail = workerid %in% workers.fail.sliders,
+      bad_expln = workerid %in% workers.bad.expln,
+    ),
+  df.mmry %>% select(workerid, n_correct))
+
+df.query <- df.trials %>%
+  mutate(
+    memory_fail = workerid %in% workers.fail.memory,
+    slider_fail = workerid %in% workers.fail.sliders,
+    bad_expln = workerid %in% workers.bad.expln,
+    bad_ratings = workerid %in% workers.bad.ratings,
+  )
+```
+
+### Prevalence Estimates by Participant
+
+Histogram of all of a single participant's prevalence estimates, collapsed across trials and color coded for the number of correct responses on the memory check.
+* fill = number of correct responses on the memory check (out of 10)
+* facet = participants
+
+```{r}
+df.query  %>%
+  filter(!memory_fail, !slider_fail, !bad_expln) %>%
+  gather(key, val, response1:response2) %>%
+  ggplot(., aes( x = val, fill = n_correct ))+
+  geom_histogram()+
+  facet_wrap(~workerid, ncol=3)+
+  scale_fill_viridis()+
+  scale_x_continuous(breaks = c(0, 0.5, 1))
+```
+
+### Included/Excluded Subject Numbers
+
+Removing participants who got fewer than 7 correct on memory check and didn't get all 3 sliders, as well as participants that gave bad explanations or gave the same prevalence ratings to all sentences.
+
+```{r}
+df.query %>% write.csv('elephants-coord-20200427.csv')
+
+df.query %>%
+  distinct(workerid, memory_fail, slider_fail, bad_expln, bad_ratings) %>%
+  group_by(memory_fail, slider_fail, bad_expln) %>% count() %>% arrange(desc(n)) %>% kable()
+```

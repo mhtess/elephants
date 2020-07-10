@@ -1,0 +1,789 @@
+// denotation of quantifier:
+// lambda noun: lambda c: noun(lambda P: quantifier(P, c))
+// quantifier function is responsible for finding the kind in the world state
+// consistent with P (e.g. elephants) and the features relativized to that kind
+// consistent with c (e.g. live in Africa), and evaluating the obtained prevalence
+// with respect to the threshold (either fixed or inferred)
+var gen = function(kindChecker, featureChecker, worldState, threshold) {
+  var kinds = Object.keys(worldState)
+  var applicableKinds = filter(function(k) {return kindChecker(k)}, kinds)
+  if (applicableKinds.length != 1) {
+    error('cannot find unique kind')
+  }
+  var kind = applicableKinds[0]
+  var features = Object.keys(worldState[kind])
+  var applicableFeatures = filter(function(f) {return featureChecker(f)}, features)
+  var applicableFeaturePrevalences = map(function(f) {return worldState[kind][f]}, applicableFeatures)
+  // all features are mutually exclusive, so addition doesn't double count any individuals
+  // if feature is "africa" ("asia"), this will add the prevalence of elephants living
+  // in Africa (Asia) and the prevalence of elephants living in both
+  // if feature is "both", only the prevalence of elephants living in both will remain
+  return sum(applicableFeaturePrevalences) > threshold
+}
+var genFunc = function(noun, worldState, threshold) {
+  return function(continuation) {
+    return noun(function(predicate) {
+      gen(predicate, continuation, worldState, threshold)
+    })
+  }
+}
+var most = function(kindChecker, featureChecker, worldState) {
+  var kinds = Object.keys(worldState)
+  var applicableKinds = filter(function(k) {return kindChecker(k)}, kinds)
+  if (applicableKinds.length != 1) {
+    error('cannot find unique kind')
+  }
+  var kind = applicableKinds[0]
+  var features = Object.keys(worldState[kind])
+  var applicableFeatures = filter(function(f) {return featureChecker(f)}, features)
+  var applicableFeaturePrevalences = map(function(f) {return worldState[kind][f]}, applicableFeatures)
+  // all features are mutually exclusive, so addition doesn't double count any individuals
+  // if feature is "africa" ("asia"), this will add the prevalence of elephants living
+  // in Africa (Asia) and the prevalence of elephants living in both
+  // if feature is "both", only the prevalence of elephants living in both will remain
+  return sum(applicableFeaturePrevalences) > 0.5
+}
+var mostFunc = function(noun, worldState, threshold) {
+  return function(continuation) {
+    return noun(function(predicate) {
+      most(predicate, continuation, worldState)
+    })
+  }
+}
+var some = function(kindChecker, featureChecker, worldState) {
+  var kinds = Object.keys(worldState)
+  var applicableKinds = filter(function(k) {return kindChecker(k)}, kinds)
+  if (applicableKinds.length != 1) {
+    error('cannot find unique kind')
+  }
+  var kind = applicableKinds[0]
+  var features = Object.keys(worldState[kind])
+  var applicableFeatures = filter(function(f) {return featureChecker(f)}, features)
+  var applicableFeaturePrevalences = map(function(f) {return worldState[kind][f]}, applicableFeatures)
+  // all features are mutually exclusive, so addition doesn't double count any individuals
+  // if feature is "africa" ("asia"), this will add the prevalence of elephants living
+  // in Africa (Asia) and the prevalence of elephants living in both
+  // if feature is "both", only the prevalence of elephants living in both will remain
+  return sum(applicableFeaturePrevalences) > 0
+}
+var someFunc = function(noun, worldState, threshold) {
+  return function(continuation) {
+    return noun(function(predicate) {
+      some(predicate, continuation, worldState)
+    })
+  }
+}
+var all = function(kindChecker, featureChecker, worldState) {
+  var kinds = Object.keys(worldState)
+  var applicableKinds = filter(function(k) {return kindChecker(k)}, kinds)
+  if (applicableKinds.length != 1) {
+    error('cannot find unique kind')
+  }
+  var kind = applicableKinds[0]
+  var features = Object.keys(worldState[kind])
+  var applicableFeatures = filter(function(f) {return featureChecker(f)}, features)
+  var applicableFeaturePrevalences = map(function(f) {return worldState[kind][f]}, applicableFeatures)
+  // all features are mutually exclusive, so addition doesn't double count any individuals
+  // if feature is "africa" ("asia"), this will add the prevalence of elephants living
+  // in Africa (Asia) and the prevalence of elephants living in both
+  // if feature is "both", only the prevalence of elephants living in both will remain
+  return sum(applicableFeaturePrevalences) > .99
+}
+var allFunc = function(noun, worldState, threshold) {
+  return function(continuation) {
+    return noun(function(predicate) {
+      all(predicate, continuation, worldState)
+    })
+  }
+}
+
+var conjFunc = function(leftConjunct, rightConjunct) {
+  // denotation of conjunction:
+  // lambda c: c(left(c), right(c))
+  return function(continuation) {
+    return leftConjunct(continuation) && rightConjunct(continuation)
+  }
+}
+
+var makePredicateSemantics = function(predicate) {
+  // denotation of predicate (feature)
+  // lambda c: c(lambda P: P is consistent with predicate)
+  return function(continuation) {
+    return continuation(function(testPredicate) {
+      return testPredicate == predicate || testPredicate == 'both'
+    })
+  }
+}
+
+var elephantsFunc = function(continuation) {
+  // denotation of noun (kind):
+  // lambda c: c(lambda P: P is consistent with predicate)
+  // no 'both' index for kinds based on the definition of world state
+  return continuation(function(testPredicate) {
+    return testPredicate == "elephants"
+  })
+}
+
+var lexicalEntries = {
+  "gen": {
+    pronunciation: "",
+    semantics: genFunc,
+  },
+  "most": {
+    pronunciation: "most",
+    semantics: mostFunc,
+  },
+  "some": {
+    pronunciation: "some",
+    semantics: someFunc,
+  },
+  "all": {
+    pronunciation: "all",
+    semantics: allFunc,
+  },
+  "conj": {
+    pronunciation: "and",
+    semantics: conjFunc,
+  },
+  "asia": {
+    pronunciation: "Asia",
+    semantics: "asia",
+  },
+  "elephants": {
+    pronunciation: "elephants",
+    semantics: elephantsFunc,
+  },
+  "africa": {
+    pronunciation: "Africa",
+    semantics: "africa",
+  },
+  "live": {
+    pronunciation: "live",
+    semantics: makePredicateSemantics
+  },
+  "in": {
+    pronunciation: "in"
+  }
+}
+
+var s1Func = function(constituents, worldState, threshold) {
+  // S -> QP VP
+  // denotation of S (assuming trivial continuation)
+  // VP(lambda P: QP(lambda x: P(x)))
+  var qp = constituents[0]
+  var vp = constituents [1]
+  return vp(function(predicate) {
+    return qp(function(x) {
+      return predicate(x)
+    })
+  })
+}
+
+var s2Func = function(constituents, worldState, threshold) {
+  // S -> QP VP
+  // denotation of S (assuming trivial continuation)
+  // QP(lambda x: VP(lambda P: P(x)))
+  var qp = constituents[0]
+  var vp = constituents[1]
+  return qp(function(x) {
+    return vp(function(predicate) {
+      return predicate(x)
+    })
+  })
+}
+
+var qpFunc = function(constituents, worldState, threshold) {
+  // QP -> Q N
+  // denotation of QP:
+  // Q(N)
+  var q = constituents[0]
+  var n = constituents[1]
+  return q(n, worldState, threshold)
+}
+
+var andPFunc = function(constituents, worldState, threshold) {
+  // X -> X1 and X2
+  // denotation of andP:
+  // and(X1, X2)
+  var leftConjunct = constituents[0]
+  if (!_.isEqual(constituents[1], lexicalEntries.conj.semantics)) {
+    error('andP does not have correct form')
+  }
+  if (_.isEqual(constituents[0], constituents[2])) {
+    return constituents[0]
+  }
+  var and = constituents[1]
+  var rightConjunct = constituents[2]
+  return and(leftConjunct, rightConjunct)
+}
+
+var ppFunc = function(constituents, worldState, threshold) {
+  // PP -> P NP
+  // denotation of PP: (semantically vacuous)
+  // NP
+  var np = constituents[1]
+  return np
+}
+
+var vpFunc = function(constituents, worldState, threshold) {
+  // VP -> V PP
+  // denotation of VP: (semantically vacuous)
+  // PP
+  var v = constituents[0]
+  var pp = constituents[1]
+  return v(pp)
+}
+
+var phrases = {
+  's1': s1Func,
+  's2': s2Func,
+  'qp': qpFunc,
+  'andP': andPFunc,
+  'pp': ppFunc,
+  'vp': vpFunc
+}
+
+var k = 50; // degree of mutual exclusivity
+
+var probability = function(Dist, x) {
+  return Math.exp(Dist.score(x));
+}
+// for prevalence
+var bins = [
+  0.01,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,
+  0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,0.99
+];
+var theta_bins = [
+  0.01, 0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,
+  0.5, 0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95
+]
+var makeComponent = function(params){
+  return Categorical({
+    vs: bins,
+    ps: map(function(b) {
+      probability(Beta(params), b) + Number.EPSILON
+    }, bins )
+  })
+}
+var priorParameters = priorInfo["params"]
+var meProb = priorInfo["meProb"][0]
+
+// makes 3-way joint on living in africa, living in asia, and living in both
+var makePrevalencePrior = function() {
+  return Infer({model: function(){
+    var me = flip(meProb)
+    // elephants living in Asia (or both)
+    var asiaProb = sample(
+      // binned beta distribution on prior prevalence of living in Asia
+      makeComponent(priorParameters[uniformDraw(_.keys(priorParameters))][0])
+    )
+    // elephants living in Africa (or both)
+    var africaProb = sample(
+      // binned beta distribution on prior prevalence of living in Africa
+      makeComponent(priorParameters[uniformDraw(_.keys(priorParameters))][0])
+    )
+    var totalPrevalence = asiaProb + africaProb
+    var p =  {
+      asia: asiaProb,
+      africa: africaProb,
+      both: totalPrevalence > 1 ? totalPrevalence - 1 : 0, // elephants live in both
+      // prevalence cannot add up to greater than 1, so leftover prevalence must be
+      // elephants living in both Africa and Asia
+      me: me
+    } 
+    // if correlated, force mutual exclusivity by decreasing probability of there
+    // being elephants that live in both places
+    factor(me ? totalPrevalence > 1 ? -k*Math.log(totalPrevalence) : 0 : 0)
+    return p
+  }})
+}
+
+// prior on the generic threshold value
+// same threshold value for all three predicates to help with inference
+var makeThetaPrior = function() {
+  return Infer({model: function(){
+    var sampleTheta = function(){ uniformDraw(theta_bins) }
+    return sampleTheta()
+  }})
+};
+
+var pronounce = function(utterance) {
+  if (utterance.hasOwnProperty('pronunciation')) {
+    // base case: single lexical entry
+    return utterance.pronunciation
+  } else {
+    var constituents = utterance.slice(0, utterance.length-1)
+    var pronouncedConstituents = filter(function(c) {return c != ""}, map(pronounce, constituents))
+    return pronouncedConstituents.join(" ")
+  }
+}
+
+var interpretSemantics = function(utterance, state, theta) {
+  // returns a truth value for declarative sentences
+  if (utterance.hasOwnProperty('pronunciation')) {
+    // base case: single lexical entry
+    return utterance.semantics
+  } else {
+    // otherwise, use the composition rule for that consituent
+    var constituents = utterance.slice(0, utterance.length-1)
+    var interpretedConstituents = map(function(cons) {
+      return interpretSemantics(cons, state, theta)
+    }, constituents)
+    var compositionRule = utterance[utterance.length-1]
+    var result = compositionRule(interpretedConstituents, state, theta)
+    //display(result)
+    return result
+  }
+}
+
+var interpretSemanticsWithPrior = function(utterance, state, thresholdPrior) {
+  // wrapper to sample over language-based priors
+  var theta = sample(thresholdPrior)
+  return interpretSemantics(utterance, state, theta)
+}
+
+// PCFG
+
+var pcfg = {
+  'QP': [
+    {
+      expansion: ['Q', 'N'], 
+      annotation: phrases.qp, 
+      p: 1,
+      recursive: false
+    }
+  ],
+  'PP': [
+    {
+      expansion: ['P', 'NP'], 
+      annotation: phrases.pp,
+      p: .9,
+      recursive: false
+    },
+    {
+      expansion: ['PP', 'connective', 'PP'], 
+      annotation: phrases.andP, 
+      p: .1,
+      recursive: true
+    }
+  ],
+  'VP': [
+    {
+      expansion: ['V', 'PP'],
+      annotation: phrases.vp, 
+      p: .9,
+      recursive: false
+    },
+    {
+      expansion: ['VP', 'connective', 'VP'],
+      annotation: phrases.andP, 
+      p: .1,
+      recursive: true
+    }
+  ],
+  'S': [
+    {
+      expansion: ['QP', 'VP'], 
+      annotation: phrases.s1, 
+      p: .4,
+      recursive: false
+    }, 
+    {
+      expansion: ['QP', 'VP'],
+      annotation: phrases.s2, 
+      p: .6,
+      recursive: false
+    }
+  ],
+  'N': [
+    {
+      expansion: lexicalEntries.elephants,
+      p: 1,
+      recursive: false
+    }
+  ],
+  'NP': [
+    {
+      expansion: lexicalEntries.africa,
+      p: 0.5,
+      recursive: false
+    },
+    {
+      expansion: lexicalEntries.asia,
+      p: 0.5,
+      recursive: false
+    }
+  ],
+  'Q': [
+    {
+      expansion: lexicalEntries.gen,
+      p: 0.4,
+      recursive: false
+    },
+    {
+      expansion: lexicalEntries.most,
+      p: 0.2,
+      recursive: false
+    },
+    {
+      expansion: lexicalEntries.all,
+      p: 0.2,
+      recursive: false
+    },
+    {
+      expansion: lexicalEntries.some,
+      p: 0.2,
+      recursive: false
+    }
+  ],
+  'V': [
+    {
+      expansion: lexicalEntries.live,
+      p: 1,
+      recursive: false
+    }
+  ],
+  'P': [
+    {
+      expansion: lexicalEntries.in,
+      p: 1,
+      recursive: false
+    }
+  ],
+  'connective': [
+    {
+      expansion: lexicalEntries.conj,
+      p: 1,
+      recursive: false
+    }
+  ]
+}
+
+var deepExtendErrorMessage = 'ill-formed target/source for deepExtend'
+
+// helper for deepExtend
+var copyOver = function(target, obj) {
+  return reduce(function(x, acc) {
+    if (Array.isArray(obj[x])) {
+      if (x === 'children') {
+        return extend(acc, {
+          children: map(function(e) {
+            return deepExtend({}, e)
+          }, obj[x])
+        })
+      } else {
+        error(deepExtendErrorMessage)
+      }
+    } else if (typeof obj[x] === 'number') {
+      if (x === 'p') {
+        return extend(acc, {
+          p: obj[x]
+        })
+      } else if (x === 'tempP') {
+        return extend(acc, {
+          tempP: obj[x]
+        })
+      } else if (x === 'id') {
+        return extend(acc, {
+          id: obj[x]
+        })
+      } else {
+        error(deepExtendErrorMessage)
+      }
+    } else if (typeof obj[x] === 'string') {
+      if (x === 'label') {
+        return extend(acc, {
+          label: obj[x]
+        })
+      } else {
+        error(deepExtendErrorMessage)
+      }
+    } else if (obj[x].hasOwnProperty('label')) {
+      return extend(acc, deepExtend({}, obj[x]))
+    } else {
+      if (x === 'annotation') {
+        return extend(acc, {
+          annotation: obj[x]
+        })
+      } else if (obj[x].hasOwnProperty('pronunciation') & x === 'children') {
+        return extend(acc, {
+          children: obj[x]
+        })
+      } else {
+        error(deepExtendErrorMessage)
+      }
+    }
+  }, target, Object.keys(obj))
+}
+
+// used to build up trees in expand
+var deepExtend = function(target, source) {
+  // consists of objects, arrays, strings, and numbers
+  // properties of source override those of target
+  var intermediateObject = copyOver({}, target)
+  return copyOver(intermediateObject, source)
+}
+
+var beamSize = 100
+
+// prune possible expansions to most likely ones
+var prune = function(expansions) {
+  return _.sortBy(
+    expansions, "p"
+  ).reverse().slice(
+    0, beamSize > expansions.length ? expansions.length : beamSize
+  )
+}
+
+// helper for expand
+var expandLabel = function(tree, possibleExpansions, depth) {
+  var expansions = _.flatten(map(function(possibleExpansion) {
+    if (possibleExpansion.expansion.hasOwnProperty('pronunciation')) {
+      return [deepExtend(
+        tree, {
+          children: extend(
+            possibleExpansion.expansion, {p: 1}
+          ),
+          p: possibleExpansion.p
+        }
+      )]
+    } else {
+      var newChildren = map(function(e) {
+        return {
+          label: e,
+        }
+      }, possibleExpansion.expansion)
+      return expand(deepExtend(tree, {
+        children: newChildren,
+        annotation: possibleExpansion.annotation,
+        tempP: possibleExpansion.p
+      }), depth + 1)
+    }
+  }, possibleExpansions), true)
+  return prune(expansions)
+}
+
+// recursively expands a tree until either the maximum recursion depth is reached
+// or all nodes have been fully expanded
+var expand = function(tree, depth) {
+  if (tree.hasOwnProperty('children')) {
+    if (tree.children.hasOwnProperty('pronunciation')) { // leaf node
+      return deepExtend(tree, {
+        p: tree.tempP
+      })
+    } else { // branching node
+      if (tree.children.length === 1) { // only one child to expand
+        var leftExpansions = expand(tree.children[0], depth + 1)
+        var expansions = map(function(l) {
+          return deepExtend(tree, {
+            children: [l],
+            p: l.p*tree.tempP
+          })
+        }, leftExpansions)
+        return prune(expansions)
+      } else { // multiple children to expand
+        var leftExpansions = expand(tree.children[0], depth + 1)
+        var restChildren = tree.children.slice(1, tree.children.length)
+        var restExpansions = expand(deepExtend(tree, {
+          children: restChildren
+        }), depth+1)
+        var expansions = _.flatten(map(function(l) {
+          return map(function(r) {
+            return deepExtend(tree, {
+              children: [l].concat(r.children),
+              p: l.p*product(map(function(x) {return x.p}, r.children))*tree.tempP
+            })
+          }, restExpansions)
+        }, leftExpansions), true)
+        return prune(expansions)
+      }
+    }
+  } else { // need to expand based on label of branching node (or preterminal)
+    if (depth > 5) {
+      var possibleExpansions = filter(function(e) {
+        return !e.recursive
+      }, pcfg[tree.label])
+      return expandLabel(tree, possibleExpansions, depth)
+    } else {
+      var possibleExpansions = pcfg[tree.label]
+      var result = expandLabel(tree, possibleExpansions, depth)
+      return result
+    }
+  }
+}
+
+// convert tree representation from object form to array form that is used by
+// the semantic interpretation function
+var convertTree = function(tree) {
+  if (tree.hasOwnProperty('pronunciation')) {
+    return tree
+  } else if (tree.hasOwnProperty('children')) {
+    if (tree.children.hasOwnProperty('pronunciation')) {
+      return tree.children
+    } else {
+      var intermediateResult = map(function(x) {
+        return convertTree(x)
+      }, tree.children)
+      return intermediateResult.concat([tree.annotation])
+    }
+  }
+}
+
+// array of most likely parses, with ids to differentiate them
+var likelyParses = map2(function(a,b) {
+  return deepExtend(a, {
+    id: b
+  })
+}, expand({
+  label: 'S'
+}, 0), _.range(0, beamSize))
+
+// creates the world state, allowing for multiple kinds
+var getWorldState = function(makeFeaturePrior) {
+  return {
+    "elephants": sample(makeFeaturePrior())
+  }
+}
+
+// models the literal listener, assuming the complete utterance has already been
+// parsed into a syntax tree
+var listener0Complete = function(utterance, makeFeaturePrior, thresholdPrior, qud) {
+  Infer({model: function() {
+    var state = getWorldState(makeFeaturePrior)
+    var result = interpretSemanticsWithPrior(utterance, state, thresholdPrior)
+    // condition on utterance being true
+    condition(result)
+    return state[qud]
+  }, method: 'enumerate'});
+}
+
+var possibleSentences = Categorical({
+  vs: likelyParses,
+  ps: map(function(y) {
+    return y.p
+  }, likelyParses)
+})
+
+var inferStructure = function(utteranceString) {
+  Infer({model: function() {
+    var unprocessedTree = sample(possibleSentences)
+    var utteranceTree = convertTree(unprocessedTree)
+    if (utteranceString.endsWith('.')) {
+      condition(pronounce(utteranceTree) === utteranceString.slice(
+        0, utteranceString.length-1
+      ))
+    } else {
+      condition(pronounce(utteranceTree).startsWith(utteranceString))
+    }
+    return unprocessedTree
+  }, method: 'enumerate'})
+}
+
+var listener0 = function(utteranceString, makeFeaturePrior, thresholdPrior, qud) {
+  Infer({model: function() {
+    var state = getWorldState(makeFeaturePrior)
+    var utteranceTree = convertTree(sample(inferStructure(utteranceString)))
+    var result = interpretSemanticsWithPrior(utteranceTree, state, thresholdPrior)
+    condition(result)
+    return state[qud]
+  }, method: 'enumerate'})
+}
+
+var ambiguousComplete = listener0(
+  "elephants live in Africa and live in Asia.", 
+  makePrevalencePrior, makeThetaPrior(), "elephants"
+)
+
+var conjunctiveUtteranceGen = [
+  [
+    lexicalEntries.gen,
+    lexicalEntries.elephants,
+    phrases.qp
+  ],
+  [
+    [
+      lexicalEntries.live,
+      [
+	lexicalEntries.in,
+	lexicalEntries.africa,
+	phrases.pp
+      ],
+      phrases.vp
+    ],
+    lexicalEntries.conj,
+    [
+      lexicalEntries.live,
+      [
+	lexicalEntries.in,
+	lexicalEntries.asia,
+	phrases.pp
+      ],
+      phrases.vp
+    ],
+    phrases.andP
+  ],
+  phrases.s1
+]
+
+var cont1Complete = listener0Complete(
+  conjunctiveUtteranceGen, makePrevalencePrior, makeThetaPrior(), "elephants"
+)
+
+var conjunctiveUtteranceAnd = [
+  [
+    lexicalEntries.gen,
+    lexicalEntries.elephants,
+    phrases.qp
+  ],
+  [
+    [
+      lexicalEntries.live,
+      [
+	lexicalEntries.in,
+	lexicalEntries.africa,
+	phrases.pp
+      ],
+      phrases.vp
+    ],
+    lexicalEntries.conj,
+    [
+      lexicalEntries.live,
+      [
+	lexicalEntries.in,
+	lexicalEntries.asia,
+	phrases.pp
+      ],
+      phrases.vp
+    ],
+    phrases.andP
+  ],
+  phrases.s2
+]
+
+var cont2Complete = listener0Complete(
+  conjunctiveUtteranceAnd, makePrevalencePrior, makeThetaPrior(), "elephants"
+)
+
+var prior = makePrevalencePrior()
+var prefix = listener0(
+  "elephants live in Africa.",
+  makePrevalencePrior, makeThetaPrior(), "elephants"
+)
+var full = listener0(
+  "elephants live in Africa and live in Asia.",
+  makePrevalencePrior, makeThetaPrior(), "elephants"
+)
+var partial = listener0(
+  "elephants live in Africa and",
+  makePrevalencePrior, makeThetaPrior(), "elephants"
+)
+var result = {
+  prior: prior,
+  prefix: prefix,
+  full: full,
+  partial: partial,
+  ambiguous_complete: ambiguousComplete,
+  cont1_complete: cont1Complete,
+  cont2_complete: cont2Complete
+}
+result

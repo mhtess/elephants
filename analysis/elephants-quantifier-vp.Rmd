@@ -1,0 +1,220 @@
+---
+title: "Quantifiers under VP-Coordination"
+author: "Karen Gu"
+date: "2/22/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(jsonlite)
+library(viridis)
+library(tidyboot)
+theme_set(theme_few())
+```
+
+## Number of Participants by Item and Condition
+
+```{r}
+df.query <- read.csv('./preprocessing/elephants-quantifier-vp-20190221.csv')
+df.full.tab.item.count <-  df.query %>% filter(condition ==  "uninterrupted", trial_type == "critical") %>%
+  group_by(quantifier, predicate_1) %>%
+  count() %>%
+  spread(quantifier, n) 
+
+df.full.tab.item.count %>% kable()
+
+df.full.tab.item.count %>% 
+  gather(quantifier, n, all, generic, most) %>%
+  group_by(quantifier) %>%
+  summarize(n = sum(n)) %>% kable()
+```
+
+## Filler Trials
+
+These used quantifiers (and thus we have strong idea about literal meaning).
+
+```{r}
+df.query.filler <- df.query %>%
+  filter(!memory_fail, !slider_fail) %>%
+  filter(trial_type == "filler") %>%
+  select(workerid, condition, chapter_num, 
+         rt, trial_type, quantifier, page_type, key, val)
+
+df.query.filler  %>%
+  ggplot(., aes( x = val ))+
+  geom_histogram()+
+  facet_wrap(~quantifier + condition)
+```
+
+## Critical Trials (collapsed across item)
+
+### Histograms of Prevalence Estimates by Condition and Quantifier (collapsed across item)
+
+```{r fig.height = 10}
+df.query.critical <- df.query %>%
+  filter(!memory_fail, !slider_fail) %>%
+  select(workerid, condition, chapter_num, rt, 
+         quantifier,
+         trial_type, predicate_1, predicate_2, 
+         key, val, page_type, memory_fail, slider_fail) %>%
+  filter(trial_type == "critical") %>%
+  rowwise() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("interrupted", 
+                                       "uninterrupted",
+                                       "nme_interrupted",
+                                       "nme_uninterrupted"),
+                            labels = c('"...live in Africa __"\nQ2(Asia)',
+                                       '"...live in Africa and Asia"\nQ2(Asia)',
+                                       '"...live in Africa __"\nQ2(bugs)',
+                                       '"...live in Africa and eat bugs"\nQ2(bugs)')),
+         key = factor(key, levels = c("response_1", "response_2"),
+                      labels = c("% live in Africa", "% property 2")))
+
+df.query.critical %>%
+  ggplot(., aes( x = val ))+
+  geom_histogram()+
+  facet_grid(quantifier + condition ~ key)
+```
+
+### Pirate Plots by Condition and Quantifier (collapsed across item)
+
+```{r}
+df.bs.query.critical <- df.query.critical %>%
+  group_by(quantifier, condition, key) %>%
+  tidyboot_mean(column = val)
+  
+ggplot(df.bs.query.critical, aes( x = condition, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_point(data = df.query.critical, position = position_jitterdodge(),
+             inherit.aes = F, aes(x = condition, y = val, color = key), 
+             alpha = 0.5)+
+  geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, alpha = 0.3, color = 'black')+
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), 
+                position = position_dodge(0.8), width = 0.3, size = 1.2)+  
+  ylab("Implied prevalence rating")+
+  facet_wrap(~quantifier)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")
+```
+
+### Histograms of Prevalence Estimates by Quantifier for Condition 2 (collapsed across item)
+
+```{r}
+df.query.critical %>%
+  filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)") %>%
+  ggplot(., aes( x = val ))+
+  geom_histogram()+
+  facet_grid( quantifier~ key, scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))
+```
+
+## By-item Analyses
+
+### Number of Participants by Item and Quantifier
+
+```{r}
+df.tab.item.count <-  df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)", str_detect(key, "Africa")) %>%
+  group_by(quantifier, predicate_1) %>%
+  count() %>%
+  spread(quantifier, n) 
+
+df.tab.item.count %>% kable()
+
+df.tab.item.count %>% 
+  gather(quantifier, n, all, generic, most) %>%
+  group_by(quantifier) %>%
+  summarize(n = sum(n)) %>% kable()
+```
+
+### Comparison of Prevalence Estimates for "(all/most/gen) elephants live in Africa and live in Asia"
+
+```{r fig.width=13, fig.height = 10}
+df.bs.cond2.item <- df.query.critical %>%
+  filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)") %>%
+  group_by(quantifier, condition, predicate_1, key) %>%
+  tidyboot_mean(column = val)
+
+
+ggplot(df.bs.cond2.item, aes( x = key, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+  geom_point(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
+             inherit.aes = F, aes(x = key, y = val, color = key), 
+             alpha = 0.8)+
+  geom_line(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
+            position = position_dodge(),
+             inherit.aes = F, aes(x = key, y = val, group = workerid), 
+             alpha = 0.6)+
+  ylab("Implied prevalence rating")+
+  facet_grid(quantifier~predicate_1)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")
+```
+
+```{r}
+ggplot(df.bs.cond2.item, aes( x = quantifier, fill = key))+
+  geom_hline(yintercept = 0.5, lty = 2, alpha = 0.5)+
+    geom_col(position = position_dodge(0.8),
+           aes(y = mean),
+           width = 0.8, alpha = 0.3, color = 'black')+
+  geom_point(data = df.query.critical %>% filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)"), 
+             position = position_jitterdodge(),
+             inherit.aes = F, aes(x = quantifier, y = val, color = key), 
+             alpha = 0.8)+
+  ylab("Implied prevalence rating")+
+  facet_wrap(~predicate_1, nrow = 2)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  scale_fill_manual(values = c("#268bd2", "#859900"))+
+  scale_color_manual(values = c("#268bd2", "#859900"))+
+  xlab("")+
+  guides(fill = guide_legend(title = "Question"),
+         color = guide_legend(title = "Question"))+
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        legend.position = "top")
+```
+
+### Histograms of Prevalence Estimates by Item
+
+#### % live in Africa
+
+```{r fig.height = 10}
+df.query.critical %>%
+  filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)",
+         key == "% live in Africa") %>%
+  ggplot(., aes( x = val ))+
+  xlab("% live in Africa") +
+  geom_histogram()+
+  facet_grid( predicate_1 ~condition+ quantifier , scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))
+```
+
+#### % live in Asia
+
+```{r fig.height = 10}
+df.query.critical %>%
+  filter(condition ==  "\"...live in Africa and Asia\"\nQ2(Asia)",
+         key == "% property 2") %>%
+  ggplot(., aes( x = val ))+
+  xlab("% property 2") + 
+  geom_histogram()+
+  facet_grid( predicate_2 ~condition+ quantifier , scales = 'free')+
+  theme(strip.text.y = element_text(angle = 0))
+```

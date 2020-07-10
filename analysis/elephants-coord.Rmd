@@ -1,0 +1,457 @@
+---
+title: "Variable Coordination"
+author: "Karen Gu"
+date: "9/6/2019"
+output: github_document
+---
+
+## Variable Coordination Level Experiment
+
+Analysis for variable coordination level experiment across 2 pilots. Pre-processing for the pilots are contained in `elephants-coord-20200414.Rmd` and `elephants-coord-20200427.Rmd`, respectively. The experiment for Pilot 1 can be found in `experiments/legacy/elephants-coord-20200414.html`. The experiment for Pilot 2 can be found in `experiments/elephants-coord.html`.
+
+[Link to Pilot 2](https://www.mit.edu/~karengu/elephants_expt1_single_samescreen/elephants/experiments/elephants-12.html)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F, fig.width = 10)
+library(tidyverse)
+library(knitr)
+library(ggthemes)
+library(viridis)
+library(tidyboot)
+library(jsonlite)
+library(gridExtra)
+library(lme4)
+library(brms)
+library(bayesplot)
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(broom)
+library(tidybayes)
+library(modelr)
+library(ggridges)
+library(ggstance)
+theme_set(theme_few())
+```
+
+We'll load the data in csv format, which is the output from the pre-processing files.
+
+```{r loading}
+df.query.pilot1 <- read.csv('preprocessing/elephants-coord-20200414.csv')
+df.query.pilot2 <- read.csv('preprocessing/elephants-coord-20200427.csv')
+df.query <- bind_rows(
+  df.query.pilot1 %>%
+    filter(!memory_fail, !slider_fail, !bad_expln, !bad_ratings) %>%
+    mutate(val = response, key = "response1", rep = "20200414"),
+  df.query.pilot2 %>%
+    filter(!memory_fail, !slider_fail, !bad_expln, !bad_ratings) %>%
+    gather("key", "val", response1:response2) %>%
+    mutate(rep = "20200427")
+)
+```
+
+## Filler Trials
+
+These used quantifiers (and thus we have strong idea about literal meaning). Overall, it looks like participants understand the experimental task (close to 1 for "all", above .5 for "most", and close to 0 for "none").
+
+```{r}
+df.query.filler <- df.query %>%
+  filter(trial_type == "filler") %>%
+  select(workerid, condition, chapter_num,
+         rt, trial_type, quantifier, key, val)
+
+df.query.filler  %>%
+  ggplot()+
+  geom_histogram(aes(x = val, y = ..density..*0.05, binwidth = 0.05))+
+  ylab('Density')+
+  facet_wrap(~quantifier)
+```
+
+## Critical Trials
+
+### Predicate A only
+
+First we perform analyses while only looking at predicate A. For Pilot 1, participants are only asked about predicate A. For Pilot 2, participants are asked both about predicate A and about a contrasting predicate, but we only look at the data for the first predicate (which may appear before or after the other predicate due to randomization of conjunct order and question order).
+
+#### Histograms of Prevalence Estimates by Condition (collapsed across item)
+```{r}
+df.query.critical <- df.query %>%
+  select(workerid, condition, chapter_num, rt,
+         trial_type, predicate_1,
+         key, val, memory_fail, slider_fail, chapter, rep) %>%
+  mutate(condition = factor(condition, levels = c("np", "pp", "vp", "s"))) %>%
+  filter(trial_type == "critical")
+
+df.query.critical %>%
+  filter(key == "response1") %>%
+  ggplot(., aes( x = val ))+
+  geom_histogram(aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]))+
+  facet_grid(condition~rep)+
+  ylab('Proportion of Participants')+
+  xlab('Implied Prevalence')
+```
+
+#### 95% Boostrapped CIs
+
+##### Pilot 1 (used in AMLaP abstract)
+
+```{r}
+df.bs.query.critical <- df.query.critical %>%
+  filter(!is.na(val)) %>%
+  group_by(condition, rep, key) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+df.bs.3cond <- df.bs.query.critical %>%
+  filter(key == "response1") %>%
+  filter(rep == "20200414") %>%
+  filter(condition != "pp") %>%
+  mutate(condition = factor(condition, levels = c("np", "vp", "s"), labels=c("NP", "VP", "S")))
+
+df.3cond <- df.query.critical %>%
+  filter(key == "response1") %>%
+  filter(rep == "20200414") %>%
+  filter(condition != "pp") %>%
+  mutate(condition = factor(condition, levels = c("np", "vp", "s"), labels=c("NP", "VP", "S")))
+
+ggplot(df.3cond,
+       aes(x = val, y = condition, fill = ..x..)) +
+  geom_density_ridges_gradient(
+    jittered_points = T, alpha = 0.8, scale = 0.95,
+    position = position_points_jitter(width = 0.01, height = 0),
+    point_shape = '|', point_size = 2.5, point_alpha = 0.3,
+    rel_min_height = 0.01, gradient_lwd = 1,
+    stat = 'binline', bins = 20, draw_baseline = F
+  ) +
+  geom_linerangeh(data = df.bs.3cond,
+    inherit.aes = F,
+    aes(xmin = ci_lower, xmax = ci_upper, 
+        y = as.numeric(condition)+0.4),
+    size = 1.25, color = 'black')+
+  geom_point(data = df.bs.3cond,
+    inherit.aes = F,
+    aes(x = mean,
+        y = as.numeric(condition)+0.4),
+    size = 3, color = 'black', shape = 3)+
+  scale_x_continuous(expand = c(0.01, 0), 
+                     limits = c(0, 1.03), 
+                     breaks = c(0, 0.25, 0.5, 0.75, 1)) +
+  scale_y_discrete(expand = c(0.01, 0)) +
+  scale_fill_viridis(name = "Implied Prevalence", option = "D",
+                     breaks = c(0, 1)) +
+  guides(fill = F)+
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0))+
+  labs(x = "Implied Prevalence about First Predicate")
+```
+
+Comparing all conditions to S-coordination as the base level, we see that the CIs all intersect 0.
+
+```{r results='hide'}
+model.data.original <- df.query.critical %>% 
+  filter(rep == "20200427", key == "response1") %>%
+  select(workerid, predicate_1, val, condition) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+fit.coord.original <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.original)
+```
+
+```{r}
+summary(fit.coord.original)
+```
+
+
+
+##### Pilot 2
+
+```{r}
+df.bs.query.critical %>%
+  filter(rep == "20200427") %>%
+  mutate(condition = factor(condition, levels = c("np", "pp", "vp", "s"), labels=c("NP", "PP", "VP", "S")))%>%
+  filter(condition != "PP") %>%
+  ggplot(aes( x = condition, y = mean, ymin = ci_lower, ymax = ci_upper, fill = rep))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("Implied Prevalence about First Predicate")+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)+
+  scale_fill_viridis(discrete=TRUE)+
+  xlab("Coordination Level")+
+  theme(legend.position = "none")+
+  ggtitle('20200427')
+```
+
+Coding S as the base level and only considering responses for the first conjunct, Pilot 2 shows no effect of coordination level on prevalence judgements.
+
+```{r results='hide'}
+model.data.rep <- df.query.critical %>% 
+  filter(rep == "20200427", key == "response1") %>%
+  select(workerid, predicate_1, val, condition) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+fit.coord.rep <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.rep)
+```
+
+```{r}
+summary(fit.coord.rep)
+```
+
+
+#### By-item
+
+```{r}
+df.bs.query.critical.by.item <- df.query.critical %>%
+  filter(!is.na(val), key == "response1") %>%
+  group_by(condition, predicate_1, rep, key) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+```
+
+##### Pilot 1
+
+There is considerable item-wise variability. The predicted pattern is observed (numerically) for two predicates:
+1. chew on xorfun
+2. have territories at the tops of tall mountains
+Ignoring NP-coordination (which may be a special case due to group predication), the predicted pattern is also observed for two more predicates:
+1. ascribe to the Caboo religion
+2. live on the continent of Caro
+
+```{r}
+df.bs.query.critical.by.item %>%
+  filter(rep == "20200414") %>%
+  ggplot(aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+  geom_col() +
+  geom_errorbar(position = position_dodge(0.8), width = 0) +
+  facet_wrap(~predicate_1)+
+  ggtitle('Pilot 1 - 20200414')
+```
+
+##### Pilot 2
+
+Again, there is high item-wise variability. The predicted pattern is observed for 2 predicates:
+1. have territories at the tops of tall mountains (replicating above)
+2. produce fruit with bumpy skin
+The other pattern (ignoring NP-coordination) is not observed for any of the items.
+
+```{r}
+df.bs.query.critical.by.item %>%
+  filter(key == "response1", rep == "20200427") %>%
+  ggplot(aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper)) +
+  geom_col() +
+  geom_errorbar(position = position_dodge(0.8), width = 0) +
+  facet_wrap(~predicate_1)+
+  ggtitle('Pilot 2 - 20200427')
+```
+
+### Conjunct A and B (20200427 only)
+
+We'll see if there are any systematic differences in participants' responses to the first conjunct vs. the second conjunct. This is only possible for Pilot 2, since participants provide a response for both conjuncts (conjunct order and question order randomized across trial).
+
+```{r}
+df.bs.query.critical.both.responses <- df.query.critical %>%
+  filter(rep == "20200427") %>%
+  group_by(condition, key) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+df.bs.query.critical.both.responses %>%
+  mutate(condition = factor(condition, levels = c("np", "pp", "vp", "s"), labels=c("NP", "PP", "VP", "S")))%>%
+  ggplot(aes( x = condition, y = mean, ymin = ci_lower, ymax = ci_upper, fill = key))+
+  geom_col(position = position_dodge(0.8), width = 0.8, alpha = 0.8, color = 'black')+
+  ylab("Prevalence")+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)+
+  xlab("Coordination Level")
+```
+
+Predicting prevalence across both conjuncts (20200427), with S-coordination as the base level, there is no effect of the conjunct.
+
+```{r results='hide'}
+model.data.rep <- df.query.critical %>% 
+  filter(rep == "20200427") %>%
+  select(workerid, predicate_1, val, condition, key) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+fit.coord.rep <- brm(val ~ condition*key + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.rep)
+```
+
+```{r}
+summary(fit.coord.rep)
+```
+
+
+### Collapsed across experiment, conjunct
+
+Here we collapse across both pilots and both conjuncts for Pilot 2.
+
+#### Collapsed across predicate
+
+Collapsing across both experiments gives an effect of coordination (S vs. PP).
+
+```{r results='hide'}
+model.data.collapsed <- df.query.critical %>%
+  select(workerid, predicate_1, val, condition) %>%
+  filter(!is.na(val)) %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+
+model.data.collapsed.bs <- model.data.collapsed %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = val)
+
+model.data.collapsed.bs %>%
+  ggplot(aes(x=condition, y=mean, ymin=ci_lower, ymax=ci_upper))+
+  geom_col()+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)
+
+fit.coord.collapsed <- brm(val~condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.collapsed)
+```
+
+```{r}
+summary(fit.coord.collapsed)
+```
+
+
+#### By-item
+
+```{r}
+model.data.collapsed.bs.by.item <- model.data.collapsed %>%
+  group_by(condition, predicate_1) %>%
+  tidyboot_mean(column = val)
+
+model.data.collapsed.bs.by.item %>%
+  ggplot(aes(x=condition, y=mean, ymin=ci_lower, ymax=ci_upper))+
+  geom_col()+
+  geom_linerange(position = position_dodge(0.8), width = 0.3)+
+  facet_wrap(~predicate_1)
+```
+
+#### Comparing S vs. all other levels
+
+Collapsing all other coordination levels (across pilot) does not produce an effect of coordination.
+
+```{r results='hide'}
+model.data.collapsed.s.onehot <- df.query.critical %>%
+  select(workerid, predicate_1, val, condition) %>%
+  filter(!is.na(val)) %>%
+  mutate(condition = condition == "s") %>%
+  mutate(condition = factor(condition, levels=c(FALSE, TRUE), labels=c("Other", "S")))
+
+model.data.collapsed.s.onehot.bs <- model.data.collapsed.s.onehot %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = val) %>%
+  ungroup()
+
+ggplot(model.data.collapsed.s.onehot.bs, aes(x = condition, y = mean, ymin = ci_lower, ymax = ci_upper))+
+geom_col()+
+  geom_linerange(width=0)
+
+fit.coord.s.onehot <- brm(val ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.collapsed.s.onehot)
+```
+
+```{r}
+summary(fit.coord.s.onehot)
+```
+
+
+### Mutually Exclusive Interpretations (20200427 only)
+
+Now we try to assess the extent to which participants interpreted the predicates as mutually exclusive. This is easier to do for Pilot 2 since we have data on both predicates. We first assess mutual exclusivity both numerically by the total prevalence = prevalence1 + prevalence 2. The lower the total prevalence, the higher the degree of mutual exclusivity.
+
+```{r}
+df.me <- df.query.critical %>%
+  filter(rep == "20200427") %>%
+  spread(key, val) %>%
+  mutate(total_prevalence = response1+response2) %>%
+  mutate(me = total_prevalence < 1.2)
+
+model.data.me <- df.me %>%
+  mutate(condition = factor(condition, levels=c("s", "np", "pp", "vp")))
+```
+
+Total prevalence is highest in the VP-coordinated condition, although this difference is small.
+
+```{r results='hide'}
+ggplot(df.me, aes(x=total_prevalence))+
+  geom_histogram()+
+  facet_wrap(~condition)
+
+df.me.bs <- df.me %>%
+  group_by(condition) %>%
+  tidyboot_mean(column = total_prevalence) 
+
+df.me.bs %>%
+  ggplot(aes(x=condition,y=mean,ymin=ci_lower,ymax=ci_upper))+
+  geom_col()+
+  geom_errorbar(width=0)+
+  ylab('Total Prevalence')
+
+fit.coord.total.prev <- brm(total_prevalence ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.me)
+```
+
+```{r}
+summary(fit.coord.total.prev)
+```
+
+
+We also assess mutual exclusivity as a binary variable, classifying an interpretation as mutually exclusive if the total prevalence does not exceed 1.2 (to allow for some fuzziness).
+
+```{r results='hide'}
+df.me %>%
+  group_by(me) %>%
+  summarise(n = n()) %>%
+  kable()
+
+fit.coord.me <- brm(me ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.me, family = "bernoulli")
+```
+
+```{r}
+summary(fit.coord.me)
+```
+
+
+We'll also try to predict mutual exclusivity as a total prevalence < 1, which is more stringent than above.
+
+```{r results='hide'}
+fit.coord.me <- brm(me ~ condition + (1 + condition | workerid) + (1 + condition | predicate_1), model.data.me %>% mutate(me = total_prevalence <= 1), family = "bernoulli")
+```
+
+```{r}
+summary(fit.coord.me)
+```
+
+
+Lastly, the classic interpretation in the case of mutual exclusivity is that participants will respond 50/50. What proportion of participants do this? We collapse across both conjuncts for Pilot 2. As expected if S-coordination leads to the highest levels of mutual exclusivity, the proportion of participants responding 50% is highest in the S condition, but the pattern varies by pilot for the other conditions.
+
+```{r}
+df.query.critical.pretty <- df.query.critical %>%
+  mutate(condition = factor(condition,
+                            levels=c("np", "pp", "vp", "s"),
+                            labels=c("NP", "PP", "VP", "S")))
+
+df.prop.50 <- df.query.critical.pretty %>% 
+  filter(!is.na(val)) %>%
+  mutate(response_half = val < .55 & val > .45) %>%
+  group_by(condition, rep) %>%
+  summarise(percent_half = sum(response_half)/n())
+
+df.prop.50 %>%
+  arrange(desc(percent_half)) %>%
+  kable()
+
+ggplot(df.prop.50, aes(x = condition, y = percent_half)) +
+  geom_col()+
+  facet_wrap(~rep)
+```
+
+#### By-item
+
+```{r}
+df.me.bs.by.item <- df.me %>%
+  group_by(predicate_1, condition) %>%
+  tidyboot_mean(column = total_prevalence) 
+
+df.me.bs.by.item %>%
+  ggplot(aes(x = predicate_1, y = mean, ymin=ci_lower, ymax=ci_upper)) +
+  geom_col()+
+  xlab('Item')+
+  ylab('Total Prevalence Estimate (across 2 Conjuncts)')+
+  geom_errorbar(width=0)+
+  facet_wrap(~condition)+
+  coord_flip()
+```
+
+
