@@ -26,21 +26,21 @@ df.subject <- data.frame()
 df.trials <- data.frame()
 df.attention <- data.frame()
 for (anon_result in anon_results) {
-  
+
   result_json = fromJSON(paste(data.path, anon_result, sep ="/"))
 
   df.attention = bind_rows(
-    df.attention, 
+    df.attention,
     data.frame(result_json$answers$catch_trials) %>%
     mutate(
       workerid = i,
       property = gsub("\n", " ", property)
       )
   )
-  
+
   df.subject = bind_rows(
-    df.subject, 
-    data.frame(result_json$answers$subject_information) %>% 
+    df.subject,
+    data.frame(result_json$answers$subject_information) %>%
       mutate(workerid = i,
              language = gsub("\"", "", language),
          enjoyment = gsub("\"", "", enjoyment),
@@ -49,10 +49,10 @@ for (anon_result in anon_results) {
          problems = gsub("\"", "", problems),
          comments = gsub("\"", "", comments))
   )
-  
+
   df.trials = bind_rows(
-    df.trials, 
-    data.frame(result_json$answers$trials) %>% 
+    df.trials,
+    data.frame(result_json$answers$trials) %>%
       mutate(workerid = i,
              combined_predicate = ifelse(!is.na(combined_predicate), combined_predicate, combined_precidate)) %>%
       select(workerid, kind, predicate1, predicate2, combined_predicate, trial_type, condition, response)
@@ -67,7 +67,7 @@ df.subject %>%
   select(workerid, language, enjoyment, age, gender, problems, comments) %>%
   kable(.)
 ```
-## Attention Checks 
+## Attention Checks
 
 ### Slider Practice
 
@@ -79,7 +79,7 @@ Before the experiment, participants practice using the sliders to rate 3 sentenc
 
 ```{r}
 df.slider_check.workers <- df.attention %>%
-  group_by(workerid) %>% 
+  group_by(workerid) %>%
   summarize(
     n_correct = sum(correct),
     not_all_correct = n_correct < 3
@@ -90,7 +90,7 @@ workers.fail.sliders <- df.slider_check.workers %>%
   pull(workerid)
 
 # number of participants that got a certain number of properties correct
-df.attention %>% 
+df.attention %>%
   filter(condition == "practice") %>%
   group_by(workerid) %>%
   summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
@@ -98,7 +98,7 @@ df.attention %>%
   kable()
 
 # number of participants that got each property correct
-df.attention %>% 
+df.attention %>%
   filter(condition == "practice") %>%
   group_by(sentence) %>%
   summarize(n_correct = sum(correct, na.rm = TRUE)) %>%
@@ -117,9 +117,9 @@ df.mmry <- df.attention %>%
   summarize(n_correct = sum(correct)) %>%
   ungroup() %>%
   spread(tested_on, n_correct) %>%
-  rename(correct_rejections = `0`, 
+  rename(correct_rejections = `0`,
          hits = `1`) %>%
-  mutate(n_correct = correct_rejections + hits) 
+  mutate(n_correct = correct_rejections + hits)
 
 workers.fail.memory <- df.mmry %>% filter(n_correct < 7) %>% pull(workerid)
 
@@ -160,7 +160,7 @@ df.trials <- df.trials %>%
   mutate(memory_fail = workerid %in% workers.fail.memory,
       slider_fail = workerid %in% workers.fail.sliders,
       bad_expln  = workerid %in% bad.expln) %>%
-  left_join(., 
+  left_join(.,
       df.mmry %>% select(workerid, n_correct)
 )
 
@@ -175,6 +175,67 @@ df.query <- df.trials %>%
   mutate(quantifier = factor(quantifier, levels = c("generic", "most"), ordered = TRUE)) %>%
   mutate(coordination = factor(coordination, levels = c("np", "vp"), ordered = TRUE)) %>%
   mutate(response = response == "true")
+```
+
+### Number of Participants by Item and Condition
+
+```{r}
+df.full.tab.item.count <- df.query %>%
+  group_by(coordination, quantifier, combined_predicate) %>%
+  count() %>%
+  spread(quantifier, n)
+
+df.full.tab.item.count %>% kable()
+
+df.full.tab.item.count %>%
+  gather(quantifier, n, generic, most) %>%
+  group_by(coordination) %>%
+  summarize(n = sum(n)) %>% kable()
+```
+
+### Confidence Intervals by Coordination and Quantifier (collapsed across item)
+
+```{r}
+df_sample <- function(i) {
+  df.query %>%
+    group_by(quantifier, coordination) %>%
+    sample_frac(replace = TRUE) %>%
+    group_by(quantifier, coordination, response) %>%
+    count() %>%
+    group_by(quantifier, coordination) %>%
+    mutate(prop = n/sum(n), sample = i) %>%
+    filter(response == TRUE)
+}
+df_resampled <- map_df(1:10, df_sample)
+df_ci <- df_resampled %>%
+  group_by(coordination, quantifier) %>%
+  summarise(mean = mean(prop), ci_lower = ci_lower(prop), ci_upper = ci_upper(prop))
+
+ggplot(df_ci) +
+  geom_col(aes(x = quantifier, y = mean, fill = quantifier)) +
+  geom_linerange(aes(x = quantifier, ymin = ci_lower, ymax = ci_upper)) +
+  facet_grid(~ coordination) +
+  scale_fill_manual(values = c("#4477AA", "#CC6677"), guide = FALSE) +
+  ylab("Proportion `True` Responses") +
+  xlab("Quantifier")
+
+ggsave("~/Documents/talks/1906-xprag-elephants/truthJudgment_NP_VP.pdf", width = 5, height = 3.5)
+```
+
+### Model
+
+```{r}
+contrasts(df.query$coordination) <- contr.sum
+contrasts(df.query$quantifier) <- contr.sum
+recall_glm <- glmer(response ~ coordination * quantifier + (1 | workerid) + (1 | combined_predicate),
+                  data = df.query,
+                  family = "binomial")
+summary(recall_glm)
+```
+
+## By-item Analyses
+
+### Number of Trials by Item and Quantifier
 
 write.csv(df.query, 'elephants-quantifier-coord-truth.csv')
 ```
