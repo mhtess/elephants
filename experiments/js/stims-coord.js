@@ -141,8 +141,8 @@ var filler_chapters = [{
     type: "filler",
     kind: "morseths",
     property1: "build permanent structures called fendles",
-    property2: "come on land to find mates",,
-    inference: false
+    property2: "come on land to find mates",
+      inference: false,
   },
 
   {

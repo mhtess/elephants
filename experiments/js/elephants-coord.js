@@ -99,11 +99,10 @@ function make_slides(f) {
       this.init_sliders(4);
       practice_questions = [
         "What percentage of <strong>dogs</strong> do you think <strong>bark</strong>?\n",
-        "What percentage of <strong>birds</strong> do you think <strong>are male</strong>?\n",
         "What percentage of <strong>cats</strong> do you think <strong>get cancer</strong>?\n",
         "What percentage of <strong>lions</strong> do you think <strong>lay eggs</strong>?\n"
       ]
-      for (i = 1; i < 5; i++) {
+      for (i = 1; i < 4; i++) {
         $("#query_p" + i).html(practice_questions[i - 1])
       }
       exp.sliderPractice = [-1, -1, -1];
@@ -136,27 +135,18 @@ function make_slides(f) {
         exp.catch_trials.push({
           condition: "practice",
           check_index: 2,
-          property: "birds are male",
-          tested_on: -1,
-          response: exp.sliderPractice[1],
-          correct: (exp.sliderPractice[1] > 0.30) && (exp.sliderPractice[1] < 0.70)
-        })
-
-        exp.catch_trials.push({
-          condition: "practice",
-          check_index: 2,
           property: "cats get cancer",
           tested_on: -1,
-          response: exp.sliderPractice[2],
-          correct: (exp.sliderPractice[2] < 0.50)
+          response: exp.sliderPractice[1],
+          correct: (exp.sliderPractice[1] < 0.50)
         })
         exp.catch_trials.push({
           condition: "practice",
           check_index: 2,
           property: "lions lay eggs",
           tested_on: -1,
-          response: exp.sliderPractice[3],
-          correct: (exp.sliderPractice[3] < 0.1)
+          response: exp.sliderPractice[2],
+          correct: (exp.sliderPractice[2] < 0.1)
         })
 
 
