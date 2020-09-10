@@ -848,5 +848,117 @@ var stims_chapters = [{
     type: "critical",
     continuationType: "real",
     coordination: "np"
-  }
+  },
+  {
+    title: "Rondas",
+    main_text: ["Rondas are very common creatures on Dax. They have adapted to live in many different habitats like rainforests and plains."],
+    continuation: {
+      firstConjunct: {
+        same: "Rondas eat with short, hooked beaks",
+        reverse: "Rondas eat with long, pointed beaks",
+      },
+      critical: {
+        s: {
+          same: "and rondas eat with long, pointed beaks",
+          reverse: "and rondas eat with short, hooked beaks",
+        },
+        vp: {
+          same: "and eat with long, pointed beaks",
+          reverse: "and eat with short, hooked beaks",
+        },
+        pp: {
+          same: "and with long, pointed beaks",
+          reverse: "and with short, hooked beaks",
+        },
+        np: {
+          same: "and long, pointed beaks",
+          reverse: "and short, hooked beaks",
+        }
+      }
+    }
+  },
+  {
+    title: "Sarkeys",
+    main_text: ["Sarkeys are large herbivores. They invest a lot of care into each of their offspring. Both parents spend most of their time taking care of the baby until it grows to an adult, a process that takes about three years."],
+    continuation: {
+      firstConjunct: {
+        same: "Sarkeys mate in the spring",
+        reverse: "Sarkeys mate in the fall",
+      },
+      critical: {
+        s: {
+          same: "and sarkeys mate in the fall",
+          reverse: "and sarkeys mate in the spring",
+        },
+        vp: {
+          same: "and mate in the fall",
+          reverse: "and mate in the spring",
+        },
+        pp: {
+          same: "and in the fall",
+          reverse: "and in the spring",
+        },
+        np: {
+          same: "and the fall",
+          reverse: "and the spring",
+        },
+      }
+    }
+  },
+  {
+    title: "Vimers",
+    main_text: ["Vimers are tiny bugs that form mutually beneficial relationships with plants in order to reproduce. After they lay their eggs inside the plant, they die."],
+    continuation: {
+      firstConjunct: {
+        same: "Vimers lay their eggs in yergs",
+        reverse: "Vimers lay their eggs in flooms",
+      },
+      critical: {
+        s: {
+          same: "and vimers lay their eggs in flooms",
+          reverse: "and vimers lay their eggs in yergs",
+        },
+        vp: {
+          same: "and lay their eggs in flooms",
+          reverse: "and lay their eggs in yergs",
+        },
+        pp: {
+          same: "and in flooms",
+          reverse: "and in yergs",
+        },
+        np: {
+          same: "and flooms",
+          reverse: "and yergs",
+        }
+      }
+    }
+  },
+  {
+    title: "Marths",
+    main_text: ["Marths are parasitic vines that climb on top of other plants in order to reach more sunlight. They also steal nutrients from the plant because their roots are entangled with their hosts' roots."],
+    continuation: {
+      firstConjunct: {
+        same: "Marths grow on freenas",
+        reverse: "Marths grow on vorbas",
+      },
+      critical: {
+        s: {
+          same: "and marths grow on vorbas",
+          reverse: "and marths grow on freenas",
+        },
+        vp: {
+          same: "and grow on vorbas",
+          reverse: "and grow on freenas",
+        },
+        pp: {
+          same: "and on vorbas",
+          reverse: "and on freenas",
+        },
+        np: {
+          same: "and vorbas",
+          reverse: "and freenas",
+        },
+      }
+    }
+  },
 ]
