@@ -408,7 +408,7 @@ function make_slides(f) {
         "time_in_minutes": (Date.now() - exp.startT) / 60000
       };
       setTimeout(function() {
-        turk.submit(exp.data);
+        proliferate.submit(exp.data);
       }, 1000);
     }
   });
@@ -418,16 +418,6 @@ function make_slides(f) {
 
 /// init ///
 function init() {
-
-  repeatWorker = false;
-  (function() {
-    var ut_id = "mht-eleph-20190121";
-    if (UTWorkerLimitReached(ut_id)) {
-      $('.slide').empty();
-      repeatWorker = true;
-      alert("You have already completed the maximum number of HITs allowed by this requester. Please click 'Return HIT' to avoid any impact on your approval rating.");
-    }
-  })();
 
   fillers = _.shuffle(filler_chapters)
   shuffled_chapters = _.shuffle(stims_chapters)
