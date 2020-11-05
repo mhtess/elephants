@@ -1,0 +1,403 @@
+---
+title: "Scope Model Simulations"
+author: "Karen Gu"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+library(rwebppl)
+library(tidyverse)
+library(ggthemes)
+```
+
+Here we explore predictions made by a simple RSA model that reasons about whether or not two conjuncts in a given conjunctive generic sentence are mutually exclusive or not.
+
+The model assumes that mutual exclusivity is affected by the relative scope of the generic operator (GEN) and conjunction (AND). When GEN > AND, it is more likely that the two conjuncts are not mutually exclusive, since it is the case that generically many of the kind possess both properties, _simultaneously_. When GEN < AND, it is more likely that the two conjuncts are mutually exclusive, since it is the case that generically many of the kind possess the first property, and it is also the case that generically many of the kind possess the second property, but the flexibility of GEN's threshold semantics enables a fewer number of the kind to possess each property (see `model-simulations-v2` for quantitative predictions).
+
+Obviously, the mutual exclusivity of any two random predicates will vary quite widely. Here we assume that the prior on mutual exclusivity for the two predicates is quite high, such as "living in Africa" and "living in Asia", in order to test the range of model predictions.
+
+The model also assumes if group predication exists, it is only available at the NP level of coordination. Group predication has the effect of making mutual exclusivity less likely, since it operates as a union for many predicate types (notably including "living in Africa and Asia"). The *strength of group predication* is the first variable we consider. Notably, it can be zero, meaning that group predication does not operate in the model.
+
+We also consider a structural effect on interpretation. The AND > GEN scope is the inverse scope for sentences with NP-, PP-, or VP- coordination. Moreover, it may be more computationally intensive to achieve the inverse scope depending on where AND begins in the syntactic tree. Thus, the *cost of movement* (for some theory-neutral notion of movement) is the second variable we consider.
+
+Furthermore, longer utterances have greater cost, such that S-coordinated sentences are the most costly and NP-coordinated sentences are the least costly. The multiplier for the *cost of utterance* is the third variable we consider. Throughout, we assume that the cost spacing (relative difference in cost between different coordination levels) is constant, but the size of the spacing (multiplier) varies.
+
+We last consider the *speaker optimality* or alpha, which is a common parameter in RSA models.
+
+We will work through a series of possible cases and look at the model predictions for each. Ideally, the model makes unique qualitative predictions in each case so that we can disambiguate between them. Within each case, we will explore the range of quantitative predictions made.
+
+## Case 1: group predication exists, no cost of movement
+
+Here we assume that group predication exists (``groupPredicationStrength`` is nonzero), and there is no cost of movement (``andOverGenStrength`` is a fixed value for all coordination levels).
+
+First we'll set ``andOverGenStrength = 0.5`` for all coordination levels, with ``alpha = 1`` and ``costMultiplier = 1``, and vary the strength of group predication.
+
+```{r case1.group.predication}
+vary.group.predication <- function(group.predication.strength) {
+  webppl(
+    program_file = "elephants-coord-model-case1.wppl",
+    data = list(groupPredicationStrength=group.predication.strength, andOverGenStrength=.1, alpha=1, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(group.predication.strength=1:10/10) %>% 
+  mutate(preds=map(group.predication.strength, vary.group.predication)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    group.predication.strength=factor(group.predication.strength)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=group.predication.strength))+
+  geom_point() +
+  geom_line(aes(group=group.predication.strength))
+```
+
+We see that the general shape of the model predictions is PP = VP < NP < S. NP-coordination may produce estimates of mutual exclusivity as high as that of S-coordination when the strength of group predication is high, which indicates that NP-coordination is more likely to indicate mutual exclusivity.
+
+Next, let's consider setting group predication strength to 0.5 and varying the speaker optimality ``alpha``.
+
+```{r case1.alpha}
+vary.alpha <- function(alpha) {
+  webppl(
+    program_file = "elephants-coord-model-case1.wppl",
+    data = list(groupPredicationStrength=0.5, andOverGenStrength=.1, alpha=alpha, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(alpha=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(alpha, vary.alpha)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    alpha=factor(alpha)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=alpha))+
+  geom_point() +
+  geom_line(aes(group=alpha))
+```
+
+We see that the general shape of the trend remains the same (PP = VP < NP < S), except when ``alpha`` is very high, in which case the model predictions for NP-coordination and S-coordination become more similar. As ``alpha`` increases, the differences between coordination levels increases.
+
+Next, let's consider setting ``alpha=1`` and varying the cost multiplier.
+
+```{r case1.cost}
+vary.cost <- function(cost) {
+  webppl(
+    program_file = "elephants-coord-model-case1.wppl",
+    data = list(groupPredicationStrength=0.5, andOverGenStrength=.1, alpha=1, costMultiplier=cost), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(cost=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(cost, vary.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    cost=factor(cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=cost))+
+  geom_point() +
+  geom_line(aes(group=cost))
+```
+
+We see that the general shape of the trend is again constant. As the difference in cost between coordination levels increases, the difference between coordination levels becomes greater.
+
+## Case 2: group predication exists, movement is costly
+
+Here we assume that group predication exists (``groupPredicationStrength`` is nonzero), and there is a cost associated with movement (``andOverGenStrength``differs across coordination levels).
+
+First we'll set ``groupPredicationStrength=0.5``, ``alpha=1``, ``costMultiplier=1``, and ``andOverGenStrength`` to some evenly spaced values (.2 for NP, .4 for PP, and .6 for VP). We will then vary the cost of movement by applying a ``movementCostMultiplier``.
+
+```{r case2.movement.cost}
+vary.movement.cost <- function(movement.cost) {
+  webppl(
+    program_file = "elephants-coord-model-case2.wppl",
+    data = list(groupPredicationStrength=0.5, movementCostMultiplier=movement.cost, alpha=1, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(movement.cost=c(1:8/5)) %>% 
+  mutate(preds=map(movement.cost, vary.movement.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    movement.cost=factor(movement.cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=movement.cost))+
+  geom_point() +
+  geom_line(aes(group=movement.cost))
+```
+
+The general shape of the trend is that PP < NP < VP < S. However, the cost of movement changes the shape slightly. When the movement cost is at most 1, the shape is convex. When the movement cost is greater than 1, the shape becomes more sigmoidal.
+
+Next, let's set the multiplier for movement cost to 1, and vary the group predication strength.
+
+```{r case2.group.predication}
+vary.group.predication <- function(group.predication.strength) {
+  webppl(
+    program_file = "elephants-coord-model-case2.wppl",
+    data = list(groupPredicationStrength=group.predication.strength, movementCostMultiplier=1, alpha=1, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(group.predication.strength=1:10/10) %>% 
+  mutate(preds=map(group.predication.strength, vary.group.predication)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    group.predication.strength=factor(group.predication.strength)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=group.predication.strength))+
+  geom_point() +
+  geom_line(aes(group=group.predication.strength))
+```
+We see that depending on the relative strengths of group predication and the cost of movement, the shape of the trend differs. When group predication is relatively weak, we see a monotonically increasing judgement of mutual exclusivity as coordination moves from NP- to S-. When group predication is relatively strong, we see a V-pattern where NP > PP < VP < S.
+
+Next, let's vary ``alpha``.
+
+```{r case2.alpha}
+vary.alpha <- function(alpha) {
+  webppl(
+    program_file = "elephants-coord-model-case2.wppl",
+    data = list(groupPredicationStrength=0.5, movementCostMultiplier=1, alpha=alpha, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(alpha=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(alpha, vary.alpha)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    alpha=factor(alpha)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=alpha))+
+  geom_point() +
+  geom_line(aes(group=alpha))
+```
+
+When ``alpha`` deviates from 1, the shape of the trend deviates from the V-shape, although the general trend is still NP > PP < VP < S.
+
+Next, let's vary the cost multiplier.
+
+```{r case2.cost}
+vary.cost <- function(cost) {
+  webppl(
+    program_file = "elephants-coord-model-case2.wppl",
+    data = list(groupPredicationStrength=0.5, movementCostMultiplier=1, alpha=1, costMultiplier=cost), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(cost=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(cost, vary.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    cost=factor(cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=cost))+
+  geom_point() +
+  geom_line(aes(group=cost))
+```
+
+We see that the cost multiplier does not affect the overall shape of the trend, but modulates the average estimate of mutual exclusivity. When the cost is higher, the model predicts more mutual exclusivity.
+
+## Case 3: no group predication, no cost of movement
+
+Here we assume that group predication does not exist (``groupPredicationStrength=0``), and there is no cost of movement (``andOverGenStrength`` is a fixed value for all coordination levels).
+
+First we assume that ``andOverGenStrength = 0.5`` for all coordination levels, and ``costMultiplier=1``. What is the effect of changing ``alpha``?
+
+```{r case3.alpha}
+vary.alpha <- function(alpha) {
+  webppl(
+    program_file = "elephants-coord-model-case3.wppl",
+    data = list(andOverGenStrength=0.5, alpha=alpha, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(alpha=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(alpha, vary.alpha)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    alpha=factor(alpha)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=alpha))+
+  geom_point() +
+  geom_line(aes(group=alpha))
+```
+
+In this case, only S-coordination is different than the other coordination levels. As alpha increases, the difference between the conditions increases.
+
+Next, we will vary the cost multiplier.
+
+```{r case3.cost}
+vary.cost <- function(cost) {
+  webppl(
+    program_file = "elephants-coord-model-case3.wppl",
+    data = list(andOverGenStrength=0.5, alpha=1, costMultiplier=cost), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(cost=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(cost, vary.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    cost=factor(cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=cost))+
+  geom_point() +
+  geom_line(aes(group=cost))
+```
+
+The general shape is the same: only S-coordination differs. As the difference in utterance cost increases, the difference in predictions between conditions decreases.
+
+## Case 4: no group predication, movement is costly
+
+Here we assume that group predication does not exist (``groupPredicationStrength=0``), and there is a cost associated with movement (``andOverGenStrength``differs across coordination levels).
+
+First we'll set ``groupPredicationStrength=0.5``, ``alpha=1``, ``costMultiplier=1``, and ``andOverGenStrength`` to some evenly spaced values (.2 for NP, .4 for PP, and .6 for VP). We will then vary the cost of movement by applying a ``movementCostMultiplier``.
+
+```{r case4.movement.cost}
+vary.movement.cost <- function(movement.cost) {
+  webppl(
+    program_file = "elephants-coord-model-case4.wppl",
+    data = list(movementCostMultiplier=movement.cost, alpha=1, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(movement.cost=c(1:8/5)) %>% 
+  mutate(preds=map(movement.cost, vary.movement.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    movement.cost=factor(movement.cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=movement.cost))+
+  geom_point() +
+  geom_line(aes(group=movement.cost))
+```
+
+In this case, we see a monotonically increasing trend NP < PP < VP < S. As the cost of movement increases, the trend becomes more concave, quickly reaching the ceiling of 100% confidence in mutual exclusivity.
+
+Next, let's vary ``alpha``.
+
+```{r case4.alpha}
+vary.alpha <- function(alpha) {
+  webppl(
+    program_file = "elephants-coord-model-case4.wppl",
+    data = list(movementCostMultiplier=1, alpha=alpha, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(alpha=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(alpha, vary.alpha)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    alpha=factor(alpha)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=alpha))+
+  geom_point() +
+  geom_line(aes(group=alpha))
+```
+
+Again, we see the monotonically increasing trend. As ``alpha`` increases, the trend becomes more concave, until at ``alpha=10``, only NP-coordination differs from the other coordination levels.
+
+Next, let's vary the cost multiplier.
+
+```{r case4.cost}
+vary.cost <- function(cost) {
+  webppl(
+    program_file = "elephants-coord-model-case4.wppl",
+    data = list(groupPredicationStrength=0.5, movementCostMultiplier=1, alpha=1, costMultiplier=cost), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(cost=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(cost, vary.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    cost=factor(cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=cost))+
+  geom_point() +
+  geom_line(aes(group=cost))
+```
+
+We again see the monotonically increasing trend. As cost increases, the model predictions tend to cluster more closely together and all coordination levels appear more similar.
+
+## Summary
+
+The model displays four qualitatively different trends depending on the existence of group predication and the existence of a cost of movement (the strong structural hypothesis). Note that in the absence of the structural hypothesis, even if group predication is present, all coordination levels will imply the same mutual exclusivity.
+
+The pattern PP = VP < NP <= S is consistent with a model in which group predication exists but only the weak structural hypothesis holds.
+
+The pattern NP > PP < VP < S is consistent with a model in which group predication exists and the strong structural hypothesis holds.
+
+The pattern NP = PP = VP < S is consistent with a model in which group predication does not exist and only the weak structural hypothesis holds.
+
+The pattern NP < PP < VP < S (monotonically increasing) is consistent with a model in which group predication does not exist and the strong structural hypothesis holds.

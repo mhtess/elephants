@@ -1,0 +1,82 @@
+// CASE 2: NO GROUP PREDICATION, MOVEMENT IS COSTLY
+var groupPredicationStrength = 0
+
+
+// INPUT PARAMETERS FROM RWEBPPL
+var movementCostMultiplier = params["movementCostMultiplier"][0]
+var andOverGenStrength = function(utt) {
+  return movementCostMultiplier*(utt=="s"? 0.8 :
+         utt=="vp"? 0.6 :
+         utt=="pp"? 0.4 :
+         utt=="np"? 0.2 :
+         true)
+}
+var alpha = params["alpha"][0]
+var costMultiplier = params["costMultiplier"][0]
+
+var meProb = .9
+
+var worldPrior = function() {
+  return flip(meProb) ? "ME" : "nME"
+}
+
+var utterancePrior = function() {
+  var utterances = ["s", "vp", "pp", "np"]
+  var i = randomInteger(utterances.length)
+  return utterances[i]
+}
+
+
+
+var meaning = function(utt,world) {
+  return utt=="s"? (world==="ME") :
+         utt=="vp"? (flip(andOverGenStrength("vp"))?world==="ME": world==="nME") :
+         utt=="pp"? (flip(andOverGenStrength("pp"))?world==="ME": world==="nME") :
+         utt=="np"? (flip(groupPredicationStrength)?world==="ME":
+                     (flip(andOverGenStrength("np"))?world==="ME":world==="nME")) :
+         true
+}
+
+var literalListener = function(utterance) {
+  Infer({
+    model() {
+      var world = worldPrior()
+      var m = meaning(utterance, world)
+      factor(m ? 0 : -Infinity)
+      return world
+    }
+  })
+}
+
+var cost = function(utterance){
+  utterance == "s" ? .5 :
+  utterance == "vp" ? .4 :
+  utterance == "pp" ? .3 :
+  utterance == "np" ? .2 :
+  true
+}
+
+var speaker = function(world) {
+  Infer({
+    model(){
+      var utterance = utterancePrior()
+      factor(alpha * (literalListener(utterance).score(world)
+	                - costMultiplier * cost(utterance)))
+      return utterance
+    }
+  })
+}
+
+var listener = function(utterance) {
+  Infer({
+    model() {
+      var world = worldPrior()
+      factor(utterance == sample(speaker(world)) ?0:-Infinity)
+      return world
+    }
+  })
+}
+
+map(function(coord) {
+  Math.exp(listener(coord).score("ME"))
+}, ["s", "vp", "pp", "np"])
