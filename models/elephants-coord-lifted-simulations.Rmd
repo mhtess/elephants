@@ -1,0 +1,311 @@
+---
+title: "Lifted Scope Model Simulations"
+author: "Karen Gu"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+library(rwebppl)
+library(tidyverse)
+library(ggthemes)
+library(viridis)
+```
+
+This file explores predictions made by a lifted version of the scope model explored in `elephants-coord-simulations.Rmd`. The key difference between these models is that in the lifted model, the pragmatic listener can reason about the structure of the utterance, that is, whether or not GEN outscopes AND. This enables the model to make new classes of predictions as described below. We also add a null utterance for completeness, and assume that movement can also occur in the case of S-coordination to produce an inverse scope. In the other model, we assume that S-coordination always yields a AND > GEN scope, identical to the surface scope. This assumption is added back to the model in the third case that we address.
+
+Throughout, we assume that group predication does not exist. We consider the effects of three variables: the cost multiplier, which affects the magnitude of the *cost of each utterance*, although their relative difference in cost remains the same, alpha, or the *speaker optimality*, and the prior on utterance structure in the form of ``andOverGenStrength`` (affected by the cost of movement).
+
+## Case 1: no cost of movement
+
+We assume that there is no cost of movement (``andOverGenStrength`` is a fixed value for all coordination levels).
+
+Varying the cost of the utterance:
+
+```{r case1.cost}
+vary.cost <- function(cost) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case1.wppl',
+    data = list(andOverGenStrength=.5, alpha=2, costMultiplier=cost), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(cost=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(cost, vary.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    cost=factor(cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=cost))+
+  geom_point() +
+  geom_line(aes(group=cost))+
+  scale_color_viridis(discrete=T)
+```
+
+We see a monotonically decreasing trend (NP -> S) for all values of cost. As the cost of the utterance increases, the difference in interpretation across coordination levels increases.
+
+Varying ``alpha``:
+
+```{r case1.alpha}
+vary.alpha <- function(alpha) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case1.wppl',
+    data = list(andOverGenStrength=.5, alpha=alpha, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(alpha=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(alpha, vary.alpha)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    alpha=factor(alpha)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=alpha))+
+  geom_point() +
+  geom_line(aes(group=alpha)) +
+  scale_color_viridis(discrete=T)
+```
+
+We see the monotonically decreasing trend for all values of ``alpha``, and as ``alpha`` increases, the difference in interpretation across coordination levels increases.
+
+Varying the baseline belief in the AND > GEN scope:
+
+```{r case1.andovergen}
+vary.andovergen <- function(andovergen) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case1.wppl',
+    data = list(andOverGenStrength=andovergen, alpha=1, costMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(andovergen=1:10/10) %>% 
+  mutate(preds=map(andovergen, vary.andovergen)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    andovergen=factor(andovergen)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=andovergen))+
+  geom_point() +
+  geom_line(aes(group=andovergen)) +
+  scale_color_viridis(discrete=T)
+```
+
+The trend is monotonically decreasing for high values of `andOverGen` (high likelihood of inverse scope), and monotonically increasing for low values of `andOverGen` (low likelihood of inverse scope).
+
+## Case 2: movement is costly
+
+Next we'll assume that movement is costly, meaning that the prior on utterance structure will depend on the level of coordination.
+
+Varying the cost of the utterance:
+
+```{r case2.cost}
+vary.cost <- function(cost) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case2.wppl',
+    data = list(andOverGenStrength=.5, alpha=1, costMultiplier=cost, movementCostMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(cost=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(cost, vary.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    cost=factor(cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=cost))+
+  geom_point() +
+  geom_line(aes(group=cost))+
+  scale_color_viridis(discrete=T)
+```
+
+The trend is monotonically increasing and concave in shape. Both the utterance cost (longer utterances are more costly) and the cost of movement (NP-coordination is least likely to convey AND > GEN) are at play here, with the former tending to increase the predicted mutual exclusivity of NP-coordination and the latter tending to decrease it. Since NP-coordination ends up having a low predicted mutual exclusivity, the movement effect is stronger.
+
+Varying the cost of movement:
+
+```{r case2.movement}
+vary.movement.cost <- function(movement.cost) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case2.wppl',
+    data = list(andOverGenStrength=.5, alpha=1, costMultiplier=1, movementCostMultiplier=movement.cost), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(movement.cost=c(1:8/5)) %>% 
+  mutate(preds=map(movement.cost, vary.movement.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    movement.cost=factor(movement.cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=movement.cost))+
+  geom_point() +
+  geom_line(aes(group=movement.cost))+
+  scale_color_viridis(discrete=T)
+```
+
+Again, the trend is monotonically increasing and concave in shape. We see that increasing the cost of movement cannot affect the overall shape of the trend.
+
+Varying ``alpha``:
+
+```{r case2.alpha}
+vary.alpha <- function(alpha) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case2.wppl',
+    data = list(andOverGenStrength=.5, alpha=alpha, costMultiplier=1, movementCostMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(alpha=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(alpha, vary.alpha)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    alpha=factor(alpha)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=alpha))+
+  geom_point() +
+  geom_line(aes(group=alpha)) +
+  scale_color_viridis(discrete=T)
+```
+
+The overall shape of the trend is the same. As alpha increases, the overall mutual exclusivity predictions decrease.
+
+## Case 3: S = AND > GEN, movement is costly
+
+In this case, we assume that movement cannot occur in the case of S-coordination such that GEN outscopes AND, that is, the surface scope is the only scope allowed (with some very high probability = `.999`). Movement in other cases is still allowed, and is costly.
+
+Varying the cost of the utterance:
+
+```{r case3.cost}
+vary.cost <- function(cost) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case3.wppl',
+    data = list(andOverGenStrength=.5, alpha=1, costMultiplier=cost, movementCostMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(cost=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(cost, vary.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    cost=factor(cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=cost))+
+  geom_point() +
+  geom_line(aes(group=cost))+
+  scale_color_viridis(discrete=T)
+```
+
+S-coordination always implies mutual exclusivity with very high likelihood. Otherwise the trend is monotonically increasing.
+
+Varying the cost of movement:
+
+```{r case3.movement}
+vary.movement.cost <- function(movement.cost) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case3.wppl',
+    data = list(andOverGenStrength=.5, alpha=1, costMultiplier=1, movementCostMultiplier=movement.cost), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(movement.cost=c(1:6/5)) %>% 
+  mutate(preds=map(movement.cost, vary.movement.cost)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    movement.cost=factor(movement.cost)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=movement.cost))+
+  geom_point() +
+  geom_line(aes(group=movement.cost))+
+  scale_color_viridis(discrete=T)
+```
+
+The trend is monotonically increasing and convex for high costs of movement, while concave for low costs of movement.
+
+Varying ``alpha``:
+
+```{r case3.alpha}
+vary.alpha <- function(alpha) {
+  webppl(
+    program_file = 'elephants-coord-lifted-case3.wppl',
+    data = list(andOverGenStrength=.5, alpha=alpha, costMultiplier=1, movementCostMultiplier=1), 
+    data_var = "params"
+  )
+}
+
+sim.result <- tibble(alpha=c(1:5/5, 1:5*2)) %>% 
+  mutate(preds=map(alpha, vary.alpha)) %>%
+  unnest_wider(preds) %>%
+  rename(np=...4, pp=...3, vp=...2, s=...1)
+
+sim.result %>%
+  pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
+  mutate(
+    coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
+    alpha=factor(alpha)
+  ) %>%
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=alpha))+
+  geom_point() +
+  geom_line(aes(group=alpha)) +
+  scale_color_viridis(discrete=T)
+```
+
+The trend is monotonically increasing and concave.
+
+## Summary
+
+Using the lifted model, we can model an additional trend of a monotonically decreasing function from NP -> S.
+
+With an assumption of no cost of movement, the trend is always monotonically decreasing.
+
+In the case where movement is costly, we see a monotonically increasing, concave trend.
+
+In the case where movement is costly and S-coordination is forced to have surface scope, we can see either a monotonically increasing, concave trend, or a monotonically increasing, convex trend.
+
+Note that there are different ways to parameterize the prior on utterance structure (``andOverGenStrength``) which could lead to different qualitative predictions. I tested a few different ways and found the same qualitative predictions, but I possibly missed some important cases.

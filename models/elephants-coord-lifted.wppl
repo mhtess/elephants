@@ -1,0 +1,70 @@
+// LIFTED MODEL
+// The pragmatic listener can jointly infer the compositional structure of the utterance (in the
+// form of the `andOverGen` variable) with the utterance's meaning (probability of mutual
+// exclusivity.)
+
+var meProb = .9
+var worldPrior = function() {
+  return flip(meProb) ? "ME" : "nME"
+}
+var utterancePrior = function() {
+  var utterances = ["s", "vp", "pp", "np", "silence"]
+  var i = randomInteger(utterances.length)
+  return utterances[i]
+}
+var groupPredicationStrength = 0
+var andOverGenStrength = function(utt) {
+  return 0.5
+}
+var meaning = function(utt,world, andOverGen) {
+  return utt == "silence" ? true : 
+  utt == "np" ? flip(groupPredicationStrength) ? world==="ME":
+                     andOverGen[utt] ? world==="ME" : world==="nME" : 
+  andOverGen[utt] ? world==="ME" : world==="nME" 
+}
+var literalListener = function(utterance, andOverGen) {
+  Infer({
+    model() {
+      var world = worldPrior()
+      var m = meaning(utterance, world, andOverGen)
+      factor(m ? 0 : -Infinity)
+      return world
+    }
+  })
+}
+var cost = function(utterance){
+  utterance == "s" ? 5 :
+  utterance == "vp" ? 4 :
+  utterance == "pp" ? 3 :
+  utterance == "np" ? 2 :
+  1
+}
+var alpha = 2
+var speaker = function(world, andOverGen) {
+  Infer({
+    model(){
+      var utterance = utterancePrior()
+      factor(alpha * (literalListener(utterance, andOverGen).score(world)
+	                - cost(utterance)))
+      return utterance
+    }
+  })
+}
+var listener = function(utterance) {
+  Infer({
+    model() {
+      var world = worldPrior()
+      var andOverGen = {
+        s: flip(andOverGenStrength("s")),
+        vp: flip(andOverGenStrength("vp")),
+        pp: flip(andOverGenStrength("pp")),
+        np: flip(andOverGenStrength("np"))
+      }
+      observe(speaker(world, andOverGen), utterance)
+      return world
+    }
+  })
+}
+map(function(coord) {
+  Math.exp(listener(coord).score("ME"))
+}, ["s", "vp", "pp", "np", "silence"])
