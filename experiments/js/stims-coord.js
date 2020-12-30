@@ -874,8 +874,20 @@ var stims_chapters = [{
           same: "and long, pointed beaks",
           reverse: "and short, hooked beaks",
         }
-      }
-    }
+      },
+      filler: "and bring back food for their young",
+      nme: {
+	s: "and rondas eat with sharp claws",
+	vp: "and eat with sharp claws",
+	pp: "and with sharp claws",
+	np: "and sharp claws",
+      },
+    },
+    critical: true,
+    kind: "rondas",
+    property1: "eat with short, hooked beaks",
+    property2: "eat with long, pointed beaks",
+    property3: "eat with sharp claws",
   },
   {
     title: "Sarkeys",
@@ -902,8 +914,18 @@ var stims_chapters = [{
           same: "and the fall",
           reverse: "and the spring",
         },
-      }
-    }
+      },
+      filler: "and give birth in late summer",
+      nme: {
+        s: "and sarkeys choose a new mate each season",
+        vp: "and choose a new mate each season",
+      },
+    },
+    critical: true,
+    kind: "sarkeys",
+    property1: "mate in the spring",
+    property2: "mate in the fall",
+    property3: "choose a new mate each season",
   },
   {
     title: "Vimers",
@@ -930,8 +952,18 @@ var stims_chapters = [{
           same: "and flooms",
           reverse: "and yergs",
         }
-      }
-    }
+      },
+      filler: "and feed on evors",
+      nme: {
+        s: "and vimers lay their eggs in clutches of a few hundred",
+        vp: "and lay their eggs in clutches of a few hundred",
+      },
+    },
+    critical: true,
+    kind: "vimers",
+    property1: "lay their eggs in yergs",
+    property2: "lay their eggs in flooms",
+    property3: "lay their eggs in cluthces of a few hundred",
   },
   {
     title: "Marths",
@@ -958,7 +990,17 @@ var stims_chapters = [{
           same: "and vorbas",
           reverse: "and freenas",
         },
+      },
+      filler: "and grow up to ten feet long",
+      nme: {
+        s: "and marths grow up to ten feet long",
+        vp: "and grow up to ten feet long",
       }
-    }
+    },
+    critical: true,
+    kind: "marths",
+    property1: "grow on freenas",
+    property2: "grow on vorbas",
+    property3: "grow up to ten feet long",
   },
 ]

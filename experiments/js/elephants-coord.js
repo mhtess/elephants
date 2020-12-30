@@ -262,7 +262,7 @@ function make_slides(f) {
       this.rt = Date.now() - this.startTime;
 
       exp.data_trials.push({
-        "trial_type": this.stim.type,
+        "trial_type": this.stim.critical ? "critical" : "filler",
         "condition": this.stim.condition,
         "chapter_num": exp.trial_num,
         "page_content": $("#mainText").html(),
