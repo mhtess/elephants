@@ -16,12 +16,15 @@ case that generically many of the kind possess the first property, and
 it is also the case that generically many of the kind possess the second
 property, but the flexibility of GEN’s threshold semantics enables a
 fewer number of the kind to possess each property (see
-`model-simulations-v2` for quantitative predictions).
+`model-simulations-v2` for quantitative predictions). Note that this
+mapping of scope to meaning implicitly assumes that the two conjuncts
+have a relatively high degree of mutual exclusivity, since if they did
+not, neither scope would be incongruous with the world state.
 
 Obviously, the mutual exclusivity of any two random predicates will vary
 quite widely. Here we assume that the prior on mutual exclusivity for
 the two predicates is quite high, such as “living in Africa” and “living
-in Asia”, in order to test the range of model predictions.
+in Asia”, consistent with the model’s implicit assumption.
 
 The model also assumes if group predication exists, it is only available
 at the NP level of coordination. Group predication has the effect of
@@ -29,14 +32,17 @@ making mutual exclusivity less likely, since it operates as a union for
 many predicate types (notably including “living in Africa and Asia”).
 The *strength of group predication* is the first variable we consider.
 Notably, it can be zero, meaning that group predication does not operate
-in the model.
+in the model. (`groupPredicationStrength`)
 
 We also consider a structural effect on interpretation. The AND \> GEN
 scope is the inverse scope for sentences with NP-, PP-, or VP-
 coordination. Moreover, it may be more computationally intensive to
 achieve the inverse scope depending on where AND begins in the syntactic
 tree. Thus, the *cost of movement* (for some theory-neutral notion of
-movement) is the second variable we consider.
+movement) is the second variable we consider. This is represented in the
+model as a probability for the AND \> GEN scope at each coordination
+level, which varies according to the cost of movement.
+(`andOverGenStrength`)
 
 Furthermore, longer utterances have greater cost, such that
 S-coordinated sentences are the most costly and NP-coordinated sentences
@@ -44,15 +50,13 @@ are the least costly. The multiplier for the *cost of utterance* is the
 third variable we consider. Throughout, we assume that the cost spacing
 (relative difference in cost between different coordination levels) is
 constant, but the size of the spacing (multiplier) varies.
+(`costMultiplier`)
 
 We last consider the *speaker optimality* or alpha, which is a common
-parameter in RSA models.
+parameter in RSA models. (`alpha`)
 
 We will work through a series of possible cases and look at the model
-predictions for each. Ideally, the model makes unique qualitative
-predictions in each case so that we can disambiguate between them.
-Within each case, we will explore the range of quantitative predictions
-made.
+predictions for each.
 
 ## Case 1: group predication exists, no cost of movement
 
@@ -80,8 +84,9 @@ varying the speaker optimality `alpha`.
 We see that the general shape of the trend remains the same (PP = VP \<
 NP \< S), except when `alpha` is very high, in which case the model
 predictions for NP-coordination and S-coordination become more similar.
-As `alpha` increases, the differences between coordination levels
-increases.
+As `alpha` increases, the differences between the mutually exclusive
+coordination levels (NP, S) and the non-mutually exclusive coordination
+levels (PP, VP) increases.
 
 Next, let’s consider setting `alpha=1` and varying the cost multiplier.
 
@@ -89,7 +94,8 @@ Next, let’s consider setting `alpha=1` and varying the cost multiplier.
 
 We see that the general shape of the trend is again constant. As the
 difference in cost between coordination levels increases, the difference
-between coordination levels becomes greater.
+between coordination levels becomes greater, with PP- and
+VP-coordination more likely to indicate non-mutual exclusivity.
 
 ## Case 2: group predication exists, movement is costly
 
@@ -113,12 +119,12 @@ Next, let’s set the multiplier for movement cost to 1, and vary the
 group predication strength.
 
 ![](elephants-coord-simulations_files/figure-gfm/case2.group.predication-1.png)<!-- -->
-We see that depending on the relative strengths of group predication and
-the cost of movement, the shape of the trend differs. When group
-predication is relatively weak, we see a monotonically increasing
-judgement of mutual exclusivity as coordination moves from NP- to S-.
-When group predication is relatively strong, we see a V-pattern where NP
-\> PP \< VP \< S.
+
+We see that depending on the relative strength of group predication, the
+shape of the trend differs. When group predication is relatively weak,
+we see a monotonically increasing judgement of mutual exclusivity as
+coordination moves from NP- to S-. When group predication is relatively
+strong, we see a V-pattern where NP \> PP \< VP \< S.
 
 Next, let’s vary `alpha`.
 
@@ -173,7 +179,7 @@ of movement by applying a `movementCostMultiplier`.
 
 In this case, we see a monotonically increasing trend NP \< PP \< VP \<
 S. As the cost of movement increases, the trend becomes more concave,
-quickly reaching the ceiling of 100% confidence in mutual exclusivity.
+quickly reaching the ceiling of 100% probability of mutual exclusivity.
 
 Next, let’s vary `alpha`.
 
@@ -194,9 +200,11 @@ coordination levels appear more similar.
 ## Summary
 
 The model displays four qualitatively different trends depending on the
-existence of group predication and the existence of a cost of movement
-(the strong structural hypothesis). Note that in the absence of the
-structural hypothesis, even if group predication is present, all
+existence of group predication and the existence of a cost of movement.
+Let’s call the case that movement can occur but there is no cost, the
+*weak structural hypothesis*. The case in which there is a movement cost
+will be the *strong structural hypothesis*. Note that in the absence of
+the structural hypothesis, even if group predication is present, all
 coordination levels will imply the same mutual exclusivity.
 
 The pattern PP = VP \< NP \<= S is consistent with a model in which
@@ -209,6 +217,7 @@ The pattern NP = PP = VP \< S is consistent with a model in which group
 predication does not exist and only the weak structural hypothesis
 holds.
 
-The pattern NP \< PP \< VP \< S (monotonically increasing) is consistent
-with a model in which group predication does not exist and the strong
-structural hypothesis holds.
+The pattern NP \< PP \< VP \< S (monotonically increasing with the
+height of the coordination level) is consistent with a model in which
+group predication does not exist and the strong structural hypothesis
+holds.
