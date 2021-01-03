@@ -20,7 +20,7 @@ Throughout, we assume that group predication does not exist. We consider the eff
 
 We assume that there is no cost of movement (``andOverGenStrength`` is a fixed value for all coordination levels).
 
-Varying the cost of the utterance:
+Varying the cost multiplier:
 
 ```{r case1.cost}
 vary.cost <- function(cost) {
@@ -91,8 +91,8 @@ vary.andovergen <- function(andovergen) {
   )
 }
 
-sim.result <- tibble(andovergen=1:10/10) %>% 
-  mutate(preds=map(andovergen, vary.andovergen)) %>%
+sim.result <- tibble(andovergenstrength=1:10/10) %>% 
+  mutate(preds=map(andovergenstrength, vary.andovergen)) %>%
   unnest_wider(preds) %>%
   rename(np=...4, pp=...3, vp=...2, s=...1)
 
@@ -100,15 +100,15 @@ sim.result %>%
   pivot_longer(np:s, names_to="coordination", values_to="mutually.exclusive") %>%
   mutate(
     coordination=factor(coordination, levels=c("np", "pp", "vp", "s")),
-    andovergen=factor(andovergen)
+    andovergenstrength=factor(andovergenstrength)
   ) %>%
-  ggplot(aes(x=coordination, y=mutually.exclusive, color=andovergen))+
+  ggplot(aes(x=coordination, y=mutually.exclusive, color=andovergenstrength))+
   geom_point() +
-  geom_line(aes(group=andovergen)) +
+  geom_line(aes(group=andovergenstrength)) +
   scale_color_viridis(discrete=T)
 ```
 
-The trend is monotonically decreasing for high values of `andOverGen` (high likelihood of inverse scope), and monotonically increasing for low values of `andOverGen` (low likelihood of inverse scope).
+The trend is monotonically decreasing for high values of `andOverGenStrength` (high likelihood of inverse scope for coordination levels below S), and monotonically increasing for low values of `andOverGenStrength` (low likelihood of inverse scope for coordination levels below S).
 
 ## Case 2: movement is costly
 
@@ -206,9 +206,9 @@ The overall shape of the trend is the same. As alpha increases, the overall mutu
 
 ## Case 3: S = AND > GEN, movement is costly
 
-In this case, we assume that movement cannot occur in the case of S-coordination such that GEN outscopes AND, that is, the surface scope is the only scope allowed (with some very high probability = `.999`). Movement in other cases is still allowed, and is costly.
+In this case, we assume that movement cannot occur in the case of S-coordination such that GEN outscopes AND, that is, the surface scope is the only scope allowed (with some very high probability = `.999`). Movement in other cases is still allowed, and is costly. This is more consistent with the assumptions made in ``elephants-coord-simulations.Rmd``.
 
-Varying the cost of the utterance:
+Varying the cost multiplier:
 
 ```{r case3.cost}
 vary.cost <- function(cost) {
@@ -302,7 +302,7 @@ The trend is monotonically increasing and concave.
 
 Using the lifted model, we can model an additional trend of a monotonically decreasing function from NP -> S.
 
-With an assumption of no cost of movement, the trend is always monotonically decreasing.
+With an assumption of no cost of movement, the trend is always monotonically decreasing, since more costly utterances (higher levels of coordination) tend to convey less likely world states (non-mutually exclusive).
 
 In the case where movement is costly, we see a monotonically increasing, concave trend.
 

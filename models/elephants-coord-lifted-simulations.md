@@ -26,7 +26,7 @@ and the prior on utterance structure in the form of `andOverGenStrength`
 We assume that there is no cost of movement (`andOverGenStrength` is a
 fixed value for all coordination levels).
 
-Varying the cost of the utterance:
+Varying the cost multiplier:
 
 ![](elephants-coord-lifted-simulations_files/figure-gfm/case1.cost-1.png)<!-- -->
 
@@ -46,9 +46,11 @@ Varying the baseline belief in the AND \> GEN scope:
 
 ![](elephants-coord-lifted-simulations_files/figure-gfm/case1.andovergen-1.png)<!-- -->
 
-The trend is monotonically decreasing for high values of `andOverGen`
-(high likelihood of inverse scope), and monotonically increasing for low
-values of `andOverGen` (low likelihood of inverse scope).
+The trend is monotonically decreasing for high values of
+`andOverGenStrength` (high likelihood of inverse scope for coordination
+levels below S), and monotonically increasing for low values of
+`andOverGenStrength` (low likelihood of inverse scope for coordination
+levels below S).
 
 ## Case 2: movement is costly
 
@@ -87,9 +89,11 @@ overall mutual exclusivity predictions decrease.
 In this case, we assume that movement cannot occur in the case of
 S-coordination such that GEN outscopes AND, that is, the surface scope
 is the only scope allowed (with some very high probability = `.999`).
-Movement in other cases is still allowed, and is costly.
+Movement in other cases is still allowed, and is costly. This is more
+consistent with the assumptions made in
+`elephants-coord-simulations.Rmd`.
 
-Varying the cost of the utterance:
+Varying the cost multiplier:
 
 ![](elephants-coord-lifted-simulations_files/figure-gfm/case3.cost-1.png)<!-- -->
 
@@ -115,7 +119,9 @@ Using the lifted model, we can model an additional trend of a
 monotonically decreasing function from NP -\> S.
 
 With an assumption of no cost of movement, the trend is always
-monotonically decreasing.
+monotonically decreasing, since more costly utterances (higher levels of
+coordination) tend to convey less likely world states (non-mutually
+exclusive).
 
 In the case where movement is costly, we see a monotonically increasing,
 concave trend.
