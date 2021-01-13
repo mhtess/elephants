@@ -1,5 +1,11 @@
-// currently 4 mosts, 3 nones, 7 alls
-// target: 3 mosts, 3 nones, 3 alls, 3 less than a third, 2 more than two-thirds
+/**
+filler breakdown
+- 4 alls
+- 3 less than a third
+- 2 2 more than three-fourths
+- 3 mosts
+- 3 nones
+**/
 
 var filler_chapters = [{
     title: "Zorxon, overlord of Dax",
@@ -45,6 +51,17 @@ var filler_chapters = [{
     quantifier: "all",
     inference: false
   },
+		       {
+			   title: "Wargons",
+			   main_text: ["Wargons are gentle giants. All of them grow to be more than thirty feet tall, and they use their great height to reach the young leaves at the tops of tall plants. All wargons graze in herds to stay safe from predators."],
+			   critical: false,
+			   kind: "wargons",
+			   property1: "grow to be more than thirty feet tall",
+			   property2: "graze in herds",
+			   type: "filler",
+			   quantifier: "all",
+			   inference: false,
+		       },
 
   {
     title: "Yomis",
@@ -110,7 +127,6 @@ var filler_chapters = [{
     quantifier: "gt34th",
     inference: true
   },
-
   {
     title: "Wopis",
     main_text: [
@@ -123,10 +139,20 @@ var filler_chapters = [{
     property1: "live in the desert",
     property2: "are very hard to find",
     type: "filler",
-    condition: "single",
     quantifier: "gt34th",
     inference: true
   },
+		       {
+			   title: "Rifnas",
+			   main_text: ["Rifnas are tall grasses that are found on the continent of Caro. More than three-quarters of rifnas are found on the western part of Caro, and all of those are greenish-purple in color."],
+			   critical: false,
+			   kind: "rifnas",
+			   property1: "are found on the western part of Caro",
+			   property2: "are greenish-purple in color",
+			   type: "filler",
+			   quantifier: "gt34th",
+			   inference: true 
+		       },
 
 
 
